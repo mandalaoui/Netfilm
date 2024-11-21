@@ -1,0 +1,3 @@
+class Menu : public IMenu {
+
+}
