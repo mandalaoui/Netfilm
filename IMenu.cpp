@@ -1,0 +1,3 @@
+class IMenu {
+    public:
+}
