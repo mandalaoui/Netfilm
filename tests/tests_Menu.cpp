@@ -4,7 +4,8 @@
 // <sstream> Provides a memory buffer for reading/writing text, for capturing std::cout output in tests.
 using namespace std;
 
-// Test for function - Execute in class - Help
+// Test for function - nextCommand in class - Menu
+// Check if output is correct
 TEST(MenuNextCommandTest, NextCommandPrintsCorrectOutput) {
     // create an object
     Menu menu;
@@ -58,15 +59,16 @@ void testInvalidInput(const string& input, const string& expectedErrorMessage) {
     EXPECT_EQ(outputBuffer.str(), expectedErrorMessage);
 }
 
-// Test for function - nextCommand in class - Help
+// Test for function - nextCommand in class - Menu
+// Check the function's behavior for invalid inputs
 TEST(MenuNextCommandTest, NextCommandReturnsValidInput) {
     // Array of invalid inputs to test
-    vector<string> invalidInputs = {"4", "-1", "abc", "!@#", " ", "12", "1 2"};
+    const char* invalidInputs[] = {"4", "-1", "abc", "!@#", " ", "12", "1 2"};
     string expectedErrorMessage = "Sorry, no can do";
 
     // Loop through each invalid input and test it
-    for (const auto& input : invalidInputs) {
-        testInvalidInput(input, expectedErrorMessage);
+    for (int i = 0; i < sizeof(invalidInputs) / sizeof(invalidInputs[0]); ++i) {
+        testInvalidInput(invalidInputs[i], expectedErrorMessage);
     }
 }
 

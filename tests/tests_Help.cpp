@@ -2,24 +2,25 @@
 #include "Help.h"
 #include <sstream> 
 // <sstream> Provides a memory buffer for reading/writing text, for capturing std::cout output in tests.
+using namespace std;
 
-// Test for funcion - Execute in class - Help
+// Test for funtcion - Execute in class - Help
 TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
-    // create an object
+    // Create an object
     Help help;
 
     // Redirecting std::cout to stringstream for capturing and testing output
-    std::stringstream buffer;
-    std::streambuf* oldCoutBuffer = std::cout.rdbuf(buffer.rdbuf());
+    stringstream buffer;
+    streambuf* oldCoutBuffer = cout.rdbuf(buffer.rdbuf());
 
-    // run help.execute()
+    // Run the execute function
     help.execute();
 
     // Restoring std::cout to its original buffer to revert to normal console output after redirection
-    std::cout.rdbuf(oldCoutBuffer);
+    cout.rdbuf(oldCoutBuffer);
 
     // Expected output
-    std::string expectedOutput = 
+    string expectedOutput = 
     "add [userid] [movieid1] [movieid2] …\n"
     "recommend [userid] [movieid]\n"
     "help\n";
@@ -31,6 +32,6 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
 }
 
 int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
+    InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
