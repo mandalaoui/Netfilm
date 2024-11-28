@@ -1,0 +1,5 @@
+services:
+  gtest:
+    build:
+      context: ./tests
+      dockerfile: Dockerfile
