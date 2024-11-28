@@ -1,14 +1,7 @@
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <vector> 
-#include <map>
-
+#include "Recommend.h"
 using namespace std;
 
 class Recommend : public ICommand {
-    private:
-
     string my_user;
     string my_movie;
     vector<int> relevent_users;
@@ -146,8 +139,6 @@ class Recommend : public ICommand {
         }
         return sortedMovies;
     }
-
-    public:
 
     Recommend(){}
 
