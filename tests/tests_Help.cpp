@@ -5,6 +5,7 @@
 using namespace std;
 
 // Test for funtcion - Execute in class - Help
+// Check if the function prints the correct output
 TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     // Create an object
     Help help;
@@ -32,6 +33,6 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
 }
 
 int main(int argc, char **argv) {
-    InitGoogleTest(&argc, argv);
+    testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
