@@ -1,5 +1,7 @@
 services:
   gtest:
     build:
-      context: ./tests
+      context: .
       dockerfile: Dockerfile
+    stdin_open: true
+    tty: true

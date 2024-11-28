@@ -1,4 +1,2 @@
-class Icommand {
-    public:
-        virtual void execute() = 0;
-}
+#include "ICommand.h"
+//void ICommand::execute() {}

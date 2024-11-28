@@ -1,20 +1,27 @@
-#include <string>
-#include <iostream>
+#include "App.h"
+#include "MapCommands.h"
+#include "ICommand.h"
 using namespace std;
-class App: {
-    public:
-        void run() {
-            string task;
 
-            while(true) {
-                cin >> user;
-                size_t space = user.find(' ');
-                string task = user.substr(0, space);
-                cout << task << endl;
-                try {
-                    commands[task].execute(task);
-                }
-                catch() {}
-            }
+App::App(std::map<std::string, ICommand*> commands) : commands(commands) {}
+
+void App::run() {
+    string task;
+    string userInput;
+
+    while(true) {
+        getline(cin, userInput);
+        size_t space = userInput.find(' ');
+        task = userInput.substr(0, space);
+        cout << task << endl;
+        try {
+            cout << "3" << endl;
+            commands[task]->execute();
+            cout << "2" << endl;
+
         }
+        catch(...) {
+            cout << "1" << endl;
+        }
+    }
 }

@@ -1,20 +1,25 @@
+#include "MapCommands.h"
+#include "ICommand.h"
+#include "Add.h"
 
-class MapCommands: {
-    public:
-        map<string, Icommand*> commands;
+void MapCommands::createCommand () {
+    commands["add"] = add;
+    //std::cout << "create commad: " << std::endl;
 
-        Icommand* add = new Add();
-        commands["add"] = add;
+    /*ICommand* recommend = new Recommend();
+    commands["recommend"] = recommend;
 
-        Icommand* recommend = new Recommend();
-        commands["recommend"] = recommend;
+    ICommand* help = new Help();
+    commands["help"] = help;*/
+}
 
-        Icommand* help = new Help();
-        commands["help"] = help;
+std::map<std::string, ICommand*> MapCommands:: getCommands() {
+    //std::cout << "return commad: " << std::endl;
+    return commands;
+}
 
-        void delete() {
-            delete add;
-            delete recommend;
-            delete help;
-        }
+void MapCommands::deleteCommands() {
+    delete add;
+    //delete recommend;
+    //delete help;
 }
