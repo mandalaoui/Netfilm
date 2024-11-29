@@ -2,11 +2,11 @@
 #define ADD_H
 #include "ICommand.h"
 #include <iostream>
+#include <string>
+using namespace std;
 class Add : public ICommand {
     public:
-        void execute(std::string word) override {
-            std::cout << "You entered1: " + word << std::endl;
-        }
-        //void execute() override;
+        void execute(string input) override;
+        bool isInvalid(string input) override;
 };
 #endif
