@@ -11,5 +11,9 @@ class Add : public ICommand {
     public:
         void execute(string input) override;
         bool isInvalid(string input) override;
+        void addMoviesToUser(string user, string movies);
+        void addUser(string user, string movies);
+        bool isInFile(string str, fstream& file);
+
 };
 #endif
