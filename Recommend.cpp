@@ -5,5 +5,4 @@
 #include <string>
 using namespace std;
 void Recommend::execute(string input) {
-        cout << input << endl;
 }
