@@ -1,6 +1,7 @@
 #include "App.h"
 #include "MapCommands.h"
 #include "ICommand.h"
+#include <map>
 using namespace std;
 
 App::App(std::map<std::string, ICommand*> commands) : commands(commands) {}
@@ -13,15 +14,13 @@ void App::run() {
         getline(cin, userInput);
         size_t space = userInput.find(' ');
         task = userInput.substr(0, space);
-        cout << task << endl;
         try {
-            cout << "3" << endl;
-            commands[task]->execute();
-            cout << "2" << endl;
-
+            if (commands.find(task) != commands.end()) {
+                commands[task]->execute();
+            }
         }
         catch(...) {
-            cout << "1" << endl;
+            continue;
         }
     }
 }

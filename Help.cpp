@@ -1,5 +1,6 @@
-class Help : public Icommand {
-    private:
-    /* data */
-    public:
+#include "Help.h"
+#include "string"
+#include "ICommand.h"
+#include <iostream>
+void Help::execute() {
 }
