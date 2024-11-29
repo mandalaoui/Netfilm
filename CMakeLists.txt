@@ -10,7 +10,10 @@ FetchContent_Declare(
     URL https://github.com/google/googletest/archive/refs/tags/release-1.11.0.zip
 )
 
+# For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(runTests Recommend.cpp)
+add_executable(runTests main.cpp MapCommands.cpp App.cpp Add.cpp Recommend.cpp Help.cpp)
+
+#target_link_libraries(runTests gtest_main)
