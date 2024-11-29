@@ -6,3 +6,5 @@
 using namespace std;
 void Recommend::execute(string input) {
 }
+bool Recommend::isInvalid(string input) {
+}

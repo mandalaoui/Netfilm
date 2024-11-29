@@ -7,5 +7,6 @@ using namespace std;
 class Add : public ICommand {
     public:
         void execute(string input) override;
+        bool isInvalid(string input) override;
 };
 #endif
