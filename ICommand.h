@@ -11,5 +11,4 @@ class ICommand {
         // Pure virtual function 'isInvalid' that print the right format of input.
         virtual bool isInvalid(string input) = 0;
 };
-
 #endif

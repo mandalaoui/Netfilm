@@ -1,5 +1,6 @@
 #ifndef RECOMMEND_H
 #define RECOMMEND_H
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -29,5 +30,4 @@ class Recommend : public ICommand {
     vector<unsigned long> sortMovies(); // Sorts movies by their weights in descending order.
     void execute(string input) override; // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
 };
-
 #endif
