@@ -6,6 +6,8 @@
 using namespace std;
 void Add::execute(string input) {
 }
+bool Add::isInvalid(string input) {
+}
 
 
 

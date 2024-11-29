@@ -7,5 +7,7 @@ using namespace std;
 class Recommend : public ICommand {
     public:
         void execute(string input) override;
+        bool isInvalid(string input) override;
+
 };
 #endif
