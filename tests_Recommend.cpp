@@ -1,84 +1,16 @@
 #include <gtest/gtest.h>
-#include "Recommend.h"
 #include <iostream>
 #include <fstream>
+#include "Recommend.h"
 #include "funcForTests.h"
 
-
 using namespace std;
-/*
-bool searchInFile(const string& value, const string& fileName) {
-    ifstream file(fileName);
-    if (!file.is_open()) {
-        // std::cerr << "file not available!" << std::endl;
-        return false;
-    }
-
-    string line;
-    while (getline(file, line)) {
-        if (line.find(value) != string::npos) {
-            // value found in the file
-            file.close();
-            return true;
-        }
-    }
-    file.close();
-    return false;
-}
-
-void createOrClearFile(const string& fileName) {
-    ofstream file(fileName, ios::trunc); // delete mode
-    if (file.is_open()) {
-        //std::cout << "File created or cleared: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to create or clear file: " << fileName << std::endl;
-    }
-}
-
-void insertToFile(const string& fileName, const string& content) {
-    ofstream file(fileName, ios::app); //adding mode
-    if (file.is_open()) {
-        file << content << endl;
-        //std::cout << "Content added to file: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to write to file: " << fileName << std::endl;
-    }
-}
-
-void duplicateFile(const string& sourceFile) {
-    ifstream src(sourceFile, ios::binary);
-    createOrClearFile("duplicate");
-    ofstream dest("duplicate", ios::binary);
-    if (src.is_open() && dest.is_open()) {
-        dest << src.rdbuf(); // copying data to new file
-        //cout << "File duplicated: " << sourceFile << " -> " << destFile << std::endl;
-    } else {
-        cerr << "Failed to duplicate file: "; //<< sourceFile << " -> " << destFile << std::endl;
-    }
-}
-
-void compareFiles(const string& file1, const string& file2) {
-    ifstream f1(file1), f2(file2);
-    if (!f1 || !f2) {
-        std::cerr << "Failed to open one of the files!" << std::endl;
-        return;
-    }
-    cout << "Comparing files:\n";
-    string line1, line2;
-    int lineNumber = 0;
-    while (++lineNumber, std::getline(f1, line1) || std::getline(f2, line2)) {
-        if (line1 != line2) {
-            cout << "Difference at line " << lineNumber << ":\n"
-                      << "File 1: " << line1 << "\n"
-                      << "File 2: " << line2 << "\n";
-        }
-    }
-    cout << "All done\n";
-}
-*/
+// Tests for function "Execute" in class "Recommend"
+    // Test case for a non-existent user.
+    // Verify that the system does not produce any output.
 TEST(RecommendExecuteTest, UserIdNotFound) {
-    createOrClearFile("users"); //usersBeforeAdd
-    insertToFile("users", "12\n15\n20\n19\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "12\n15\n20\n19\n");
     
     Recommend recommend;
     const char* inputs[] = {"1", "121", "115", "20"};
@@ -88,7 +20,7 @@ TEST(RecommendExecuteTest, UserIdNotFound) {
         ostringstream capturedOutput;
         streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
         
-        // Execute the function
+        // Execute the function with each input from the array - not suppose to print anything
         recommend.execute(string(inputs[i]) + " 35");
         
         // Restore original cout buffer
@@ -98,13 +30,13 @@ TEST(RecommendExecuteTest, UserIdNotFound) {
         EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i];
     }
 }
-
+    // Test case for a non-existent movie.
+    // Verify that the system does not produce any output.
 TEST(RecommendExecuteTest, MovieIdNotFound) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n4\n");
-
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n4\n");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
         
     Recommend recommend;
     const char* inputs[] = {"1", "121", "115", "20"};
@@ -114,7 +46,7 @@ TEST(RecommendExecuteTest, MovieIdNotFound) {
         ostringstream capturedOutput;
         streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
         
-        // Execute the function
+        // Execute the function with each input from the array - not suppose to print anything
         recommend.execute("1 "+ string(inputs[i]));
         
         // Restore original cout buffer
@@ -124,130 +56,137 @@ TEST(RecommendExecuteTest, MovieIdNotFound) {
         EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i];
     }
 }
-
+    // Test case to verify that the Execute function returns the correct movie recommendation.
 TEST(RecommendExecuteTest, ExecuteReturnsCorrectRecommendation) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n4\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n4\n");
+    // Create watchlists for each user
+    setFile("1_watchlist", "100\n101\n102\n103\n"); // User 1's watchlist
+    setFile("2_watchlist", "100\n101\n102\n110\n"); // User 2's watchlist
+    setFile("3_watchlist", "100\n105\n107\n110\n"); // User 3's watchlist
+    setFile("4_watchlist", "105\n102\n109\n"); // User 4's watchlist
 
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "100\n101\n102\n110\n");
-
-    createOrClearFile("3_watchlist"); //watchListBeforeAdd
-    insertToFile("3_watchlist", "100\n105\n107\n110\n");
-
-    createOrClearFile("4_watchlist"); //watchListBeforeAdd
-    insertToFile("4_watchlist", "105\n102\n109\n");
-
-    string recommendations[] = {"110 105 107\n", "110\n", "110 105 109\n"};
-    //recommendation for 1 100, recommendation for 1 101, recommendation for 1 102
+    // Define expected recommendations for each movie watched by User 1
+    string recommendations[] = {"110 105 107\n", "110\n", "110 105 109\n", ""};
     
     Recommend rcommend;
-    const char* inputs[] = {"100", "101", "102"};
+    const char* inputs[] = {"100", "101", "102, 103"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
         // Redirect cout to a stringstream to capture output
         ostringstream capturedOutput;
         streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
         
-        // Execute the function
+        // Execute the function for User 1 with the current movie ID from inputs[]
         rcommend.execute("1 " + string(inputs[i]));
         
         // Restore original cout buffer
         cout.rdbuf(originalCoutBuffer);
         
         cout << "For input: 1 " + string(inputs[i])+"\n";
-        // Verify that no output was printed
+        // Verify that the output matches the expected recommendations
         EXPECT_EQ(capturedOutput.str(), recommendations[i]);
     }
 }
-//to check
+    // Test case to ensure that the function returns no more than ten recommendations
 TEST(RecommendExecuteTest, NoMoreThanTenRecommendations) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
-
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "99\n101\n102\n104\n105\n106\n107\n108\n109\n110\nn111\n112\nn113\n114\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n");
+    // Create watchlist for user 1 (with 4 movies)
+    setFile("1_watchlist", "100\n101\n102\n103\n");
+    // Create watchlist for user 2 (with more than 10 movies)
+    setFile("2_watchlist", "99\n101\n102\n104\n105\n106\n107\n108\n109\n110\nn111\n112\nn113\n114\n");
 
     Recommend recommend;
-    const char* inputs[] = {"100", "101", "102"};
+    // Define the set of movie IDs to test the recommendations for
+    const char* inputs[] = {"101", "102"};
+    const char* correctRecommendations[] = {"99\n102\n104\n105\n106\n107\n108\n109\n110\nn111\n"
+                                            "99\n101\n104\n105\n106\n107\n108\n109\n110\nn111\n"};
+
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
-        recommend.execute("1 " + string(inputs[i]));
-        createOrClearFile("watchListAfterAdd");
-        insertToFile("watchListAfterAdd", "99\n102\n104\n105\n106\n107\n108\n109\n110\nn111\n");
+        // Redirect cout to a stringstream to capture output
+        ostringstream capturedOutput;
+        streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
 
+        // Execute the function with each input from the array for user 1
+        recommend.execute("1 " + string(inputs[i]));
+        
+        // Restore original cout buffer
+        cout.rdbuf(originalCoutBuffer);
+
+        // Compare the current watchlist after adding recommendations with the expected result
         cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("1_watchlist", "watchListAfterAdd");
+        EXPECT_EQ(capturedOutput.str(), correctRecommendations[i]);
     }
 }
-
+    // Test case to ensure that the function does not modify any file
 TEST(RecommendExecuteTest, ExecuteDoesntChangeFiles) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
-
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "101\n102\n107\n108\n");
-
-    createOrClearFile("3_watchlist"); //watchListBeforeAdd
-    insertToFile("3_watchlist", "101\n106\n109\n110\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n");
+    // Create watchlists for each user
+    setFile("1_watchlist", "100\n101\n102\n103\n"); // User 1's watchlist
+    setFile("2_watchlist", "101\n102\n107\n108\n"); // User 2's watchlist
+    setFile("3_watchlist", "101\n106\n109\n110\n"); // User 3's watchlist
     
     Recommend recommend;
+    // Define the set of movie IDs to test the recommendations for user 1
     const char* inputs[] = {"100", "101", "102", "103"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+        // Execute the recommendation function for user 1 and the current movie ID
         recommend.execute("1 " + string(inputs[i]));
         
-        createOrClearFile("1_watchListAfterReco");
-        insertToFile("1_watchListAfterReco", "100\n101\n102\n103\n");
-
+        // Verify that user 1's watchlist remains unchanged after the recommendation
+        setFile("1_watchListAfterReco", "100\n101\n102\n103\n");
         cout << "For input: 1 " + string(inputs[i])+"\n";
         compareFiles("1_watchlist", "1_watchListAfterReco");
 
-        createOrClearFile("2_watchListAfterReco");
-        insertToFile("2_watchListAfterReco", "100\n101\n102\n103\n");
-
+        // Verify that user 2's watchlist remains unchanged after the recommendation
+        setFile("2_watchListAfterReco", "100\n101\n102\n103\n");
         cout << "For input: 1 " + string(inputs[i])+"\n";
         compareFiles("2_watchlist", "2_watchListAfterReco");
 
-        createOrClearFile("3_watchListAfterReco");
-        insertToFile("3_watchListAfterReco", "100\n101\n102\n103\n");
-
+        // Verify that user 3's watchlist remains unchanged after the recommendation
+        setFile("3_watchListAfterReco", "100\n101\n102\n103\n");
         cout << "For input: 1 " + string(inputs[i])+"\n";
         compareFiles("3_watchlist", "3_watchListAfterReco");
     }
 }
-
+    // Test case to verify that the function handles valid input with extra spaces correctly
 TEST(RecommendExecuteTest, ValidInputWithSpaces) {
-    createOrClearFile("1_watchlist"); // watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
-    duplicateFile("1_watchlist"); // 000
-
-    createOrClearFile("2_watchlist"); // watchListBeforeAdd
-    insertToFile("2_watchlist", "100\n103\n110\n");
+    // Create watchlist for user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
+    // Create watchlist for user 2
+    setFile("2_watchlist", "100\n103\n110\n");
 
     Recommend recommend;
-    recommend.execute("1 101");
-    recommend.execute("000      150"); //duplicate
 
-    compareFiles("1_watchlist", "000");
+    // Redirect cout to a stringstream to capture output
+    ostringstream capturedOutput1;
+    streambuf* originalCoutBuffer1 = cout.rdbuf(capturedOutput1.rdbuf());
+    // Test recommendation for user 1 with a valid input
+    recommend.execute("1 100");
+    // Restore original cout buffer
+    cout.rdbuf(originalCoutBuffer1);
+
+    // Redirect cout to a stringstream to capture output
+    ostringstream capturedOutput2;
+    streambuf* originalCoutBuffer2 = cout.rdbuf(capturedOutput2.rdbuf());
+    // Test recommendation for the duplicated file with excessive spaces in the input
+    recommend.execute("1      100"); //duplicate
+    // Restore original cout buffer
+    cout.rdbuf(originalCoutBuffer2);
+
+    // Compare the current watchlist after adding recommendations with the expected result
+    EXPECT_EQ(capturedOutput1.str(), capturedOutput1.str());
 }
-
-// Test for function - Execute in class - Add
-// Check the function's behavior for invalid inputs
+    // Test case to verify that the function handles invalid inputs without altering watchlist
 TEST(RecommendExecuteTest, invalidInputs) {
-    createOrClearFile("1_watchlist"); // usersBeforeAdd
-    insertToFile("1_watchlist", "1\n2\n3\n4\n");
-
-    duplicateFile("1_watchlist"); // duplicate = "000"
+    // Create watchlist for user 1
+    setFile("1_watchlist", "1\n2\n3\n4\n");
+    // Duplicate the watchlist to compare with after running invalid inputs
+    duplicateFile("1_watchlist", "2_watchlist");
     
     Recommend recommend;
     // Array of invalid inputs to test
@@ -256,17 +195,19 @@ TEST(RecommendExecuteTest, invalidInputs) {
 
     // Loop through each input and test it
     for (int i = 0; i < sizeof(invalidInputs) / sizeof(invalidInputs[0]); ++i) {
+        // Redirect cout to a stringstream to capture output
+        ostringstream capturedOutput;
+        streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
+        // Execute the function with the invalid input
         recommend.execute(string(invalidInputs[i]));
-        
-        // check there are no changes
-        cout << "For input: " + string(invalidInputs[i]);
-        compareFiles("1_watchlist", "000");
+        // Restore original cout buffer
+        cout.rdbuf(originalCoutBuffer);
 
-
+        // Print current test case information
+        cout << "Testing invalid input: " + string(invalidInputs[i]) + "\n";
+        // Verify that the watchlist remains unchanged
+        compareFiles("1_watchlist", "2_watchlist");
+        // Verify that no output was printed
+        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << invalidInputs[i];
     }
 }
-
-/*int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}*/

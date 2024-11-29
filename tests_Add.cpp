@@ -1,193 +1,121 @@
 #include <gtest/gtest.h>
-#include "Add.h"
 #include <iostream>
 #include <fstream>
+#include "Add.h"
 #include "funcForTests.h"
 
 using namespace std;
-
-/*tests_Add::tests_Add();
-bool searchInFile(const string& value, const string& fileName)
-{
-    ifstream file(fileName);
-    if (!file.is_open()) {
-        // std::cerr << "file not available!" << std::endl;
-        return false;
-    }
-
-    string line;
-    while (getline(file, line)) {
-        if (line.find(value) != string::npos) {
-            // value found in the file
-            file.close();
-            return true;
-        }
-    }
-    file.close();
-    return false;
-}
-
-void createOrClearFile(const string& fileName) {
-    ofstream file(fileName, ios::trunc); // delete mode
-    if (file.is_open()) {
-        //std::cout << "File created or cleared: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to create or clear file: " << fileName << std::endl;
-    }
-}
-
-void insertToFile(const string& fileName, const string& content) {
-    ofstream file(fileName, ios::app); //adding mode
-    if (file.is_open()) {
-        file << content << endl;
-        //std::cout << "Content added to file: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to write to file: " << fileName << std::endl;
-    }
-}
-
-void duplicateFile(const string& sourceFile) {
-    ifstream src(sourceFile, ios::binary);
-    createOrClearFile("duplicate");
-    ofstream dest("duplicate", ios::binary);
-    if (src.is_open() && dest.is_open()) {
-        dest << src.rdbuf(); // copying data to new file
-        //cout << "File duplicated: " << sourceFile << " -> " << destFile << std::endl;
-    } else {
-        cerr << "Failed to duplicate file: "; // << sourceFile << " -> " << dest << std::endl;
-    }
-}
-
-void compareFiles(const string& file1, const string& file2) {
-    ifstream f1(file1), f2(file2);
-    if (!f1 || !f2) {
-        std::cerr << "Failed to open one of the files!" << std::endl;
-        return;
-    }
-    cout << "Comparing files:\n";
-    string line1, line2;
-    int lineNumber = 0;
-    while (++lineNumber, std::getline(f1, line1) || std::getline(f2, line2)) {
-        if (line1 != line2) {
-            cout << "Difference at line " << lineNumber << ":\n"
-                      << "File 1: " << line1 << "\n"
-                      << "File 2: " << line2 << "\n";
-        }
-    }
-    cout << "All done\n";
-}
-*/
+// Tests for function "Execute" in class "Add"
+    // Test for adding a new user (if the user is not found, a new one will be created)
 TEST(AddExecuteTest, UserIdNotFoundCreateNew) {
-    createOrClearFile("users"); //usersBeforeAdd
-    insertToFile("users","12\n15\n20\n19\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users","12\n15\n20\n19\n");
     
     Add add;
     const char* inputs[] = {"1", "121", "115", "20"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+        // Execute the function with each input from the array - suppose to add a new user
         add.execute(string(inputs[i]) +" 35 20");
-        createOrClearFile("usersAfterAdd");
-        insertToFile("usersAfterAdd", "12\n15\n20\n19\n"+string(inputs[i])+"\n");
-
+        // Create a file to store the result as after adding the user
+        setFile("usersAfterAdd", "12\n15\n20\n19\n"+string(inputs[i])+"\n");
+        // Compare the "before" and "after" files to validate the change
         cout << "For input: "+string(inputs[i]) +" 35 20"+"\n";
         compareFiles("usersBeforeAdd", "usersAfterAdd");
     }
 }
-
+    // Test for adding a new movie for existing user
 TEST(AddExecuteTest, UserIdFoundAddingMovie) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n4\n");
-
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n4\n");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
     
     Add add;
     const char* inputs[] = {"11", "1001", "150", "100100"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+        // Execute the function with each input from the array - suppose to add a new movie
         add.execute("1 " + string(inputs[i]));
-        createOrClearFile("watchListAfterAdd");
-        insertToFile("watchListAfterAdd", "100\n101\n102\n103\n"+string(inputs[i])+"\n");
-
+        // Create a file to store the result as after adding the movie
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n"+string(inputs[i])+"\n");
+        // Compare the "before" and "after" files to validate the change
         cout << "For input: 1 " + string(inputs[i])+"\n";
         compareFiles("1_watchlist", "watchListAfterAdd");
     }
 }
-
+    // Test for not adding a movie that already exist
 TEST(AddExecuteTest, UserIdFoundMovieExists) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n4\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n4\n");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
     
     Add add;
     const char* inputs[] = {"100", "101", "102", "103"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+        // Execute the function with each input from the array - not suppose to add any movie
         add.execute("1 " + string(inputs[i]));
-        createOrClearFile("watchListAfterAdd");
-        insertToFile("watchListAfterAdd", "100\n101\n102\n103\n");
-
+        // Create a file to store the previous watchlist
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n");
+        // Compare the "before" and "after" files to validate there are no changes
         cout << "For input: 1 " + string(inputs[i])+"\n";
         compareFiles("1_watchlist", "watchListAfterAdd");
     }
 }
-
+    // Test for not adding a movie that was repeated
 TEST(AddExecuteTest, UserIdFoundMovieRepeats) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n4\n");
-
-    createOrClearFile("1_watchlist"); // watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file (clear or create it)
+    setFile("users", "1\n2\n3\n4\n");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
     
     Add add;
     const char* inputs[] = {"100", "101"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+        // Execute the function with each input from the array - suppose to add just one each time (In addition to the 150 id mocie)
         add.execute("1 150" + string(inputs[i])+" "+ string(inputs[i]));
-        createOrClearFile("watchListAfterAdd");
-        insertToFile("watchListAfterAdd", "100\n101\n102\n103\n\105\n"+string(inputs[i])+"\n");
-
+        // Create a file to store the the result as after adding the correct movies
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n\105\n"+string(inputs[i])+"\n");
+        // Compare the "correct" and "tested" files to validate the difference
         cout << "For input: 1 150" + string(inputs[i])+" "+ string(inputs[i]);
         compareFiles("1_watchlist", "watchListAfterAdd");
     }
 }
-
+    // Test for valid input some spaces - suppose to work normally
 TEST(AddExecuteTest, ValidInputWithSpaces) {
-    createOrClearFile("1_watchlist"); // watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
-    duplicateFile("1_watchlist");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "100\n101\n102\n103\n");
+    // Creates a copy of the watch list of user 1
+    duplicateFile("1_watchlist", "2_watchlist");
 
     Add add;
+    // Execute the function with each file and similar input
+    // Suppose to behave the same
     add.execute("1 150 160 1600");
-    add.execute("000 150   160   1600"); //duplicate
-
-    compareFiles("1_watchlist", "000");
+    add.execute("2 150   160   1600"); //duplicate
+    // Compare the files to validate the changes
+    compareFiles("1_watchlist", "2_watchlist");
 }
-
-// Test for function - Execute in class - Add
-// Check the function's behavior for invalid inputs
+    // Test for invalid inputs - won't change anything
 TEST(AddExecuteTest, invalidInputs) {
-    createOrClearFile("1_watchlist"); // usersBeforeAdd
-    insertToFile("1_watchlist", "1\n2\n3\n4\n");
+    // Creates the watch list of user 1
+    setFile("1_watchlist", "1\n2\n3\n4\n");
+    // Creates a copy of the watch list of user 1
+    duplicateFile("1_watchlist", "2_watchlist");
 
-    duplicateFile("1_watchlist"); // duplicate = "000"
-    
     Add add;
     // Array of invalid inputs to test
     const char* invalidInputs[] = {"1", "-1 12", "abc", "!@#", " ", "12 ab", "1 - 2", "abc 12", "", "1-2", "1  2", "1 2 3 a b"};
 
     // Loop through each input and test it
     for (int i = 0; i < sizeof(invalidInputs) / sizeof(invalidInputs[0]); ++i) {
+        // Execute the function with each input from the array - not suppose to add anything
         add.execute(string(invalidInputs[i]));
-        
+        // Compare the "before" and "after" files to validate there are no changes
         cout << "For input: " + string(invalidInputs[i]);
-        compareFiles("1_watchlist", "000");
+        compareFiles("1_watchlist", "2_watchlist");
     }
 }
-
-/*int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}*/

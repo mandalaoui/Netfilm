@@ -1,60 +1,21 @@
 #include <gtest/gtest.h>
+#include <fstream>
 #include "App.h"
 #include "Help.h"
 #include "Recommend.h"
 #include "Add.h"
-#include <fstream>
 #include "funcForTests.h"
-
 
 using namespace std;
 
+// Global map linking command names to their respective ICommand objects
 map<std::string, ICommand*> commands = {
     {"Help", new Help()},
     {"Recommend", new Recommend()},
     {"Add", new Add()}
 };
-/*
-void createOrClearFile(const string& fileName) {
-    ofstream file(fileName, ios::trunc); // delete mode
-    if (file.is_open()) {
-        //std::cout << "File created or cleared: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to create or clear file: " << fileName << std::endl;
-    }
-}
-
-void insertToFile(const string& fileName, const string& content) {
-    ofstream file(fileName, ios::app); //adding mode
-    if (file.is_open()) {
-        file << content << endl;
-        //std::cout << "Content added to file: " << fileName << std::endl;
-    } else {
-        std::cerr << "Failed to write to file: " << fileName << std::endl;
-    }
-}
-
-void compareFiles(const string& file1, const string& file2) {
-    ifstream f1(file1), f2(file2);
-    if (!f1 || !f2) {
-        std::cerr << "Failed to open one of the files!" << std::endl;
-        return;
-    }
-    cout << "Comparing files:\n";
-    string line1, line2;
-    int lineNumber = 0;
-    while (++lineNumber, std::getline(f1, line1) || std::getline(f2, line2)) {
-        if (line1 != line2) {
-            cout << "Difference at line " << lineNumber << ":\n"
-                      << "File 1: " << line1 << "\n"
-                      << "File 2: " << line2 << "\n";
-        }
-    }
-    cout << "All done\n";
-}
-*/
-
-// No output for invalid input
+// Test for class "App"
+    // Test case to verify that no output is produced for invalid inputs
 TEST(AppRunTest, NoOutputForInvalidInput) {
     const char* InvalidInput[] = {"Help 12", "hep", "helpp", "he lp", "Help1"
                                     "Add 12", "Addd", "Add 15 a", "Add1 12 12"
@@ -63,8 +24,10 @@ TEST(AppRunTest, NoOutputForInvalidInput) {
     
     // Loop through each input and test it
     for (int i = 0; i < sizeof(InvalidInput) / sizeof(InvalidInput[0]); ++i) {
+    // Save the original cin buffer
     streambuf* originalCinBuffer = cin.rdbuf();
 
+    // Simulate input by redirecting cin to read from a stringstream
     istringstream simulatedInput(string(InvalidInput[i]));
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
@@ -73,79 +36,74 @@ TEST(AppRunTest, NoOutputForInvalidInput) {
     ostringstream capturedOutput;
     streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
     
-    // Execute the function
+    // Execute the function with the current input
     app.run();
 
+    // Restore the original cin buffer
     cin.rdbuf(originalCinBuffer);
         
     // Restore original cout buffer
     cout.rdbuf(originalCoutBuffer);
         
-    // Verify that no output was printed
+    // Verify that no output was produced for the invalid input
     EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << InvalidInput[i];
     }
 }
-// Files haven't changed for invalid input
+    // Test case to ensure files haven't changed for invalid input
 TEST(AppRunTest, NoChangeForInvalidInput) {
+    // Array of invalid inputs to test
     const char* InvalidInput[] = {"Help 12", "hep", "helpp", "he lp"
                                     "Add 12", "Addd", "Add 15 a"
                                     "Reccome 15 15", "recommend 10 10", "Recommend22"
                                     "hi, Help", "1Add 15 15", "-Recommend 10 10"};
-    
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Initialize the "users" file with a set of test users    
+    setFile("users", "1\n2\n3\n");
+    // Initialize watchlists for users    
+    setFile("1_watchlist", "100\n101\n102\n103\n");
+    setFile("2_watchlist", "101\n102\n107\n108\n");
+    setFile("3_watchlist", "101\n106\n109\n110\n");
+    // Duplicate watchlists for comparing later
+    duplicateFile("1_watchlist", "1_watchListAfterAdd");
+    duplicateFile("2_watchlist", "2_watchListAfterAdd");
+    duplicateFile("3_watchlist", "3_watchListAfterAdd");
 
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "101\n102\n107\n108\n");
-
-    createOrClearFile("3_watchlist"); //watchListBeforeAdd
-    insertToFile("3_watchlist", "101\n106\n109\n110\n");
-    
+    // Save the original cin buffer to restore it later    
     streambuf* originalCinBuffer = cin.rdbuf();
     // Loop through each input and test it
     for (int i = 0; i < sizeof(InvalidInput) / sizeof(InvalidInput[0]); ++i) {
-
+    
+    // Simulate input by redirecting cin to a stringstream with the current invalid input
     istringstream simulatedInput(string(InvalidInput[i]));
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
+    // Create an instance of the App class with the predefined commands map
     App app(commands);    
-    // Execute the function
+    // Execute the application run with the simulated input
     app.run();
-
+    // Restore the original cin buffer to avoid affecting other tests
     cin.rdbuf(originalCinBuffer);
 
-    //compare      
-    createOrClearFile("1_watchListAfterAdd");
-    insertToFile("1_watchListAfterAdd", "100\n101\n102\n103\n");
-
     cout << "For input: 1 " + string(InvalidInput[i])+"\n";
+    // Verify that the first user's watchlist remains unchanged
     compareFiles("1_watchlist", "1_watchListAfterAdd");
-
-    createOrClearFile("2_watchListAfterAdd");
-    insertToFile("2_watchListAfterAdd", "101\n102\n107\n108\n");
-
-    cout << "For input: 1 " + string(InvalidInput[i])+"\n";
+    // Verify that the second user's watchlist remains unchanged
     compareFiles("2_watchlist", "2_watchListAfterAdd");
-
-    createOrClearFile("3_watchListAfterAdd");
-    insertToFile("3_watchListAfterAdd", "101\n106\n109\n110\n");
-
-    cout << "For input: 1 " + string(InvalidInput[i])+"\n";
+    // Verify that the third user's watchlist remains unchanged
     compareFiles("3_watchlist", "3_watchListAfterAdd");
     }
 }
 
-// Check if the input is "Help", behave like Help
-    // Check output
+    // Test case to ensure the "Help" command produces the correct output
 TEST(AppRunTest, runCallsHelpOutput) {
+    // Save the original buffer for input
     streambuf* originalCinBuffer = cin.rdbuf();
 
+    // Define a set of inputs to simulate user input after "Help"
     const char* inputs[] = {"", " 10", " a"};
 
+    // Loop through each input to simulate user behavior
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
+    // Create a stringstream to simulate user input
     istringstream simulatedInput("Help" + string(inputs[i]));
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
@@ -154,16 +112,17 @@ TEST(AppRunTest, runCallsHelpOutput) {
     ostringstream capturedOutput;
     streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
     
-    // Execute the function
+    // Execute the function with the current input
     app.run();
 
+    // Restore the original input and output buffers after running the App
     cin.rdbuf(originalCinBuffer);
-        
-    // Restore original cout buffer
     cout.rdbuf(originalCoutBuffer);
 
+    // Save the buffer for a second test with Help directly
     streambuf* secondCinBuffer = cin.rdbuf();
 
+    // Create a Help object to call its execute function directly
     Help help;
     help.execute();
 
@@ -171,233 +130,198 @@ TEST(AppRunTest, runCallsHelpOutput) {
     ostringstream capturedOutputFromHelp;
     streambuf* secondCoutBuffer = cout.rdbuf(capturedOutputFromHelp.rdbuf());
 
+    // Restore the cin buffer to ensure it reflects Help's output
     cin.rdbuf(secondCinBuffer);
         
-    // Restore original cout buffer
+    // Restore the output buffer after Help finishes execution
     cout.rdbuf(secondCoutBuffer);
 
-    // Verify that no output was printed
+    // Compare the output of running the App's Help command and the direct Help command
     EXPECT_EQ(capturedOutput.str(), capturedOutputFromHelp.str());
     }
 }
-    // Check files
+    // Test case to verify that the "Help" command does not modify any files
 TEST(AppRunTest, runCallsHelpFiles) {  
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n");
-    
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Set up initial files for users and their watchlists
+    setFile("users", "1\n2\n3\n");
+    setFile("1_watchlist", "100\n101\n102\n103\n"); // User 1's watchlist
+    setFile("2_watchlist", "101\n102\n107\n108\n"); // User 2's watchlist
+    setFile("3_watchlist", "101\n106\n109\n110\n"); // User 3's watchlist
+    // Create backup copies of the watchlists to compare later
+    duplicateFile("1_watchlist", "1_watchListAfterAdd");
+    duplicateFile("2_watchlist", "2_watchListAfterAdd");
+    duplicateFile("3_watchlist", "3_watchListAfterAdd");
 
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "101\n102\n107\n108\n");
-
-    createOrClearFile("3_watchlist"); //watchListBeforeAdd
-    insertToFile("3_watchlist", "101\n106\n109\n110\n");
-    
+    // Save the original cin buffer to restore later
     streambuf* originalCinBuffer = cin.rdbuf();
-
+    
+    // Simulate the user input for the "Help" command
     istringstream simulatedInput("Help");
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
     App app(commands);    
-    // Execute the function
+    // Execute the function (which processes the "Help" command)
     app.run();
-
+    // Restore the original cin buffer
     cin.rdbuf(originalCinBuffer);
 
-    //compare      
-    createOrClearFile("1_watchListAfterAdd");
-    insertToFile("1_watchListAfterAdd", "100\n101\n102\n103\n");
-
+    // Compare the current state of the watchlists with their backups to ensure no changes
     cout << "For input: Help\n";
     compareFiles("1_watchlist", "1_watchListAfterAdd");
-
-    createOrClearFile("2_watchListAfterAdd");
-    insertToFile("2_watchListAfterAdd", "101\n102\n107\n108\n");
-
-    cout << "For input: Help\n";
     compareFiles("2_watchlist", "2_watchListAfterAdd");
-
-    createOrClearFile("3_watchListAfterAdd");
-    insertToFile("3_watchListAfterAdd", "101\n106\n109\n110\n");
-
-    cout << "For input: Help\n";
     compareFiles("3_watchlist", "3_watchListAfterAdd");
 }
 
-// Check if the input is "Add", behave like Add
-    // Check output
+    // Test case to verify that the "Add" command behaves correctly and produces no output
 TEST(AppRunTest, runCallsAddOutput) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n");
+    // Set up initial files for users and their watchlists
+    setFile("users", "1\n");
+    setFile("1_watchlist", "100\n101\n");
 
-    createOrClearFile("1_watchlist"); 
-    insertToFile("1_watchlist", "100\n101\n");
-
+    // Capture the output produced by the "Add" command
     ostringstream capturedOutput;
 
+    // Redirect cout to capture any output from the app
     streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
 
     App app(commands);
-
+    // Define a list of simulated inputs for the "Add" command
     const char* inputs[] = {"100", "105", "101 102", "105 106"};
 
+    // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
-    // יצירת קלט מדומה
+    // Simulate user input for the "Add" command
     istringstream simulatedInput("Add " + string(inputs[i]) + "\n");
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
-    // קריאה לפונקציה שלך
+    // Execute the App's run method to process the simulated input
     app.run();
 
     // Restore original cout buffer
     cout.rdbuf(originalCoutBuffer);
 
     // Verify that no output was printed
-    EXPECT_EQ(capturedOutput.str(), "");
+    EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i];
     }
 }
-    // check files
+    // Test case to verify that the "Add" command correctly updates files
 TEST(AppRunTest, runCallsAddFiles) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n");
+    // Set up initial files: users and their respective watchlists
+    setFile("users", "1\n");
+    setFile("1_watchlist", "100\n101\n");
     
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n");
-    
+    // Capture the original cin buffer to restore later
     streambuf* originalCinBuffer = cin.rdbuf();
 
+    // Array of simulated inputs for the "Add" command
     const char* inputs[] = {"1 100", "1 100 99", "1 109", "1 100 101"};
+    // Array of expected content for the watchlist after each "Add" operation
     const char* inputsAdded[] = {"100\n101\n", "100\n101\n99\n", "100\n101\n109\n", "100\n101\n"};
 
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
+    // Simulate the user input for the "Add" command
     istringstream simulatedInput("Add " + string(inputs[i]) + "\n");
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
     App app(commands);    
-    // Execute the function
+    // Execute the function with the current input
     app.run();
-
+    // Restore the original cin buffer
     cin.rdbuf(originalCinBuffer);
 
-    //compare      
+    // Compare the resulting watchlist with the expected outcome for each test case
     cout << "For input: Add " + string(inputs[i])+"\n";
     compareFiles("1_watchlist", string(inputsAdded[i]));
-
-    cout << "For input: Add " + string(inputs[i])+"\n";
     compareFiles("2_watchlist",  string(inputsAdded[i]));
-
-    cout << "For input: Add " + string(inputs[i])+"\n";
     compareFiles("3_watchlist",  string(inputsAdded[i]));
     }
 }
-// Check if the input is "Recommend", behave like Recommend
-    // Check output
+   
+    // Test case to verify that the "Recommend" command behaves as expected and produces the correct output
 TEST(AppRunTest, runCallsRecommendOutput) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n");
+    // Set up initial files: users and their respective watchlists
+    setFile("users", "1\n2\n3\n");
+    setFile("1_watchlist", "100\n101\n");
+    setFile("2_watchlist", "101\n102\n103\n104\n110\n111\n");
+    setFile("3_watchlist", "100\n101\n102\n103\n104\n");
 
-    createOrClearFile("1_watchlist"); 
-    insertToFile("1_watchlist", "100\n101\n");
-
-    createOrClearFile("2_watchlist"); 
-    insertToFile("2_watchlist", "101\n102\n103\n104\n110\n111\n");
-
-    createOrClearFile("3_watchlist"); 
-    insertToFile("3_watchlist", "100\n101\n102\n103\n104\n");
-
+    // Create a stringstream to capture the output of the App execution
     ostringstream capturedOutput;
-
+    // Capture the original cout buffer to restore it later
     streambuf* originalCoutBuffer = cout.rdbuf(capturedOutput.rdbuf());
 
     App app(commands);
 
+    // Array of simulated inputs for the "Recommend" command, specifying the user and the movie ID
     const char* inputs[] = {"1 101", "2 104", "1 100"};
-
+    // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
-    // יצירת קלט מדומה
+    // Simulate user input for the "Recommend" command
     istringstream simulatedInput("Recommend " + string(inputs[i]) + "\n");
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
-    // קריאה לפונקציה שלך
     app.run();
 
     // Restore original cout buffer
     cout.rdbuf(originalCoutBuffer);
 
+    // Create a new instance of Recommend and execute the same command to compare outputs
     streambuf* secondCinBuffer = cin.rdbuf();
-
     Recommend recommend;
     recommend.execute(string(inputs[i]));
 
-    // Redirect cout to a stringstream to capture output
+    // Redirect cout to a stringstream to another capture output
     ostringstream capturedOutputFromReco;
     streambuf* secondCoutBuffer = cout.rdbuf(capturedOutputFromReco.rdbuf());
 
+    // Restore cin buffer and execute the Recommend command
     cin.rdbuf(secondCinBuffer);
-        
-    // Restore original cout buffer
     cout.rdbuf(secondCoutBuffer);
 
-    // compearing outputs
+    // Compare the captured outputs: the one from App's run() method and the one from Recommend's execute()
     EXPECT_EQ(capturedOutput.str(), capturedOutputFromReco.str());
     }   
 }
-    // Check files
+    // Test case to verify that the "Recommend" command modifies the watchlists as expected
 TEST(AppRunTest, runCallsRecommendFiles) {
-    createOrClearFile("users");
-    insertToFile("users", "1\n2\n3\n");
+    // Set up initial files: users and their respective watchlists
+    setFile("users", "1\n2\n3\n");
+    setFile("1_watchlist", "100\n101\n102\n103\n"); // User 1's watchlist
+    setFile("2_watchlist", "101\n102\n107\n108\n"); // User 2's watchlist
+    setFile("3_watchlist", "101\n106\n109\n110\n"); // User 3's watchlist
     
-    createOrClearFile("1_watchlist"); //watchListBeforeAdd
-    insertToFile("1_watchlist", "100\n101\n102\n103\n");
+    // Create duplicates of the watchlists before modifications (used for comparison later)
+    duplicateFile("1_watchlist", "1_watchListAfterAdd");
+    duplicateFile("2_watchlist", "2_watchListAfterAdd");
+    duplicateFile("3_watchlist", "3_watchListAfterAdd");
 
-    createOrClearFile("2_watchlist"); //watchListBeforeAdd
-    insertToFile("2_watchlist", "101\n102\n107\n108\n");
-
-    createOrClearFile("3_watchlist"); //watchListBeforeAdd
-    insertToFile("3_watchlist", "101\n106\n109\n110\n");
-    
+    // Capture the original cin buffer to restore it later
     streambuf* originalCinBuffer = cin.rdbuf();
 
+    // Array of simulated inputs
     const char* inputs[] = {"1 100", "2 102", "3 109"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
+    // Simulate user input for the "Recommend" command (e.g., "Recommend 1 100")
     istringstream simulatedInput("Recommend " + string(inputs[i]) + "\n");
     cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
 
     App app(commands);    
-    // Execute the function
+    // Execute the function with the current input
     app.run();
 
+    // Restore the original cin buffer after running the command
     cin.rdbuf(originalCinBuffer);
 
-    //compare      
-    createOrClearFile("1_watchListAfterAdd");
-    insertToFile("1_watchListAfterAdd", "100\n101\n102\n103\n");
-
+    // Compare the updated watchlists with the expected outputs after the "Recommend" command
     cout << "For input: 1 " + string(inputs[i])+"\n";
     compareFiles("1_watchlist", "1_watchListAfterAdd");
-
-    createOrClearFile("2_watchListAfterAdd");
-    insertToFile("2_watchListAfterAdd", "101\n102\n107\n108\n");
-
-    cout << "For input: 1 " + string(inputs[i])+"\n";
     compareFiles("2_watchlist", "2_watchListAfterAdd");
-
-    createOrClearFile("3_watchListAfterAdd");
-    insertToFile("3_watchListAfterAdd", "101\n106\n109\n110\n");
-
-    cout << "For input: 1 " + string(inputs[i])+"\n";
     compareFiles("3_watchlist", "3_watchListAfterAdd");
     }
 }
-
-/*int main(int argc, char **argv) {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}*/
