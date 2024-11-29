@@ -2,7 +2,10 @@
 #include "string"
 #include "ICommand.h"
 #include <iostream>
-void Add::execute() {
+#include <string>
+using namespace std;
+void Add::execute(string input) {
+    cout << input << endl;
 }
 
 

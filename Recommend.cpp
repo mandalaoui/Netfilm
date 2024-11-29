@@ -2,5 +2,8 @@
 #include "string"
 #include "ICommand.h"
 #include <iostream>
-void Recommend::execute() {
+#include <string>
+using namespace std;
+void Recommend::execute(string input) {
+        cout << input << endl;
 }

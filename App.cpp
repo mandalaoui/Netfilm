@@ -16,7 +16,7 @@ void App::run() {
         task = userInput.substr(0, space);
         try {
             if (commands.find(task) != commands.end()) {
-                commands[task]->execute();
+                commands[task]->execute(userInput);
             }
         }
         catch(...) {
