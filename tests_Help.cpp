@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 #include "Help.h"
 #include <sstream> 
+#include "funcForTests.h"
+
+
 // <sstream> Provides a memory buffer for reading/writing text, for capturing std::cout output in tests.
 using namespace std;
 
@@ -32,7 +35,7 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     // Passes if they match, fails and shows differences if not.
 }
 
-int main(int argc, char **argv) {
+/*int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-}
+}*/

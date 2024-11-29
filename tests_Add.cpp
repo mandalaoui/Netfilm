@@ -2,10 +2,11 @@
 #include "Add.h"
 #include <iostream>
 #include <fstream>
+#include "funcForTests.h"
 
 using namespace std;
 
-//tests_Add::tests_Add();
+/*tests_Add::tests_Add();
 bool searchInFile(const string& value, const string& fileName)
 {
     ifstream file(fileName);
@@ -75,7 +76,7 @@ void compareFiles(const string& file1, const string& file2) {
     }
     cout << "All done\n";
 }
-
+*/
 TEST(AddExecuteTest, UserIdNotFoundCreateNew) {
     createOrClearFile("users"); //usersBeforeAdd
     insertToFile("users","12\n15\n20\n19\n");
@@ -186,7 +187,7 @@ TEST(AddExecuteTest, invalidInputs) {
     }
 }
 
-int main(int argc, char **argv) {
+/*int main(int argc, char **argv) {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-}
+}*/

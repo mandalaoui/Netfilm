@@ -1,10 +1,10 @@
-#ifndef HELP_H
-#define HELP_H
+#ifndef RECOMMEND_H
+#define RECOMMEND_H
 #include "ICommand.h"
 #include <iostream>
-class Help : public ICommand {
+class Recommend : public ICommand {
     public:
-        void execute() override {
+        void execute(std::string word) override {
             std::cout << "You entered1: " << std::endl;
         }
         //void execute() override;
