@@ -3,7 +3,6 @@
 #include "ICommand.h"
 #include <iostream>
 #include <string>
-#include <algorithm>
 #include <sstream>
 #include <fstream>
 #include <cctype>

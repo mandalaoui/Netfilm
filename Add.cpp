@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
-#include <string>
 #include <cctype>
 using namespace std;
 
@@ -86,7 +85,7 @@ void Add::checkUserList(string user, string movies) {
 // Function that add a movie to a user's watchlist.
 void Add::addMoviesToUser(string user, string movies) {
     // Open the user's watchlist file in append mode
-    std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
+    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
     if (!user_watchlist) {
         std::cerr << "opening faild" << std::endl;
         return;
