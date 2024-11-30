@@ -19,16 +19,15 @@ void Help::execute(string input) {
 
 // This function checks if the input string is invalid.
 bool Help::isInvalid(string input) {
-    istringstream stream(input);
+    stringstream stream(input);
     string word;
-    int count = 0;
+    int count = 0;  
 
     // Loop through the input string and count the words.
     while (stream >> word)
     {
         count++;
     }
-    
     // If there is only one word in the input, we consider it invalid.
     if (count == 1) {
         return true;

@@ -10,17 +10,17 @@ using namespace std;
 
 // Global map linking command names to their respective ICommand objects
 map<std::string, ICommand*> commands = {
-    {"Help", new Help()},
-    {"Recommend", new Recommend()},
-    {"Add", new Add()}
+    {"help", new Help()},
+    {"recommend", new Recommend()},
+    {"add", new Add()}
 };
 // Test for class "App"
     // Test case to verify that no output is produced for invalid inputs
 TEST(AppRunTest, NoOutputForInvalidInput) {
-    const char* InvalidInput[] = {"Help 12", "hep", "helpp", "he lp", "Help1"
-                                    "Add 12", "Addd", "Add 15 a", "Add1 12 12"
-                                    "Reccome 15 15", "recommend 10 10", "Recommend22"
-                                    "hi, Help", "1Add 15 15", "-Recommend 10 10"};
+    const char* InvalidInput[] = {"help 12", "hep", "helpp", "he lp", "help1"
+                                    "add 12", "addd", "add 15 a", "add1 12 12"
+                                    "reccome 15 15", "recommend 10 10", "recommend22"
+                                    "hi, help", "1add 15 15", "-recommend 10 10"};
     
     // Loop through each input and test it
     for (int i = 0; i < sizeof(InvalidInput) / sizeof(InvalidInput[0]); ++i) {
@@ -29,7 +29,7 @@ TEST(AppRunTest, NoOutputForInvalidInput) {
 
     // Simulate input by redirecting cin to read from a stringstream
     istringstream simulatedInput(string(InvalidInput[i]));
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    cin.rdbuf(simulatedInput.rdbuf());
 
     App app(commands);
     // Redirect cout to a stringstream to capture output
@@ -52,10 +52,10 @@ TEST(AppRunTest, NoOutputForInvalidInput) {
     // Test case to ensure files haven't changed for invalid input
 TEST(AppRunTest, NoChangeForInvalidInput) {
     // Array of invalid inputs to test
-    const char* InvalidInput[] = {"Help 12", "hep", "helpp", "he lp"
-                                    "Add 12", "Addd", "Add 15 a"
-                                    "Reccome 15 15", "recommend 10 10", "Recommend22"
-                                    "hi, Help", "1Add 15 15", "-Recommend 10 10"};
+    const char* InvalidInput[] = {"help 12", "hep", "helpp", "he lp"
+                                    "add 12", "addd", "add 15 a"
+                                    "reccome 15 15", "recommend 10 10", "recommend22"
+                                    "hi, help", "1add 15 15", "-recommend 10 10"};
     // Initialize the "users" file with a set of test users    
     setFile("users", "1\n2\n3\n");
     // Initialize watchlists for users    
@@ -74,7 +74,7 @@ TEST(AppRunTest, NoChangeForInvalidInput) {
     
     // Simulate input by redirecting cin to a stringstream with the current invalid input
     istringstream simulatedInput(string(InvalidInput[i]));
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    cin.rdbuf(simulatedInput.rdbuf());
 
     // Create an instance of the App class with the predefined commands map
     App app(commands);    
@@ -104,8 +104,8 @@ TEST(AppRunTest, runCallsHelpOutput) {
     // Loop through each input to simulate user behavior
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
     // Create a stringstream to simulate user input
-    istringstream simulatedInput("Help" + string(inputs[i]));
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("help" + string(inputs[i]));
+    cin.rdbuf(simulatedInput.rdbuf());
 
     App app(commands);
     // Redirect cout to a stringstream to capture output
@@ -124,7 +124,7 @@ TEST(AppRunTest, runCallsHelpOutput) {
 
     // Create a Help object to call its execute function directly
     Help help;
-    help.execute();
+    help.execute("help");
 
     // Redirect cout to a stringstream to capture output
     ostringstream capturedOutputFromHelp;
@@ -156,8 +156,8 @@ TEST(AppRunTest, runCallsHelpFiles) {
     streambuf* originalCinBuffer = cin.rdbuf();
     
     // Simulate the user input for the "Help" command
-    istringstream simulatedInput("Help");
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("help");
+    cin.rdbuf(simulatedInput.rdbuf());
 
     App app(commands);    
     // Execute the function (which processes the "Help" command)
@@ -166,7 +166,7 @@ TEST(AppRunTest, runCallsHelpFiles) {
     cin.rdbuf(originalCinBuffer);
 
     // Compare the current state of the watchlists with their backups to ensure no changes
-    cout << "For input: Help\n";
+    cout << "For input: help\n";
     compareFiles("1_watchlist", "1_watchListAfterAdd");
     compareFiles("2_watchlist", "2_watchListAfterAdd");
     compareFiles("3_watchlist", "3_watchListAfterAdd");
@@ -192,8 +192,8 @@ TEST(AppRunTest, runCallsAddOutput) {
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
     // Simulate user input for the "Add" command
-    istringstream simulatedInput("Add " + string(inputs[i]) + "\n");
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("add " + string(inputs[i]) + "\n");
+    cin.rdbuf(simulatedInput.rdbuf());
 
     // Execute the App's run method to process the simulated input
     app.run();
@@ -223,8 +223,8 @@ TEST(AppRunTest, runCallsAddFiles) {
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
     // Simulate the user input for the "Add" command
-    istringstream simulatedInput("Add " + string(inputs[i]) + "\n");
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("add " + string(inputs[i]) + "\n");
+    cin.rdbuf(simulatedInput.rdbuf());
 
     App app(commands);    
     // Execute the function with the current input
@@ -233,7 +233,7 @@ TEST(AppRunTest, runCallsAddFiles) {
     cin.rdbuf(originalCinBuffer);
 
     // Compare the resulting watchlist with the expected outcome for each test case
-    cout << "For input: Add " + string(inputs[i])+"\n";
+    cout << "For input: add " + string(inputs[i])+"\n";
     compareFiles("1_watchlist", string(inputsAdded[i]));
     compareFiles("2_watchlist",  string(inputsAdded[i]));
     compareFiles("3_watchlist",  string(inputsAdded[i]));
@@ -261,8 +261,8 @@ TEST(AppRunTest, runCallsRecommendOutput) {
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
     // Simulate user input for the "Recommend" command
-    istringstream simulatedInput("Recommend " + string(inputs[i]) + "\n");
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("recommend " + string(inputs[i]) + "\n");
+    cin.rdbuf(simulatedInput.rdbuf());
 
     app.run();
 
@@ -308,8 +308,8 @@ TEST(AppRunTest, runCallsRecommendFiles) {
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
 
     // Simulate user input for the "Recommend" command (e.g., "Recommend 1 100")
-    istringstream simulatedInput("Recommend " + string(inputs[i]) + "\n");
-    cin.rdbuf(simulatedInput.rdbuf()); // שינוי ה-buffer של cin
+    istringstream simulatedInput("recommend " + string(inputs[i]) + "\n");
+    cin.rdbuf(simulatedInput.rdbuf());
 
     App app(commands);    
     // Execute the function with the current input
@@ -319,7 +319,7 @@ TEST(AppRunTest, runCallsRecommendFiles) {
     cin.rdbuf(originalCinBuffer);
 
     // Compare the updated watchlists with the expected outputs after the "Recommend" command
-    cout << "For input: 1 " + string(inputs[i])+"\n";
+    cout << "For input: recommend " + string(inputs[i])+"\n";
     compareFiles("1_watchlist", "1_watchListAfterAdd");
     compareFiles("2_watchlist", "2_watchListAfterAdd");
     compareFiles("3_watchlist", "3_watchListAfterAdd");

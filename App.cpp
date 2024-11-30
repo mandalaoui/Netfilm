@@ -10,6 +10,7 @@ App::App(std::map<std::string, ICommand*> commands) : commands(commands) {}
 void App::run() {
     string task;
     string userInput;
+    string inputForTask;
     
     // Infinite loop to keep running the application.
     while(true) {
@@ -17,10 +18,12 @@ void App::run() {
         getline(cin, userInput);
         size_t space = userInput.find(' ');
         task = userInput.substr(0, space);
+        inputForTask = userInput.substr(space + 1);
+
         try {
             // Check if the command exists in the map of commands, if exists and execute the command by calling its execute method.
             if (commands.find(task) != commands.end()) {
-                commands[task]->execute(userInput);
+                commands[task]->execute(inputForTask);
             }
         }
         // Catch any exceptions thrown during execution and continue the loop.

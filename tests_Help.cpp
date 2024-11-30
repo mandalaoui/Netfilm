@@ -17,7 +17,7 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     streambuf* oldCoutBuffer = cout.rdbuf(buffer.rdbuf());
 
     // Run the execute function
-    help.execute();
+    help.execute("help");
 
     // Restoring std::cout to its original buffer to revert to normal console output after redirection
     cout.rdbuf(oldCoutBuffer);
