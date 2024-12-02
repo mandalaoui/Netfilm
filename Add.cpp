@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <cctype>
+#include <set>
 using namespace std;
 
 // Function that performs the action of adding user and movies to a user.
@@ -55,12 +56,20 @@ void Add::addUser(string user, string movies) {
     // Write the username to the file and close the file.
     users_file << user << endl;
     users_file.close();
+    // Open the user watchlist file to the new user.
+    std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
+    if (!user_watchlist.is_open()) {
+        std::cerr << "opening faild" << std::endl;
+        return;
+    }
+    // close the user watchlist file.
+    user_watchlist.close();
     // Convert the movies string into individual words (movies), iterate through each word (movie) and
     // add each movie to the user's watchlist.
     stringstream ss(movies);
     string word;
     while (ss >> word) {
-        addMoviesToUser(user, word);
+        checkUserList(user, word);
     }
 }
 
@@ -68,19 +77,25 @@ void Add::addUser(string user, string movies) {
 void Add::checkUserList(string user, string movies) {
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
-     if (!user_watchlist.is_open()) {
+    if (!user_watchlist.is_open()) {
         cerr << "opening faild" << endl;
         return;
     }
-    // Convert the movie string into individual words (movies), iterate through each word (movie) and
-    // check if the user had already each movie, add accordingly each movie to the user's watchlist.
+    //create set that include all the movies the users ask to add.
+    set<string> existingMovies;
     stringstream ss(movies);
     string word;
     while (ss >> word) {
+  
         // Check if the movie is not already in the user's list.
         if(!isInFile(word, user_watchlist)) {
-            // If the movie is not in the list, add it.
-            addMoviesToUser(user, word);
+            // Check if the movie is not already in the set.
+            if (existingMovies.find(word) == existingMovies.end()) {
+                // If the movie is not in the list, add it.
+                addMoviesToUser(user, word);
+                // Add the movie to the set to prevent further duplicates
+                existingMovies.insert(word);
+            }
         }
     }
     user_watchlist.close();
@@ -96,7 +111,7 @@ void Add::addMoviesToUser(string user, string movies) {
     }
     // Write the movie to the file and close the file.
     user_watchlist << movies << endl;
-    user_watchlist.close();
+    //]user_watchlist.close();
 }   
 
 
