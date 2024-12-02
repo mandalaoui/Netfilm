@@ -16,8 +16,13 @@ void Add::execute(string input) {
     // Open the users file for reading.
     ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!users_file.is_open()) {
-        cout << "opening faild" << endl;
-        return;
+        // Try to create the file "users.txt" if it doesn't exist.
+        ofstream create_file("/usr/src/mytest/data/users.txt");
+        // If the file creation fails, display an error message.
+        if (!create_file.is_open()) {
+            cout << "Failed to create users.txt" << endl;
+            return;
+        }
     }
     // Split the input into two parts: username and movies.
     size_t spacePos = input.find(' ');
@@ -26,7 +31,7 @@ void Add::execute(string input) {
     if (spacePos != string::npos) {
         user = input.substr(0, spacePos); 
         movies = input.substr(spacePos + 1); 
-    }
+    }   
     // Check if the user exists in the file, if exist check if the movies are already in the user's list.
     if (isInFile(user, users_file)) {
         checkUserList(user, movies);
@@ -44,7 +49,7 @@ void Add::execute(string input) {
 void Add::addUser(string user, string movies) {
     // Open the users file in append mode to add the new user.
     ofstream users_file("/usr/src/mytest/data/users.txt", std::ios::app); 
-    if (!users_file) {
+    if (!users_file.is_open()) {
         cerr << "opening faild" << endl;
         return;
     }
@@ -64,7 +69,7 @@ void Add::addUser(string user, string movies) {
 void Add::checkUserList(string user, string movies) {
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
-     if (!user_watchlist) {
+     if (!user_watchlist.is_open()) {
         cerr << "opening faild" << endl;
         return;
     }
@@ -74,7 +79,7 @@ void Add::checkUserList(string user, string movies) {
     string word;
     while (ss >> word) {
         // Check if the movie is not already in the user's list.
-        if(!isInFile(word, user_watchlist)){
+        if(!isInFile(word, user_watchlist)) {
             // If the movie is not in the list, add it.
             addMoviesToUser(user, word);
         }
@@ -85,8 +90,8 @@ void Add::checkUserList(string user, string movies) {
 // Function that add a movie to a user's watchlist.
 void Add::addMoviesToUser(string user, string movies) {
     // Open the user's watchlist file in append mode
-    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
-    if (!user_watchlist) {
+    std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
+    if (!user_watchlist.is_open()) {
         std::cerr << "opening faild" << std::endl;
         return;
     }
@@ -104,7 +109,7 @@ bool Add::isInFile(string str, ifstream& file) {
     string word;
     // Read the file line by line to check for the specified string.
     while (getline(file, word)) {
-        if (word == str){
+        if (word == str) {
             // The string is found in the file.
             return true;
         }
@@ -116,7 +121,7 @@ bool Add::isInFile(string str, ifstream& file) {
 // Function to validate the input string.
 bool Add::isInvalid(string input) {
     // If the input is less than 3 characters long, it's invalid.
-    if (input.size() < 3) {
+    if (input.size() < 2) {
         return false;
     }
     // Convert the input string into a stringstream.
