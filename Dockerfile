@@ -9,6 +9,8 @@ WORKDIR /usr/src/mytest
 RUN mkdir build
 WORKDIR /usr/src/mytest/build
 
+VOLUME ["/usr/src/mytest/data"]
+
 RUN cmake --version
 
 RUN cmake .. && make
