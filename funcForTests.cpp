@@ -36,24 +36,55 @@ void duplicateFile(const string& sourceFile, const string& newFileName) {
 }
 
 // Function to compare the content of two files line by line
-void compareFiles(const string& file1, const string& file2) {
+bool compareFiles(const string& file1, const string& file2) {
     ifstream f1(file1), f2(file2); // Open both files for reading
-    if (!f1 || !f2) { // Check if either file failed to open
+    if (!f1) { // Check if either file failed to open
+            if (!f2) {
+                return true;
+            }
         std::cerr << "Failed to open one of the files!" << std::endl;
-        return;
+        return false;
     }
-    cout << "Comparing files:\n"; // Log the comparison process
+    if (!f2) { // Check if either file failed to open
+        std::cerr << "Failed to open one of the files!" << std::endl;
+        return false;
+    }
+    cout << "Comparing files: " << file1 << " & " << file2 << "\n"; // Log the comparison process
     string line1, line2;
     int lineNumber = 0; // Line counter
     // Read lines from both files
+    int isSame = 1; // the same
     while (++lineNumber, std::getline(f1, line1) || std::getline(f2, line2)) {
-        if (line1 != line2) { // Compare the lines
-            cout << "Difference at line " << lineNumber << ":\n"
-                      << "File 1: " << line1 << "\n"
-                      << "File 2: " << line2 << "\n";
+        if (line1 != line2) { 
+            isSame = 0; // not the same
         }
     }
-    cout << "All done\n";
+    if (isSame == 0) {
+        cout << "Files are not identical!" << endl;
+        cout << file1 << ": \n";
+        printFileContents(file1);
+        cout << file2 << ": \n";
+        printFileContents(file2);
+        return false; // Signal failure
+    }
+    cout << "Files are identical\n";
+    return true; // Signal success
+
+}
+
+void printFileContents(const std::string& filename) {
+    std::ifstream file(filename); // Open the file for reading
+    if (!file) { // Check if the file opened successfully
+        std::cerr << "Error: Could not open file \"" << filename << "\"!" << std::endl;
+        return;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) { // Read the file line by line
+        std::cout << line << std::endl; // Print each line to the console
+    }
+
+    file.close(); // Close the file
 }
 
 // Function to reset a file with new content

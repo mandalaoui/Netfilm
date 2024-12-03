@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 
-//include "tests_App.cpp"
 #include "tests_Help.cpp"
 #include "tests_Recommend.cpp"
 #include "tests_Add.cpp"

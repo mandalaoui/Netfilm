@@ -20,8 +20,7 @@ TEST(AddExecuteTest, UserIdNotFoundCreateNew) {
         // Create a file to store the result as after adding the user
         setFile("usersAfterAdd", "12\n15\n20\n19\n"+string(inputs[i])+"\n");
         // Compare the "before" and "after" files to validate the change
-        cout << "For input: "+string(inputs[i]) +" 35 20"+"\n";
-        compareFiles("usersBeforeAdd", "usersAfterAdd");
+        ASSERT_TRUE(compareFiles("users", "usersAfterAdd")) << "Comparison for " << string(inputs[i]) << " failed!";
     }
 }
     // Test for adding a new movie for existing user
@@ -40,8 +39,7 @@ TEST(AddExecuteTest, UserIdFoundAddingMovie) {
         // Create a file to store the result as after adding the movie
         setFile("watchListAfterAdd", "100\n101\n102\n103\n"+string(inputs[i])+"\n");
         // Compare the "before" and "after" files to validate the change
-        cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("1_watchlist", "watchListAfterAdd");
+        ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd")) << "Comparison for " << (inputs[i]) << " failed!";
     }
 }
     // Test for not adding a movie that already exist
@@ -60,8 +58,7 @@ TEST(AddExecuteTest, UserIdFoundMovieExists) {
         // Create a file to store the previous watchlist
         setFile("watchListAfterAdd", "100\n101\n102\n103\n");
         // Compare the "before" and "after" files to validate there are no changes
-        cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("1_watchlist", "watchListAfterAdd");
+        ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd"));
     }
 }
     // Test for not adding a movie that was repeated
@@ -80,8 +77,7 @@ TEST(AddExecuteTest, UserIdFoundMovieRepeats) {
         // Create a file to store the the result as after adding the correct movies
         setFile("watchListAfterAdd", "100\n101\n102\n103\n\105\n"+string(inputs[i])+"\n");
         // Compare the "correct" and "tested" files to validate the difference
-        cout << "For input: 1 150" + string(inputs[i])+" "+ string(inputs[i]);
-        compareFiles("1_watchlist", "watchListAfterAdd");
+        ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd")) << "Comparison for repeat " << string(inputs[i]) << " failed!";
     }
 }
     // Test for valid input some spaces - suppose to work normally
@@ -97,7 +93,7 @@ TEST(AddExecuteTest, ValidInputWithSpaces) {
     add.execute("1 150 160 1600");
     add.execute("2 150   160   1600"); //duplicate
     // Compare the files to validate the changes
-    compareFiles("1_watchlist", "2_watchlist");
+    ASSERT_TRUE(compareFiles("1_watchlist", "2_watchlist")) << "Comparison for spaces failed!";
 }
     // Test for invalid inputs - won't change anything
 TEST(AddExecuteTest, invalidInputs) {
@@ -115,7 +111,6 @@ TEST(AddExecuteTest, invalidInputs) {
         // Execute the function with each input from the array - not suppose to add anything
         add.execute(string(invalidInputs[i]));
         // Compare the "before" and "after" files to validate there are no changes
-        cout << "For input: " + string(invalidInputs[i]);
-        compareFiles("1_watchlist", "2_watchlist");
+        ASSERT_TRUE(compareFiles("1_watchlist", "2_watchlist")) << "Comparison for " << invalidInputs[i] << " failed!";
     }
 }

@@ -27,7 +27,7 @@ TEST(RecommendExecuteTest, UserIdNotFound) {
         cout.rdbuf(originalCoutBuffer);
         
         // Verify that no output was printed
-        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i];
+        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i] << endl;
     }
 }
     // Test case for a non-existent movie.
@@ -53,7 +53,7 @@ TEST(RecommendExecuteTest, MovieIdNotFound) {
         cout.rdbuf(originalCoutBuffer);
         
         // Verify that no output was printed
-        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i];
+        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << inputs[i] << endl;
     }
 }
     // Test case to verify that the Execute function returns the correct movie recommendation.
@@ -139,18 +139,15 @@ TEST(RecommendExecuteTest, ExecuteDoesntChangeFiles) {
         
         // Verify that user 1's watchlist remains unchanged after the recommendation
         setFile("1_watchListAfterReco", "100\n101\n102\n103\n");
-        cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("1_watchlist", "1_watchListAfterReco");
+        ASSERT_TRUE(compareFiles("1_watchlist", "1_watchListAfterReco")) << "Comparison for users1 failed!";
 
         // Verify that user 2's watchlist remains unchanged after the recommendation
         setFile("2_watchListAfterReco", "100\n101\n102\n103\n");
-        cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("2_watchlist", "2_watchListAfterReco");
+        ASSERT_TRUE(compareFiles("2_watchlist", "2_watchListAfterReco")) << "Comparison for users2 failed!";
 
         // Verify that user 3's watchlist remains unchanged after the recommendation
         setFile("3_watchListAfterReco", "100\n101\n102\n103\n");
-        cout << "For input: 1 " + string(inputs[i])+"\n";
-        compareFiles("3_watchlist", "3_watchListAfterReco");
+        ASSERT_TRUE(compareFiles("3_watchlist", "3_watchListAfterReco")) << "Comparison for users3 failed!";
     }
 }
     // Test case to verify that the function handles valid input with extra spaces correctly
@@ -203,11 +200,9 @@ TEST(RecommendExecuteTest, invalidInputs) {
         // Restore original cout buffer
         cout.rdbuf(originalCoutBuffer);
 
-        // Print current test case information
-        cout << "Testing invalid input: " + string(invalidInputs[i]) + "\n";
         // Verify that the watchlist remains unchanged
-        compareFiles("1_watchlist", "2_watchlist");
+        ASSERT_TRUE(compareFiles("1_watchlist", "2_watchlist")) << "Comparison for " << invalidInputs[i] << " failed!";
         // Verify that no output was printed
-        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << invalidInputs[i];
+        EXPECT_EQ(capturedOutput.str(), "") << "Unexpected output for input: " << invalidInputs[i] << endl;
     }
 }
