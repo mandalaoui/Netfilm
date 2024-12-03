@@ -10,12 +10,12 @@ Recommend::Recommend() {}
 
 // Finds all relevant users who have the specified movie in their watchlist
 // and are not the user who initiated the recommendation process.
-void Recommend::releventUsers() {
+vector<unsigned long> Recommend::releventUsers() {
+    vector<unsigned long> relevent_users;
     // Open the file containing all users' IDs
     ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!users_file.is_open()) {
-    cout << "opening faild1" << endl;
-    return;
+    return relevent_users;
     }
 
     string next_user;
@@ -24,8 +24,7 @@ void Recommend::releventUsers() {
         // Open the watchlist file for the current user
         ifstream next_user_watchlist("/usr/src/mytest/data/" + next_user + "_watchlist.txt");
         if (!users_file.is_open()) {
-            cout << "opening faild2" << endl;
-            return;
+            return relevent_users;
         }
 
         // Check if the movie is in the user's watchlist and the user is not the same as the one calling the recommendation
@@ -37,13 +36,14 @@ void Recommend::releventUsers() {
         next_user_watchlist.close();
     }
     // Close the users file
-    users_file.close();    
+    users_file.close();
+
+    return relevent_users;    
 }
 
 // Checks whether a specific string exists in the given file.
 bool Recommend::isInFile(string str, ifstream& file) {
     if (!file.is_open()) {
-        cout << "Error: File not open!" << endl;
         return false;
     }
     // Reset any error flags that may have occurred during file operations
@@ -64,7 +64,8 @@ bool Recommend::isInFile(string str, ifstream& file) {
 }
 
 // Calculates the weight of relevance for each relevant user by comparing their watchlists with the calling user's watchlist.
-void Recommend::weightsOfRelevent() {
+vector<int> Recommend::weightsOfRelevent(vector<unsigned long>& relevent_users) {
+    vector<int> weights_relevent_users;
     // Calculate weights for each relevant user by comparing their watchlists
     for (int user : relevent_users) {
         // Compute the weight for the user
@@ -72,6 +73,7 @@ void Recommend::weightsOfRelevent() {
         // Store the computed weight
         weights_relevent_users.push_back(weight);
     }
+    return weights_relevent_users;
 }
 
 // Compares the watchlists of two users and calculates a weight based on the number of matching movies.
@@ -84,8 +86,7 @@ int Recommend::calculateWeight(string user_tocal) {
     ifstream my_user_movies("/usr/src/mytest/data/" + my_user + "_watchlist.txt");
     ifstream user_tocal_movies("/usr/src/mytest/data/" + user_tocal + "_watchlist.txt");
     if (!my_user_movies.is_open() || !user_tocal_movies.is_open()) {
-        cout << "opening faild3" << endl;
-        return 1;
+        return -1;
     }
 
     // Compare each movie in the calling user's watchlist with the current user's watchlist
@@ -104,7 +105,9 @@ int Recommend::calculateWeight(string user_tocal) {
 }
 
 // Creates a map of movies recommended by relevant users, weighted by relevance scores.
-void Recommend::makeMap() {
+map<unsigned long, int> Recommend::makeMap(vector<unsigned long>& relevent_users, vector<int>& weights_relevent_users) {
+    map<unsigned long, int> movies_weights;
+
     // Open the calling user's watchlist file
     ifstream my_user_movies("/usr/src/mytest/data/" + my_user + "_watchlist.txt");
     
@@ -125,13 +128,15 @@ void Recommend::makeMap() {
     }
     // Close the calling user's watchlist file
     my_user_movies.close();
+
+    return movies_weights;
 }
 
 // Validates the user input, ensuring it contains exactly two numeric values (user ID and movie ID).
 bool Recommend::isInvalid(string input) {
     // Input must be at least 3 characters long
     if (input.size() < 3) {
-        return false;
+        return true;
     }
 
     int pos = 0;
@@ -148,7 +153,7 @@ bool Recommend::isInvalid(string input) {
         pos = nextPos + 1;
     } else {
         // Return false if there is no second word
-        return false;
+        return true;
     }
 
     // Skip spaces before the second word
@@ -169,7 +174,7 @@ bool Recommend::isInvalid(string input) {
     while (pos < input.size() && input[pos] == ' ') pos++;
     if (pos < input.size()) {
         // If there are extra characters, the input is invalid.
-        return false;
+        return true;
     }
 
     // Try to convert both user ID and movie ID to integers.
@@ -178,18 +183,27 @@ bool Recommend::isInvalid(string input) {
         unsigned long num2 = stoul(my_movie);
     } catch (const invalid_argument& e) {
         // If conversion fails, the input is invalid.
-        return false;
+        return true;
     } catch (const out_of_range& e) {
         // If the numbers are too large, the input is invalid.
-        return false;
+        return true;
+    }
+
+    // Check if the user exists in the system
+    ifstream users_file("/usr/src/mytest/data/users.txt");
+    if (!users_file.is_open()) {
+    return true;
+    }
+    if (!isInFile(my_user, users_file)) {
+        return true;
     }
     
     // If all checks pass, the input is valid.
-    return true;
+    return false;
 }
 
 // Sorts movies by their weights in descending order.
-vector<unsigned long> Recommend::sortMovies() {
+vector<unsigned long> Recommend::sortMovies(map<unsigned long, int>& movies_weights) {
     // Convert the movies_weights map to a vector of pairs
     vector<pair<unsigned long, int>> map_vec(movies_weights.begin(), movies_weights.end());
     
@@ -215,23 +229,27 @@ vector<unsigned long> Recommend::sortMovies() {
 // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
 void Recommend::execute(string input) {
     // Validate the input
-    if (!isInvalid(input)) {
+    if (isInvalid(input)) {
         // Exit if the input is invalid
         return;
     }
 
     // Find relevant users
-    releventUsers();
+    vector<unsigned long> relevent_users = releventUsers();
     
     // Calculate weights for relevant users
-    weightsOfRelevent();
+    vector<int> weights_relevent_users = weightsOfRelevent(relevent_users);
 
     // Build the map of movies and their weights
-    makeMap();
+    map<unsigned long, int> movies_weights = makeMap(relevent_users, weights_relevent_users);
 
     // Sort movies and display the top 10 recommendations
-    vector<unsigned long> sortedMovies = sortMovies();
+    vector<unsigned long> sortedMovies = sortMovies(movies_weights);
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
         cout << sortedMovies[i] << " ";
+    }
+    // Add new line if needs to
+    if (sortedMovies.size() != 0) {
+        cout << endl;
     }
 }
