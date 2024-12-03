@@ -15,7 +15,6 @@ vector<unsigned long> Recommend::releventUsers() {
     // Open the file containing all users' IDs
     ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!users_file.is_open()) {
-    cout << "opening faild1" << endl;
     return relevent_users;
     }
 
@@ -25,7 +24,6 @@ vector<unsigned long> Recommend::releventUsers() {
         // Open the watchlist file for the current user
         ifstream next_user_watchlist("/usr/src/mytest/data/" + next_user + "_watchlist.txt");
         if (!users_file.is_open()) {
-            cout << "opening faild2" << endl;
             return relevent_users;
         }
 
@@ -46,7 +44,6 @@ vector<unsigned long> Recommend::releventUsers() {
 // Checks whether a specific string exists in the given file.
 bool Recommend::isInFile(string str, ifstream& file) {
     if (!file.is_open()) {
-        cout << "Error: File not open!" << endl;
         return false;
     }
     // Reset any error flags that may have occurred during file operations
@@ -89,7 +86,6 @@ int Recommend::calculateWeight(string user_tocal) {
     ifstream my_user_movies("/usr/src/mytest/data/" + my_user + "_watchlist.txt");
     ifstream user_tocal_movies("/usr/src/mytest/data/" + user_tocal + "_watchlist.txt");
     if (!my_user_movies.is_open() || !user_tocal_movies.is_open()) {
-        cout << "opening faild3" << endl;
         return -1;
     }
 
@@ -196,7 +192,6 @@ bool Recommend::isInvalid(string input) {
     // Check if the user exists in the system
     ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!users_file.is_open()) {
-    cout << "opening faild1" << endl;
     return true;
     }
     if (!isInFile(my_user, users_file)) {
@@ -253,6 +248,7 @@ void Recommend::execute(string input) {
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
         cout << sortedMovies[i] << " ";
     }
+    // Add new line if needs to
     if (sortedMovies.size() != 0) {
         cout << endl;
     }
