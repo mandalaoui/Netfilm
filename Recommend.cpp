@@ -1,8 +1,10 @@
 #include "Recommend.h"
-#include "string"
 #include "ICommand.h"
 #include <iostream>
-#include <string>
+#include <sstream>
+#include <fstream>
+
+
 using namespace std;
 
 // Constructor for the Recommend class
@@ -138,11 +140,9 @@ bool Recommend::isInvalid(string input) {
     if (input.size() < 3) {
         return true;
     }
-
     int pos = 0;
     // Skip leading spaces
     while (pos < input.size() && input[pos] == ' ') pos++;
-
     // Find the position of the first space after the first word (user ID).
     int nextPos = input.find(' ', pos);
     // Check if there is more then one word
@@ -182,9 +182,11 @@ bool Recommend::isInvalid(string input) {
         unsigned long num1 = stoul(my_user);
         unsigned long num2 = stoul(my_movie);
     } catch (const invalid_argument& e) {
+
         // If conversion fails, the input is invalid.
         return true;
     } catch (const out_of_range& e) {
+
         // If the numbers are too large, the input is invalid.
         return true;
     }
@@ -195,6 +197,7 @@ bool Recommend::isInvalid(string input) {
     return true;
     }
     if (!isInFile(my_user, users_file)) {
+
         return true;
     }
     
@@ -230,6 +233,7 @@ vector<unsigned long> Recommend::sortMovies(map<unsigned long, int>& movies_weig
 void Recommend::execute(string input) {
     // Validate the input
     if (isInvalid(input)) {
+
         // Exit if the input is invalid
         return;
     }

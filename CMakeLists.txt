@@ -16,4 +16,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(runProject tests_AllTests.cpp App.cpp Add.cpp Help.cpp Recommend.cpp funcForTests.cpp)
 
+#add_executable(runProject main.cpp App.cpp Add.cpp Help.cpp Recommend.cpp MapCommands.cpp)
+
 target_link_libraries(runProject gtest_main)

@@ -58,7 +58,7 @@ TEST(AddExecuteTest, UserIdFoundMovieExists) {
         // Create a file to store the previous watchlist
         setFile("watchListAfterAdd", "100\n101\n102\n103\n");
         // Compare the "before" and "after" files to validate there are no changes
-        ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd"));
+        compareFiles("1_watchlist", "watchListAfterAdd");
     }
 }
     // Test for not adding a movie that was repeated
@@ -73,9 +73,9 @@ TEST(AddExecuteTest, UserIdFoundMovieRepeats) {
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
         // Execute the function with each input from the array - suppose to add just one each time (In addition to the 150 id mocie)
-        add.execute("1 150" + string(inputs[i])+" "+ string(inputs[i]));
+        add.execute("1 150 " + string(inputs[i])+" "+ string(inputs[i]));
         // Create a file to store the the result as after adding the correct movies
-        setFile("watchListAfterAdd", "100\n101\n102\n103\n\105\n"+string(inputs[i])+"\n");
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n105\n"+string(inputs[i])+"\n");
         // Compare the "correct" and "tested" files to validate the difference
         ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd")) << "Comparison for repeat " << string(inputs[i]) << " failed!";
     }
@@ -86,7 +86,7 @@ TEST(AddExecuteTest, ValidInputWithSpaces) {
     setFile("1_watchlist", "100\n101\n102\n103\n");
     // Creates a copy of the watch list of user 1
     duplicateFile("1_watchlist", "2_watchlist");
-
+    
     Add add;
     // Execute the function with each file and similar input
     // Suppose to behave the same

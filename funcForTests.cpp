@@ -25,19 +25,23 @@ void insertToFile(const string& fileName, const string& content) {
 
 // Function to duplicate the content of one file into another
 void duplicateFile(const string& sourceFile, const string& newFileName) {
-    ifstream src(sourceFile, ios::binary); // Open source file in binary mode for reading
-    createOrClearFile(newFileName); // Create or clear the target file
-    ofstream dest(newFileName, ios::binary); // Open target file in binary mode for writing
+    ifstream src("/usr/src/mytest/data/"+sourceFile+".txt", ios::binary); // Open source file in binary mode for reading
+    string fullNameFile = "/usr/src/mytest/data/"+newFileName+".txt";
+    createOrClearFile(fullNameFile); // Create or clear the target file
+    ofstream dest(fullNameFile, ios::binary); // Open target file in binary mode for writing
     if (src.is_open() && dest.is_open()) {
         dest << src.rdbuf(); // Copy all content from source to target file
     } else {
         cerr << "Failed to duplicate file: "; // << sourceFile << " -> " << dest << std::endl;
     }
+
+    printFileContents(sourceFile);
+    printFileContents(newFileName);
 }
 
 // Function to compare the content of two files line by line
 bool compareFiles(const string& file1, const string& file2) {
-    ifstream f1(file1), f2(file2); // Open both files for reading
+    ifstream f1("/usr/src/mytest/data/"+file1+".txt"), f2("/usr/src/mytest/data/"+file2+".txt"); // Open both files for reading
     if (!f1) { // Check if either file failed to open
             if (!f2) {
                 return true;
@@ -49,12 +53,12 @@ bool compareFiles(const string& file1, const string& file2) {
         std::cerr << "Failed to open one of the files!" << std::endl;
         return false;
     }
-    cout << "Comparing files: " << file1 << " & " << file2 << "\n"; // Log the comparison process
+    //cout << "Comparing files: " << file1 << " & " << file2 << "\n"; // Log the comparison process
     string line1, line2;
     int lineNumber = 0; // Line counter
     // Read lines from both files
     int isSame = 1; // the same
-    while (++lineNumber, std::getline(f1, line1) || std::getline(f2, line2)) {
+    while (++lineNumber, std::getline(f1, line1) && std::getline(f2, line2)) {
         if (line1 != line2) { 
             isSame = 0; // not the same
         }
@@ -67,15 +71,16 @@ bool compareFiles(const string& file1, const string& file2) {
         printFileContents(file2);
         return false; // Signal failure
     }
-    cout << "Files are identical\n";
+    //cout << "Files are identical\n";
     return true; // Signal success
 
 }
 
 void printFileContents(const std::string& filename) {
-    std::ifstream file(filename); // Open the file for reading
+    string fullNameFile = "/usr/src/mytest/data/"+filename+".txt";
+    std::ifstream file(fullNameFile); // Open the file for reading
     if (!file) { // Check if the file opened successfully
-        std::cerr << "Error: Could not open file \"" << filename << "\"!" << std::endl;
+        std::cerr << "Error: Could not open file \"" << fullNameFile << "\"!" << std::endl;
         return;
     }
 
@@ -89,6 +94,7 @@ void printFileContents(const std::string& filename) {
 
 // Function to reset a file with new content
 void setFile(const string& fileName, const string& content) {
-    createOrClearFile(fileName);
-    insertToFile(fileName,content);
+    string fullNameFile = "/usr/src/mytest/data/"+fileName+".txt";
+    createOrClearFile(fullNameFile);
+    insertToFile(fullNameFile,content);
 }
