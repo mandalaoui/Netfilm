@@ -20,7 +20,6 @@ void Add::execute(string input) {
         ofstream create_file("/usr/src/mytest/data/users.txt");
         // If the file creation fails, display an error message.
         if (!create_file.is_open()) {
-            cout << "Failed to create users.txt" << endl;
             return;
         }
     }
@@ -50,7 +49,6 @@ void Add::addUser(string user, string movies) {
     // Open the users file in append mode to add the new user.
     ofstream users_file("/usr/src/mytest/data/users.txt", std::ios::app); 
     if (!users_file.is_open()) {
-        cerr << "opening faild" << endl;
         return;
     }
     // Write the username to the file and close the file.
@@ -59,7 +57,6 @@ void Add::addUser(string user, string movies) {
     // Open the user watchlist file to the new user.
     std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
-        std::cerr << "opening faild" << std::endl;
         return;
     }
     // close the user watchlist file.
@@ -78,7 +75,6 @@ void Add::checkUserList(string user, string movies) {
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
-        cerr << "opening faild" << endl;
         return;
     }
     //create set that include all the movies the users ask to add.
@@ -106,14 +102,12 @@ void Add::addMoviesToUser(string user, string movies) {
     // Open the user's watchlist file in append mode
     std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
     if (!user_watchlist.is_open()) {
-        std::cerr << "opening faild" << std::endl;
         return;
     }
     // Write the movie to the file and close the file.
     user_watchlist << movies << endl;
     //]user_watchlist.close();
 }   
-
 
 // Function to check if a string exists in a file
 bool Add::isInFile(string str, ifstream& file) {
@@ -166,6 +160,3 @@ bool Add::isInvalid(string input) {
     //The input is valid.
     return true;
 }
-
-
-

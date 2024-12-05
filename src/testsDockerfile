@@ -16,4 +16,4 @@ RUN cmake --version
 RUN cmake .. && make
 
 # Run tests
-CMD ["./runProject"]
+CMD ["./runTests"]

@@ -17,7 +17,6 @@ class Recommend : public ICommand {
     string my_movie;
 
     public:
-    Recommend(); // Constructor for the Recommend class
     vector<unsigned long> releventUsers(); // Finds all relevant users who have the specified movie in their watchlist
     bool isInFile(string str, ifstream& file); // Checks whether a specific string exists in the given file.
     vector<int> weightsOfRelevent(vector<unsigned long>& relevent_users); // Calculates the weight of relevance for each relevant user by comparing their watchlists with the calling user's watchlist.
