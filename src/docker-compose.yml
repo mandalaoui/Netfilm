@@ -1,0 +1,16 @@
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: testsDockerfile
+    stdin_open: true
+    tty: true
+  project:
+    volumes:
+      - ./data:/usr/src/mytest/data
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+ 
