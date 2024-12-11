@@ -46,7 +46,7 @@ TEST(AddExecuteTest, UserIdFoundMovieExists) {
     setFile("users", "1\n2\n3\n4");
     // Creates the watch list of user 1
     setFile("1_watchlist", "100\n101\n102\n103");
-    
+        
     Add add;
     const char* inputs[] = {"100", "101", "102", "103"};
     // Loop through each input and test it
