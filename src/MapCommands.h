@@ -7,7 +7,7 @@
 #include "ICommand.h"   
 #include "Add.h"
 #include "Help.h"
-#include "Recommend.h"
+#include "Get.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class MapCommands {
     public:
         // Dynamically allocate memory for each command object, initializing them to their respective concrete classes.
         ICommand* add = new Add();
-        ICommand* recommend = new Recommend();
+        ICommand* get = new Get();
         ICommand* help = new Help();
 
          // Method to initialize the commands map.

@@ -14,8 +14,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(runTests tests_AllTests.cpp App.cpp Add.cpp Help.cpp Recommend.cpp funcForTests.cpp)
+add_executable(runTests tests_AllTests.cpp App.cpp Add.cpp Help.cpp Get.cpp funcForTests.cpp Server.cpp Client.cpp)
 
-add_executable(runProject main.cpp App.cpp Add.cpp Help.cpp Recommend.cpp MapCommands.cpp)
+add_executable(runProject main.cpp App.cpp Add.cpp Help.cpp Get.cpp MapCommands.cpp Server.cpp Client.cpp)
 
 target_link_libraries(runTests gtest_main)

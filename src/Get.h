@@ -1,5 +1,5 @@
-#ifndef RECOMMEND_H
-#define RECOMMEND_H
+#ifndef GET_H
+#define GET_H
 
 #include <string>
 #include <fstream>
@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class Recommend : public ICommand {
+class Get : public ICommand {
     private:
     string my_user;
     string my_movie;

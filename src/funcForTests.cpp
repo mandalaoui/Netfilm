@@ -40,7 +40,7 @@ void duplicateFile(const string& sourceFile, const string& newFileName) {
     printFileContents(sourceFile);
     printFileContents(newFileName);
 }
-ASSERT_TRUE
+
 // Function to compare the content of two files line by line
 bool compareFiles(const string& file1, const string& file2) {
     ifstream f1("/usr/src/mytest/data/"+file1+".txt"), f2("/usr/src/mytest/data/"+file2+".txt"); // Open both files for reading
@@ -106,11 +106,12 @@ bool checkResponseFromServer(const string& clientMessage, const string& expected
     // Step 1: Start the server
     Server server;
     if (!server.start(8080)) {
-        return false; // אם השרת לא התחיל בהצלחה, החזר false
+        return false; // If the server failed to start, return false
+
     }
 
     // Step 2: Simulate the server receiving the message
-    server.receiveMessage(clientMessage); // פונקציה המדמה קבלת הודעה
+    server.receiveMessage(clientMessage); // A function that simulates receiving a message
     
     // Step 3: Capture the server's response directly from the server
     std::string actualResponse = server.getLastResponse();
