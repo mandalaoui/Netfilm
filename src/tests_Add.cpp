@@ -10,14 +10,22 @@ using namespace std;
 TEST(AddExecuteTest, UserIdNotFoundCreateNew) {
     // Initialize the "users" file (clear or create it)   
     Add add;
-    const char* inputs[] = {"1", "121", "115", "20"};
+    const char* inputs[] = {"1", "121", "115", "2"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
         setFile("users","12\n15\n20\n19");
         // Execute the function with each input from the array - suppose to add a new user
-        add.execute(string(inputs[i]) +" 35 20");
+        post.execute(string(inputs[i]) +" 35 20");
         // Create a file to store the result as after adding the user
         setFile("usersAfterAdd", "12\n15\n20\n19\n"+string(inputs[i]));
+        // Compare the "before" and "after" files to validate the change
+        ASSERT_TRUE(compareFiles("users", "usersAfterAdd")) << "Comparison for " << string(inputs[i]) << " failed!";
+
+        setFile("users","12\n15\n20\n19");
+        // Execute the function with each input from the array - suppose to add a new user
+        petch.execute(string(inputs[i]) +" 35 20");
+        // Create a file to store the result as after adding the user
+        setFile("usersAfterAdd", "12\n15\n20\n19");
         // Compare the "before" and "after" files to validate the change
         ASSERT_TRUE(compareFiles("users", "usersAfterAdd")) << "Comparison for " << string(inputs[i]) << " failed!";
     }

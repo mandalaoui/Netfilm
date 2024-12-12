@@ -7,28 +7,17 @@
 using namespace std;
 
 // Test for funtcion "Execute" in class "Help"
-// Check if the function prints the correct output
+// Check if the server sends the correct output to the client
 TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
-    // Create an object
-    Help help;
-
-    // Redirecting std::cout to stringstream for capturing and testing output
-    stringstream buffer;
-    streambuf* oldCoutBuffer = cout.rdbuf(buffer.rdbuf());
-
-    // Run the execute function
-    help.execute("help");
-
-    // Restoring std::cout to its original buffer to revert to normal console output after redirection
-    cout.rdbuf(oldCoutBuffer);
-
     // Expected output
-    string expectedOutput = 
-    "add [userid] [movieid1] [movieid2] …\n"
-    "recommend [userid] [movieid]\n"
+    string expectedResponse = 
+    "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
+    "GET, arguments: [userid] [movieid]\n"
+    "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
+    "POST, arguments: [userid] [movieid1] [movieid2] ..."
     "help\n";
 
     // Comparing the captured output with the expected output
-    EXPECT_EQ(buffer.str(), expectedOutput);
+    EXPECT_EQ(checkResponseFromServer("help", expectedResponse));
     // Passes if they match, fails and shows differences if not.
 }
