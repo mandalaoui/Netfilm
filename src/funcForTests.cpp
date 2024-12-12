@@ -1,6 +1,8 @@
 #include <string>
 #include <fstream>
 #include "funcForTests.h"
+#include "Client.h"
+#include "Server.h"
 #include <iostream>
 
 using namespace std;
@@ -38,7 +40,7 @@ void duplicateFile(const string& sourceFile, const string& newFileName) {
     printFileContents(sourceFile);
     printFileContents(newFileName);
 }
-
+ASSERT_TRUE
 // Function to compare the content of two files line by line
 bool compareFiles(const string& file1, const string& file2) {
     ifstream f1("/usr/src/mytest/data/"+file1+".txt"), f2("/usr/src/mytest/data/"+file2+".txt"); // Open both files for reading
@@ -97,4 +99,27 @@ void setFile(const string& fileName, const string& content) {
     string fullNameFile = "/usr/src/mytest/data/"+fileName+".txt";
     createOrClearFile(fullNameFile);
     insertToFile(fullNameFile,content);
+}
+
+// Function to check the correction of server's response
+bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse) {
+    // Step 1: Start the server
+    Server server;
+    if (!server.start(8080)) {
+        return false; // אם השרת לא התחיל בהצלחה, החזר false
+    }
+
+    // Step 2: Simulate the server receiving the message
+    server.receiveMessage(clientMessage); // פונקציה המדמה קבלת הודעה
+    
+    // Step 3: Capture the server's response directly from the server
+    std::string actualResponse = server.getLastResponse();
+    
+    // Step 4: Compare response to expected result
+    bool isEqual = (actualResponse == expectedResponse);
+    
+    // Step 5: Clean up
+    server.stop();
+
+    return isEqual;
 }
