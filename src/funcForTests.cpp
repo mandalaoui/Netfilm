@@ -1,7 +1,6 @@
 #include <string>
 #include <fstream>
 #include "funcForTests.h"
-#include "Client.h"
 #include "Server.h"
 #include <iostream>
 
@@ -107,7 +106,6 @@ bool checkResponseFromServer(const string& clientMessage, const string& expected
     Server server;
     if (!server.start(8080)) {
         return false; // If the server failed to start, return false
-
     }
 
     // Step 2: Simulate the server receiving the message

@@ -11,7 +11,7 @@ using namespace std;
 class Add : public ICommand {
     public:
 
-        void execute(string input) override; // Function that performs the action of adding user and movies to a user.
+        string execute(string input) override; // Function that performs the action of adding user and movies to a user.
         bool isInvalid(string input) override; // Function to validate the input string.
         void addMoviesToUser(string user, string movies); // Function that add a movie to a user's watchlist.
         void addUser(string user, string movies); // Function to add a new user to the users file and his movie.

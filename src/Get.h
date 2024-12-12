@@ -24,6 +24,6 @@ class Get : public ICommand {
     map<unsigned long, int> makeMap(vector<unsigned long>& relevent_users, vector<int>& weights_relevent_users); // Creates a map of movies recommended by relevant users, weighted by relevance scores.
     bool isInvalid(string input) override; // Validates the user input, ensuring it contains exactly two numeric values (user ID and movie ID).
     vector<unsigned long> sortMovies(map<unsigned long, int>& movies_weights); // Sorts movies by their weights in descending order.
-    void execute(string input) override; // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
+    string execute(string input) override; // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
 };
 #endif

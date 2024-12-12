@@ -8,10 +8,10 @@
 using namespace std;
 
 // Function that performs the action of adding user and movies to a user.
-void Add::execute(string input) {
+string Add::execute(string input) {
     // Check if the input is valid.
     if (!isInvalid(input)) {
-        return;
+        return "400 Bad Request\n";
     }
     // Open the users file for reading.
     ifstream users_file("/usr/src/mytest/data/users.txt");
@@ -20,7 +20,7 @@ void Add::execute(string input) {
         ofstream create_file("/usr/src/mytest/data/users.txt");
         // If the file creation fails, display an error message.
         if (!create_file.is_open()) {
-            return;
+            return "400 Bad Request\n";
         }
     }
     // Split the input into two parts: username and movies.
@@ -42,6 +42,8 @@ void Add::execute(string input) {
 
     // Close the users file after use.
     users_file.close();
+
+    return "dont forget response";
 }
 
 // Function to add a new user to the users file and his movie.
