@@ -226,12 +226,13 @@ vector<unsigned long> Get::sortMovies(map<unsigned long, int>& movies_weights) {
 }
 
 // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
-void Get::execute(string input) {
+string Get::execute(string input) {
+    string response = "";
     // Validate the input
     if (isInvalid(input)) {
-
+        response += "404 Not Found\n";
         // Exit if the input is invalid
-        return;
+        return response;
     }
 
     // Find relevant users
@@ -245,11 +246,14 @@ void Get::execute(string input) {
 
     // Sort movies and display the top 10 recommendations
     vector<unsigned long> sortedMovies = sortMovies(movies_weights);
+
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
-        cout << sortedMovies[i] << " ";
+        response += sortedMovies[i] + " ";
     }
-    // Add new line if needs to
+    
     if (sortedMovies.size() != 0) {
-        cout << endl;
+        response += "\n\n200 Ok\n";
     }
+
+    return response;
 }

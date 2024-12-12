@@ -7,7 +7,7 @@ using namespace std;
 class ICommand {
     public:
         // Pure virtual function 'execute' that takes a string as input and will be overridden by concrete command classes.
-        virtual void execute(string input) = 0;
+        virtual string execute(string input) = 0;
         // Pure virtual function 'isInvalid' that print the right format of input.
         virtual bool isInvalid(string input) = 0;
 };

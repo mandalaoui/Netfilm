@@ -7,14 +7,21 @@
 using namespace std;
 
 // This function will takes the input string from the user and show the right format.
-void Help::execute(string input) {
+string Help::execute(string input) {
     // Check if the input is invalid using the isInvalid function.
+    string response;
     if (isInvalid(input))
     {
-        cout << "add [userid] [movieid1] [movieid2] …" << endl;
-        cout << "recommend [userid] [movieid]" << endl;
-        cout << "help" << endl;
+        response = "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
+        "GET, arguments: [userid] [movieid]"
+        "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
+        "POST, arguments: [userid] [movieid1] [movieid2] ..."
+        "help\n";
     }
+    else
+        response = "400 Bad Request";
+
+    return response;
 }
 
 // This function checks if the input string is invalid.

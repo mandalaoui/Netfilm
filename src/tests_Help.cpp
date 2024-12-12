@@ -12,7 +12,7 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     // Expected output
     string expectedResponse = 
     "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
-    "GET, arguments: [userid] [movieid]\n"
+    "GET, arguments: [userid] [movieid]"
     "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
     "POST, arguments: [userid] [movieid1] [movieid2] ..."
     "help\n";
