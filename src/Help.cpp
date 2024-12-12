@@ -9,15 +9,19 @@ using namespace std;
 // This function will takes the input string from the user and show the right format.
 string Help::execute(string input) {
     // Check if the input is invalid using the isInvalid function.
+    string response;
     if (isInvalid(input))
     {
-        return "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
+        response = "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
         "GET, arguments: [userid] [movieid]"
         "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
         "POST, arguments: [userid] [movieid1] [movieid2] ..."
         "help\n";
     }
-    return "400 Bad Request";
+    else
+        response = "400 Bad Request";
+
+    return response;
 }
 
 // This function checks if the input string is invalid.
