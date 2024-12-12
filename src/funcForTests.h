@@ -24,4 +24,6 @@ void setFile(const string& fileName, const string& content);
 
 void printFileContents(const string& filename);
 
+bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse);
+
 #endif // FUNCFORTESTS_H

@@ -18,6 +18,6 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     "help\n";
 
     // Comparing the captured output with the expected output
-    EXPECT_EQ(checkResponseFromServer("help", expectedResponse));
+    ASSERT_TRUE(checkResponseFromServer("help", expectedResponse));
     // Passes if they match, fails and shows differences if not.
 }
