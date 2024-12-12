@@ -1,7 +1,6 @@
 #include <string>
 #include <fstream>
 #include "funcForTests.h"
-#include "Client.h"
 #include "Server.h"
 #include <iostream>
 
