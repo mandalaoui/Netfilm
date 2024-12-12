@@ -13,7 +13,7 @@ TEST(PatchExecuteTest, UserIdNotFound) {
     const string inputs[] = {"1", "121", "115", "20"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs); ++i) {
-        setFile("users","12\n15\n20\n19");
+        setFile("users","12\n15\n20\n19\n");
         // Execute the function with each input from the array and check the response
         ASSERT_TRUE(checkResponseFromServer("PATCH "+ inputs[i] + " 35 20", "404 Not Found"));
         // Create a file to store the result as after patching the user
@@ -26,16 +26,16 @@ TEST(PatchExecuteTest, UserIdNotFound) {
     // Test for adding a new movie for existing user
 TEST(PatchExecuteTest, UserIdFoundAddingMovie) {
     // Initialize the "users" file (clear or create it)
-    setFile("users", "1\n2\n3\n4");
+    setFile("users", "1\n2\n3\n4\n");
     const string inputs[] = {"11", "1001", "150", "100100"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs); ++i) {
         // Creates the watch list of user 1
-        setFile("1_watchlist", "100\n101\n102\n103");
+        setFile("1_watchlist", "100\n101\n102\n103\n");
         // Execute the function with each input from the array and check the response
         ASSERT_TRUE(checkResponseFromServer("PATCH 1 "+ inputs[i], "204 No Content"));
         // Create a file to store the result as after adding the movie
-        setFile("watchListAfterAdd", "100\n101\n102\n103\n" + inputs[i]);
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n" + inputs[i] +"\n");
         // Compare the "before" and "after" files to validate the change
         ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd")) << "Comparison for " << inputs[i] << " failed!";
     }
@@ -44,16 +44,16 @@ TEST(PatchExecuteTest, UserIdFoundAddingMovie) {
     // Test for not adding a movie that already exist
 TEST(PatchExecuteTest, UserIdFoundMovieExists) {
     // Initialize the "users" file (clear or create it)
-    setFile("users", "1\n2\n3\n4");
+    setFile("users", "1\n2\n3\n4\n");
     // Creates the watch list of user 1
-    setFile("1_watchlist", "100\n101\n102\n103");
+    setFile("1_watchlist", "100\n101\n102\n103\n");
     const string inputs[] = {"100", "101", "102", "103"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs); ++i) {
         // Execute the function with each input from the array and check the response
         ASSERT_TRUE(checkResponseFromServer("PATCH 1 "+ inputs[i], "404 Not Found"));
         // Create a file to store the previous watchlist
-        setFile("watchListAfterAdd", "100\n101\n102\n103");
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n");
         // Compare the "before" and "after" files to validate there are no changes - not suppose to add any movie
         compareFiles("1_watchlist", "watchListAfterAdd");
     }
@@ -67,11 +67,11 @@ TEST(PatchExecuteTest, UserIdFoundMovieRepeats) {
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs); ++i) {
         // Creates the watch list of user 1
-        setFile("1_watchlist", "100\n101\n102\n103");
+        setFile("1_watchlist", "100\n101\n102\n103\n");
         // Execute the function with each input from the array and check the response
         ASSERT_TRUE(checkResponseFromServer("PATCH 1 150 " + inputs[i] + " " + inputs[i], "204 No Content"));
         // Create a file to store the the result as after adding the correct movies
-        setFile("watchListAfterAdd", "100\n101\n102\n103\n150\n" + inputs[i]);
+        setFile("watchListAfterAdd", "100\n101\n102\n103\n150\n" + inputs[i] + "\n");
         // Compare the "correct" and "tested" files to validate the difference - suppose to add just one each time (In addition to the 150 id mocie)
         ASSERT_TRUE(compareFiles("1_watchlist", "watchListAfterAdd")) << "Comparison for repeat " << inputs[i] << " failed!";
     }
