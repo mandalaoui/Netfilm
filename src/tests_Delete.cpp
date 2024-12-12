@@ -5,55 +5,72 @@
 
 using namespace std;
 
-
+// Test case for deleting a movie from a user's watchlist.
 TEST(DeleteExecuteTest, deleteMovieFromUser) {
-    Delete deleteMovie;
+    // Array of inputs representing movie IDs to delete from the watchlist.
     const char* inputs[] = {"100","100 101", "100 102 103", "103 102 100 101", "103", "102 101"};
+    // Expected results after deleting the specified movies
     const char* results[] = {"101\n102\n103", "102\n103", "101", "", "100\n101\n102", "100\n103"};
 
+    // Set the "users" file with user "1"
     setFile("users", "1");
+
+    // Loop over all input scenarios
     for (int i = 0; i < sizeof(inputs); i++)
     {
+        // Set the initial "1_watchlist" with a list of movies
         setFile("1_watchlist", "100\n101\n102\n103");
-        deleteMovie.execute("1" + inputs[i]);
 
+        // Call the checkResponseFromServer function to check if the server sends "204 No Content".
+        ASSERT_TRUE(checkResponseFromServer("DELETE 1 " + inputs[i] ,"204 No Content"));
+        
+        // Set the expected result file after movie deletion.
         setFile("usersAfterDeleteMovie", results[i]);
-
-        // Compare the "before" and "after" files to validate the change
+        
+        // Compare the "before" and "after" files to validate the change.
         ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteMovie")) << "Comparison for " << string(inputs[i]) << " failed!";
     }
 }
 
+// Test case to check invalid inputs of movies.
 TEST(DeleteExecuteTest, invalidInputs) {
-    Delete deleteMovie;
-    const char* inputs[] = {"100 104","100 101 %", "100 102 103 104 105", "103 AB 102"};
-    //const char* results[] = {"101\n102\n103", "102\n103", "101", "", "100\n101\n102", "100\n103"};
 
+    // Array of invalid inputs of movies.
+    const char* inputs[] = {"100 104","100 101 %", "100 102 103 104 105", "103 AB 102"};
+
+    // Set the "users" file with user "1"
     setFile("users", "1");
+
+    // Loop through all invalid input scenarios
     for (int i = 0; i < sizeof(inputs); i++)
-    {
+    {        
+        // Set the initial "1_watchlist" with a list of movies.
         setFile("1_watchlist", "100\n101\n102\n103");
+
+        // Duplicate the "1_watchlist" file to simulate the original state before deletion.
         duplicateFile("1_watchlist", "usersAfterDeleteInvalid");
-        deleteMovie.execute("1" + inputs[i]);
+
+        // Call the checkResponseFromServer function to check if the server sends "400 Bad Request"
+        ASSERT_TRUE(checkResponseFromServer("DELETE 1 " + inputs[i] ,"400 Bad Request"));
 
         // Compare the "before" and "after" files to validate the change
         ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteInvalid")) << "Comparison for " << string(inputs[i]) << " failed!";
+
     }
 }
 
+// Test case to check behavior when the user does not exist.
 TEST(DeleteExecuteTest, userNotExist) {
-    Delete deleteMovie;
-    const char* inputs[] = {"5", "44"};
+    // Array of non-existing user IDs.
+    const char* inputs[] = {"5", "44"}; 
 
+    // Set the "users" file with users "1", "2", "3", and "4".
     setFile("users", "1\n2\n3\n4");
-    for (int i = 0; i < sizeof(inputs); i++)
-    {
-        setFile(inputs[i] + "_watchlist", "100\n101\n102\n103");
-        
-        duplicateFile(inputs[i] + "_watchlist", "usersWithoutChange");
-        deleteMovie.execute(inputs[i] + "101 102");
 
-        // Compare the "before" and "after" files to validate the change
-        ASSERT_TRUE(compareFiles(inputs[i] + "_watchlist", "usersWithoutChange")) << "Comparison for " << string(inputs[i]) << " failed!";
+    // Loop through all non-existing user IDs.
+    for (int i = 0; i < sizeof(inputs); i++)
+    {       
+        // Check that the server responds with "404 Not Found" when trying to delete from a non-existent user.
+        ASSERT_TRUE(checkResponseFromServer("DELETE " + inputs[i] + " 101 102", "404 Not Found"));
     }
 }
