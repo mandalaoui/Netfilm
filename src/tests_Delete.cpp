@@ -8,9 +8,9 @@ using namespace std;
 // Test case for deleting a movie from a user's watchlist.
 TEST(DeleteExecuteTest, deleteMovieFromUser) {
     // Array of inputs representing movie IDs to delete from the watchlist.
-    const char* inputs[] = {"100","100 101", "100 102 103", "103 102 100 101", "103", "102 101"};
+    const string inputs[] = {"100","100 101", "100 102 103", "103 102 100 101", "103", "102 101"};
     // Expected results after deleting the specified movies
-    const char* results[] = {"101\n102\n103", "102\n103", "101", "", "100\n101\n102", "100\n103"};
+    const string results[] = {"101\n102\n103", "102\n103", "101", "", "100\n101\n102", "100\n103"};
 
     // Set the "users" file with user "1"
     setFile("users", "1");
@@ -28,7 +28,7 @@ TEST(DeleteExecuteTest, deleteMovieFromUser) {
         setFile("usersAfterDeleteMovie", results[i]);
         
         // Compare the "before" and "after" files to validate the change.
-        ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteMovie")) << "Comparison for " << string(inputs[i]) << " failed!";
+        ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteMovie")) << "Comparison for " << inputs[i] << " failed!";
     }
 }
 
@@ -36,7 +36,7 @@ TEST(DeleteExecuteTest, deleteMovieFromUser) {
 TEST(DeleteExecuteTest, invalidInputs) {
 
     // Array of invalid inputs of movies.
-    const char* inputs[] = {"100 104","100 101 %", "100 102 103 104 105", "103 AB 102"};
+    const string inputs[] = {"100 104","100 101 %", "100 102 103 104 105", "103 AB 102"};
 
     // Set the "users" file with user "1"
     setFile("users", "1");
@@ -54,7 +54,7 @@ TEST(DeleteExecuteTest, invalidInputs) {
         ASSERT_TRUE(checkResponseFromServer("DELETE 1 " + inputs[i] ,"400 Bad Request"));
 
         // Compare the "before" and "after" files to validate the change
-        ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteInvalid")) << "Comparison for " << string(inputs[i]) << " failed!";
+        ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteInvalid")) << "Comparison for " << inputs[i] << " failed!";
 
     }
 }
@@ -62,7 +62,7 @@ TEST(DeleteExecuteTest, invalidInputs) {
 // Test case to check behavior when the user does not exist.
 TEST(DeleteExecuteTest, userNotExist) {
     // Array of non-existing user IDs.
-    const char* inputs[] = {"5", "44"}; 
+    const string inputs[] = {"5", "44"}; 
 
     // Set the "users" file with users "1", "2", "3", and "4".
     setFile("users", "1\n2\n3\n4");
