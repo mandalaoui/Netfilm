@@ -3,12 +3,14 @@
 #include "Add.h"
 #include "Help.h"
 #include "Get.h"
+#include "DeleteCommand.h"
 
 // Create and initialize the commands in the map.
 void MapCommands::createCommand () {
     commands["add"] = add;
     commands["GET"] = get;
     commands["help"] = help;
+    commands["DELETE"] = deleteCommand;
 }
 
 // Get the map of commands.
@@ -21,4 +23,5 @@ void MapCommands::deleteCommands() {
     delete add;
     delete get;
     delete help;
+    delete deleteCommand;
 }

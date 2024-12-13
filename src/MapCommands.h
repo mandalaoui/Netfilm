@@ -8,6 +8,7 @@
 #include "Add.h"
 #include "Help.h"
 #include "Get.h"
+#include "DeleteCommand.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class MapCommands {
         ICommand* add = new Add();
         ICommand* get = new Get();
         ICommand* help = new Help();
+        ICommand* deleteCommand = new DeleteCommand();
 
          // Method to initialize the commands map.
         void createCommand();

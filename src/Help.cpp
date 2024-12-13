@@ -12,11 +12,11 @@ string Help::execute(string input) {
     string response;
     if (isInvalid(input))
     {
-        response = "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
-        "GET, arguments: [userid] [movieid]"
-        "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
-        "POST, arguments: [userid] [movieid1] [movieid2] ..."
-        "help\n";
+        response = "DELETE, arguments: [userid] [movieid1] [movieid2] ...\n"
+        "GET, arguments: [userid] [movieid]\n"
+        "PATCH, arguments: [userid] [movieid1] [movieid2] ...\n"
+        "POST, arguments: [userid] [movieid1] [movieid2] ...\n"
+        "help";
     }
     else
         response = "400 Bad Request";

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <sstream>
-#include "Delete.h"
+#include "DeleteCommand.h"
 #include "funcForTests.h"
 
 using namespace std;
