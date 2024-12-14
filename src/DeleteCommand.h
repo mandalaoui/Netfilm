@@ -14,6 +14,6 @@ class DeleteCommand : public ICommand {
         bool isInvalid(string input) override; // Function to validate the input string.
         void deleteMovie(string user, string movies); // Function that add a movie to a user's watchlist.
         bool isInFile(string str, ifstream& file); // Function to check if a string exists in a file
-        void checkUserList(string user, string movies); // Function that checks if the movies are in the user's watchlist
+        bool checkUserList(string user, string movies); // Function that checks if the movies are in the user's watchlist
 };
 #endif

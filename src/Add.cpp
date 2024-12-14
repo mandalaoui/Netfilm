@@ -11,7 +11,7 @@ using namespace std;
 string Add::execute(string input) {
     // Check if the input is valid.
     if (!isInvalid(input)) {
-        return "400 Bad Request\n";
+        return "400 Bad Request";
     }
     // Open the users file for reading.
     ifstream users_file("/usr/src/mytest/data/users.txt");
@@ -20,7 +20,7 @@ string Add::execute(string input) {
         ofstream create_file("/usr/src/mytest/data/users.txt");
         // If the file creation fails, display an error message.
         if (!create_file.is_open()) {
-            return "400 Bad Request\n";
+            return "400 Bad Request";
         }
     }
     // Split the input into two parts: username and movies.

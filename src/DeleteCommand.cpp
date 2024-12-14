@@ -8,7 +8,6 @@
 #include <queue>
 using namespace std;
 
-
 // Function that performs the action of adding user and movies to a user.
 string DeleteCommand::execute(string input) {
     // Check if the input is valid.
@@ -32,11 +31,8 @@ string DeleteCommand::execute(string input) {
         movies = input.substr(spacePos + 1); 
     }   
     // Check if the user exists in the file, if exist check if the movies are already in the user's list.
-    if (isInFile(user, users_file)) {
-        checkUserList(user, movies);
-    }
-    else {
-        // User doesn't exist
+    if (!isInFile(user, users_file) || !checkUserList(user, movies)) {
+        // User or movie doesn't exist
         return "404 Not Found";
     }
 
@@ -132,27 +128,38 @@ bool DeleteCommand::isInFile(string str, ifstream& file) {
 }
 
 // Function that checks if the user already has a each movie.
-void DeleteCommand::checkUserList(string user, string movies) {
+bool DeleteCommand::checkUserList(string user, string movies) {
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
-        return;
+        return false;
     }
     //create set that include all the movies the users ask to add.
     set<string> deletedMovies;
     stringstream ss(movies);
     string word;
+    
+    // First, check if all movies are in the user's watchlist.
     while (ss >> word) {
-        // Check if the movie is in the user's list.
-        if(isInFile(word, user_watchlist)) {        
-            // Check if the movie is not already in the set.
-            if (deletedMovies.find(word) == deletedMovies.end()) {
-                // If the movie is not in the list, delete it.
-                deleteMovie(user, word);
-                // Add the movie to the set to prevent further duplicates
-                deletedMovies.insert(word);
-            }
+        if (!isInFile(word, user_watchlist)) {
+            // If any movie is not in the watchlist, close the file and return false.
+            user_watchlist.close();
+            return false;
+        }
+    }
+
+    ss.clear();  // Reset the stringstream for reuse
+    ss.str(movies);  // Set the stringstream's content to the input again
+
+    while (ss >> word) {      
+        // Check if the movie is not already in the set.
+        if (deletedMovies.find(word) == deletedMovies.end()) {
+            // If the movie is not in the list, delete it.
+            deleteMovie(user, word);
+            // Add the movie to the set to prevent further duplicates
+            deletedMovies.insert(word);
         }
     }
     user_watchlist.close();
+    return true;
 }

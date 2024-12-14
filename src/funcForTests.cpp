@@ -35,9 +35,6 @@ void duplicateFile(const string& sourceFile, const string& newFileName) {
     } else {
         cerr << "Failed to duplicate file: "; // << sourceFile << " -> " << dest << std::endl;
     }
-
-    printFileContents(sourceFile);
-    printFileContents(newFileName);
 }
 
 // Function to compare the content of two files line by line
