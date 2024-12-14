@@ -32,7 +32,7 @@ string Patch::execute(string input) {
     }
     else {
         // User doesn't exist
-        return "400 Bad Request";
+        return "404 Not Found";
     }
 
     // Close the users file after use.

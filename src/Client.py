@@ -5,14 +5,26 @@ class Client:
             self.port = port
             self.ip_dest = ip_dest
 
-    def runClient():
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((self.ip_dest, self.port))
+    def runClient(self):
+        # try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect((self.ip_dest, self.port))
+            print(f"Connected to server at {self.ip_dest}:{self.port}")
 
-        while true:
-            msg = input()
-            s.send(bytes(msg, 'utf-8'))
-            res = s.recv(4096)
-            print(res.decode('utf-8'))
+            while True:
+                msg = input()
+                s.send(bytes(msg, 'utf-8'))
+                res = s.recv(4096)
+                print(res.decode('utf-8'))
 
-        s.close()
+            s.close()
+        # except Exception as e:
+        #     print("An error occurred:", e)
+
+
+def main():
+    client_instance = Client(12345, "127.0.0.1")
+    client_instance.runClient()
+
+if __name__ == "__main__":
+    main()

@@ -12,6 +12,7 @@
 #include "Runnable.h"
 #include "MapCommands.h"
 #include "ICommand.h"
+#include <map>
 
 using namespace std;
 

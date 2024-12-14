@@ -15,7 +15,7 @@ string Post::execute(string input) {
         ofstream create_file("/usr/src/mytest/data/users.txt");
         // If the file creation fails, display an error message.
         if (!create_file.is_open()) {
-            return "400 Bad Request";
+            return "400 Bad Request- Not open";
         }
     }
     // Split the input into two parts: username and movies.

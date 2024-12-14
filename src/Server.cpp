@@ -7,6 +7,7 @@
 #include <unistd.h> 
 #include <arpa/inet.h>
 #include "ClientHandle.h"
+#include "AnExecutor.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ void Server::runServer()
     }
 
     //Listen
-    if(listen(serverSocket,0) < 0) {
+    if(listen(serverSocket,5) < 0) {
         perror("Listen failed");
         exit(EXIT_FAILURE);
     }

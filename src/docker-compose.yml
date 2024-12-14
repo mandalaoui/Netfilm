@@ -5,12 +5,20 @@ services:
       dockerfile: testsDockerfile
     stdin_open: true
     tty: true
-  project:
+  server:
     volumes:
       - ./data:/usr/src/mytest/data
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.server
     stdin_open: true
     tty: true
- 
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    stdin_open: true
+    tty: true
+    depends_on:
+      - server
