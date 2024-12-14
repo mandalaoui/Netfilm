@@ -43,7 +43,7 @@ string Add::execute(string input) {
     // Close the users file after use.
     users_file.close();
 
-    return "dont forget response";
+    return "201 Created";
 }
 
 // Function to add a new user to the users file and his movie.

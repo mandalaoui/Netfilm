@@ -7,7 +7,9 @@
 
 // Create and initialize the commands in the map.
 void MapCommands::createCommand () {
-    commands["add"] = add;
+    commands["POST"] = post;
+    commands["PATCH"] = patch;
+    //commands["add"] = add;
     commands["GET"] = recommend;
     commands["help"] = help;
     commands["DELETE"] = deleteCommand;
@@ -20,7 +22,9 @@ std::map<std::string, ICommand*> MapCommands:: getCommands() {
 
 // Delete the command objects and free their memory.
 void MapCommands::deleteCommands() {
-    delete add;
+    delete patch;
+    delete post;
+//    delete add;
     delete recommend;
     delete help;
     delete deleteCommand;
