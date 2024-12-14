@@ -5,9 +5,11 @@
 #include <string>
 #include <map>
 #include "ICommand.h"   
-#include "Add.h"
+#include "Post.h"
+#include "Patch.h"
 #include "Help.h"
-#include "Get.h"
+#include "Recommend.h"
+#include "DeleteCommand.h"
 
 using namespace std;
 
@@ -15,9 +17,13 @@ using namespace std;
 class MapCommands {
     public:
         // Dynamically allocate memory for each command object, initializing them to their respective concrete classes.
-        ICommand* add = new Add();
-        ICommand* get = new Get();
+        ICommand* post = new Post();
+        ICommand* patch = new Patch();
+//        ICommand* add = new Add();
+        ICommand* recommend = new Recommend();
         ICommand* help = new Help();
+        ICommand* deleteCommand = new DeleteCommand();
+
 
          // Method to initialize the commands map.
         void createCommand();

@@ -1,4 +1,4 @@
-#include "Get.h"
+#include "Recommend.h"
 #include "ICommand.h"
 #include <iostream>
 #include <sstream>
@@ -8,7 +8,7 @@ using namespace std;
 
 // Finds all relevant users who have the specified movie in their watchlist
 // and are not the user who initiated the recommendation process.
-vector<unsigned long> Get::releventUsers() {
+vector<unsigned long> Recommend::releventUsers() {
     vector<unsigned long> relevent_users;
     // Open the file containing all users' IDs
     ifstream users_file("/usr/src/mytest/data/users.txt");
@@ -40,7 +40,7 @@ vector<unsigned long> Get::releventUsers() {
 }
 
 // Checks whether a specific string exists in the given file.
-bool Get::isInFile(string str, ifstream& file) {
+bool Recommend::isInFile(string str, ifstream& file) {
     if (!file.is_open()) {
         return false;
     }
@@ -62,7 +62,7 @@ bool Get::isInFile(string str, ifstream& file) {
 }
 
 // Calculates the weight of relevance for each relevant user by comparing their watchlists with the calling user's watchlist.
-vector<int> Get::weightsOfRelevent(vector<unsigned long>& relevent_users) {
+vector<int> Recommend::weightsOfRelevent(vector<unsigned long>& relevent_users) {
     vector<int> weights_relevent_users;
     // Calculate weights for each relevant user by comparing their watchlists
     for (int user : relevent_users) {
@@ -75,7 +75,7 @@ vector<int> Get::weightsOfRelevent(vector<unsigned long>& relevent_users) {
 }
 
 // Compares the watchlists of two users and calculates a weight based on the number of matching movies.
-int Get::calculateWeight(string user_tocal) {
+int Recommend::calculateWeight(string user_tocal) {
     // Initialize weight to 0
     int weight = 0;
     string movie_tocomp;
@@ -103,7 +103,7 @@ int Get::calculateWeight(string user_tocal) {
 }
 
 // Creates a map of movies recommended by relevant users, weighted by relevance scores.
-map<unsigned long, int> Get::makeMap(vector<unsigned long>& relevent_users, vector<int>& weights_relevent_users) {
+map<unsigned long, int> Recommend::makeMap(vector<unsigned long>& relevent_users, vector<int>& weights_relevent_users) {
     map<unsigned long, int> movies_weights;
 
     // Open the calling user's watchlist file
@@ -131,7 +131,7 @@ map<unsigned long, int> Get::makeMap(vector<unsigned long>& relevent_users, vect
 }
 
 // Validates the user input, ensuring it contains exactly two numeric values (user ID and movie ID).
-bool Get::isInvalid(string input) {
+bool Recommend::isInvalid(string input) {
     // Input must be at least 3 characters long
     if (input.size() < 3) {
         return true;
@@ -202,7 +202,7 @@ bool Get::isInvalid(string input) {
 }
 
 // Sorts movies by their weights in descending order.
-vector<unsigned long> Get::sortMovies(map<unsigned long, int>& movies_weights) {
+vector<unsigned long> Recommend::sortMovies(map<unsigned long, int>& movies_weights) {
     // Convert the movies_weights map to a vector of pairs
     vector<pair<unsigned long, int>> map_vec(movies_weights.begin(), movies_weights.end());
     
@@ -226,15 +226,15 @@ vector<unsigned long> Get::sortMovies(map<unsigned long, int>& movies_weights) {
 }
 
 // Finds relevant movie recommendations based on the user's preferences by identifying other users who have similar tastes in movies.
-string Get::execute(string input) {
+string Recommend::execute(string input) {
     string response = "";
     // Validate the input
     if (isInvalid(input)) {
-        response += "404 Not Found\n";
+        response += "404 Not Found";
         // Exit if the input is invalid
         return response;
     }
-
+    response += "200 Ok\n\n";
     // Find relevant users
     vector<unsigned long> relevent_users = releventUsers();
     
@@ -248,12 +248,12 @@ string Get::execute(string input) {
     vector<unsigned long> sortedMovies = sortMovies(movies_weights);
 
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
-        response += sortedMovies[i] + " ";
+        response += to_string(sortedMovies[i]) + " ";
     }
     
-    if (sortedMovies.size() != 0) {
-        response += "\n\n200 Ok\n";
-    }
+    // if (sortedMovies.size() != 0) {
+        
+    // }
 
     return response;
 }

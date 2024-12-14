@@ -23,7 +23,7 @@ void App::run() {
         try {
             // Check if the command exists in the map of commands, if exists and execute the command by calling its execute method.
             if (commands.find(task) != commands.end()) {
-                commands[task]->execute(inputForTask);
+                cout << commands[task]->execute(inputForTask) << endl;
             }
         }
         // Catch any exceptions thrown during execution and continue the loop.
