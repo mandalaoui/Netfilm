@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <fstream>
-#include "Get.h"
+#include "Recommend.h"
 #include "funcForTests.h"
 
 using namespace std;
@@ -9,7 +9,7 @@ using namespace std;
 
     // Test case for a non-existent user.
     // Verify that the server does not produce any recommend.
-TEST(GetExecuteTest, UserIdNotFound) {
+TEST(RecommendExecuteTest, UserIdNotFound) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "12\n15\n20\n19\n");
     const char* inputs[] = {"1", "121", "115", "20"};
@@ -23,7 +23,7 @@ TEST(GetExecuteTest, UserIdNotFound) {
 }
     // Test case for a non-existent movie.
     // Verify that the server does not produce any recommend.
-TEST(GetExecuteTest, MovieIdNotFound) {
+TEST(RecommendExecuteTest, MovieIdNotFound) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "1\n");
     // Creates the watch list of user 1
@@ -39,7 +39,7 @@ TEST(GetExecuteTest, MovieIdNotFound) {
     }
 }
     // Test case to verify that the Execute function returns the correct movie recommendation.
-TEST(GetExecuteTest, ExecuteReturnsCorrectRecommendation) {
+TEST(RecommendExecuteTest, ExecuteReturnsCorrectRecommendation) {
     // Initialize the "users" file (clear or create it)
     setFile("users","1\n2\n3\n4\n");
     // Create watchlists for each user
@@ -61,7 +61,7 @@ TEST(GetExecuteTest, ExecuteReturnsCorrectRecommendation) {
     }
 }
     // Test case to ensure that the function returns no more than ten recommendations
-TEST(GetExecuteTest, NoMoreThanTenRecommendations) {
+TEST(RecommendExecuteTest, NoMoreThanTenRecommendations) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "1\n2\n");
     // Create watchlist for user 1 (with 4 movies)
@@ -82,7 +82,7 @@ TEST(GetExecuteTest, NoMoreThanTenRecommendations) {
     }
 }
     // Test case to ensure that the function does not modify any file
-TEST(GetExecuteTest, ExecuteDoesntChangeFiles) {
+TEST(RecommendExecuteTest, ExecuteDoesntChangeFiles) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "1\n2\n3\n");
     // Create watchlists for each user
@@ -90,13 +90,13 @@ TEST(GetExecuteTest, ExecuteDoesntChangeFiles) {
     setFile("2_watchlist", "101\n102\n107\n108\n"); // User 2's watchlist
     setFile("3_watchlist", "101\n106\n109\n110\n"); // User 3's watchlist
     
-    Get get;
+    Recommend recommend;
     // Define the set of movie IDs to test the recommendations for user 1
     const char* inputs[] = {"100", "101", "102", "103"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
         // Execute the recommendation function for user 1 and the current movie ID
-        get.execute("1 " + string(inputs[i]));
+        recommend.execute("1 " + string(inputs[i]));
         
         // Verify that user 1's watchlist remains unchanged after the recommendation
         setFile("1_watchListAfterReco", "100\n101\n102\n103\n");
@@ -112,7 +112,7 @@ TEST(GetExecuteTest, ExecuteDoesntChangeFiles) {
     }
 }
     // Test case to verify that the function handles valid input with extra spaces correctly
-TEST(GetExecuteTest, ValidInputWithSpaces) {
+TEST(RecommendExecuteTest, ValidInputWithSpaces) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "1\n2\n");
     // Create watchlist for user 1
@@ -129,7 +129,7 @@ TEST(GetExecuteTest, ValidInputWithSpaces) {
     // Passes if they match, fails and shows differences if not.
 }
     // Test case to verify that the function handles invalid inputs without altering watchlist
-TEST(GetExecuteTest, invalidInputs) {
+TEST(RecommendExecuteTest, invalidInputs) {
     // Create watchlist for user 1
     setFile("1_watchlist", "1\n2\n3\n4\n");
     // Duplicate the watchlist to compare with after running invalid inputs

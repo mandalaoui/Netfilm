@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "tests_Help.cpp"
-#include "tests_Get.cpp"
+#include "tests_Recommend.cpp"
 #include "tests_Add.cpp"
 #include "tests_Delete.cpp"
 

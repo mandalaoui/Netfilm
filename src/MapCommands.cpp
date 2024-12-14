@@ -2,13 +2,13 @@
 #include "ICommand.h"
 #include "Add.h"
 #include "Help.h"
-#include "Get.h"
+#include "Recommend.h"
 #include "DeleteCommand.h"
 
 // Create and initialize the commands in the map.
 void MapCommands::createCommand () {
     commands["add"] = add;
-    commands["GET"] = get;
+    commands["GET"] = recommend;
     commands["help"] = help;
     commands["DELETE"] = deleteCommand;
 }
@@ -21,7 +21,7 @@ std::map<std::string, ICommand*> MapCommands:: getCommands() {
 // Delete the command objects and free their memory.
 void MapCommands::deleteCommands() {
     delete add;
-    delete get;
+    delete recommend;
     delete help;
     delete deleteCommand;
 }

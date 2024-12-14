@@ -37,13 +37,13 @@ string DeleteCommand::execute(string input) {
     }
     else {
         // User doesn't exist
-        return "404 Not Found\n";
+        return "404 Not Found";
     }
 
     // Close the users file after use.
     users_file.close();
 
-    return "204 No Content\n";
+    return "204 No Content";
 }
 
 // Function to validate the input string.
