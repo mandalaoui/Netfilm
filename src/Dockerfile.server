@@ -18,7 +18,7 @@ WORKDIR /usr/src/myserver/build
 RUN cmake .. && make
 
 # Expose the port the server will listen on
-# EXPOSE 8080
+ EXPOSE 12345
 
 # Command to run the server
 CMD ["./runProject"]

@@ -1,4 +1,5 @@
 import socket
+import sys
 
 class Client:
     def __init__(self, port: int, ip_dest: int):
@@ -23,7 +24,15 @@ class Client:
 
 
 def main():
-    client_instance = Client(12345, "127.0.0.1")
+    port = 12345  # ברירת מחדל אם לא הועבר ערך מהשורת פקודה
+    ip_dest = "172.18.0.2"
+
+    # בדיקה אם הועברו ארגומנטים לפורט ו-IP
+    if len(sys.argv) > 1:
+        port = sys.argv[1]
+
+
+    client_instance = Client(port, ip_dest)
     client_instance.runClient()
 
 if __name__ == "__main__":

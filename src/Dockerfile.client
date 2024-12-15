@@ -10,5 +10,8 @@ COPY . /usr/src/myclient
 # Set working directory
 WORKDIR /usr/src/myclient
 
+# Expose the port the server will listen on
+EXPOSE 12345
+
 # Command to run the client
 CMD ["python3", "Client.py"]

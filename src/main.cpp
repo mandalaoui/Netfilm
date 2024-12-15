@@ -3,10 +3,10 @@
 #include "MapCommands.h"
 #include "ICommand.h"
 #include "Server.h"
-#include "Server.h"
 #include <string>
+#include <cstdlib>
 
-int main() {
+int main(int argc, char *argv[]) {
     // // Create an instance of the MapCommands class to manage the commands.
     // MapCommands map;
     // // Create an instance of the MapCommands class to manage the commands.
@@ -34,8 +34,15 @@ int main() {
 
     // //Delete the dynamically allocated command objects to free memory.
     // map.deleteCommands();
+    
+    int port = 12345; // ברירת מחדל אם לא הועבר ערך מהשורת פקודה
 
-    Server server(12345);
+    // אם הועבר פורט כארגומנט
+    if (argc > 1) {
+        port = atoi(argv[1]); // המרת הערך לאינט
+    }
+
+    Server server(port);
     server.runServer();
     return 0;
 }
