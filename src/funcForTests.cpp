@@ -100,7 +100,7 @@ void setFile(const string& fileName, const string& content) {
 // Function to check the correction of server's response
 bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse) {
     // Step 1: Start the server
-    Server server;
+    Server server(8080);
     if (!server.start(8080)) {
         return false; // If the server failed to start, return false
     }
