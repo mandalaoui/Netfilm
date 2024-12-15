@@ -43,6 +43,7 @@ void Server::runServer()
         exit(EXIT_FAILURE);
     }
 
+    cout << "server is listening" << endl;
     while (true) {
         if ((clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddr, &clientAddrLen)) < 0) {
             perror("Accept failed");

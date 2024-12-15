@@ -11,4 +11,4 @@ COPY . /usr/src/myclient
 WORKDIR /usr/src/myclient
 
 # Command to run the client
-CMD ["python", "client.py"]
+CMD ["python3", "Client.py"]

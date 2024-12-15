@@ -7,13 +7,12 @@ services:
     tty: true
   server:
     volumes:
-      - ./data:/usr/src/mytest/data
+      - ./data:/usr/src/myserver/data
     build:
       context: .
       dockerfile: Dockerfile.server
     stdin_open: true
     tty: true
-
   client:
     build:
       context: .
