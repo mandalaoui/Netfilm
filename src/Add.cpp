@@ -60,7 +60,7 @@ void Add::addUser(string user, string movies) {
     users_file << user << endl;
     users_file.close();
     // Open the user watchlist file to the new user.
-    std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
+    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
         return;
     }
@@ -110,7 +110,7 @@ void Add::checkUserList(string user, string movies) {
 // Function that add a movie to a user's watchlist.
 void Add::addMoviesToUser(string user, string movies) {
     // Open the user's watchlist file in append mode
-    std::ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
+    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
     if (!user_watchlist.is_open()) {
         return;
     }

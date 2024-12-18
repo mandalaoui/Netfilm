@@ -9,14 +9,13 @@
 void MapCommands::createCommand () {
     commands["POST"] = post;
     commands["PATCH"] = patch;
-    //commands["add"] = add;
-    //commands["GET"] = recommend;
+    commands["GET"] = get;
     commands["help"] = help;
     commands["DELETE"] = deleteCommand;
 }
 
 // Get the map of commands.
-std::map<std::string, ICommand*> MapCommands:: getCommands() {
+map<string, ICommand*> MapCommands:: getCommands() {
     return commands;
 }
 

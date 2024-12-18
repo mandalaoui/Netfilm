@@ -16,8 +16,8 @@
 using namespace std;
 
 class AnExecutor : public Executor {
-    private:
     public:
+        // Override the execute method of the Executor base class.
         void execute(Runnable& command) override;
 
 };

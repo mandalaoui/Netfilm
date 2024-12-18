@@ -4,24 +4,19 @@
 #include "ICommand.h"
 #include "Server.h"
 #include <string>
+#include <cstdlib>
 
-int main() {
-    // Create an instance of the MapCommands class to manage the commands.
-    MapCommands map;
+int main(int argc, char *argv[]) {
+    // Default port value in case no port is provided as an argument.
+    int port = 12345; 
 
-    // Initialize the commands.
-    map.createCommand();
+    // If the program is run with a command-line argument, set the port to the provided value.
+    if (argc > 1) {
+        port = atoi(argv[1]); // Convert the argument (a string) to an integer.
+    }
 
-    // Get the map of commands from MapCommands.
-    std::map<std::string, ICommand*> commands = map.getCommands();
-
-    // Create an instance of the App class, passing the map of commands.
-    App app(commands);
-
-    // Run the applicatio
-    app.run();
-
-    //Delete the dynamically allocated command objects to free memory.
-    map.deleteCommands();
+    // Create a Server object and pass the port number and start the server's run functionality.
+    Server server(port);
+    server.runServer();
     return 0;
 }

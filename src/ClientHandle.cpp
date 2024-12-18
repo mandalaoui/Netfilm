@@ -12,24 +12,32 @@
 #include "ICommand.h"
 #define BUFFER_SIZE 1024
 
+using namespace std;
+
+// Constructor for ClientHandle, initializing the client socket.
 ClientHandle::ClientHandle(int clientSocket) : clientSocket(clientSocket) {}
 
+// Implements the logic to handle client communication and execute commands.
 void ClientHandle::run()
 {
+    // Initialize an object map and get the command map.
     MapCommands map;
     map.createCommand();
-    std::map<std::string, ICommand*> commands = map.getCommands();
+    map<string, ICommand*> commands = map.getCommands();
     char buffer[BUFFER_SIZE] = {0};
 
-    
+    // Infinite loop to handle client requests until the connection is closed.
     while(true) {
+        // Read data from the client socket into the buffer. If no data is read or an error occurs, close the connection and exit the loop.
         int bytesRead = read(this->clientSocket, buffer, BUFFER_SIZE);
         if(bytesRead <= 0) {
             close(this->clientSocket);
             break;
         }
+        // Convert the received buffer into a string.
         string clientMessage(buffer);
-        
+
+        // Read a line of clientMessage and take the first word in the string.
         string response;
         string task;
         size_t space = clientMessage.find(' ');
@@ -41,11 +49,13 @@ void ClientHandle::run()
             if (commands.find(task) != commands.end()) {
                 response = commands[task]->execute(inputForTask);
             }
+            // Send the response back to the client and clear the buffer for the next request.
             send(this->clientSocket, response.c_str(), response.size(), 0);
             memset(buffer, 0, BUFFER_SIZE);
         }
         // Catch any exceptions thrown during execution and continue the loop.
         catch(...) {
+            // Handle any exceptions during execution, send the response back to the client and clear the buffer for the next request.
             response = "400 Bad Request\n";
             send(this->clientSocket, response.c_str(), response.size(), 0);
             memset(buffer, 0, BUFFER_SIZE);
