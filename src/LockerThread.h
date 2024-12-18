@@ -3,7 +3,6 @@
 
 #include "ILocker.h"
 
-
 using namespace std;
 
 class LockerThread : public ILocker {

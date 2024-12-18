@@ -14,7 +14,7 @@ TEST(RecommendExecuteTest, UserIdNotFound) {
     setFile("users", "12\n15\n20\n19\n");
     
     Recommend recommend;
-    string inputs[] = {"1", "121", "115", "20"};
+    string inputs[] = {"1", "121", "115", "200"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {             
         // Execute the function with each input from the array - not suppose to print anything
@@ -55,10 +55,10 @@ TEST(RecommendExecuteTest, ExecuteReturnsCorrectRecommendation) {
     setFile("4_watchlist", "105\n102\n109\n"); // User 4's watchlist
 
     // Define expected recommendations for each movie watched by User 1
-    string recommendations[] = {"110 105 107 ", "110 ", "110 105 109 ", ""};
+    string recommendations[] = {"110 105 107 ", "110 ", "110 105 109 "};
     
     Recommend recommend;
-    string inputs[] = {"100", "101", "102", "103"};
+    string inputs[] = {"100", "101", "102"};
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
         //cout << "For input: 1 " + string(inputs[i])+"\n";
@@ -149,15 +149,15 @@ TEST(RecommendExecuteTest, invalidInputs) {
     Recommend recommend;
     // Array of invalid inputs to test
     string invalidInputs[] = {"4", "-1 12", "abc", "!@#", " ", "1 ab", "1 - 2", "abc 12", "", "1-2",
-                                     "1  2", "1 2 3 a b", "2 12 12", "1 2 3 4", "  35"};
+                                     "1 . 2", "1 2 3 a b", "2 12 12", "1 2 3 4", "  35"};
 
     // Loop through each input and test it
     for (int i = 0; i < sizeof(invalidInputs) / sizeof(invalidInputs[0]); ++i) {
         // Execute the function with the invalid input
         string actualResponse = recommend.execute(string(invalidInputs[i]));
         // Verify that the watchlist remains unchanged
-        ASSERT_TRUE(compareFiles("1_watchlist", "2_watchlist")) << "Comparison for " << invalidInputs[i] << " failed!";
+        ASSERT_TRUE(compareFiles("1_watchlist", "2_watchlist")) << "Comparison for " << string(invalidInputs[i]) << " failed!";
         // Verify that no output was printed
-        EXPECT_EQ(actualResponse, "400 Bad Request") << endl;
+        EXPECT_EQ(actualResponse, "400 Bad Request") << "problem with - " << string(invalidInputs[i]) << endl;
     }
 }

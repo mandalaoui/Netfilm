@@ -39,7 +39,7 @@ TEST(DeleteExecuteTest, deleteMovieFromUser) {
 TEST(DeleteExecuteTest, invalidInputs) {
 
     // Array of invalid inputs of movies.
-    const string inputs[] = {"100 104","100 101 %", "100 102 103 104 105", "103 AB 102"};
+    const string inputs[] = {"100 . 104","100 101 %", "100 102 - 104 105", "103 AB 102"};
 
     // Set the "users" file with user "1"
     setFile("users", "1");
@@ -57,7 +57,7 @@ TEST(DeleteExecuteTest, invalidInputs) {
         string actualResponse = deleteC.execute("1 " + string(inputs[i]));
 
         // Call the checkResponseFromServer function to check if the server sends "400 Bad Request"
-        ASSERT_EQ(actualResponse ,"400 Bad Request");
+        ASSERT_EQ(actualResponse ,"400 Bad Request") << "problem with " << inputs[i];
 
         // Compare the "before" and "after" files to validate the change
         ASSERT_TRUE(compareFiles("1_watchlist", "usersAfterDeleteInvalid")) << "Comparison for " << inputs[i] << " failed!";
@@ -77,6 +77,25 @@ TEST(DeleteExecuteTest, userNotExist) {
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++)
     {   
         string actualResponse = deleteC.execute(string(inputs[i]) + " 101 102");
+        // Check that the server responds with "404 Not Found" when trying to delete from a non-existent user.
+        ASSERT_EQ(actualResponse , "404 Not Found");
+    }
+}
+
+// Test case to check behavior when one ofe the movies does not exist.
+TEST(DeleteExecuteTest, movieNotExist) {
+    // Array of non-existing movie IDs.
+    const string inputs[] = {"100 101 10", "20 102"}; 
+    // Set the "users" file with users "1", "2"
+    setFile("users", "1\n2");
+
+    DeleteCommand deleteC;
+    // Loop through all non-existing user IDs.
+    for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++)
+    {   
+        // Set the initial "1_watchlist" with a list of movies
+        setFile("1_watchlist", "100\n101\n102\n103");
+        string actualResponse = deleteC.execute("1 "+ string(inputs[i]));
         // Check that the server responds with "404 Not Found" when trying to delete from a non-existent user.
         ASSERT_EQ(actualResponse , "404 Not Found");
     }

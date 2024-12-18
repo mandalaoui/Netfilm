@@ -9,10 +9,10 @@ ILocker* postLock = new LockerThread();
 // Overriding the execute function
 string Post::execute(string input) {
     // Check if the input is valid.
-    if (!isInvalid(input)) {
+    if (isInvalid(input)) {
         return "400 Bad Request";
     }
-    postLock->on();
+    //postLock->on();
     // Open the users file for reading.
     ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!users_file.is_open()) {
@@ -20,8 +20,8 @@ string Post::execute(string input) {
         ofstream create_file("/usr/src/mytest/data/users.txt");
         // If the file creation fails, display an error message.
         if (!create_file.is_open()) {
-            postLock->off();
-            return "400 Bad Request- Not open";
+            //postLock->off();
+            return "400 Bad Request";
         }
     }
     // Split the input into two parts: username and movies.
@@ -32,11 +32,11 @@ string Post::execute(string input) {
         user = input.substr(0, spacePos); 
         movies = input.substr(spacePos + 1); 
     }   
-    // Check if the user exists in the file, if exist return 400.
+    // Check if the user exists in the file, if exist return 404.
     if (isInFile(user, users_file)) {
-        postLock->off();
+        //postLock->off();
         users_file.close();
-        return "400 Bad Request";
+        return "404 Not Found";
     }
     else {
         // If the user doesn't exist, add the user and movies.
@@ -45,7 +45,7 @@ string Post::execute(string input) {
 
     // Close the users file after use.
     users_file.close();
-    postLock->off();
+    //postLock->off();
 
     return "201 Created";
 }
