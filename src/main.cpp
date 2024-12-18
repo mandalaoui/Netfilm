@@ -2,11 +2,12 @@
 #include "App.h"
 #include "MapCommands.h"
 #include "ICommand.h"
+#include "Server.h"
 #include <string>
 
 int main() {
     // Create an instance of the MapCommands class to manage the commands.
-    /*MapCommands map;
+    MapCommands map;
 
     // Initialize the commands.
     map.createCommand();
@@ -21,8 +22,6 @@ int main() {
     app.run();
 
     //Delete the dynamically allocated command objects to free memory.
-    map.deleteCommands();*/
-    Server server(8080);
-    server.runServer();
+    map.deleteCommands();
     return 0;
 }

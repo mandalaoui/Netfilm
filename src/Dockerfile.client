@@ -1,0 +1,17 @@
+# Start from a base Python image if client הוא ב-Python (או אם מדובר ב-C++, תוכל להחליף לפי הצורך)
+FROM python:3.8-slim
+
+# Install dependencies (לפי הצורך - למשל requests אם יש לך צרכים נוספים)
+RUN pip install requests
+
+# Copy the client code to the container
+COPY . /usr/src/myclient
+
+# Set working directory
+WORKDIR /usr/src/myclient
+
+# Expose the port the server will listen on
+#EXPOSE 12345
+
+# Command to run the client
+ENTRYPOINT ["python3", "Client.py"]

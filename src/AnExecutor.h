@@ -1,5 +1,6 @@
-#ifndef SERVER_H
-#define SERVER_H
+
+#ifndef ANEXECUTOR_H
+#define ANEXECUTOR_H
 
 #include <iostream>
 #include <string>
@@ -8,20 +9,16 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include "MapCommands.h"
 #include "Executor.h"
-#include "AnExecutor.h"
 #include "ClientHandle.h"
 
 using namespace std;
 
-class Server
-{
-private:
-    const int port;
-    Executor* executor = new AnExecutor();
-public:
-    Server(const int port);
-    void runServer();
+class AnExecutor : public Executor {
+    private:
+    public:
+        void execute(Runnable& command) override;
 
 };
 #endif
