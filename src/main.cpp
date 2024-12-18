@@ -6,7 +6,7 @@
 
 int main() {
     // Create an instance of the MapCommands class to manage the commands.
-    MapCommands map;
+    /*MapCommands map;
 
     // Initialize the commands.
     map.createCommand();
@@ -21,6 +21,8 @@ int main() {
     app.run();
 
     //Delete the dynamically allocated command objects to free memory.
-    map.deleteCommands();
+    map.deleteCommands();*/
+    Server server(8080);
+    server.runServer();
     return 0;
 }

@@ -10,7 +10,7 @@ void MapCommands::createCommand () {
     commands["POST"] = post;
     commands["PATCH"] = patch;
     //commands["add"] = add;
-    commands["GET"] = recommend;
+    //commands["GET"] = recommend;
     commands["help"] = help;
     commands["DELETE"] = deleteCommand;
 }
