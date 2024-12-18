@@ -4,12 +4,13 @@
 using namespace std;
 mutex myLock;
 
-void Locker::on()
+void LockerThread::on()
 {
     myLock.lock();
 }
 
-void Locker::off()
+void LockerThread::off()
 {
     myLock.unlock();
 }
+

@@ -186,17 +186,6 @@ bool Recommend::isInvalid(string input) {
         // If the numbers are too large, the input is invalid.
         return true;
     }
-
-    // Check if the user exists in the system
-    ifstream users_file("/usr/src/mytest/data/users.txt");
-    if (!users_file.is_open()) {
-    return true;
-    }
-    if (!isInFile(my_user, users_file)) {
-
-        return true;
-    }
-    
     // If all checks pass, the input is valid.
     return false;
 }
@@ -230,10 +219,17 @@ string Recommend::execute(string input) {
     string response = "";
     // Validate the input
     if (isInvalid(input)) {
-        response += "404 Not Found";
+        response += "400 Bad Request";
         // Exit if the input is invalid
         return response;
     }
+    ifstream users_file("/usr/src/mytest/data/users.txt");
+    if (!isInFile(my_user, users_file)) {
+        response += "404 Not Found";
+        // Exit if user not found
+        return response;
+    }
+
     response += "200 Ok\n\n";
     // Find relevant users
     vector<unsigned long> relevent_users = releventUsers();

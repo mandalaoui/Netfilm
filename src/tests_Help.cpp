@@ -9,15 +9,20 @@ using namespace std;
 // Test for funtcion "Execute" in class "Help"
 // Check if the server sends the correct output to the client
 TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
+    // Create an object
+    Help help;
+    // Run the execute function
+    string actualResponse = help.execute("help");
+    
     // Expected output
     string expectedResponse = 
-    "DELETE, arguments: [userid] [movieid1] [movieid2] ..."
-    "GET, arguments: [userid] [movieid]"
-    "PATCH, arguments: [userid] [movieid1] [movieid2] ..."
-    "POST, arguments: [userid] [movieid1] [movieid2] ..."
-    "help\n";
+    "DELETE, arguments: [userid] [movieid1] [movieid2] ...\n"
+    "GET, arguments: [userid] [movieid]\n"
+    "PATCH, arguments: [userid] [movieid1] [movieid2] ...\n"
+    "POST, arguments: [userid] [movieid1] [movieid2] ...\n"
+    "help";
 
     // Comparing the captured output with the expected output
-    ASSERT_TRUE(checkResponseFromServer("help", expectedResponse));
+    ASSERT_EQ(actualResponse, expectedResponse);
     // Passes if they match, fails and shows differences if not.
 }

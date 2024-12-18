@@ -79,11 +79,11 @@ ILocker* addLock = new LockerThread();
 
 // Function that checks if the user already has a each movie.
 void Add::checkUserList(string user, string movies) {
-    addLock.on();
+    addLock->on();
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
-        addLock.off();
+        addLock->off();
         return;
     }
     //create set that include all the movies the users ask to add.
@@ -104,7 +104,7 @@ void Add::checkUserList(string user, string movies) {
         }
     }
     user_watchlist.close();
-    addLock.off();
+    addLock->off();
 }
 
 // Function that add a movie to a user's watchlist.

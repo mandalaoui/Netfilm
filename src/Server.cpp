@@ -52,7 +52,5 @@ void Server::runServer()
         Runnable* clientHandle = new ClientHandle(clientSocket);
 
         executor->execute(*clientHandle);
-
     }
-
 }

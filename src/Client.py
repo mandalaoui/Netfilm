@@ -15,9 +15,15 @@ class Client:
             while True:
                 msg = input()
                 s.send(bytes(msg, 'utf-8'))
-                res = s.recv(4096)
-                print(res.decode('utf-8'))
-
+                res = b""
+                while True:
+                    chunk = s.recv(4096) 
+                    if not chunk:
+                        break
+                    res += chunk
+                    if b"\n" in res:  
+                        break                
+                    print(res.decode('utf-8'))
             s.close()
         # except Exception as e:
         #     print("An error occurred:", e)
