@@ -1,5 +1,6 @@
 #include "Patch.h"
 #include <iostream>
+
 using namespace std;
 
 // Overriding the execute function
@@ -32,6 +33,7 @@ string Patch::execute(string input) {
     }
     else {
         // User doesn't exist
+        users_file.close();
         return "404 Not Found";
     }
 

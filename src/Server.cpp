@@ -38,7 +38,7 @@ void Server::runServer()
     }
 
     //Listen
-    if(listen(serverSocket,5) < 0) {
+    if(listen(serverSocket,0) < 0) {
         perror("Listen failed");
         exit(EXIT_FAILURE);
     }

@@ -5,6 +5,9 @@
 #include <fstream>
 #include <cctype>
 #include <set>
+#include "ILocker.h"
+#include "LockerThread.h"
+
 using namespace std;
 
 // Function that performs the action of adding user and movies to a user.
@@ -72,11 +75,15 @@ void Add::addUser(string user, string movies) {
     }
 }
 
+ILocker* addLock = new LockerThread();
+
 // Function that checks if the user already has a each movie.
 void Add::checkUserList(string user, string movies) {
+    addLock.on();
     // Open the user's watchlist file
     ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
     if (!user_watchlist.is_open()) {
+        addLock.off();
         return;
     }
     //create set that include all the movies the users ask to add.
@@ -97,6 +104,7 @@ void Add::checkUserList(string user, string movies) {
         }
     }
     user_watchlist.close();
+    addLock.off();
 }
 
 // Function that add a movie to a user's watchlist.
