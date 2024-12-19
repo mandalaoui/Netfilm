@@ -28,7 +28,7 @@ Client:
 -	Send user's command.
 -	Display server response.
 # UML
-<img width="938" alt="image" src="https://github.com/user-attachments/assets/1561690d-be7b-47c4-95ea-1a223902ca2b" />
+<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/UML.png?raw=true" />
 
 # Command project
 1. help - will print the functions and the input format.
