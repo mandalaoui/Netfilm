@@ -10,7 +10,7 @@ using namespace std;
 string Help::execute(string input) {
     // Check if the input is invalid using the isInvalid function.
     string response;
-    if (isInvalid(input))
+    if (!isInvalid(input))
     {
         response = "DELETE, arguments: [userid] [movieid1] [movieid2] ...\n"
         "GET, arguments: [userid] [movieid]\n"
@@ -19,7 +19,7 @@ string Help::execute(string input) {
         "help";
     }
     else
-        response = "400 Bad Request";
+        response = "400 Bad Request!";
 
     return response;
 }
@@ -36,7 +36,7 @@ bool Help::isInvalid(string input) {
         count++;
     }
     // If there is only one word in the input, we consider it invalid.
-    if (count == 1) {
+    if (count != 0) {
         return true;
     }
     return false;

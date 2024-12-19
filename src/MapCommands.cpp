@@ -23,8 +23,7 @@ map<string, ICommand*> MapCommands:: getCommands() {
 void MapCommands::deleteCommands() {
     delete patch;
     delete post;
-//    delete add;
-    delete recommend;
+    delete get;
     delete help;
     delete deleteCommand;
 }

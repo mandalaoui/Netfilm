@@ -9,6 +9,7 @@
 #include "ClientHandle.h"
 #include "MapCommands.h"
 #include "ICommand.h"
+#include <map>
 
 #define BUFFER_SIZE 1024
 
@@ -23,7 +24,7 @@ void ClientHandle::run()
     // Initialize an object map and get the command map.
     MapCommands map;
     map.createCommand();
-    map<string, ICommand*> commands = map.getCommands();
+    std::map<std::string, ICommand*> commands = map.getCommands();
     char buffer[BUFFER_SIZE] = {0};
 
     // Infinite loop to handle client requests until the connection is closed.
@@ -40,25 +41,30 @@ void ClientHandle::run()
         // Read a line of clientMessage and take the first word in the string.
         string response;
         string task;
-        size_t space = clientMassage.find(' ');
-        task = clientMassage.substr(0, space);
-        string inputForTask = clientMassage.substr(space + 1);
-
+        size_t space = clientMessage.find(' ');
+        if (space == string::npos) {
+            task = clientMessage;
+            inputForTask = "";
+        } else {
+            task = clientMessage.substr(0, space);
+            string inputForTask = clientMessage.substr(space + 1);
+        }
         try {
             // Check if the command exists in the map of commands, if exists and execute the command by calling its execute method.
-            if (commands.find(task) != commands.end()) {
-                response = commands[task]->execute(inputForTask);
+            if (commands.find(task) == commands.end()) {
+                throw invalid_argument("");
             }
-            // Send the response back to the client and clear the buffer for the next request.
-            send(this->clientSocket, response.c_str(), response.size(), 0);
-            memset(buffer, 0, BUFFER_SIZE);
+            response = commands[task]->execute(inputForTask);
+
         }
         // Catch any exceptions thrown during execution and continue the loop.
         catch(...) {
             // Handle any exceptions during execution, send the response back to the client and clear the buffer for the next request.
-            response = "400 Bad Request\n";
-            send(this->clientSocket, response.c_str(), response.size(), 0);
-            memset(buffer, 0, BUFFER_SIZE);
+            response = "400 Bad Request";
         }
+        // Send the response back to the client and clear the buffer for the next request.
+        send(this->clientSocket, response.c_str(), response.size(), 0);
+        memset(buffer, 0, BUFFER_SIZE);
+
     }
 }

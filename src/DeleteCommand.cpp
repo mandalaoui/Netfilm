@@ -11,7 +11,7 @@ using namespace std;
 // Function that performs the action of adding user and movies to a user.
 string DeleteCommand::execute(string input) {
     // Check if the input is valid.
-    if (!isInvalid(input)) {
+    if (isInvalid(input)) {
         return "400 Bad Request";
     }
     // Open the users file for reading.
@@ -46,19 +46,20 @@ string DeleteCommand::execute(string input) {
 bool DeleteCommand::isInvalid(string input) {
     // If the input is less than 3 characters long, it's invalid.
     if (input.size() < 2) {
-        return false;
+        return true;
     }
     // Convert the input string into a stringstream.
     stringstream ss(input);
     string word;
-
+    int wordCounter = 0;
     // For each word in the input.
     while (ss >> word) {    
+        wordCounter++;
         // Check if every character in the word is a digit.
         for (char ch : word) {
             //If any character is not a digit, return false.
             if (!isdigit(ch)) {
-                return false;   
+                return true;   
             }
         }
 
@@ -67,14 +68,18 @@ bool DeleteCommand::isInvalid(string input) {
             unsigned long num1 = stoul(word);
         } catch (const invalid_argument& e) {
             // If conversion fails, the input is invalid.
-            return false;
+            return true;
         } catch (const out_of_range& e) {
             // If the numbers are too large, the input is invalid.
-            return false;
+            return true;
         }
+
+    }
+    if (wordCounter < 2) {
+        return true;
     }
     //The input is valid.
-    return true;
+    return false;
 }
 
 // Function that add a movie to a user's watchlist.
