@@ -32,7 +32,6 @@ vector<string> Recommend::releventUsers() {
 vector<int> Recommend::weightsOfRelevent(vector<string>& relevent_users) {
     vector<int> weights_relevent_users;
     // Calculate weights for each relevant user by comparing their watchlists
-    // for (string user : relevent_users) {
     for (int i = 0; i < relevent_users.size(); i++) {
         // Compute the weight for the user
         int weight = calculateWeight(relevent_users[i]);
@@ -71,11 +70,9 @@ map<string, int> Recommend::makeMap(vector<string>& relevent_users, vector<int>&
         // Add movies that are not in the calling user's watchlist and are not the movie that initiated the recommendation process to the map.
         vector<string> user_movies = dataToVec(relevent_users[i]+ "_watchlist");
 
-        for (int i = 0; i < user_movies.size(); i++) {
-            movie = user_movies[i];
+        for (int j = 0; j < user_movies.size(); j++) {
+            movie = user_movies[j];
             if (!isInFile(movie, my_user + "_watchlist") && movie != my_movie){
-                // int movieid = stoul(movie);
-                // movies_weights[movieid] += weights_relevent_users[i];
                 movies_weights[movie] += weights_relevent_users[i];
             }
         }
@@ -133,8 +130,7 @@ vector<string> Recommend::sortMovies(map<string, int>& movies_weights) {
     sort(map_vec.begin(), map_vec.end(), [](pair<string, int>& a, pair<string, int>& b) {
         // If weights are equal, sort by movie ID
         if (a.second == b.second) {
-            return a.first < b.first;
-            // return (a.first.compare(b.first) < 0);
+            return stoul(a.first) < stoul(b.first);
         }
         // Otherwise, sort by weight
         return a.second > b.second;
@@ -191,7 +187,6 @@ string Recommend::execute(string input) {
     vector<string> sortedMovies = sortMovies(movies_weights);
 
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
-        // response += to_string(sortedMovies[i]) + " ";
         response += sortedMovies[i] + " ";
     }
     return response;
