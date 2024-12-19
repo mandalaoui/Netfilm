@@ -22,8 +22,7 @@ bool compareFiles(const string& file1, const string& file2);
 // Creates a file with the given name and sets its content to the specified string.
 void setFile(const string& fileName, const string& content);
 
+// This function prints the content of the given file
 void printFileContents(const string& filename);
-
-bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse);
 
 #endif // FUNCFORTESTS_H

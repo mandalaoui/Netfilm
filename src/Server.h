@@ -20,7 +20,9 @@ private:
     const int port;
     Executor* executor = new AnExecutor();
 public:
+    // Constructor to initialize the server with a specified port.
     Server(const int port);
+    // set up and run the server.
     void runServer();
 
 };

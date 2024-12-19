@@ -1,0 +1,28 @@
+# Start from the GCC image for building C++ code
+FROM gcc:latest
+
+# Install dependencies (CMake, g++, make)
+RUN apt-get update && apt-get install -y cmake g++ make
+
+# Copy server files into the container
+COPY . /usr/src/myserver
+
+# Set working directory inside the container
+WORKDIR /usr/src/myserver
+
+# Clean up unnecessary files
+RUN rm -rf build CMakeCache.txt CMakeFiles cmake_install.cmake Makefile
+
+# Create build directory and change into it
+RUN mkdir build
+WORKDIR /usr/src/myserver/build
+
+
+# Run CMake to build the project
+RUN cmake .. && make
+
+# Expose the port the server will listen on
+#EXPOSE 12345
+
+# Command to run the server
+ENTRYPOINT ["./runProject"]

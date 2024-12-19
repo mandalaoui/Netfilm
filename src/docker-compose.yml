@@ -2,15 +2,25 @@ services:
   tests:
     build:
       context: .
-      dockerfile: testsDockerfile
+      dockerfile: Dockerfile.tests
     stdin_open: true
     tty: true
-  project:
-    volumes:
-      - ./data:/usr/src/mytest/data
+  
+  server:
     build:
       context: .
-      dockerfile: Dockerfile
-    stdin_open: true
+      dockerfile: Dockerfile.server
+    volumes:
+      - ./data:/usr/src/myserver/data
+    container_name: netflix-project
+    working_dir: /usr/src/myserver/build
+  
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
     tty: true
- 
+    stdin_open: true
+    init: true
+    container_name: netflix-project
+    working_dir: /usr/src/myclient

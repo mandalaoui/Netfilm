@@ -6,10 +6,12 @@
 #include <sstream>
 #include <fstream>
 #include <cctype>
+#include "dataFuncs.h"
 
 using namespace std;
 class Post : public Add {
     public:
-        string execute(string input) override; // Function that performs the action of adding user and movies to a user.
+        // Function that performs the action of adding user and movies to a user.
+        string execute(string input) override; 
 };
 #endif

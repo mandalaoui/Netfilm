@@ -1,7 +1,7 @@
 #include <string>
 #include <fstream>
 #include "funcForTests.h"
-#include "Server.h"
+#include "ClientHandle.h"
 #include <iostream>
 
 using namespace std;
@@ -74,6 +74,7 @@ bool compareFiles(const string& file1, const string& file2) {
 
 }
 
+// This function prints the content of the given file
 void printFileContents(const std::string& filename) {
     string fullNameFile = "/usr/src/mytest/data/"+filename+".txt";
     std::ifstream file(fullNameFile); // Open the file for reading
@@ -95,27 +96,4 @@ void setFile(const string& fileName, const string& content) {
     string fullNameFile = "/usr/src/mytest/data/"+fileName+".txt";
     createOrClearFile(fullNameFile);
     insertToFile(fullNameFile,content);
-}
-
-// Function to check the correction of server's response
-bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse) {
-    // Step 1: Start the server
-    Server server;
-    if (!server.start(8080)) {
-        return false; // If the server failed to start, return false
-    }
-
-    // Step 2: Simulate the server receiving the message
-    server.receiveMessage(clientMessage); // A function that simulates receiving a message
-    
-    // Step 3: Capture the server's response directly from the server
-    std::string actualResponse = server.getLastResponse();
-    
-    // Step 4: Compare response to expected result
-    bool isEqual = (actualResponse == expectedResponse);
-    
-    // Step 5: Clean up
-    server.stop();
-
-    return isEqual;
 }
