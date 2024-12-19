@@ -120,7 +120,7 @@ TEST(PatchExecuteTest, invalidInputs) {
     // Creates a copy of the watch list of user 1
     duplicateFile("1_watchlist", "2_watchlist");
     // Array of invalid inputs to test
-    const string invalidInputs[] = {"1", "-1 12", "abc", "!@#", " ", "12 ab", "1 - 2", "abc 12", "", "1-2", "1  2", "1 2 3 a b"};
+    const string invalidInputs[] = {"1", "-1 12", "abc", "!@#", " ", "12 ab", "1 - 2", "abc 12", "", "1-2", "1  2.", "1 2 3 a b"};
     Patch patch;
     // Loop through each input and test it
     for (int i = 0; i < sizeof(invalidInputs) / sizeof(invalidInputs[0]); ++i) {

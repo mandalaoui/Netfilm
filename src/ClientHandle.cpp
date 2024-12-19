@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <string.h>
@@ -10,6 +9,7 @@
 #include "ClientHandle.h"
 #include "MapCommands.h"
 #include "ICommand.h"
+
 #define BUFFER_SIZE 1024
 
 using namespace std;
@@ -40,9 +40,9 @@ void ClientHandle::run()
         // Read a line of clientMessage and take the first word in the string.
         string response;
         string task;
-        size_t space = clientMessage.find(' ');
-        task = clientMessage.substr(0, space);
-        string inputForTask = clientMessage.substr(space + 1);
+        size_t space = clientMassage.find(' ');
+        task = clientMassage.substr(0, space);
+        string inputForTask = clientMassage.substr(space + 1);
 
         try {
             // Check if the command exists in the map of commands, if exists and execute the command by calling its execute method.

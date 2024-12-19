@@ -6,7 +6,7 @@ using namespace std;
 // Overriding the execute function
 string Patch::execute(string input) {
         // Check if the input is valid.
-    if (!isInvalid(input)) {
+    if (isInvalid(input)) {
         return "400 Bad Request";
     }
     // Open the users file for reading.

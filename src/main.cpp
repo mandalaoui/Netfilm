@@ -1,5 +1,4 @@
 #include <iostream>
-#include "App.h"
 #include "MapCommands.h"
 #include "ICommand.h"
 #include "Server.h"

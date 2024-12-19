@@ -20,19 +20,8 @@ class Client:
                 # Take user input to send as a command to the server.
                 msg = input()
                 s.send(bytes(msg, 'utf-8'))
-                res = b""
-                # Loop to receive the server's response.
-                while True:
-                    chunk = s.recv(4096) 
-                    # If no more data, break the loop
-                    if not chunk:
-                        break
-                    res += chunk
-                    # Check for a newline character as a delimiter.
-                    if b"\n" in res:  
-                        break                
-                    print(res.decode('utf-8'))
-            # Close the socket after communication ends.
+                res = s.recv(4096)
+                print(res.decode('utf-8'))
             s.close()
 
 

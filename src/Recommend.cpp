@@ -172,20 +172,19 @@ bool Recommend::isInvalid(string input) {
         // If there are extra characters, the input is invalid.
         return true;
     }
-
     // Try to convert both user ID and movie ID to integers.
     try {
         unsigned long num1 = stoul(my_user);
         unsigned long num2 = stoul(my_movie);
     } catch (const invalid_argument& e) {
-
         // If conversion fails, the input is invalid.
         return true;
     } catch (const out_of_range& e) {
-
         // If the numbers are too large, the input is invalid.
         return true;
     }
+    if (!(stoi(input) > 0))
+        return true;
     // If all checks pass, the input is valid.
     return false;
 }
@@ -230,10 +229,16 @@ string Recommend::execute(string input) {
         return response;
     }
 
-    response += "200 Ok\n\n";
+    
     // Find relevant users
     vector<unsigned long> relevent_users = releventUsers();
-    
+    if(relevent_users.empty()) {
+        response += "404 Not Found";
+        // Exit if user not found
+        return response;
+    }
+
+    response += "200 Ok\n\n";
     // Calculate weights for relevant users
     vector<int> weights_relevent_users = weightsOfRelevent(relevent_users);
 
