@@ -58,7 +58,7 @@ all command will print the the appropriate outputs.
 
 4.	Did the fact that the input/output comes from sockets instead of the console require you to touch code that should be "closed to changes but open to extension"?
    
-    -	Yes, we changed the using of Cout and buffers, to a new class named – ClientHandle so it will be in charge of "translating" the input from the client to a  and to send the correct response from the         server.
+    -	Yes, we changed the using of Cout, to a new class named – ClientHandle so it will be in charge of "translating" the input from the client to a and to send the correct response from the server.
   
     -	From now on, the input/output will be managed by outside.
 
