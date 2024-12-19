@@ -15,13 +15,11 @@ using namespace std;
 vector<string> Recommend::releventUsers() {
     vector<string> relevent_users;
         string next_user;
-        // unsigned long userid;
         vector<string> users_vec = dataToVec("users");
 
         for (int i = 0; i < users_vec.size(); i++) {
             next_user = users_vec[i];
             if (isInFile(my_movie, next_user+"_watchlist") && my_user != next_user) {
-                // userid = stoul(next_user);
                 relevent_users.push_back(next_user);
             }
         }
@@ -154,12 +152,12 @@ string Recommend::execute(string input) {
         // Exit if the input is invalid
         return response;
     }
-    //ifstream users_file("/usr/src/mytest/data/users.txt");
     if (!isInFile(my_user, "users")) {
         response += "404 Not Found";
         // Exit if user not found
         return response;
     }
+    // init the fields
     string word;
     stringstream ss(input);
     ss >> word;
@@ -186,6 +184,7 @@ string Recommend::execute(string input) {
     // Sort movies and display the top 10 recommendations
     vector<string> sortedMovies = sortMovies(movies_weights);
 
+    // Return the recommended movies
     for (int i = 0; i < 10 && i < sortedMovies.size(); i++) {
         response += sortedMovies[i] + " ";
     }

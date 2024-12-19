@@ -74,6 +74,7 @@ bool compareFiles(const string& file1, const string& file2) {
 
 }
 
+// This function prints the content of the given file
 void printFileContents(const std::string& filename) {
     string fullNameFile = "/usr/src/mytest/data/"+filename+".txt";
     std::ifstream file(fullNameFile); // Open the file for reading
@@ -96,17 +97,3 @@ void setFile(const string& fileName, const string& content) {
     createOrClearFile(fullNameFile);
     insertToFile(fullNameFile,content);
 }
-
-// // Function to check the correction of server's response
-// bool checkResponseFromServer(const string& clientMessage, const string& expectedResponse) {
-//     // Start the server
-//     ClientHandle* client = new ClientHandle(0);
-
-//     // Simulate the server receiving the message
-//     string actualResponse = client->executeFunc(clientMessage); // A function that simulates receiving a message
-    
-//     // Compare response to expected result
-//     bool isEqual = (actualResponse == expectedResponse);
-
-//     return isEqual;
-// }

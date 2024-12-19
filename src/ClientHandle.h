@@ -22,7 +22,6 @@ class ClientHandle : public Runnable {
     public:
         // Implements the logic to handle client communication and execute commands.
         void run() override;
-        
         // Constructor for ClientHandle, initializing the client socket.
         ClientHandle(int clientSocket);
 };

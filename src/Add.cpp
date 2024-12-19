@@ -5,8 +5,6 @@
 #include <fstream>
 #include <cctype>
 #include <set>
-#include "ILocker.h"
-#include "LockerThread.h"
 #include "dataFuncs.h"
 
 using namespace std;
@@ -17,7 +15,6 @@ string Add::execute(string input) {
     if (isInvalid(input)) {
         return "400 Bad Request";
     }
-
     size_t spacePos = input.find(' ');
     string user;
     string movies;
@@ -31,14 +28,10 @@ string Add::execute(string input) {
     }
     else {
         // If the user doesn't exist, add the user and movies.
-        //addUser(user, movies);
         writeToFile(user, "users");
         writeToFile(movies, user + "_watchlist");
     }
-
     // Close the users file after use.
-    //users_file.close();
-
     return "";
 }
 
@@ -63,7 +56,6 @@ bool Add::isInvalid(string input) {
             if (!(stoi(input) > 0))
                 return true;
         }
-
         // Attempt to convert the string `word` to an unsigned long.
         try {
             unsigned long num1 = stoul(word);
@@ -78,6 +70,6 @@ bool Add::isInvalid(string input) {
     if (wordCounter < 2) {
         return true;
     }
-    //The input is valid.
+    // The input is valid.
     return false;
 }

@@ -19,7 +19,6 @@ class MapCommands {
         // Dynamically allocate memory for each command object, initializing them to their respective concrete classes.
         ICommand* post = new Post();
         ICommand* patch = new Patch();
-//        ICommand* add = new Add();
         ICommand* get = new Recommend();
         ICommand* help = new Help();
 
@@ -29,7 +28,7 @@ class MapCommands {
         map<string, ICommand*> commands;
 
      public:
-         // Method to initialize the commands map.
+        // Method to initialize the commands map.
         void createCommand();
         
         // Method to get the map of commands.

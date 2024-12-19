@@ -1,10 +1,7 @@
 #include "Post.h"
 #include <iostream>
-#include "ILocker.h"
-#include "LockerThread.h"
 
 using namespace std;
-ILocker* postLock = new LockerThread();
 
 // Overriding the execute function
 string Post::execute(string input) {

@@ -23,10 +23,9 @@ string Patch::execute(string input) {
     if (isInFile(user, "users")) {
         Add add;
         add.execute(input);
-}
-    else {
-    return "404 Not Found";
     }
-
+    else {
+        return "404 Not Found";
+    }
     return "204 No Content";
 }

@@ -31,10 +31,8 @@ string DeleteCommand::execute(string input) {
         // User or movie doesn't exist
         return "404 Not Found";
     }
-
     return "204 No Content";
 }
-
 
 // Function to validate the input string.
 bool DeleteCommand::isInvalid(string input) {

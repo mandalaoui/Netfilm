@@ -2,7 +2,7 @@ services:
   tests:
     build:
       context: .
-      dockerfile: testsDockerfile
+      dockerfile: Dockerfile.tests
     stdin_open: true
     tty: true
   
