@@ -44,7 +44,6 @@ void Server::runServer()
         exit(EXIT_FAILURE);
     }
 
-    cout << "server is listening to Port - " << port << endl;
     // Main loop to accept and handle client requests.
     while (true) {
         // Accept an incoming client connection.

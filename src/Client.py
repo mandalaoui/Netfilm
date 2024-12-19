@@ -13,8 +13,6 @@ class Client:
             # Create a socket using IPv4 and TCP and connect to the server.
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((self.ip_dest, self.port))
-            print(f"Connected to server at {self.ip_dest}:{self.port}")
-
             # Infinite loop to interact with the user and communicate with the server.
             while True:
                 # Take user input to send as a command to the server.
