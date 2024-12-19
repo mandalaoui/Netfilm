@@ -8,6 +8,7 @@
 -	Command project
 -	Change in project
 -	Running
+-	Running Examples
 
 # Overview
 
@@ -36,7 +37,8 @@ Client:
 4. PATCH -  will add movies to existing user.
 5. DELETE - will delete movies from existing user.
 
-all command will print the the appropriate outputs.
+All the commands return the relevant output by the server.
+The client recives the result and prints it.
 
 # Changes in project
 
@@ -54,24 +56,22 @@ all command will print the the appropriate outputs.
   
 3.	Did the fact that the command output changed require you to touch code that should be "closed to changes but open to extension"?
    
-    -	We needed to change the value that returned from the function "execute" of each command from void to string. For each command we returned the relevant output.
+    -	Yes, We needed to change the value that returned from the function "execute" of each command from void to string. For each command we returned the relevant output.
 
 4.	Did the fact that the input/output comes from sockets instead of the console require you to touch code that should be "closed to changes but open to extension"?
    
-    -	Yes, we changed the using of Cout, to a new class named – ClientHandle so it will be in charge of "translating" the input from the client to a and to send the correct response from the server.
-  
-    -	From now on, the input/output will be managed by outside.
-
+    -	Previously, we printed the command results directly to the screen.
+    -	Now, the server processes all commands using clientHandle, which connects the client to the appropriate socket.
 
 ## Change previous classes
-
+In order to follow the SOLID principle;
 We created file with function called "dataFuncs",  that includes functions for writing to file and reading from file (checking if specific content exists in the file).
 We updated the command classes accordingly.
 
-## Update
+## Updates
 1. Implemented a threaded multi-client server in C++ that simultaneously handles several clients.
 2. Implemented a client in Python.
-3. created Docker containers for the server and the client and updated the Docker Compose configuration accordingly.
+3. Created Docker containers for the server and the client and updated the Docker Compose configuration accordingly.
 
 
 # Running
@@ -81,6 +81,8 @@ Server:
 Build: docker-compose build
 
 Run: docker-compose run -it -v netflix:/usr/src/mytest/data --rm --name netflix-project server 8080
+
+*Prepare for next run: docker-compose down --remove-orphans
 
 Client:
 
