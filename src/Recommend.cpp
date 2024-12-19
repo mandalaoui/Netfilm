@@ -152,11 +152,6 @@ string Recommend::execute(string input) {
         // Exit if the input is invalid
         return response;
     }
-    if (!isInFile(my_user, "users")) {
-        response += "404 Not Found";
-        // Exit if user not found
-        return response;
-    }
     // init the fields
     string word;
     stringstream ss(input);
@@ -164,6 +159,13 @@ string Recommend::execute(string input) {
     my_user = word;
     ss >> word;
     my_movie = word;
+
+    if (!isInFile(my_user, "users")) {
+        response += "404 Not Found";
+        // Exit if user not found
+        return response;
+    }
+    
 
     
     // Find relevant users
