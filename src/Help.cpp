@@ -19,7 +19,7 @@ string Help::execute(string input) {
         "help";
     }
     else
-        response = "400 Bad Request!";
+        response = "400 Bad Request";
 
     return response;
 }

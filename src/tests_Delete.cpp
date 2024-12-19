@@ -25,7 +25,7 @@ TEST(DeleteExecuteTest, deleteMovieFromUser) {
         string actualResponse = deleteC.execute("1 " + string(inputs[i]));
 
         // Call the checkResponseFromServer function to check if the server sends "204 No Content".
-        ASSERT_EQ(actualResponse ,"204 No Content");
+        ASSERT_EQ(actualResponse ,"204 No Content")<<"with " + string(inputs[i]);
 
         // Set the expected result file after movie deletion.
         setFile("usersAfterDeleteMovie", results[i]);

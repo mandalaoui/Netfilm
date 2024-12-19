@@ -36,7 +36,6 @@ TEST(PostExecuteTest, UserIdFound) {
         // Creates the watch list of user 1
         setFile("1_watchlist", "100\n101\n102\n103");
         string actualResponse = post.execute("1 " + string(inputs[i]) + " 35 20");
-
         // Execute the function with each input from the array and check the response
         ASSERT_EQ(actualResponse, "404 Not Found");     
         // Create a file to store the result as after adding the movie
@@ -54,14 +53,13 @@ TEST(PostExecuteTest, UserIdNotFoundMovieRepeats) {
     Post post;
     // Loop through each input and test it
     for (int i = 0; i < sizeof(inputs) / sizeof(inputs[0]); ++i) {
-        string actualResponse = post.execute(to_string(i+1) + " 150 " + string(inputs[i]) + " " + string(inputs[i]));
-        
+        string actualResponse = post.execute(to_string(i+100) + " 150 " + string(inputs[i]) + " " + string(inputs[i]));
         // Execute the function with each input from the array and check the response
         ASSERT_EQ(actualResponse, "201 Created") << "problem with " << string(inputs[i]) << endl;
         // Create a file to store the the result as after adding the correct movies
         setFile("watchListAfterAdd", "150\n" + inputs[i]);
         // Compare the "correct" and "tested" files to validate the difference - suppose to add just one each time (In addition to the 150 id mocie)
-        ASSERT_TRUE(compareFiles(to_string(i+1) +"_watchlist", "watchListAfterAdd")) << "Comparison for repeat " << inputs[i] << " failed!";
+        ASSERT_TRUE(compareFiles(to_string(i+100) +"_watchlist", "watchListAfterAdd")) << "Comparison for repeat " << inputs[i] << " failed!";
     }
 }
 
@@ -70,13 +68,13 @@ TEST(PostExecuteTest, ValidInputWithSpaces) {
     // Initialize the "users" file (clear or create it)
     setFile("users", "1\n2");
     Post post;
-    string firstResponse = post.execute("3 150 160 1600");
-    string secondResponse = post.execute("4 150   160   1600");
+    string firstResponse = post.execute("300 150 160 1600");
+    string secondResponse = post.execute("400 150   160   1600");
     // Execute the function with each user and similar movies and check the response
     ASSERT_EQ(firstResponse, "201 Created");
     ASSERT_EQ(secondResponse, "201 Created");
     // Compare the files to validate the changes - suppose to behave the same
-    ASSERT_TRUE(compareFiles("3_watchlist", "4_watchlist")) << "Comparison for spaces failed!";
+    ASSERT_TRUE(compareFiles("300_watchlist", "400_watchlist")) << "Comparison for spaces failed!";
 }
 
 TEST(PostExecuteTest, invalidInputs) {

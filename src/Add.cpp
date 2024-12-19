@@ -7,6 +7,7 @@
 #include <set>
 #include "ILocker.h"
 #include "LockerThread.h"
+#include "dataFuncs.h"
 
 using namespace std;
 
@@ -16,17 +17,7 @@ string Add::execute(string input) {
     if (isInvalid(input)) {
         return "400 Bad Request";
     }
-    // Open the users file for reading.
-    ifstream users_file("/usr/src/mytest/data/users.txt");
-    if (!users_file.is_open()) {
-        // Try to create the file "users.txt" if it doesn't exist.
-        ofstream create_file("/usr/src/mytest/data/users.txt");
-        // If the file creation fails, display an error message.
-        if (!create_file.is_open()) {
-            return "400 Bad Request";
-        }
-    }
-    // Split the input into two parts: username and movies.
+
     size_t spacePos = input.find(' ');
     string user;
     string movies;
@@ -35,105 +26,20 @@ string Add::execute(string input) {
         movies = input.substr(spacePos + 1); 
     }   
     // Check if the user exists in the file, if exist check if the movies are already in the user's list.
-    if (isInFile(user, users_file)) {
-        checkUserList(user, movies);
+    if (isInFile(user, "users")) {
+        writeToFile(movies, user + "_watchlist");
     }
     else {
         // If the user doesn't exist, add the user and movies.
-        addUser(user, movies);
+        //addUser(user, movies);
+        writeToFile(user, "users");
+        writeToFile(movies, user + "_watchlist");
     }
 
     // Close the users file after use.
-    users_file.close();
+    //users_file.close();
 
-    return "201 Created";
-}
-
-// Function to add a new user to the users file and his movie.
-void Add::addUser(string user, string movies) {
-    // Open the users file in append mode to add the new user.
-    ofstream users_file("/usr/src/mytest/data/users.txt", std::ios::app); 
-    if (!users_file.is_open()) {
-        return;
-    }
-    // Write the username to the file and close the file.
-    users_file << user << endl;
-    users_file.close();
-    // Open the user watchlist file to the new user.
-    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
-    if (!user_watchlist.is_open()) {
-        return;
-    }
-    // close the user watchlist file.
-    user_watchlist.close();
-    // Convert the movies string into individual words (movies), iterate through each word (movie) and
-    // add each movie to the user's watchlist.
-    stringstream ss(movies);
-    string word;
-    while (ss >> word) {
-        checkUserList(user, word);
-    }
-}
-
-ILocker* addLock = new LockerThread();
-
-// Function that checks if the user already has a each movie.
-void Add::checkUserList(string user, string movies) {
-    addLock->on();
-    // Open the user's watchlist file
-    ifstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt");
-    if (!user_watchlist.is_open()) {
-        addLock->off();
-        return;
-    }
-    //create set that include all the movies the users ask to add.
-    set<string> existingMovies;
-    stringstream ss(movies);
-    string word;
-    while (ss >> word) {
-  
-        // Check if the movie is not already in the user's list.
-        if(!isInFile(word, user_watchlist)) {
-            // Check if the movie is not already in the set.
-            if (existingMovies.find(word) == existingMovies.end()) {
-                // If the movie is not in the list, add it.
-                addMoviesToUser(user, word);
-                // Add the movie to the set to prevent further duplicates
-                existingMovies.insert(word);
-            }
-        }
-    }
-    user_watchlist.close();
-    addLock->off();
-}
-
-// Function that add a movie to a user's watchlist.
-void Add::addMoviesToUser(string user, string movies) {
-    // Open the user's watchlist file in append mode
-    ofstream user_watchlist("/usr/src/mytest/data/" + user + "_watchlist.txt", std::ios::app);
-    if (!user_watchlist.is_open()) {
-        return;
-    }
-    // Write the movie to the file and close the file.
-    user_watchlist << movies << endl;
-    //]user_watchlist.close();
-}   
-
-// Function to check if a string exists in a file
-bool Add::isInFile(string str, ifstream& file) {
-
-    // Move the file pointer to the beginning to reset any previous error flags.
-    file.seekg(0, ios::beg);
-    string word;
-    // Read the file line by line to check for the specified string.
-    while (getline(file, word)) {
-        if (word == str) {
-            // The string is found in the file.
-            return true;
-        }
-    }
-    // The string is not found
-    return false;
+    return "";
 }
 
 // Function to validate the input string.

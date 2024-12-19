@@ -6,6 +6,8 @@
 #include <sstream>
 #include <fstream>
 #include <cctype>
+#include "dataFuncs.h"
+
 
 using namespace std;
 class Patch : public Add {

@@ -12,7 +12,7 @@ TEST(HelpExecuteTest, ExecutePrintsCorrectOutput) {
     // Create an object
     Help help;
     // Run the execute function
-    string actualResponse = help.execute("help");
+    string actualResponse = help.execute("");
     
     // Expected output
     string expectedResponse = 

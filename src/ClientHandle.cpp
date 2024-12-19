@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <string.h>
+#include <cstring>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
@@ -41,13 +41,14 @@ void ClientHandle::run()
         // Read a line of clientMessage and take the first word in the string.
         string response;
         string task;
+        string inputForTask;
         size_t space = clientMessage.find(' ');
         if (space == string::npos) {
             task = clientMessage;
             inputForTask = "";
         } else {
             task = clientMessage.substr(0, space);
-            string inputForTask = clientMessage.substr(space + 1);
+            inputForTask = clientMessage.substr(space + 1);
         }
         try {
             // Check if the command exists in the map of commands, if exists and execute the command by calling its execute method.
@@ -55,7 +56,6 @@ void ClientHandle::run()
                 throw invalid_argument("");
             }
             response = commands[task]->execute(inputForTask);
-
         }
         // Catch any exceptions thrown during execution and continue the loop.
         catch(...) {
