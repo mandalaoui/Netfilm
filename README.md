@@ -93,5 +93,7 @@ Tests:
 Build: docker-compose build
 Run: docker-compose up tests
 
-
+# Running Examples
+<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample2.jpg?raw=true" />
+<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample1.jpg?raw=true" />
 
