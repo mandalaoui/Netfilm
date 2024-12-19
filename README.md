@@ -1,25 +1,95 @@
-# Netflix-Project
-the project is a reccomendation system for movies.
-In the system we have data storage that contains users and the movies that they watched.
-The project has 3 main function: 
+# Netflix Client-Server
+
+# Table of Contents
+
+-	Overview
+-	Project structure
+-	UML
+-	Command project
+-	Change in project
+-	Running
+
+# Overview
+
+The Project implements a client-server based movie recommendation system. The client implement in python and provides a user interface for sending commands and display result, the server implement in c++ and will handle all the business logic.
+
+# Project Structure
+Server:
+
+-	Handle multiple clients concurrently using a thread per client.
+-	Manages the information and performs all the logical calculations.
+-	Processes commands, and sends back the result.
+    
+Client:
+
+-	Connect to server on TCP.
+-	calls a command from the user.
+-	Send user's command.
+-	Display server response.
+# UML
+<img width="938" alt="image" src="https://github.com/user-attachments/assets/1561690d-be7b-47c4-95ea-1a223902ca2b" />
+
+# Command project
 1. help - will print the functions and the input format.
-2. add - will add movies for each user (if user doesn't exist. create him).
-3. reccomend - will print a recommendation according to the movie that inserted.
+2. GET - will print a recommendation according to the movie that inserted.
+3. POST - will add user and movies to the user (if user doesn't exist. create him).
+4. PATCH -  will add movies to existing user.
+5. DELETE - will delete movies from existing user.
 
-Run command
-main:
-cd src
-docker build -t netflix .
-docker run -it -v netflix:/usr/src/mytest/data netflix
+all command will print the the appropriate outputs.
 
-test:
-cd src
-docker build -t netflix .
-docker-compose up tests
+# Changes in project
 
-image UML
-https://github.com/user-attachments/assets/f4250997-4a3c-4acd-9eea-70773f111ed6
+## Question 
+
+1.	Did the fact that the command names changed require you to touch code that should be "closed for changes but open for extension"?
+   
+    -	No, in class MapCommands – we just changed the name of the pointer' and the input that required to call the relevant class "GET".
+
+2.	Did the fact that new commands were added require you to touch code that should be "closed to changes but open to extension"?
+   
+    -	No, we create class "Map Commands" that contain map of functions object so that each new command can be added to the map.
+  
+    -	In addition, to prevent code repetition, we created new classes that inherit from the previous and the relevant change has been made in each one.
+  
+3.	Did the fact that the command output changed require you to touch code that should be "closed to changes but open to extension"?
+   
+    -	We needed to change the value that returned from the function "execute" of each command from void to string. For each command we returned the relevant output.
+
+4.	Did the fact that the input/output comes from sockets instead of the console require you to touch code that should be "closed to changes but open to extension"?
+   
+    -	Yes, we changed the using of Cout and buffers, to a new class named – ClientHandle so it will be in charge of "translating" the input from the client to a  and to send the correct response from the         server.
+  
+    -	From now on, the input/output will be managed by outside.
 
 
-image 
-https://github.com/user-attachments/assets/4a173824-a125-4265-933e-0dae46754e52
+## Change previous classes
+
+We created file with function called "dataFuncs",  that includes functions for writing to file and reading from file (checking if specific content exists in the file).
+We updated the command classes accordingly.
+
+## Update
+1. Implemented a threaded multi-client server in C++ that simultaneously handles several clients.
+2. Implemented a client in Python.
+3. created Docker containers for the server and the client and updated the Docker Compose configuration accordingly.
+
+
+# Running
+
+Server:
+
+Build: docker-compose build
+
+Run: docker-compose run -it -v netflix:/usr/src/mytest/data --rm --name netflix-project server 8080
+
+Client:
+
+Run: docker-compose run --rm client netflix-project 8080
+
+Tests:
+
+Build: docker-compose build
+Run: docker-compose up tests
+
+
+
