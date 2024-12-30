@@ -5,10 +5,10 @@ FROM python:3.8-slim
 RUN pip install requests
 
 # Copy the client code to the container
-COPY . /usr/src/myclient
+COPY client /usr/src/client/myclient
 
 # Set working directory
-WORKDIR /usr/src/myclient
+WORKDIR /usr/src/client/myclient
 
 # Expose the port the server will listen on
 #EXPOSE 12345
