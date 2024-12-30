@@ -1,20 +1,25 @@
 # Get all categories
-# GET http://127.0.0.1:12345/categories/
+# GET http://127.0.0.1:12345/movies/
 
 # Create a new category
-POST http://127.0.0.1:12345/categories/
-Content-Type: application/json
+# POST http://127.0.0.1:12345/movies/
+# Content-Type: application/json
 
-{
-  "name": "Drama7",
-  "description": "try."
-}
+# {
+#   "name": "three",
+#   "categories":["6772b3684f88b2aa9bcbc4f3"],
+#   "movie_time":"1:30",
+#   "image":"",
+#   "Publication_year":" 2024",
+#   "description": "try.",
+#   "age":"12"
+# }
 
 # # Get a specific category by ID
 # GET http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
 
 # # Update a category
-# PATCH http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# PUT http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
 # Content-Type: application/json
 
 # {
