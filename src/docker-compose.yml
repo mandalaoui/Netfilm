@@ -23,4 +23,4 @@ services:
     stdin_open: true
     init: true
     container_name: netflix-project
-    working_dir: /usr/src/myclient
+    working_dir: /usr/src/client/myclient

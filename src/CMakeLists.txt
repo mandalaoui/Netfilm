@@ -14,8 +14,38 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_executable(runProject main.cpp DeleteCommand.cpp Patch.cpp Add.cpp Post.cpp Help.cpp Recommend.cpp MapCommands.cpp Server.cpp ClientHandle.cpp AnExecutor.cpp LockerThread.cpp dataFuncs.cpp)
+include_directories(${CMAKE_SOURCE_DIR}/commands 
+                    ${CMAKE_SOURCE_DIR}/tests 
+                    ${CMAKE_SOURCE_DIR}/utils 
+                    ${CMAKE_SOURCE_DIR}/system 
+                    ${CMAKE_SOURCE_DIR}/threads
+                    ${CMAKE_SOURCE_DIR}/client
+                    ${CMAKE_SOURCE_DIR}/interfaces)
 
-add_executable(runTests tests_AllTests.cpp Add.cpp Post.cpp Patch.cpp Help.cpp Recommend.cpp DeleteCommand.cpp funcForTests.cpp LockerThread.cpp dataFuncs.cpp)
+add_executable(runProject main.cpp 
+    commands/DeleteCommand.cpp 
+    commands/Patch.cpp 
+    commands/Add.cpp 
+    commands/Post.cpp 
+    commands/Help.cpp 
+    commands/Recommend.cpp 
+    commands/MapCommands.cpp 
+    system/Server.cpp 
+    system/ClientHandle.cpp 
+    system/AnExecutor.cpp 
+    threads/LockerThread.cpp 
+    utils/dataFuncs.cpp)
+
+add_executable(runTests 
+    tests/tests_AllTests.cpp 
+    commands/Add.cpp 
+    commands/Post.cpp 
+    commands/Patch.cpp 
+    commands/Help.cpp 
+    commands/Recommend.cpp 
+    commands/DeleteCommand.cpp 
+    threads/LockerThread.cpp 
+    utils/funcForTests.cpp 
+    utils/dataFuncs.cpp)
 
 target_link_libraries(runTests gtest_main)
