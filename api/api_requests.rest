@@ -1,5 +1,5 @@
 # Get all categories
-# GET http://127.0.0.1:12345/movies/
+ GET http://127.0.0.1:12345/movies/
 
 # Create a new category
 # POST http://127.0.0.1:12345/movies/
@@ -15,17 +15,22 @@
 #   "age":"12"
 # }
 
-# # Get a specific category by ID
-# GET http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# Get a specific category by ID
+# GET http://127.0.0.1:12345/movies//6772b7a17645e79e94a67838
 
-# # Update a category
-# PUT http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# # # Update a category
+# PUT http://127.0.0.1:12345/movies/6772b7a17645e79e94a67838
 # Content-Type: application/json
 
 # {
-#   "name": "Action & Adventure",
-#   "description": "A genre combining exciting action with adventure themes."
+#    "name": "motek",
+#    "categories":["6772b3684f88b2aa9bcbc4f3"],
+#    "movie_time":"2:30",
+#    "image":"",
+#    "Publication_year":" 2024",
+#    "description": "try.",
+#    "age":"13"
 # }
 
 # Delete a category
-# DELETE http://127.0.0.1:12345/categories/6771c7f04b3b344ff1ad9a1c
+#DELETE http://127.0.0.1:12345/movies/6772b7a17645e79e94a67838

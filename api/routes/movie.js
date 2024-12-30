@@ -11,4 +11,7 @@ router.route('/:id')
     .put(movieController.updateMovie)
     .delete(movieController.deleteMovie);
 
+router.route('search/:query/')
+    .get(movieController.getMovieIncludeQuery);
+
 module.exports = router;
