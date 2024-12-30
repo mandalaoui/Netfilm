@@ -1,7 +1,7 @@
-# Get all categories
+# Get all movies
 # GET http://127.0.0.1:12345/movies/
 
-# Create a new category
+# Create a new movie
 # POST http://127.0.0.1:12345/movies/
 # Content-Type: application/json
 
@@ -15,10 +15,10 @@
 #   "age":"12"
 # }
 
-# # Get a specific category by ID
+# # Get a specific movie by ID
 # GET http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
 
-# # Update a category
+# # Update a movie
 # PUT http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
 # Content-Type: application/json
 
@@ -27,5 +27,36 @@
 #   "description": "A genre combining exciting action with adventure themes."
 # }
 
-# Delete a category
+# Delete a movie
 # DELETE http://127.0.0.1:12345/categories/6771c7f04b3b344ff1ad9a1c
+
+
+# Get all categories
+# GET http://127.0.0.1:12345/categories/
+
+# Create a new category
+# POST http://127.0.0.1:12345/categories/
+# Content-Type: application/json
+
+# {
+#   "name": "romance",
+#   "promoted": "true",
+#   "movies": ["6772bcb91359e983cd06d677"]
+# }
+
+# # Get a specific category by ID
+# GET http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+
+# # Update a category
+# PATCH http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+# Content-Type: application/json
+
+# {
+#     "name": "Action & Adventure",
+#     "promoted": "true",
+#     "movies": ["6772bcb91359e983cd06d677"]
+# }
+
+# Delete a category
+# DELETE http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+
