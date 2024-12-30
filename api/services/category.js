@@ -1,10 +1,14 @@
 const Category = require('../models/category');
 
-const createCategory = async (name, description) => {
-    const category = new Category({ name, description });
+//router.route('/')
+const createCategory = async (name, promoted, movies) => {
+    const category = new Category({ name, promoted, movies });
     return await category.save();
 };
 
+const getCategories = async () => { return await Category.find({}); };
+
+// router.route('/:id')
 const getCategoryById = async (id) => { 
     const getC = await Category.findById(id);
     if (!getC) {
@@ -12,13 +16,13 @@ const getCategoryById = async (id) => {
     }
     return getC;
 };
-const getCategories = async () => { return await Category.find({}); };
 
-const updateCategory = async (id, name, description) => {
+const updateCategory = async (id, name, promoted, movies) => {
     const category = await getCategoryById(id);
     if (!category) return null;
     category.name = name;
-    category.description = description;
+    category.promoted = promoted;
+    category.movies = movies;
     await category.save();
     return category;
 };

@@ -6,21 +6,23 @@ POST http://127.0.0.1:12345/categories/
 Content-Type: application/json
 
 {
-  "name": "Drama7",
-  "description": "try."
+  "name": "romance",
+  "promoted": "true",
+  "movies": ["6772bcb91359e983cd06d677"]
 }
 
 # # Get a specific category by ID
-# GET http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# GET http://127.0.0.1:12345/categories/67729fad1ca1dbdd20105c3f
 
 # # Update a category
-# PATCH http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# PATCH http://127.0.0.1:12345/categories/67729fad1ca1dbdd20105c3f
 # Content-Type: application/json
 
 # {
-#   "name": "Action & Adventure",
-#   "description": "A genre combining exciting action with adventure themes."
+#     "name": "Action & Adventure",
+#     "promoted": "true",
+#     "movies": [2, 4, 6, 8]
 # }
 
 # Delete a category
-# DELETE http://127.0.0.1:12345/categories/6771c7f04b3b344ff1ad9a1c
+# DELETE http://127.0.0.1:12345/categories/67729fad1ca1dbdd20105c3f
