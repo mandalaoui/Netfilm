@@ -1,13 +1,13 @@
-# Get all categories
+# Get all movies
  GET http://127.0.0.1:12345/movies/
 
-# Create a new category
+# Create a new movie
 # POST http://127.0.0.1:12345/movies/
 # Content-Type: application/json
 
 # {
-#   "name": "three",
-#   "categories":["6772b3684f88b2aa9bcbc4f3"],
+#   "name": "four",
+#   "categories":["6772bf12ad06cf17fc1d67b4", "6773c5e4ecd7947d20a7617d"],
 #   "movie_time":"1:30",
 #   "image":"",
 #   "Publication_year":" 2024",
