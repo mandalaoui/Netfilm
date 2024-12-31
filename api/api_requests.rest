@@ -60,3 +60,19 @@
 # Delete a category
 # DELETE http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
 
+
+# Create a new user
+# POST http://127.0.0.1:12345/users/
+# Content-Type: application/json
+
+# {
+#   "username": "maayan",
+#   "email": "123@123.com",
+#   "password": "123456",
+#   "age": "1",
+#   "phoneNumber": "5525381648",
+#   "creditcard": "1234567289123"
+# }
+
+# Get a specific movie by ID
+# GET http://127.0.0.1:12345/users/6773d84d1b9665553523cd58
