@@ -6,8 +6,8 @@
 # Content-Type: application/json
 
 # {
-#   "name": "three",
-#   "categories":["6772b3684f88b2aa9bcbc4f3"],
+#   "name": "four",
+#   "categories":["6772bf12ad06cf17fc1d67b4", "6773c5e4ecd7947d20a7617d"],
 #   "movie_time":"1:30",
 #   "image":"",
 #   "Publication_year":" 2024",
@@ -19,12 +19,13 @@
 # GET http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
 
 # # Update a movie
-# PUT http://127.0.0.1:12345/categories/676ff4bb1dd6cd34b554ce2e
+# PUT http://127.0.0.1:12345/categories/6772bcb91359e983cd06d677
 # Content-Type: application/json
 
 # {
-#   "name": "Action & Adventure",
-#   "description": "A genre combining exciting action with adventure themes."
+#     "name": "Action & Adventure",
+#     "isPromoted": true,
+#     "movies": ["6772bcb91359e983cd06d677"]
 # }
 
 # Delete a movie
@@ -35,28 +36,28 @@
 # GET http://127.0.0.1:12345/categories/
 
 # Create a new category
-# POST http://127.0.0.1:12345/categories/
-# Content-Type: application/json
+POST http://127.0.0.1:12345/categories/
+Content-Type: application/json
 
-# {
-#   "name": "romance",
-#   "promoted": "true",
-#   "movies": ["6772bcb91359e983cd06d677"]
-# }
+{
+  "name": "Action4",
+  "isPromoted": true,
+  "movies": ["6773c7f7e33d921de44dd6eb", "1234"]
+}
 
 # # Get a specific category by ID
 # GET http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
 
 # # Update a category
-# PATCH http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+# PATCH http://127.0.0.1:12345/categories/6773c906e33d921de44dd706
 # Content-Type: application/json
 
 # {
 #     "name": "Action & Adventure",
-#     "promoted": "true",
-#     "movies": ["6772bcb91359e983cd06d677"]
+#     "isPromoted": false,
+#     "movies": ["6773c920e33d921de44dd70c"]
 # }
 
 # Delete a category
-# DELETE http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+# DELETE http://127.0.0.1:12345/categories/6773c8e2e33d921de44dd6fa
 

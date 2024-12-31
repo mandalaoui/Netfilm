@@ -7,10 +7,15 @@ const Category = new Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        default: ''
-    }
+    isPromoted : {
+        type: Boolean,
+        required: true
+    },
+    movies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'movie',
+        // default: ''
+    }]
 });
 
 module.exports = mongoose.model('Category', Category);
