@@ -2,7 +2,7 @@ const categoryService = require('../services/category');
 
 // router.route('/')
 const createCategory = async (req, res) => {
-    res.json(await categoryService.createCategory(req.body.name, req.body.promoted, req.body.movies));
+    res.json(await categoryService.createCategory(req.body.name, req.body.isPromoted, req.body.movies));
 };
 
 const getCategories = async (req, res) => {
@@ -19,7 +19,7 @@ const getCategory = async (req, res) => {
 };
 
 const updateCategory = async (req, res) => {
-    const category = await categoryService.updateCategory(req.params.id, req.body.name, req.body.promoted, req.body.movies);
+    const category = await categoryService.updateCategory(req.params.id, req.body.name, req.body.isPromoted, req.body.movies);
     if (!category) {
         return res.status(404).json({ errors: ['Category not found'] });
     }

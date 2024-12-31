@@ -7,14 +7,14 @@ const Category = new Schema({
         type: String,
         required: true
     },
-    promoted : {
+    isPromoted : {
         type: Boolean,
         required: true
     },
     movies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'movie',
-        default: ''
+        // default: ''
     }]
 });
 
