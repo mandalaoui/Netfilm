@@ -13,7 +13,7 @@ const Category = new Schema({
     },
     movies: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'movie',
+        ref: 'Movie',
         // default: ''
     }]
 });

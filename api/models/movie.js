@@ -10,7 +10,7 @@ const Movie = new Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
-        default: ''
+        //default: ''
     }],
     movie_time: {
         type: String,
@@ -21,7 +21,7 @@ const Movie = new Schema({
         required: false
     },
     Publication_year: {
-        type: String,
+        type: Number,
         required: true
     },
     description: {
@@ -29,7 +29,7 @@ const Movie = new Schema({
         default: ''
     },
     age: {
-        type: String,
+        type: Number,
         required: false
     }
 });
