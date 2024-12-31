@@ -1,4 +1,6 @@
 const Category = require('../models/category');
+const mongoose = require('mongoose');
+
 
 const validateMovieInput = async (req, res, next) => {
     const { name, categories, movie_time, Publication_year, age } = req.body;
@@ -21,6 +23,12 @@ const validateMovieInput = async (req, res, next) => {
 
     if (age && typeof age !== 'number') {
         return res.status(400).json({ error: 'Age must be a number' });
+    }
+
+    for (const categoryId of categories) {
+        if (!mongoose.Types.ObjectId.isValid(categoryId)) {
+            return res.status(400).json({ error: `Invalid category ID: ${categoryId}` });
+        }
     }
 
     const categoryCheck = await Category.find({ '_id': { $in: categories } });

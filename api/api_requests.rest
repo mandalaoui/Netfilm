@@ -1,36 +1,106 @@
-# Get all movies
- GET http://127.0.0.1:12345/movies/
+# movies
 
-# Create a new movie
+# Get all movies
+ #GET http://127.0.0.1:12345/movies/
+
+# # Create a new movie
 # POST http://127.0.0.1:12345/movies/
 # Content-Type: application/json
 
 # {
-#   "name": "four",
-#   "categories":["6772bf12ad06cf17fc1d67b4", "6773c5e4ecd7947d20a7617d"],
-#   "movie_time":"1:30",
+#   "name": "lior",
+#   "categories":["677404a9eeb2fe1f60063ca9"],
+#   "movie_time":"2:30",
 #   "image":"",
-#   "Publication_year":" 2024",
-#   "description": "try.",
-#   "age":"12"
+#   "Publication_year":2024,
+#   "description": "i contain query",
+#   "age":12
 # }
 
-# Get a specific category by ID
-# GET http://127.0.0.1:12345/movies//6772b7a17645e79e94a67838
 
-# # # Update a category
-# PUT http://127.0.0.1:12345/movies/6772b7a17645e79e94a67838
+# GET http://127.0.0.1:12345/movies/search/query
+
+# Get a specific movie by ID 
+# GET http://127.0.0.1:12345/movies/676ff4bb1dd6cd34b554ce2e
+
+# Update a movie
+# PUT http://127.0.0.1:12345/movies/67741e7a2ccc98fb7b970bee
 # Content-Type: application/json
 
 # {
-#    "name": "motek",
-#    "categories":["6772b3684f88b2aa9bcbc4f3"],
+#    "name": "after change",
+#    "categories":["677404eaeeb2fe1f60063cae"],
 #    "movie_time":"2:30",
 #    "image":"",
 #    "Publication_year":" 2024",
 #    "description": "try.",
-#    "age":"13"
+#    "age":"13" 
 # }
 
-# Delete a category
-#DELETE http://127.0.0.1:12345/movies/6772b7a17645e79e94a67838
+#Delete a movies
+# DELETE http://127.0.0.1:12345/movies/67740cc60a3ebb81684a41cf
+
+
+# category
+
+# Get a specific category by ID 
+# GET http://127.0.0.1:12345/categories/677406ef2a04bb001b380a5f
+
+# # Update a category 
+# PUT http://127.0.0.1:12345/categories/6772bcb91359e983cd06d677 
+# Content-Type: application/json
+
+# { 
+# "name": "Action & Adventure", 
+# "isPromoted": true, 
+# "movies": ["67740462eeb2fe1f60063ca6"] 
+# }
+
+# Delete a category 
+# DELETE http://127.0.0.1:12345/categories/6771c7f04b3b344ff1ad9a1c
+
+# Get all categories 
+# GET http://127.0.0.1:12345/categories/
+
+# # Create a new category 
+# POST http://127.0.0.1:12345/categories/ 
+# Content-Type: application/json
+
+# {
+# "name": "Romantic", 
+# "isPromoted": true, 
+# "movies": ["12345"]
+# }
+
+# Get a specific category by ID 
+# GET http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
+
+# # Update a category 
+# PATCH http://127.0.0.1:12345/categories/6773c906e33d921de44dd706 
+# Content-Type: application/json
+
+# { 
+# "name": "Action & Adventure", 
+# "isPromoted": false, 
+# "movies": ["6773c920e33d921de44dd70c"] 
+# }
+
+# Delete a category 
+# DELETE http://127.0.0.1:12345/categories/6773c8e2e33d921de44dd6fa
+
+# Create a new user 
+# POST http://127.0.0.1:12345/users/ 
+# Content-Type: application/json
+
+# { 
+# "username": "lior", 
+# "email": "maayan@123.com", 
+# "password": "123456", 
+# "age": "1", 
+# "phoneNumber": "0526834512", 
+# "creditcard": "1234567289123", 
+# "watchedMovies": "67741e7a2ccc98fb7b970bee"
+# }
+
+# Get a specific movie by ID 
+# GET http://127.0.0.1:12345/users/6773d84d1b9665553523cd58
