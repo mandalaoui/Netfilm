@@ -9,7 +9,7 @@ const getMovies = async (req, res) => {
     
     const moviesByCategories = await movieService.getMoviesByCategories(req.query.userId);
     if(!moviesByCategories) {
-        res.status(400).json({ error: ['400 Bad Request'] });
+        res.status(400).json({ error: ['404 Not Found'] });
     }
     res.status(200).json(moviesByCategories);
     //res.json(await movieService.getMovies());
@@ -40,8 +40,8 @@ const deleteMovie = async (req, res) => {
     res.json(movie);
 };
 
-const getMovieIncludeQuery = async (req, res) => {};
+//const getMovieIncludeQuery = async (req, res) => {};
 
 
 
-module.exports = {createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery };
+module.exports = {createMovie, getMovies, getMovie, updateMovie, deleteMovie };

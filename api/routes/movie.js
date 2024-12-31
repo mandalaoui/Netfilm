@@ -1,10 +1,11 @@
 const express = require('express');
 var router = express.Router();
 const movieController = require('../controllers/movie');
+const movieValidation = require('../validation/movie');
 
 router.route('/')
     .get(movieController.getMovies)
-    .post(movieController.createMovie);
+    .post(movieValidation.validateMovieInput, movieController.createMovie);
 
 router.route('/:id')
     .get(movieController.getMovie)

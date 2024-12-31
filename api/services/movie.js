@@ -69,4 +69,4 @@ const deleteMovie = async (id) => {
     return movie;
 };
 
-module.exports = {createMovie, getMovieById, getMoviesByCategories, updateMovie, deleteMovie }
+module.exports = {createMovie, getMovieById, updateMovie, deleteMovie }
