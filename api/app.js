@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const categories = require('./routes/category');
 const movies = require('./routes/movie');
 const users = require('./routes/user');
+const users = require('./routes/tokens');
 
 require('custom-env').env(process.env.NODE_ENV, './config');
 mongoose.connect('mongodb://127.0.0.1:27017/api');
@@ -16,4 +17,5 @@ app.use(express.json());
 app.use('/categories', categories);
 app.use('/movies', movies);
 app.use('/users', users);
+app.use('/tokens', tokens);
 app.listen(process.env.PORT);
