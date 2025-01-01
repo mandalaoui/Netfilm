@@ -33,7 +33,7 @@ const User = new Schema({
     },
     creditcard : {
         type: String,
-        required: true
+        required: true  
     },
     watchedMovies : [{
         type: mongoose.Schema.Types.ObjectId,

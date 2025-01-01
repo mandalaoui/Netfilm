@@ -9,6 +9,8 @@
 #include <functional>  
 #include <atomic>
 
+using namespace std;
+
 class ThreadPool {
 public:
     ThreadPool(size_t numThreads);
@@ -18,10 +20,10 @@ public:
 
 private:
     std::vector<std::thread> workers;
-    std::queue<std::function<void()>> tasks;        
+    std::queue<function<void()>> tasks;        
     std::mutex queueMutex;                         
     std::condition_variable condition;            
-    std::atomic<bool> stop;                      
+    std::atomic<bool> stop;       
 
     void workerThread(); 
 };

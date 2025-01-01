@@ -161,7 +161,7 @@ string Recommend::execute(string input) {
     my_movie = word;
 
     if (!isInFile(my_user, "users")) {
-        response += "404 Not Found";
+        response += "404 Not Found1";
         // Exit if user not found
         return response;
     }
@@ -171,7 +171,7 @@ string Recommend::execute(string input) {
     // Find relevant users
     vector<string> relevent_users = releventUsers();
     if(relevent_users.empty()) {
-        response += "404 Not Found";
+        response += "404 Not Found2";
         // Exit if user not found
         return response;
     }
