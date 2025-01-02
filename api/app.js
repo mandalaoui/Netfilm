@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const categories = require('./routes/category');
 const movies = require('./routes/movie');
 const users = require('./routes/user');
-const users = require('./routes/tokens');
+const tokens = require('./routes/tokens');
 
 require('custom-env').env(process.env.NODE_ENV, './config');
 mongoose.connect('mongodb://127.0.0.1:27017/api');

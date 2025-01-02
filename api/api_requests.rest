@@ -36,14 +36,14 @@
 # GET http://127.0.0.1:12345/categories/
 
 # Create a new category
-POST http://127.0.0.1:12345/categories/
-Content-Type: application/json
+# POST http://127.0.0.1:12345/categories/
+# Content-Type: application/json
 
-{
-  "name": "Action4",
-  "isPromoted": true,
-  "movies": ["6773c7f7e33d921de44dd6eb", "1234"]
-}
+# {
+#   "name": "Action4",
+#   "isPromoted": true,
+#   "movies": ["6773c7f7e33d921de44dd6eb", "1234"]
+# }
 
 # # Get a specific category by ID
 # GET http://127.0.0.1:12345/categories/6772bc837eb8eb017018a917
@@ -77,3 +77,12 @@ Content-Type: application/json
 
 # Get a specific movie by ID
 # GET http://127.0.0.1:12345/users/6773d84d1b9665553523cd58
+
+
+POST http://127.0.0.1:12345/tokens/
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": "123456"
+}
