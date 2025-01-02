@@ -13,6 +13,8 @@
 extern MapCommands map; 
 using namespace std;
 
+AnExecutor::AnExecutor(size_t numThreads) : pool(numThreads) {}
+
 void AnExecutor::execute(Runnable& command)
 {
     // Create a new thread to run the command's 'run' method. The thread is detached so it runs independently.

@@ -171,6 +171,10 @@ string Recommend::execute(string input) {
     // Find relevant users
     vector<string> relevent_users = releventUsers();
     if(relevent_users.empty()) {
+        if(isInFile(my_movie, my_user + "_watchlist")) {
+            response += "200 Ok\n\n";
+            return response;
+        }
         response += "404 Not Found";
         // Exit if user not found
         return response;

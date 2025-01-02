@@ -1,7 +1,10 @@
 # movies
 
 # Get all movies
- #GET http://127.0.0.1:12345/movies/
+# GET http://127.0.0.1:12345/movies/
+# userId: "6775424d0dce1623c5276f71"
+# GET http://127.0.0.1:12345/movies/?userId=677541fc0dce1623c5276f6f
+
 
 # # Create a new movie
 # POST http://127.0.0.1:12345/movies/
@@ -21,7 +24,7 @@
 # GET http://127.0.0.1:12345/movies/search/query
 
 # Get a specific movie by ID 
-# GET http://127.0.0.1:12345/movies/676ff4bb1dd6cd34b554ce2e
+# GET http://127.0.0.1:12345/movies/12234
 
 # Update a movie
 # PUT http://127.0.0.1:12345/movies/67741e7a2ccc98fb7b970bee
@@ -67,9 +70,9 @@
 # Content-Type: application/json
 
 # {
-# "name": "Romantic", 
-# "isPromoted": true, 
-# "movies": ["12345"]
+# "name": "child", 
+# "isPromoted": false, 
+# "movies": ["67741e5a2ccc98fb7b970be9"]
 # }
 
 # Get a specific category by ID 
