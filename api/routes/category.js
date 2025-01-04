@@ -1,16 +1,16 @@
 const express = require('express');
 var router = express.Router();
 const categoryController = require('../controllers/category');
-const { validateCategoryInput } = require('../validation/category');
+const categoryValidation = require('../validation/category');
 
 
 router.route('/')
     .get(categoryController.getCategories)
-    .post(validateCategoryInput, categoryController.createCategory);
+    .post(categoryValidation.validateCategoryInput, categoryController.createCategory);
 
 router.route('/:id')
-    .get(categoryController.getCategory)
-    .patch(validateCategoryInput, categoryController.updateCategory)
-    .delete(validateCategoryInput, categoryController.deleteCategory);
+    .get(categoryValidation.validateCategoryId, categoryController.getCategory)
+    .patch(categoryValidation.validateCategoryId, categoryValidation.validateCategoryInput, categoryController.updateCategory)
+    .delete(categoryValidation.validateCategoryId, categoryController.deleteCategory);
 
 module.exports = router;
