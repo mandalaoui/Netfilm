@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include "ClientHandle.h"
 #include "AnExecutor.h"
+#define MAX_CLIENT 100
 
 using namespace std;
 
@@ -39,7 +40,7 @@ void Server::runServer()
     }
 
     //Listen
-    if(listen(serverSocket,0) < 0) {
+    if(listen(serverSocket, MAX_CLIENT) < 0) {
         perror("Listen failed");
         exit(EXIT_FAILURE);
     }

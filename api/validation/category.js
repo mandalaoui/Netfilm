@@ -1,5 +1,7 @@
 // const Category = require('../models/category');
 const Movie = require('../models/movie');
+const mongoose = require('mongoose');
+
 
 const validateCategoryInput = async (req, res, next) => {
     const { name, isPromoted, movies } = req.body;
@@ -15,6 +17,11 @@ const validateCategoryInput = async (req, res, next) => {
     // Validate 'movies'
     if (!Array.isArray(movies)) {
         return res.status(400).json({ error: 'Movies must be an array' });
+    }
+    for (const movieId of movies) {
+        if (!mongoose.Types.ObjectId.isValid(movieId)) {
+            return res.status(400).json({ error: `Invalid movie ID: ${movieId}` });
+        }
     }
     // Check if all movies exist in the database
     const foundMovies = await Movie.find({ _id: { $in: movies } });

@@ -33,6 +33,7 @@ add_executable(runProject main.cpp
     system/Server.cpp 
     system/ClientHandle.cpp 
     system/AnExecutor.cpp 
+    system/ThreadPool.cpp 
     threads/LockerThread.cpp 
     utils/dataFuncs.cpp)
 
