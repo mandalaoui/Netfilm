@@ -2,6 +2,7 @@ const Category = require('../models/category');
 const Movie = require('../models/movie');
 const mongoose = require('mongoose');
 
+
 // Middleware to validate the category input
 const validateCategoryInput = async (req, res, next) => {
     const { name, isPromoted, movies } = req.body;

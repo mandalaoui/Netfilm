@@ -11,6 +11,7 @@
 #include "Executor.h"
 #include "AnExecutor.h"
 #include "ClientHandle.h"
+#define MAX_CLIENT 100
 
 using namespace std;
 
@@ -18,7 +19,7 @@ class Server
 {
 private:
     const int port;
-    Executor* executor = new AnExecutor();
+    Executor* executor = new AnExecutor(MAX_CLIENT);
 public:
     // Constructor to initialize the server with a specified port.
     Server(const int port);

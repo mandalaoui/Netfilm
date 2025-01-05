@@ -12,13 +12,18 @@
 #include "MapCommands.h"
 #include "Executor.h"
 #include "ClientHandle.h"
+#include <thread>
+#include "ThreadPool.h"
 
 using namespace std;
 
 class AnExecutor : public Executor {
     public:
+        AnExecutor(size_t numThreads);
         // Override the execute method of the Executor base class.
         void execute(Runnable& command) override;
+    private:
+        ThreadPool pool;
 
 };
 #endif
