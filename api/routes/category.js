@@ -5,12 +5,12 @@ const categoryValidation = require('../validation/category');
 
 
 router.route('/')
-    .get(categoryController.getCategories)
-    .post(categoryValidation.validateCategoryInput, categoryController.createCategory);
+    .get(categoryValidation.validateUserId, categoryController.getCategories)
+    .post(categoryValidation.validateUserId, categoryValidation.validateCategoryInput, categoryController.createCategory);
 
 router.route('/:id')
-    .get(categoryValidation.validateCategoryId, categoryController.getCategory)
-    .patch(categoryValidation.validateCategoryId, categoryValidation.validateCategoryInput, categoryController.updateCategory)
-    .delete(categoryValidation.validateCategoryId, categoryController.deleteCategory);
+    .get(categoryValidation.validateUserId, categoryValidation.validateCategoryId, categoryController.getCategory)
+    .patch(categoryValidation.validateUserId, categoryValidation.validateCategoryId, categoryValidation.validateCategoryInput, categoryController.updateCategory)
+    .delete(categoryValidation.validateUserId, categoryValidation.validateCategoryId, categoryController.deleteCategory);
 
 module.exports = router;

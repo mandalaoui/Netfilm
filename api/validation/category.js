@@ -1,6 +1,7 @@
 const Category = require('../models/category');
 const Movie = require('../models/movie');
 const mongoose = require('mongoose');
+const userService = require('../services/user');
 
 
 // Middleware to validate the category input
@@ -36,6 +37,31 @@ const validateCategoryInput = async (req, res, next) => {
     next();
 }
 
+// Middleware to validate the `userId` in the request header
+const validateUserId = async (req, res, next) => {
+    const userID = req.header('userId');
+
+    // Check if the userId is missing in the request header
+    if(!userID) {
+        return res.status(404).json({ errors: ['User must be conected'] });
+    }
+
+    // Fetch the user from the database using the userId
+    const user = await userService.getUserById(userID);
+
+    // If no user is found, return a "User not found" error
+    if(!user) {
+        return res.status(404).json({ errors: ['User not found'] });
+    }
+
+    // Check if the userId is in a valid MongoDB ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ error: ['Invalid User ID format'] });
+    }
+
+    next();
+}
+
 // Middleware to validate the category ID in the request parameters
 const validateCategoryId = async (req, res, next) => {
     const { id } = req.params;
@@ -55,4 +81,4 @@ const validateCategoryId = async (req, res, next) => {
     next();
 };
 
-module.exports = { validateCategoryInput, validateCategoryId };
+module.exports = { validateCategoryInput, validateCategoryId , validateUserId};
