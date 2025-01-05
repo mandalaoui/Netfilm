@@ -3,8 +3,14 @@
 # Get all movies
 # GET http://127.0.0.1:12345/movies/
 # userId: "6775424d0dce1623c5276f71"
-# GET http://127.0.0.1:12345/movies/?userId=677541fc0dce1623c5276f6f
 
+# GET http://127.0.0.1:12345/movies/
+# userId: 6777bcc0fb3e5288c9e272d9
+
+# curl -X GET http://127.0.0.1:12345/movies/ -H "userId: 6777bcc0fb3e5288c9e272d9"
+
+
+# curl -X GET http://127.0.0.1:12345/movies/
 
 # # Create a new movie
 # POST http://127.0.0.1:12345/movies/
@@ -114,10 +120,10 @@
 # GET http://127.0.0.1:12345/users/6773d84d1b9665553523cd58
 
 
-POST http://127.0.0.1:12345/tokens/
-Content-Type: application/json
+# POST http://127.0.0.1:12345/tokens/
+# Content-Type: application/json
 
-{
-  "username": "",
-  "password": "123456"
-}
+# {
+#   "username": "maayan",
+#   "password": "123456"
+# }

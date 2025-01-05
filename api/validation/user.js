@@ -1,4 +1,6 @@
-const validateUserInput = (req, res, next) => {
+const User = require('../models/user');
+
+const validateUserInput = async (req, res, next) => {
     const {
         username,
         email,
@@ -15,6 +17,12 @@ const validateUserInput = (req, res, next) => {
     // Validate username: must be a non-empty string.
     if (!username || typeof username !== 'string') {
         return res.status(400).json({ error: 'Invalid or missing username' });
+    }
+
+    // Check if the username is unique in the database
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).json({ error: 'Username already exists' });
     }
 
     // Validate email: must match a general email format.
@@ -59,5 +67,30 @@ const validateUserInput = (req, res, next) => {
     next();
 };
 
+// Middleware to validate the `userId` in the request header
+const validateUserId = async (req, res, next) => {
+    const userID = req.header('userId');
+
+    // Check if the userId is missing in the request header
+    if(!userID) {
+        return res.status(404).json({ errors: ['User must be conected'] });
+    }
+
+    // Fetch the user from the database using the userId
+    const user = await userService.getUserById(userID);
+
+    // If no user is found, return a "User not found" error
+    if(!user) {
+        return res.status(404).json({ errors: ['User not found'] });
+    }
+
+    // Check if the userId is in a valid MongoDB ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ error: ['Invalid User ID format'] });
+    }
+
+    next();
+}
+
 // Export the validation function for use in routes or controllers.
-module.exports = { validateUserInput };
+module.exports = { validateUserInput, validateUserId };

@@ -1,5 +1,7 @@
 const Category = require('../models/category');
 const mongoose = require('mongoose');
+const userService = require('../services/user');
+
 
 // Middleware to validate movie input when creating or updating a movie.
 const validateMovieInput = async (req, res, next) => {
@@ -63,16 +65,24 @@ const validateMovieId = async (req, res, next) => {
     next();
 }
 
-// Middleware to validate user ID in query params
+// Middleware to validate the `userId` in the request header
 const validateUserId = async (req, res, next) => {
-    const userId = req.query.userId;
-    
-    // Check if the user ID is provided
-    if (!userId) {
-        return res.status(400).json({ error: ['User ID is required'] });
+    const userID = req.header('userId');
+
+    // Check if the userId is missing in the request header
+    if(!userID) {
+        return res.status(404).json({ errors: ['User must be conected'] });
     }
 
-    // Check if the user ID is in a valid ObjectId format
+    // Fetch the user from the database using the userId
+    const user = await userService.getUserById(userID);
+
+    // If no user is found, return a "User not found" error
+    if(!user) {
+        return res.status(404).json({ errors: ['User not found'] });
+    }
+
+    // Check if the userId is in a valid MongoDB ObjectId format
     if (!mongoose.Types.ObjectId.isValid(userId)) {
         return res.status(400).json({ error: ['Invalid User ID format'] });
     }
