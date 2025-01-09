@@ -1,118 +1,113 @@
 # movies
 
-# Get all movies
-GET http://localhost:12345/api/movies/
-# userId: "6775424d0dce1623c5276f71"
+# Get all movies 
+# GET http://localhost:12345/api/movies/ 
+# userId: 677f86e856fc4b5f85be2e98
 
-# Create a new movie
-# POST http://localhost:12345/api/movies/
-# userId: "6775424d0dce1623c5276f71"
-# Content-Type: application/json
-
-# {
-#   "name": "three",
-#   "categories":[],
-#   "movie_time":"1:30",
-#   "image":"",
-#   "Publication_year":2024,
-#   "description": "i contain query",
-#   "age":12
-# }
-
-# # Get a specific movie by ID
-# GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed
-# userId: "6775424d0dce1623c5276f71"
-
-# # Update a movie
-# PUT http://localhost:12345/api/movies/6772bcb91359e983cd06d677
-# Content-Type: application/json
-# userId: "6775424d0dce1623c5276f71"
-
-# {
-#    "name": "after change",
-#    "categories":["677404eaeeb2fe1f60063cae"],
-#    "movie_time":"2:30",
-#    "image":"",
-#    "Publication_year":" 2024",
-#    "description": "try.",
-#    "age":"13" 
-# }
-
-# Delete a movie
-# DELETE http://localhost:12345/api/movies/67754a933b1861a141d12a96
-# userId: "6775424d0dce1623c5276f71"
-
-# # Get recommendation
-GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
-userId: 67796c2e62e8db81858514e7
-
-# # Add movie to user's watchlist
-# POST http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
-# Content-Type: application/json
-# userId: 67796c2e62e8db81858514e7
-
-
-# Get all categories
-# GET http://localhost:12345/api/categories/
-# userId: "6775424d0dce1623c5276f71"
-
-# Create a new category
-# POST http://localhost:12345/api/categories/
-# userId: "6775424d0dce1623c5276f71"
-# Content-Type: application/json
-
-# {
-#   "name": "six",
-#   "isPromoted": true,
-#   "movies": ["6773c920e33d921de44dd70c"]
-# }
-# {
-#   "name": "Action4",
-#   "isPromoted": true,
-#   "movies": ["6773c7f7e33d921de44dd6eb", "1234"]
-# }
-
-# # Get a specific category by ID
-# GET http://localhost:12345/api/categories/6773c906e33d921de44dd706
-# userId: "6775424d0dce1623c5276f71"
-
-# # Update a category
-# PATCH http://localhost:12345/api/categories/6773c906e33d921de44dd706
-# userId: "6775424d0dce1623c5276f71"
+# Create a new movie 
+# POST http://localhost:12345/api/movies/ 
+# userId: 677f953d41d2dca2cb88f3ef
 # Content-Type: application/json
 
 # { 
-# "name": "Action & Adventure", 
+#   "name": "two", 
+#   "categories":[],
+#   "movie_time":"1:30", 
+#   "image":"", 
+#   "Publication_year":2024, 
+#   "description": "i contain query", 
+#   "age":12 
+# }
+
+# # Get a specific movie by ID 
+# GET http://localhost:12345/api/movies/677abf7a856fe5e0a21640db 
+# userId: 677f86e856fc4b5f85be2e98
+
+# # Update a movie 
+# PUT http://localhost:12345/api/movies/677abf7a856fe5e0a21640db 
+# Content-Type: application/json 
+# userId: 677f86e856fc4b5f85be2e98
+
+# { 
+#    "name": "after change", 
+#    "categories":["6773e0fedf73ec45ec318a6a"], 
+#    "movie_time":"2:30", 
+#    "image":"", 
+#    "Publication_year":2024, 
+#    "description": "try.", 
+#    "age":13 
+# }
+
+# Delete a movie 
+DELETE http://localhost:12345/api/movies/677f954941d2dca2cb88f3f3 
+userId: 677f953d41d2dca2cb88f3ef
+
+# # Get recommendation 
+# GET http://localhost:12345/api/movies/677f908a687c75430066e9a9/recommend/ 
+# userId: 677f86e856fc4b5f85be2e98
+
+# # Add movie to user's watchlist 
+# POST http://localhost:12345/api/movies/677f954941d2dca2cb88f3f3/recommend/ 
+# Content-Type: application/json 
+# userId: 677f953d41d2dca2cb88f3ef
+
+
+# Get all categories 
+# GET http://localhost:12345/api/categories/ 
+# userId: 677f86e856fc4b5f85be2e98
+
+# Create a new category 
+# POST http://localhost:12345/api/categories/ 
+# userId: 677f86e856fc4b5f85be2e98
+# Content-Type: application/json
+
+# { 
+#   "name": "Action4", 
+#   "isPromoted": true, 
+#   "movies": ["6779644c38651f8c2e4cb132", "677abf72856fe5e0a21640d7"] 
+# }
+
+# # Get a specific category by ID 
+# GET http://localhost:12345/api/categories/677ac05953dbec53c5b57b64 
+# userId: 677f86e856fc4b5f85be2e98
+
+# # Update a category 
+# PATCH http://localhost:12345/api/categories/677ac05953dbec53c5b57b64 
+# userId: 677f86e856fc4b5f85be2e98
+# Content-Type: application/json
+
+# { 
+# "name": "comedy", 
 # "isPromoted": false, 
-# "movies": ["6773c920e33d921de44dd70c"] 
+# "movies": ["6779644c38651f8c2e4cb132"] 
 # }
 
-# Delete a category
-# DELETE http://localhost:3000/api/categories/677557c50aa8e6a1e680b063
-# userId: "6775424d0dce1623c5276f71"
+# Delete a category 
+# DELETE http://localhost:12345/api/categories/67798ff11eb94c1c56b2cdd8 
+# userId: 677f86e856fc4b5f85be2e98
 
-# # Create a new user
-# POST http://localhost:12345/api/users/
+# # Create a new user 
+# POST http://localhost:12345/api/users/ 
 # Content-Type: application/json
 
-# {
-#   "username": "lior",
-#   "email": "123@123.com",
-#   "password": "123456",
-#   "age": "1",
-#   "phoneNumber": "5525381648",
-#   "creditcard": "1234567289123"
+# { 
+#   "username": "mayan", 
+#   "email": "123@123.com", 
+#   "password": "123456", 
+#   "age": "1", 
+#   "phoneNumber": "5525381648", 
+#   "creditcard": "1234567289123" 
 # }
 
-# Connect to system
-# POST http://localhost:12345/api/tokens/
+# Connect to system 
+# POST http://localhost:12345/api/tokens/ 
 # Content-Type: application/json
 
-# {
-#   "username": "maayan",
-#   "password": "123456"
+# { 
+#   "username": "maayan", 
+#   "password": "123456" 
 # }
 
-# Get a specific user by ID
-# GET http://localhost:12345/api/users/6773d84d1b9665553523cd58
-# userId: "6773d84d1b9665553523cd58"
+# Get a specific user by ID 
+# GET http://localhost:12345/api/users/677ac0ec53dbec53c5b57b7f 
+# userId: 677f86e856fc4b5f85be2e98

@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const userService = require('../services/user');
+const mongoose = require('mongoose');
+
 
 const validateUserInput = async (req, res, next) => {
     const {
@@ -85,7 +88,7 @@ const validateUserId = async (req, res, next) => {
     }
 
     // Check if the userId is in a valid MongoDB ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
         return res.status(400).json({ error: ['Invalid User ID format'] });
     }
 
