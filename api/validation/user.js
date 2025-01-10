@@ -25,7 +25,7 @@ const validateUserInput = async (req, res, next) => {
     // Check if the username is unique in the database
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-        return res.status(400).json({ error: 'Username already exists' });
+        return res.status(404).json({ error: 'Username already exists' });
     }
 
     // Validate email: must match a general email format.
@@ -71,12 +71,17 @@ const validateUserInput = async (req, res, next) => {
 };
 
 // Middleware to validate the `userId` in the request header
-const validateUserId = async (req, res, next) => {
+const validateUserIdHeader = async (req, res, next) => {
     const userID = req.header('userId');
 
     // Check if the userId is missing in the request header
     if(!userID) {
-        return res.status(404).json({ errors: ['User must be conected'] });
+        return res.status(400).json({ errors: ['User must be conected'] });
+    }
+
+    // Check if the userId is in a valid MongoDB ObjectId format
+    if (!mongoose.Types.ObjectId.isValid(userID)) {
+        return res.status(400).json({ error: ['Invalid User ID format'] });
     }
 
     // Fetch the user from the database using the userId
@@ -87,13 +92,27 @@ const validateUserId = async (req, res, next) => {
         return res.status(404).json({ errors: ['User not found'] });
     }
 
-    // Check if the userId is in a valid MongoDB ObjectId format
-    if (!mongoose.Types.ObjectId.isValid(userID)) {
-        return res.status(400).json({ error: ['Invalid User ID format'] });
-    }
-
     next();
 }
 
+// Middleware to validate the user ID in the request parameters
+const validateUserId = async (req, res, next) => {
+    const { id } = req.params;
+
+    // Validate the 'id' field: It must be a valid MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    // Check if the category exists in the database
+    const user = await User.findById(id);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // If the category exists, proceed to the next middleware or route handler
+    next();
+};
+
 // Export the validation function for use in routes or controllers.
-module.exports = { validateUserInput, validateUserId };
+module.exports = { validateUserInput, validateUserIdHeader, validateUserId};

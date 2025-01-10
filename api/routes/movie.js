@@ -8,18 +8,18 @@ const recommendcontroller = require('../controllers/recommend');
 
 // Define routes for '/'
 router.route('/')
-    .get(userValidation.validateUserId, movieController.getMovies)
-    .post(movieValidation.validateMovieInput, userValidation.validateUserId, movieController.createMovie);
+    .get(userValidation.validateUserIdHeader, movieController.getMovies)
+    .post(movieValidation.validateMovieInput, userValidation.validateUserIdHeader, movieController.createMovie);
 
 // Define routes for '/:id'
 router.route('/:id')
-    .get(movieValidation.validateMovieId, userValidation.validateUserId, movieController.getMovie)
-    .put(movieValidation.validateMovieId, userValidation.validateUserId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
-    .delete(movieValidation.validateMovieId, userValidation.validateUserId, recommendcontroller.deleteMovie, movieController.deleteMovie);
+    .get(movieValidation.validateMovieId, userValidation.validateUserIdHeader, movieController.getMovie)
+    .put(movieValidation.validateMovieId, userValidation.validateUserIdHeader, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
+    .delete(movieValidation.validateMovieId, userValidation.validateUserIdHeader, recommendcontroller.deleteMovie, movieController.deleteMovie);
 
 // Define route for searching movies with a query.
 router.route('/search/:query')
-    .get(userValidation.validateUserId, movieController.getMovieIncludeQuery);
+    .get(userValidation.validateUserIdHeader, movieController.getMovieIncludeQuery);
 
 // Export the router to be used in the main application.
 module.exports = router;

@@ -7,13 +7,13 @@ const userValidation = require('../validation/user');
 
 // Define routes for '/'
 router.route('/')
-    .get(userValidation.validateUserId, categoryController.getCategories)
-    .post(userValidation.validateUserId, categoryValidation.validateCategoryInput, categoryController.createCategory);
+    .get(userValidation.validateUserIdHeader, categoryController.getCategories)
+    .post(userValidation.validateUserIdHeader, categoryValidation.validateCategoryInput, categoryController.createCategory);
 
 // Define routes for '/:id'
 router.route('/:id')
-    .get(userValidation.validateUserId, categoryValidation.validateCategoryId, categoryController.getCategory)
-    .patch(userValidation.validateUserId, categoryValidation.validateCategoryId, categoryValidation.validateCategoryInput, categoryController.updateCategory)
-    .delete(userValidation.validateUserId, categoryValidation.validateCategoryId, categoryController.deleteCategory);
+    .get(userValidation.validateUserIdHeader, categoryValidation.validateCategoryId, categoryController.getCategory)
+    .patch(userValidation.validateUserIdHeader, categoryValidation.validateCategoryId, categoryValidation.validateCategoryInput, categoryController.updateCategory)
+    .delete(userValidation.validateUserIdHeader, categoryValidation.validateCategoryId, categoryController.deleteCategory);
 
 module.exports = router;

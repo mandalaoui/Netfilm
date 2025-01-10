@@ -6,7 +6,7 @@ const autentication = async (req, res) => {
     const userId = await tokensService.isExist(req.body.username, req.body.password);
     // If no user is found, return a 404 error with a "User not found" message
     if (!userId) {
-        return res.status(404).json({ errors: ['User not found'] });
+        return res.status(404).json({ errors: ['Username and/or password incorrect'] });
     }
     // If authentication is successful, respond with the user's ID
     res.status(200).json(userId);

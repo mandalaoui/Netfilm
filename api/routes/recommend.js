@@ -5,7 +5,7 @@ const userValidation = require('../validation/user');
 
 // Define routes for '/:id/recommend'
 router.route('/:id/recommend')
-    .get(userValidation.validateUserId, recommendController.getRecommendedMovies)
-    .post(userValidation.validateUserId, recommendController.addToWatchList)
+    .get(userValidation.validateUserIdHeader, recommendController.getRecommendedMovies)
+    .post(userValidation.validateUserIdHeader, recommendController.addToWatchList)
 
 module.exports = router;
