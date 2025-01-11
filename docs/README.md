@@ -1,6 +1,6 @@
 # Netflix web server
 
-# Table of Contents
+## Table of Contents
 
 -	Overview
 -	Project structure
@@ -8,14 +8,14 @@
 -	Running
 -	Running Examples
 
-# Overview
+## Overview
 
 The project consists of a client-server-based system for movie recommendations and streaming. Last part of the project was focused on the basic functionality, including implementing the client and server, handling commands for movie recommendations, and utilizing a multi-threaded approach for managing multiple clients.
 
 Now, the focus shifts to implementing a RESTful API for the web server, integrating it with MongoDB for data storage, and enhancing user functionality with login, registration, and movie browsing features. This part also extends the system to provide personalized recommendations based on user preferences.
 
 
-# Project Structure
+## Project Structure
 #### Server:
 
  - The server will expose a RESTful API to manage users, movies, categories, and recommendations.
@@ -60,47 +60,38 @@ Movie Recommendations:
 - GET /api/movies/:id/recommend: Returns recommended movies based on the movie with the specified id, utilizing the recommendation system from Part A for the current user.
 - POST /api/movies/:id/recommend: Adds the specified movie to the current user's list of viewed movies, contributing to future recommendations.
 - For the POST/GET recommendations endpoints, the web server will interact with the recommendation server from Part A, using a socket connection to communicate with the recommendation system.
-
-Additionally, the recommendation system’s multi-threading implementation will be modified to use a ThreadPool for better performance and handling multiple requests concurrently.
+- Additionally, the recommendation system’s multi-threading implementation will be modified to use a ThreadPool for better performance and handling multiple requests concurrently.
 
 Search Functionality:
 - GET /api/movies/search/:query: Returns movies that match the search query in any of their fields (e.g., title, description).
   Updates to the Project:
 
-Implemented RESTful API: 
+
+## Implemented RESTful API: 
 - The server now exposes endpoints for user authentication, movie browsing, and recommendations via HTTP.
 - MongoDB Integration: Data related to users, movies, and categories is now stored in MongoDB, allowing for persistence.
 - Client-Server Communication via HTTP: The client communicates with the server through HTTP requests, allowing users to interact with the system and perform various actions such as registration, login,     and searching for movies.
 - Recommendation System Integration: The server interacts with the recommendation system developed in Part A to provide personalized movie recommendations based on the user’s preferences and watched         movies.
 - ThreadPool for Multi-threading: The recommendation system from Part A has been updated to use ThreadPool for efficient multi-threading and handling concurrent requests.
 
-# UML
+## UML
 <img width="1070" alt="image" src="https://github.com/user-attachments/assets/6de55b30-bbd4-445d-bc28-5a833e998364" />
 
-
-## Updates
-1. Implemented a threaded multi-client server in C++ that simultaneously handles several clients.
-2. Implemented a client in Python.
-3. Created Docker containers for the server and the client and updated the Docker Compose configuration accordingly.
-
-# Running
-
-Server:
+## Running
 
 Build: docker-compose build
-
-Run: docker-compose run -it -v netflix:/usr/src/mytest/data --rm --name netflix-project server 8080
 
 *Prepare for next run: docker-compose down --remove-orphans
 
-Client:
+split treminal
 
-Run: docker-compose run --rm client netflix-project 8080
+##### Recommendation system server:
 
-Tests:
+Run: docker-compose run -it -v netflix:/usr/src/mytest/data --rm --name netflix-project server 8080
 
-Build: docker-compose build
-Run: docker-compose up tests
+##### api:
+
+Run: docker-compose run -it --rm --name app -p 12345:12345 -v mongo_data:/usr/src/data api
 
 # Running Examples
 <img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample2.jpg?raw=true" />
