@@ -34,7 +34,9 @@ const validateCategoryInput = async (req, res, next) => {
     // Check if the name is available
     const categoryExists = await Category.findOne({ name });
     if (categoryExists) {
-        return res.status(404).json({ error: `This name is not available` });
+        const method = req.method;
+        if (method === 'POST')
+            return res.status(404).json({ error: `This name is not available` });
     }
 
 

@@ -1,7 +1,6 @@
 const Category = require('../models/category');
 const Movie = require('../models/movie');
 const mongoose = require('mongoose');
-const userService = require('../services/user');
 
 // Middleware to validate movie input when creating or updating a movie.
 const validateMovieInput = async (req, res, next) => {
@@ -80,7 +79,9 @@ const validateMovieInput = async (req, res, next) => {
     });
 
     if (existingMovie) {
-        return res.status(400).json({ error: 'A movie with the exact same details already exists' });
+        const method = req.method;
+        if (method === 'POST')
+            return res.status(400).json({ error: 'A movie with the exact same details already exists' });
     }
 
     // Check if the provided categories exist in the database

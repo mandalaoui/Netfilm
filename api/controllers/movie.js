@@ -8,7 +8,8 @@ const createMovie = async (req, res) => {
 
 // Function to get movies based on categories for a user.
 const getMovies = async (req, res) => {
-    const moviesByCategories = await movieService.getMoviesByCategories(req.query.userId);
+    const userId = req.header('userId');
+    const moviesByCategories = await movieService.getMoviesByCategories(userId);
 
     // If no movies are found, responds with a 400 error
     if(!moviesByCategories) {

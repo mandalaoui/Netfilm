@@ -9,13 +9,13 @@ const recommendcontroller = require('../controllers/recommend');
 // Define routes for '/'
 router.route('/')
     .get(userValidation.validateUserIdHeader, movieController.getMovies)
-    .post(movieValidation.validateMovieInput, userValidation.validateUserIdHeader, movieController.createMovie);
+    .post( userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie);
 
 // Define routes for '/:id'
 router.route('/:id')
-    .get(movieValidation.validateMovieId, userValidation.validateUserIdHeader, movieController.getMovie)
-    .put(movieValidation.validateMovieId, userValidation.validateUserIdHeader, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
-    .delete(movieValidation.validateMovieId, userValidation.validateUserIdHeader, recommendcontroller.deleteMovie, movieController.deleteMovie);
+    .get(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieController.getMovie)
+    .put(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
+    .delete(userValidation.validateUserIdHeader, movieValidation.validateMovieId, recommendcontroller.deleteMovie, movieController.deleteMovie);
 
 // Define route for searching movies with a query.
 router.route('/search/:query')
