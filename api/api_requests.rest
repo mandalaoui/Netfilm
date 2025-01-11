@@ -25,19 +25,19 @@
 # GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed
 # userId: "6775424d0dce1623c5276f71"
 
-# # Update a movie
-# PUT http://localhost:12345/api/movies/6772bcb91359e983cd06d677
-# Content-Type: application/json
-# userId: "6775424d0dce1623c5276f71"
+# # Update a movie 
+# PUT http://localhost:12345/api/movies/677f980bbdd22890aedf0bc3 
+# Content-Type: application/json 
+# userId: 677f953d41d2dca2cb88f3ef
 
-# {
-#    "name": "after change",
-#    "categories":["677404eaeeb2fe1f60063cae"],
-#    "movie_time":"2:30",
-#    "image":"",
-#    "Publication_year":" 2024",
-#    "description": "try.",
-#    "age":"13" 
+# { 
+#    "name": "after change", 
+#    "categories":[], 
+#    "movie_time":"2:30", 
+#    "image":"", 
+#    "Publication_year":2024, 
+#    "description": "try.", 
+#    "age":13 
 # }
 
 # Delete a movie
@@ -48,35 +48,37 @@
 # GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
 # userId: 67796c2e62e8db81858514e7
 
-# # Add movie to user's watchlist
-# POST http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
+
+
+# # Get recommendation 
+# GET http://localhost:12345/api/movies/6780c44efa7a58fc3e486346/recommend/ 
+# userId: 677f953d41d2dca2cb88f3ef
+
+# # Add movie to user's watchlist 
+# POST http://localhost:12345/api/movies/6780c29730c7da8a09929e3f/recommend/ 
+# Content-Type: application/json 
+# userId: 677f953d41d2dca2cb88f3ef
+
+
+# Get all categories 
+# GET http://localhost:12345/api/categories/ 
+# userId: 677f953d41d2dca2cb88f3ef
+
+# Create a new category 
+# POST http://localhost:12345/api/categories/ 
+# userId: 677f953d41d2dca2cb88f3ef
 # Content-Type: application/json
-# userId: 67796c2e62e8db81858514e7
 
-
-# Get all categories
-# GET http://localhost:12345/api/categories/
-# userId: "6775424d0dce1623c5276f71"
-
-# Create a new category
-# POST http://localhost:12345/api/categories/
-# userId: "6775424d0dce1623c5276f71"
-# Content-Type: application/json
-
-# {
-#   "name": "six",
-#   "isPromoted": true,
-#   "movies": ["6773c920e33d921de44dd70c"]
-# }
-# {
-#   "name": "Action4",
-#   "isPromoted": true,
-#   "movies": ["6773c7f7e33d921de44dd6eb", "1234"]
+# { 
+#   "name": "Action4", 
+#   "isPromoted": true, 
+#   "movies": [] 
 # }
 
-# # Get a specific category by ID
-# GET http://localhost:12345/api/categories/6773c906e33d921de44dd706
-# userId: "6775424d0dce1623c5276f71"
+# # Get a specific category by ID 
+# GET http://localhost:12345/api/categories/6780c445fa7a58fc3e486346 
+# userId: 677f953d41d2dca2cb88f3ef
+
 
 # # Update a category
 # PATCH http://localhost:12345/api/categories/6773c906e33d921de44dd706
@@ -84,37 +86,37 @@
 # Content-Type: application/json
 
 # { 
-# "name": "Action & Adventure", 
+# "name": "comedy", 
 # "isPromoted": false, 
 # "movies": ["677675bae8c1a7429b2648c2"] 
 # }
 
-# Delete a category
-# DELETE http://localhost:3000/api/categories/677557c50aa8e6a1e680b063
-# userId: "6775424d0dce1623c5276f71"
+# Delete a category 
+# DELETE http://localhost:12345/api/categories/6780c410fa7a58fc3e486333 
+# userId: 677f953d41d2dca2cb88f3ef
 
-# # Create a new user
-# POST http://localhost:12345/api/users/
+# # Create a new user 
+# POST http://localhost:12345/api/users/ 
 # Content-Type: application/json
 
-# {
-#   "username": "lior",
-#   "email": "123@123.com",
-#   "password": "123456",
-#   "age": "1",
-#   "phoneNumber": "5525381648",
-#   "creditcard": "1234567289123"
+# { 
+#   "username": "mayan", 
+#   "email": "123@123.com", 
+#   "password": "123456", 
+#   "age": "1", 
+#   "phoneNumber": "5525381648", 
+#   "creditcard": "1234567289123" 
 # }
 
-# Connect to system
-# POST http://localhost:12345/api/tokens/
+# Connect to system 
+# POST http://localhost:12345/api/tokens/ 
 # Content-Type: application/json
 
-# {
-#   "username": "maayan",
-#   "password": "123456"
+# { 
+#   "username": "maayan", 
+#   "password": "123456" 
 # }
 
-# Get a specific user by ID
-# GET http://localhost:12345/api/users/6773d84d1b9665553523cd58
-# userId: "6773d84d1b9665553523cd58"
+# Get a specific user by ID 
+# GET http://localhost:12345/api/users/677ac0ec53dbec53c5b57b7f 
+# userId: 677f953d41d2dca2cb88f3ef

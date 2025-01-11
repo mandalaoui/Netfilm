@@ -66,4 +66,23 @@ const addToWatchList = async (userId, movieId) => {
     return serverResponse;
 }
 
-module.exports = { getRecommendedMovies, addToWatchList}
+const deleteMovieFromUser = async (userId, movieId) => {
+    try {        
+        // Call the commandToServer function with the 'GET' command
+        return serverResponse = await commandToServer(`DELETE ${userId} ${movieId}`);
+    } catch (err) {
+        console.error('Error in getting recommended movies:', err);
+        throw err;
+    }
+}
+
+const deleteMovie = async (movieId) => {
+    const users = await User.find({});
+    for (const user of users) {
+        await deleteMovieFromUser(user._id, movieId);
+    } 
+}
+
+
+
+module.exports = { getRecommendedMovies, addToWatchList, deleteMovie}
