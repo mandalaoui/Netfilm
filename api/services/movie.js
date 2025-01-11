@@ -39,7 +39,7 @@ const getMoviesByCategories = async (userId) => {
     // Get the list of movie IDs the user has watched
     const watchedMovies = user?.watchedMovies.map(id => new mongoose.Types.ObjectId(id)) || [];
 
-    // Loop through categories and find promoted movies that the user hasn't watched yet
+    // Loop through promoted categories and find movies that the user hasn't watched yet
     for (const category of categories) {
         if (category.isPromoted) {
             const movies = await Movie.aggregate([
@@ -145,8 +145,8 @@ const deleteMovie = async (id) => {
 const movieIncludeQuery =  async (query) => {
     const movies = await Movie.find({
             $or: [
-                { name: { $regex: query, $options: 'i' } },     
-                { description: { $regex: query, $options: 'i' } },
+                { name: { $regex: `\\b${query}\\b`, $options: 'i' } },     
+                { description: { $regex: `\\b${query}\\b`, $options: 'i' } },
             ]
         });
     return movies;
