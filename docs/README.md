@@ -5,8 +5,6 @@
 -	Overview
 -	Project structure
 -	UML
--	Command project
--	Change in project
 -	Running
 -	Running Examples
 
@@ -18,19 +16,19 @@ Now, the focus shifts to implementing a RESTful API for the web server, integrat
 
 
 # Project Structure
-Server:
+#### Server:
 
  - The server will expose a RESTful API to manage users, movies, categories, and recommendations.
  - It will store and retrieve user and movie data in MongoDB.
  - The server will handle user authentication and session management, as well as interact with the recommendation system from Part A.
  - Multi-threading will still be used to handle concurrent client requests, but the server will now handle API requests over HTTP using ThreadPool to manage worker threads efficiently.
 
-Client:
+#### Client:
 
 - implemented in Python and communicates with the server via HTTP requests to interact with the movie recommendation system and user-related operations.
 - provide a user interface for login, registration, browsing movies, and viewing recommendations.
 
-API Specification:
+#### API Specification:
 
 User Authentication and Registration:
 - POST /api/users: Creates a new user. The request body will contain user information as a JSON object (e.g., name, profile picture).
@@ -40,7 +38,8 @@ User Authentication and Registration:
 - For any API call that requires user authentication, the user ID will be passed as part of the HTTP request header to identify the currently authenticated user.
 
 
-Home Page (Movies):
+#### Home Page (Movies):
+
 Once logged in, the user will be presented with a home page displaying movies.
 
 Categories:
