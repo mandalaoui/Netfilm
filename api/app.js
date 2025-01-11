@@ -11,8 +11,7 @@ const recommendations = require('./routes/recommend');
 
 require('custom-env').env(process.env.NODE_ENV || 'local', './config');
 
-//mongoose.connect(process.env.CONNECTION_STRING);
-mongoose.connect('mongodb://127.0.0.1:27017/api');
+mongoose.connect(process.env.CONNECTION_STRING);
 
 var app = express();
 app.use(cors());
