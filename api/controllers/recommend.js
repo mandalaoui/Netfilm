@@ -35,4 +35,17 @@ const addToWatchList = async (req, res) => {
     res.json(movie);
 }
 
-module.exports = { getRecommendedMovies , addToWatchList};
+// Delete a movie from the user's watchlist
+const deleteMovie = async (req, res, next) => {
+    // Check if userId is provided and valid
+    const userId = req.header('userId');
+    if (!userId) {
+        return res.status(400).json({ errors: ['Missing userId in header'] });
+    }
+    
+    // Add the movie to the user's watchlist based on userId and movieId from the request parameters
+    await recommendService.deleteMovie(req.params.id);
+    next();
+}
+
+module.exports = { getRecommendedMovies , addToWatchList, deleteMovie};
