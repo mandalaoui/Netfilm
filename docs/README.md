@@ -29,7 +29,7 @@ Now, the focus shifts to implementing a RESTful API for the web server, integrat
 - implemented in Python and communicates with the server via HTTP requests to interact with the movie recommendation system and user-related operations.
 - provide a user interface for login, registration, browsing movies, and viewing recommendations.
 
-### API Design
+## API Design
 ### User Authentication and Registration:
 
 - POST /api/users: Creates a new user. The request body will contain user information as a JSON object (e.g., name, profile picture).
