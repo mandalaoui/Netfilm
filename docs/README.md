@@ -75,7 +75,7 @@ Implemented RESTful API:
 - ThreadPool for Multi-threading: The recommendation system from Part A has been updated to use ThreadPool for efficient multi-threading and handling concurrent requests.
 
 # UML
-<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/UML.png?raw=true" />
+<img width="1070" alt="image" src="https://github.com/user-attachments/assets/6de55b30-bbd4-445d-bc28-5a833e998364" />
 
 
 ## Updates
