@@ -1,23 +1,25 @@
 # movies
+ # Get all movies
+# GET http://localhost:12345/api/movies/
+# userId: 6774287896dbdd3e36f5b0d8
 
-# Get all movies
-GET http://localhost:12345/api/movies/
-# userId: "6775424d0dce1623c5276f71"
-
-# Create a new movie
+# # Create a new movie
 # POST http://localhost:12345/api/movies/
-# userId: "6775424d0dce1623c5276f71"
+# userId: 6774287896dbdd3e36f5b0d8
 # Content-Type: application/json
 
 # {
-#   "name": "three",
-#   "categories":[],
-#   "movie_time":"1:30",
+#   "name": "party",
+#   "categories":[""],
+#   "movie_time":"13:30",
 #   "image":"",
-#   "Publication_year":2024,
-#   "description": "i contain query",
-#   "age":12
+#   "Publication_year":2022,
+#   "description": "i query",
+#   "age": 10
 # }
+
+# GET http://localhost:12345/api/movies/search/try
+# userId: 6774287896dbdd3e36f5b0d8
 
 # # Get a specific movie by ID
 # GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed
@@ -39,12 +41,12 @@ GET http://localhost:12345/api/movies/
 # }
 
 # Delete a movie
-# DELETE http://localhost:12345/api/movies/67754a933b1861a141d12a96
-# userId: "6775424d0dce1623c5276f71"
+# DELETE http://localhost:12345/api/movies/67741e7a2ccc98fb7b970bee
+# userId: 6774287896dbdd3e36f5b0d8
 
 # # Get recommendation
-GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
-userId: 67796c2e62e8db81858514e7
+# GET http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
+# userId: 67796c2e62e8db81858514e7
 
 # # Add movie to user's watchlist
 # POST http://localhost:12345/api/movies/6773c813e33d921de44dd6ed/recommend/
@@ -78,13 +80,13 @@ userId: 67796c2e62e8db81858514e7
 
 # # Update a category
 # PATCH http://localhost:12345/api/categories/6773c906e33d921de44dd706
-# userId: "6775424d0dce1623c5276f71"
+# userId: 6774287896dbdd3e36f5b0d8
 # Content-Type: application/json
 
 # { 
 # "name": "Action & Adventure", 
 # "isPromoted": false, 
-# "movies": ["6773c920e33d921de44dd70c"] 
+# "movies": ["677675bae8c1a7429b2648c2"] 
 # }
 
 # Delete a category
