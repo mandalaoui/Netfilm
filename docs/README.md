@@ -4,6 +4,7 @@
 
 -	Overview
 -	Project structure
+-	API Design
 -	UML
 -	Running
 -	Running Examples
@@ -28,9 +29,9 @@ Now, the focus shifts to implementing a RESTful API for the web server, integrat
 - implemented in Python and communicates with the server via HTTP requests to interact with the movie recommendation system and user-related operations.
 - provide a user interface for login, registration, browsing movies, and viewing recommendations.
 
-#### API Specification:
+### API Design
+### User Authentication and Registration:
 
-User Authentication and Registration:
 - POST /api/users: Creates a new user. The request body will contain user information as a JSON object (e.g., name, profile picture).
 - GET /api/users/:id: Retrieves the details of the user by their unique id (e.g., name, image, and other user data).
 - POST /api/tokens: Authenticates a user. The request body will contain the username and password (as JSON). If successful, it returns a JSON with the user ID; otherwise, an error message will be returned.
@@ -56,13 +57,15 @@ Movies:
 - PUT /api/movies/:id: Updates the movie details with the specified id.
 - DELETE /api/movies/:id: Deletes the movie with the specified id.
 
-Movie Recommendations:
+### Movie Recommendations:
+
 - GET /api/movies/:id/recommend: Returns recommended movies based on the movie with the specified id, utilizing the recommendation system from Part A for the current user.
 - POST /api/movies/:id/recommend: Adds the specified movie to the current user's list of viewed movies, contributing to future recommendations.
 - For the POST/GET recommendations endpoints, the web server will interact with the recommendation server from Part A, using a socket connection to communicate with the recommendation system.
 - Additionally, the recommendation system’s multi-threading implementation will be modified to use a ThreadPool for better performance and handling multiple requests concurrently.
 
-Search Functionality:
+### Search Functionality:
+
 - GET /api/movies/search/:query: Returns movies that match the search query in any of their fields (e.g., title, description).
   Updates to the Project:
 
