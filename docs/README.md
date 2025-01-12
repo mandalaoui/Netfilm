@@ -118,6 +118,8 @@ Whenever a field is defined as a list (e.g: categories, movies), you can include
 ![7  get all movies](https://github.com/user-attachments/assets/a1f807df-8aac-4b82-8957-23c554e90c1b)
 ![8  search](https://github.com/user-attachments/assets/50947f51-d5cd-49ae-9e33-de13c22b5790)
 ![9  categories](https://github.com/user-attachments/assets/0110d0ca-cf0f-4b6d-94b4-61c8f1df1e22)
+![10  movies](https://github.com/user-attachments/assets/f4500701-2e29-405b-a769-7baed775abfc)
+![11  userd](https://github.com/user-attachments/assets/285a213b-3959-4ef3-9629-20e4b2cc17de)
 
 
 
