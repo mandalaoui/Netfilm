@@ -108,6 +108,17 @@ how to use:
 Whenever a field is defined as a list (e.g: categories, movies), you can include multiple values (IDs) inside the brackets [].
 
 # Running Examples
-<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample2.jpg?raw=true" />
-<img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample1.jpg?raw=true" />
+
+![1  create new user](https://github.com/user-attachments/assets/fac0e424-211a-4097-b550-a784b2829fd2)
+![2  create new movie](https://github.com/user-attachments/assets/4ce9cef7-2f8d-4ff1-9556-17cb27036eee)
+![3  add movie to watchlist](https://github.com/user-attachments/assets/01b2d81f-784d-403c-834d-32aab9bdb2f5)
+![4  create new category](https://github.com/user-attachments/assets/85452a47-1caf-4215-800b-a16adb5ed9a4)
+![5  create new category](https://github.com/user-attachments/assets/f8716787-abc5-4abd-9fa2-02646c6f7e3c)
+![6  patch category](https://github.com/user-attachments/assets/07d7c5e7-8eb1-4d50-9dcd-285395d56c12)
+![7  get all movies](https://github.com/user-attachments/assets/a1f807df-8aac-4b82-8957-23c554e90c1b)
+![8  search](https://github.com/user-attachments/assets/50947f51-d5cd-49ae-9e33-de13c22b5790)
+![9  categories](https://github.com/user-attachments/assets/0110d0ca-cf0f-4b6d-94b4-61c8f1df1e22)
+
+
+
 
