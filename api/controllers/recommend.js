@@ -1,5 +1,6 @@
 const recommendService = require('../services/recommend');
 const userService = require('../services/user');
+const movieService = require('../services/movie');
 
 
 // Get recommended movies for a specific user and movie
@@ -16,7 +17,7 @@ const getRecommendedMovies = async (req, res, next) => {
         return res.status(404).json({ errors: ['404 Not Found'] });
     }
     // Return the list of recommended movies as a JSON response
-    res.json(await movies);
+    res.status(200).json(await movies);
     next();
 }
 
@@ -44,8 +45,13 @@ const addToWatchList = async (req, res, next) => {
         return res.status(404).json({ errors: ['404 Not Found'] });
     }
 
+    const movie = movieService.getMovieById(req.params.id);
+    if (!movie) {
+        return res.status(404).json({ errors: ['404 Not Found'] });
+    }
+    
     // Return the movie added to the watchlist as a JSON response
-    res.json(watchList);
+    res.status(204).json();
     next();
 }
 
@@ -58,7 +64,10 @@ const deleteMovie = async (req, res, next) => {
     }
     
     // Add the movie to the user's watchlist based on userId and movieId from the request parameters
-    await recommendService.deleteMovie(req.params.id);
+    const movie = await recommendService.deleteMovie(req.params.id);
+    if (!movie) {
+        return res.status(404).json({ errors: ['Movie Not Found'] });
+    }
     next();
 }
 

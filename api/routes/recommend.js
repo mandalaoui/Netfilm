@@ -1,7 +1,6 @@
 const express = require('express');
 var router = express.Router();
 const recommendController = require('../controllers/recommend');
-const userController = require('../controllers/user');
 const userValidation = require('../validation/user');
 
 // Define routes for '/:id/recommend'

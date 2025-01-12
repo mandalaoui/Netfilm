@@ -12,18 +12,15 @@ const commandToServer = async (command) => {
     return new Promise((resolve, reject) => {
         // Create a new socket client
         const client = new net.Socket();
-        console.log(`we have a socket!\n`);
 
         // Connect the client to the server
         client.connect(port, ip, () => {
-            console.log(`Connected to server at ${ip}:${port}`);
             client.write(command);
         });
 
         // Listen for data from the server
         client.on('data', (data) => {
             const response = data.toString();
-            console.log(`Response from server: ${response}`);
             resolve(response);
             client.destroy();
         });
@@ -37,7 +34,6 @@ const commandToServer = async (command) => {
 
         // Listen for the socket being closed
         client.on('close', () => {
-            console.log('Connection closed');
         });
     });
 };
@@ -94,7 +90,8 @@ const deleteMovie = async (movieId) => {
     const users = await User.find({});
     for (const user of users) {
         await deleteMovieFromUser(user._id, movieId);
-    } 
+    }
+    return movieId;
 }
 
 module.exports = { getRecommendedMovies, addToWatchList, deleteMovie}

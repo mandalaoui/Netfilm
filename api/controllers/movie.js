@@ -2,8 +2,10 @@ const movieService = require('../services/movie');
 
 // Function to create a new movie
 const createMovie = async (req, res) => {
-    res.json(await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description, req.body.age));
+    const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
+        req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+    const location = `/api/movies/${newMovie._id}`;
+    res.status(201).location(location).json();
 };
 
 // Function to get movies based on categories for a user.
@@ -13,7 +15,7 @@ const getMovies = async (req, res) => {
 
     // If no movies are found, responds with a 400 error
     if(!moviesByCategories) {
-        res.status(400).json({ error: ['Movie Not Found'] });
+        res.status(404).json({ error: ['Movie Not Found'] });
     }
     res.status(200).json(moviesByCategories);
 };
@@ -26,7 +28,7 @@ const getMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.json(movie);    
+    res.status(200).json(movie);    
 };
 
 // Function to update an existing movie's details.
@@ -38,7 +40,7 @@ const updateMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.json(movie);
+    res.status(204).json();
 };
 
 // Function to delete a movie by its ID
@@ -49,7 +51,7 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.json(movie);
+    res.status(204).json();
 };
 
 // Function to search for movies using a query parameter.

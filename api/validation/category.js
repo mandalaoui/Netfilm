@@ -38,7 +38,7 @@ const validateCategoryInput = async (req, res, next) => {
         if (method === 'POST')
             return res.status(404).json({ error: `This name is not available` });
     }
-
+    
 
     // If all validations pass
     next();

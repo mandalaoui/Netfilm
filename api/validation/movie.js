@@ -81,7 +81,7 @@ const validateMovieInput = async (req, res, next) => {
     if (existingMovie) {
         const method = req.method;
         if (method === 'POST')
-            return res.status(400).json({ error: 'A movie with the exact same details already exists' });
+            return res.status(404).json({ error: 'A movie with the exact same details already exists' });
     }
 
     // Check if the provided categories exist in the database
