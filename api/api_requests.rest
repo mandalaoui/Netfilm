@@ -3,12 +3,12 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: 678414d156b0b833f090f57f
+userId: <ID>
 
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: 6784250abf3890906b57b13f
+userId: <ID>
 Content-Type: application/json
 
 {
@@ -35,7 +35,7 @@ userId: <ID>
 
 PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858
 Content-Type: application/json
-userId: 67840d1a35ec2c3ef382f84f
+userId: <ID>
 
 {
    "name": "after change",
@@ -51,7 +51,7 @@ userId: 67840d1a35ec2c3ef382f84f
 ### Delete a movie
 
 DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588
-userId: 678414d156b0b833f090f57f
+userId: <ID>
 
 ### Get recommendation
 
@@ -62,19 +62,19 @@ userId: <ID>
 
 POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/
 Content-Type: application/json
-userId: 678414d156b0b833f090f57f
+userId: <ID>
 
 # CATEGORY
 
 ### Get all categories
 
 GET http://localhost:12345/api/categories/
-userId: 6784250abf3890906b57b13f
+userId: <ID>
 
 ### Create a new category
 
 POST http://localhost:12345/api/categories/
-userId: 6784250abf3890906b57b13f
+userId: <ID>
 Content-Type: application/json
 
 {
@@ -86,12 +86,12 @@ Content-Type: application/json
 ### Get a specific category by ID
 
 GET http://localhost:12345/api/categories/6784159856b0b833f090f58d
-userId: 678414d156b0b833f090f57f
+userId: <ID>
 
 ### Update a category
 
 PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d
-userId: 678414d156b0b833f090f57f
+userId: <ID>
 Content-Type: application/json
 
 { 
