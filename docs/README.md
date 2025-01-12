@@ -89,13 +89,23 @@ Build: docker-compose build
 
 split treminal
 
-##### Recommendation system server:
+#### Recommendation system server:
 
 Run: docker-compose run -it -v netflix:/usr/src/mytest/data --rm --name netflix-project server 8080
 
-##### api:
+#### api:
 
 Run: docker-compose run -it --rm --name app -p 12345:12345 -v mongo_data:/usr/src/data api
+
+#### file api_request.rest:
+
+Each section in the file represents a different API operation. The sections are separated by line breaks or comments (###).
+how to use:
+   1. install the extension REST Client
+   2. open the api_request.rest file
+   3. click the "Send Request" on the request you want to run
+   4. replace <ID> with the actual user ID
+Whenever a field is defined as a list (e.g: categories, movies), you can include multiple values (IDs) inside the brackets [].
 
 # Running Examples
 <img width="938" alt="image" src="https://github.com/Lior-cohen10/Netflix-Project/blob/main/runExample2.jpg?raw=true" />
