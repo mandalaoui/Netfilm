@@ -1,7 +1,7 @@
-# Start from a base Python image if client הוא ב-Python (או אם מדובר ב-C++, תוכל להחליף לפי הצורך)
+# Start from a base Python image if client
 FROM python:3.8-slim
 
-# Install dependencies (לפי הצורך - למשל requests אם יש לך צרכים נוספים)
+# Install dependencies
 RUN pip install requests
 
 # Copy the client code to the container

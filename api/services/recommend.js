@@ -12,18 +12,15 @@ const commandToServer = async (command) => {
     return new Promise((resolve, reject) => {
         // Create a new socket client
         const client = new net.Socket();
-        console.log(`we have a socket!\n`);
 
         // Connect the client to the server
         client.connect(port, ip, () => {
-            console.log(`Connected to server at ${ip}:${port}`);
             client.write(command);
         });
 
         // Listen for data from the server
         client.on('data', (data) => {
             const response = data.toString();
-            console.log(`Response from server: ${response}`);
             resolve(response);
             client.destroy();
         });
@@ -37,7 +34,6 @@ const commandToServer = async (command) => {
 
         // Listen for the socket being closed
         client.on('close', () => {
-            console.log('Connection closed');
         });
     });
 };
@@ -46,7 +42,19 @@ const commandToServer = async (command) => {
 const getRecommendedMovies = async (userId, movieId) => {
     try {        
         // Call the commandToServer function with the 'GET' command
-        return serverResponse = await commandToServer(`GET ${userId} ${movieId}`);
+        const serverResponse = await commandToServer(`GET ${userId} ${movieId}`);
+        // Check if the response starts with "200 Ok\n\n"
+        if (serverResponse.startsWith("200 Ok\n\n")) {
+            // Extract the movie IDs from the response
+            const movieIds = serverResponse
+                .split("\n\n")[1] // Get the part after "200 Ok\n\n"
+                .trim() // Remove extra spaces or newlines
+                .split(" "); // Split movie IDs into an array
+            // Fetch movie details from the database
+            const movies = await Movie.find({ _id: { $in: movieIds } });
+            return movies;
+        }
+        return serverResponse;
     } catch (err) {
         console.error('Error in getting recommended movies:', err);
         throw err;
@@ -66,6 +74,7 @@ const addToWatchList = async (userId, movieId) => {
     return serverResponse;
 }
 
+// Function to delete a movie from user's watch list
 const deleteMovieFromUser = async (userId, movieId) => {
     try {        
         // Call the commandToServer function with the 'GET' command
@@ -76,13 +85,13 @@ const deleteMovieFromUser = async (userId, movieId) => {
     }
 }
 
+// Function to delete a movie from system
 const deleteMovie = async (movieId) => {
     const users = await User.find({});
     for (const user of users) {
         await deleteMovieFromUser(user._id, movieId);
-    } 
+    }
+    return movieId;
 }
-
-
 
 module.exports = { getRecommendedMovies, addToWatchList, deleteMovie}

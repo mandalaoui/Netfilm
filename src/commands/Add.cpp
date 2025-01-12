@@ -48,24 +48,6 @@ bool Add::isInvalid(string input) {
     // For each word in the input.
     while (ss >> word) {   
         wordCounter++; 
-        // Check if every character in the word is a digit.
-        // for (char ch : word) {
-        //     //If any character is not a digit, return false.
-        //     if (!isdigit(ch)) 
-        //         return true;   
-        //     if (!(stoi(input) > 0))
-        //         return true;
-        // }
-        // Attempt to convert the string `word` to an unsigned long.
-        // try {
-        //     unsigned long num1 = stoul(word);
-        // } catch (const invalid_argument& e) {
-        //     // If conversion fails, the input is invalid.
-        //     return true;
-        // } catch (const out_of_range& e) {
-        //     // If the numbers are too large, the input is invalid.
-        //     return true;
-        // }
     }
     if (wordCounter < 2) {
         return true;

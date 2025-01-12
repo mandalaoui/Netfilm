@@ -15,11 +15,10 @@ using namespace std;
 
 AnExecutor::AnExecutor(size_t numThreads) : pool(numThreads) {}
 
+// Executes the given Runnable command.
+// The command is submitted to the thread pool for execution.
+// The Runnable's run() method is invoked when the thread processes the task.
 void AnExecutor::execute(Runnable& command)
 {
-    // Create a new thread to run the command's 'run' method. The thread is detached so it runs independently.
-    //thread t(&Runnable::run, &command);    
-    // Detach the thread, allowing it to run in the background without blocking the main execution flow.
-    //t.detach();
      pool.submit([&command] { command.run(); });    
 }
