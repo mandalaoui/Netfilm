@@ -3,8 +3,8 @@ const Movie = require('../models/movie');
 
 
 // Creates a new user and saves it to the database using the provided parameters.
-const createUser = async (username, email, password, age, phoneNumber, photo, nickname, creditcard, watchedMovies) => {
-    const user = new User({ username, email, password, age, phoneNumber, photo, nickname, creditcard, watchedMovies });
+const createUser = async (username, password, photo, nickname, watchedMovies) => {
+    const user = new User({ username, password, photo, nickname, watchedMovies });
     return await user.save();
 };
 
