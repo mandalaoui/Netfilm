@@ -12,13 +12,13 @@ userId: <ID>
 Content-Type: application/json
 
 {
-  "name": "SpiderMan 3",
-  "categories":[],
-  "movie_time":"2:30",
-  "image":"",
-  "Publication_year":2012,
-  "description": "good one",
-  "age": 10
+"name": "SpiderMan 3", 
+"categories":[], 
+"movie_time":"2:30", 
+"image":"", 
+"Publication_year":2012, 
+"description": "good one", 
+"age": 10
 }
 
 ### Return movie according to user search
@@ -28,106 +28,104 @@ userId: <ID>
 
 ### Get a specific movie by ID
 
-GET http://localhost:12345/api/movies/:id
+GET http://localhost:12345/api/movies/:id 
 userId: <ID>
 
 ### Update a movie
 
-PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858
-Content-Type: application/json
+PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
+Content-Type: application/json 
 userId: <ID>
 
 {
-   "name": "after change",
-   "categories":[],
-   "movie_time":"2:30",
-   "image":"",
-   "Publication_year":2024,
-   "description": "try.",
-   "age":18
+"name": "after change", 
+"categories":[], 
+"movie_time":"2:30", 
+"image":"", 
+"Publication_year":2024, 
+"description": "try.", 
+"age":18
 }
-
 
 ### Delete a movie
 
-DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588
+DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588 
 userId: <ID>
 
 ### Get recommendation
 
-GET http://localhost:12345/api/movies/:id/recommend/
+GET http://localhost:12345/api/movies/:id/recommend/ 
 userId: <ID>
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/
-Content-Type: application/json
+POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/ 
+Content-Type: application/json 
 userId: <ID>
 
 # CATEGORY
 
 ### Get all categories
 
-GET http://localhost:12345/api/categories/
+GET http://localhost:12345/api/categories/ 
 userId: <ID>
 
 ### Create a new category
 
-POST http://localhost:12345/api/categories/
-userId: <ID>
+POST http://localhost:12345/api/categories/ 
+userId: <ID> 
 Content-Type: application/json
 
 {
-  "name": "Family",
-  "isPromoted": false,
-  "movies": []
+"name": "Family", "isPromoted": false, "movies": []
 }
 
 ### Get a specific category by ID
 
-GET http://localhost:12345/api/categories/6784159856b0b833f090f58d
+GET http://localhost:12345/api/categories/6784159856b0b833f090f58d 
 userId: <ID>
 
 ### Update a category
 
-PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d
-userId: <ID>
+PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+userId: <ID> 
 Content-Type: application/json
 
 { 
-"name": "Action & Adventure", 
-"isPromoted": false, 
-"movies": [] 
+  "name": "Action & Adventure", 
+  "isPromoted": false, 
+  "movies": [] 
 }
 
 ### Delete a category
 
-DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e
+DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e 
 userId: <ID>
 
 #USER
 
 ### Create a new user
 
-POST http://localhost:12345/api/users/
+POST http://localhost:12345/api/users/ 
 Content-Type: application/json
 
 {
-  "username": "lior",
-  "password": "123456"
+"username": "lioriiii", 
+"password": "123456", 
+"nickname": "liori"
 }
 
 ### Connect to system
 
-POST http://localhost:12345/api/tokens/
+POST http://localhost:12345/api/tokens/ 
 Content-Type: application/json
 
 {
-  "username": "maayan",
-  "password": "123456"
+"username": "maayan", 
+"password": "123456"
 }
 
 ### Get a specific user by ID
 
-GET http://localhost:12345/api/users/:id
+GET http://localhost:12345/api/users/:id 
 userId: <ID>
