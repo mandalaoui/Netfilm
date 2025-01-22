@@ -1,0 +1,58 @@
+/* רקע שקוף */
+.transparent-bg {
+    background-color: transparent !important;
+    border: none;
+    box-shadow: none;
+}
+
+/* הפיכת הרכיב לקבוע בראש הדף */
+.fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3; 
+}
+
+/* כיסוי מלא לאורך */
+.full-width {
+    width: 100%;
+}
+
+/* טקסט NETFLIX בצד ימין */
+.header {
+
+    font-size: 32px;
+    font-weight: bold;
+    color: red;
+    font-family: 'Arial', sans-serif;
+    text-align: right;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* כפתור שינוי שפה */
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+/* כפתור Login */
+.btn-primary {
+    background-color: #FF0000;
+    border: none;
+}
+
+/* כפתורים - אפקט רחיפה */
+.btn-secondary:hover {
+    filter: brightness(80%);
+}
+
+.btn-primary:hover {
+    background-color: #FF0000;
+    filter: brightness(80%);
+}

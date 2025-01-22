@@ -110,7 +110,7 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "lioriiii", 
+"username": "lioriii", 
 "password": "123456", 
 "nickname": "liori"
 }

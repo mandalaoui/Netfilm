@@ -1,0 +1,25 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    background-image: url('../data/pictures/movies.jpg'); /* Background image */
+    background-size: cover; /* Ensure the image covers the entire background */
+    background-position: center; /* Focus on the center of the image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    position: relative;
+}
+
+.header {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 32px;
+    font-weight: bold;
+    color: red;
+    font-family: 'Arial', sans-serif;
+    z-index: 2; /* Make sure it appears above the overlay */
+}
