@@ -113,6 +113,7 @@ Content-Type: application/json
 "username": "lioriii", 
 "password": "123456", 
 "nickname": "liori"
+
 }
 
 ### Connect to system
