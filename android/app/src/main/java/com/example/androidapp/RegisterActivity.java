@@ -2,6 +2,7 @@ package com.example.androidapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,12 +17,17 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidapp.api.ApiService;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,73 +67,63 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
             } else {
 
-//                if (profilePictureBase64 == null) {
-//                    profilePictureBase64 = getDefaultProfilePictureBase64(); // תבנה פונקציה שתחזיר תמונה דיפולטיבית כ-Base64
-//                }
-                // Create a User object with the data
-                User user = new User(username, password, nickname);
-
-                UserApi userApi = new UserApi();
-//                userApi.registerUser(user);
-                Log.d("Register", "Starting registration request for user: " + user.getUsername());
-                userApi.registerUser(user, new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-
-                        Log.d("Register", "Response raw body: " + response.raw().body());
-
-                        if (response.isSuccessful()) {
-                            if (response.code() == 201) {
-                                Log.d("API_RESPONSE", "User successfully created!");
-                                runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "User created successfully!", Toast.LENGTH_LONG).show());
-                            } else {
-                                if (response.body() != null) {
-                                    Log.d("API_RESPONSE", "User created: " + response.body());
-                                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "User created: " + response.body().getUsername(), Toast.LENGTH_LONG).show());
-                                }
-                            }
-                        } else {
-
-                            try {
-                                if (response.errorBody() != null) {
-                                    String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
-                                    Log.e("Register", "Error: " + errorMessage);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Log.e("Register", "An error occurred");
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.e("Register", "Registration failed with error: " + t.getMessage());
-                        // Logging the error
-                        t.printStackTrace();
-                        runOnUiThread(() ->Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show());
-//                            Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (selectedImageUri != null) {
+                    uploadImageAndCreateUser(username, password, nickname);
+                } else {
+                    String profilePictureUrl = getDefaultProfilePictureUrl(); // אם אין תמונה
+                    createUser(username, password, nickname, profilePictureUrl);
+                }
             }
         });
-
     }
-//    private String encodeImageToBase64(Uri imageUri) {
-//        try {
-//            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);  // כוונן את סוג הקובץ (JPEG)
-//            byte[] byteArray = byteArrayOutputStream.toByteArray();
-//            return Base64.encodeToString(byteArray, Base64.DEFAULT);  // הקוד הופך את התמונה ל-Base64
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
-//    private String getDefaultProfilePictureBase64() {
-//        return "your_default_image_base64_string";
-//    }
+    private void uploadImageAndCreateUser(String username, String password, String nickname) {
+        File imageFile = new File(Uri.parse(selectedImageUri).getPath());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestBody);
+
+        UserApi userApi = new UserApi();
+        userApi.uploadImage(imagePart, new Callback<ImageResponse>() {
+//        ApiService apiService = RetrofitClient.getInstance().create(ApiService.class);
+//        Call<ImageResponse> call = apiService.uploadImage(imagePart);
+//        call.enqueue(new Callback<ImageResponse>() {
+            @Override
+            public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String imageUrl = response.body().getImageUrl();
+                    createUser(username, password, nickname, imageUrl);
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Image upload failed", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageResponse> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Error uploading image: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void createUser(String username, String password, String nickname, String imageUrl) {
+        User user = new User(username, password, nickname, imageUrl);
+        UserApi userApi = new UserApi();
+        userApi.registerUser(user, new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "User created successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(RegisterActivity.this, "User creation failed", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, "Error creating user: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");  // Filter only image files
@@ -139,7 +135,12 @@ public class RegisterActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData(); // Get the URI of the selected image
                     binding.imageViewProfilePic.setImageURI(imageUri);  // Display the image in the ImageView
-                    selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
+                    selectedImageUri = imageUri.toString(); // Update the selectedImageUri variable
                 }
             });
+
+    private String getDefaultProfilePictureUrl() {
+        return "https://example.com/default_profile_picture.jpg"; // כאן הכנס את ה-URL של התמונה ברירת המחדל שלך
+    }
+
 }

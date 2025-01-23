@@ -3,17 +3,18 @@ package com.example.androidapp.api;
 import java.util.List;
 
 public class ApiResponse {
-    private String userId;
+//    private String userId;
+    private String token;
     private List<String> errors;
 
-    public String getUserId() {
-        return userId;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setToken(String token) {
+        this.token = token;
     }
-        public List<String> getErrors() {
+    public List<String> getErrors() {
         return errors;
     }
 
@@ -27,8 +28,8 @@ public class ApiResponse {
 
     public ApiResponse() {
     }
-    public ApiResponse(String userId) {
-        this.userId = userId;
+    public ApiResponse(String token) {
+        this.token = token;
     }
 
 

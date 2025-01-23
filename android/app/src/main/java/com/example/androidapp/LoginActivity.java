@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Register", "Response raw body: " + response.raw().body());
                         if (response.isSuccessful() && response.body() != null) {
                             ApiResponse apiResponse = response.body();
-                            if (apiResponse.getUserId() != null) {
-                                String userId = apiResponse.getUserId();
+                            if (apiResponse.getToken() != null) {
+                                String userId = apiResponse.getToken();
                                 Log.d("Register", "User successfully logged i ");
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();

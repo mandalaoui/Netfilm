@@ -35,6 +35,7 @@ services:
     environment:
     - NODE_ENV=local
     - ENV_FILE_PATH=./api/config/.env.local
+     - JWT_SECRET=your_secret_key_here
     tty: true
     stdin_open: true
     command: ["npm", "start"]

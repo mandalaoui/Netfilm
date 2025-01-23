@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.ImageResponse;
 import com.example.androidapp.R;
 import com.example.androidapp.User;
 import com.example.androidapp.RegisterActivity;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -50,6 +52,12 @@ public class UserApi {
     public void loginUser(User user, final Callback<ApiResponse> callback) {
         Log.d("API_REQUEST", "Sending registration request for user: 1" + user.getUsername());
         Call<ApiResponse> call = apiService.login(user);
+        call.enqueue(callback);
+    }
+
+    public void uploadImage(MultipartBody.Part imagePart, final Callback<ImageResponse> callback) {
+        Log.d("API_REQUEST", "Sending registration request for user: 1" + imagePart);
+        Call<ImageResponse> call = apiService.uploadImage(imagePart);
         call.enqueue(callback);
     }
 }

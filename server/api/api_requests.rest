@@ -3,7 +3,7 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: <ID>
+userId: 679213ef1cebc10d8c2d7bc3
 
 ### Create a new movie
 
@@ -94,7 +94,7 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "sg", "password": "12", "nickname": "liori"
+"username": "sg", "password": "1212221", "nickname": "liori"
 }
 
 ### Connect to system
