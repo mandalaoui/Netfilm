@@ -1,0 +1,141 @@
+/* רקע שקוף עם תמונה */
+.container {
+    background: rgba(0, 0, 0, 0.8); /* רקע שחור חצי שקוף */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+/* שדות קלט (input) */
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #bbb; /* גבול אפור בהיר */
+    border-radius: 4px;
+    background-color: #222; /* רקע כהה לשדות הקלט */
+    color: #ddd; /* טקסט בהיר */
+    box-sizing: border-box;
+}
+
+/* מצב כאשר השדה נמצא במיקוד (focus) */
+input:focus {
+    outline: none; /* להסיר את הגבול המוגדר כברירת מחדל */
+    border: 2px solid #eee; /* גבול בהיר בזמן מיקוד */
+}
+
+/* כפתורים */
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 4px;
+    background-color: #FF0000; /* צבע כפתור אדום */
+    color: white;
+    font-size: 16px;
+    cursor: pointer; /* מצביע כאשר מרחפים מעל הכפתור */
+}
+
+/* כפתור משני */
+button.secondary {
+    background-color: #6c757d; /* צבע אפור לכפתור משני */
+}
+
+/* אפקט ריחוף על כפתורים */
+button:hover {
+    filter: brightness(80%); /* כהה יותר כאשר מרחפים מעל */
+}
+
+/* כפתור משני בעת ריחוף */
+button.secondary:hover {
+    filter: brightness(80%); /* כהה יותר כאשר מרחפים מעל */
+}
+
+/* עיצוב לחלקת ה-Profile Picture */
+.input-group {
+    position: relative;
+    width: 100%;
+}
+
+/* כותרת עבור Profile Picture */
+h6 {
+    margin: 0;
+    font-size: 14px;
+    color: #FFFFFF;
+    text-align: left;
+}
+
+/* טקסט המציין שהתמונה לא חובה */
+.optional-text {
+    position: relative;
+    left: 8px;
+    font-size: 12px;
+    color: #bbb;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+/* שיפור מרווחים סביב התכנים בתוך הקונטיינר */
+.container > * {
+    margin: 10px 0;
+}
+
+.container.hidden {
+    display: none;
+}
+
+.intro-container {
+    background: none;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 600px;
+}
+
+.intro-container h1 {
+    font-size: 42px;
+    font-weight: 900;
+    color: white;
+}
+
+.intro-container h3 {
+    font-size: 28px;
+    font-weight: normal;
+    color: white;
+}
+
+.intro-actions button {
+    padding: 12px 30px;
+    font-size: 16px;
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.intro-actions button:hover {
+    background-color: #cc0000;
+}
+
+.error-message {
+    position: relative;
+    text-align: left;
+    font-size: 12px;
+    color: #FF0000;
+    margin: 0;
+    margin-top: -8px;
+    margin-bottom: 6px;
+    display: none;
+}

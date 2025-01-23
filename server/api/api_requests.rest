@@ -12,7 +12,13 @@ userId: <ID>
 Content-Type: application/json
 
 {
-"name": "SpiderMan 3", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2012, "description": "good one", "age": 10
+"name": "SpiderMan 3", 
+"categories":[], 
+"movie_time":"2:30", 
+"image":"", 
+"Publication_year":2012, 
+"description": "good one", 
+"age": 10
 }
 
 ### Return movie according to user search
@@ -32,7 +38,13 @@ Content-Type: application/json
 userId: <ID>
 
 {
-"name": "after change", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2024, "description": "try.", "age":18
+"name": "after change", 
+"categories":[], 
+"movie_time":"2:30", 
+"image":"", 
+"Publication_year":2024, 
+"description": "try.", 
+"age":18
 }
 
 ### Delete a movie
@@ -79,7 +91,11 @@ PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d
 userId: <ID> 
 Content-Type: application/json
 
-{ "name": "Action & Adventure", "isPromoted": false, "movies": [] }
+{ 
+  "name": "Action & Adventure", 
+  "isPromoted": false, 
+  "movies": [] 
+}
 
 ### Delete a category
 
@@ -94,7 +110,10 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "lioriiii", "password": "123456", "nickname": "liori"
+"username": "lioriii", 
+"password": "123456", 
+"nickname": "liori"
+
 }
 
 ### Connect to system
@@ -103,7 +122,8 @@ POST http://localhost:12345/api/tokens/
 Content-Type: application/json
 
 {
-"username": "maayan", "password": "123456"
+"username": "maayan", 
+"password": "123456"
 }
 
 ### Get a specific user by ID
