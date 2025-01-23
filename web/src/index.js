@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
-import Connect2 from './Connect/Connect2.js';
+import Connect from './Connect/Connect.js';
+import Home from './HomeScreen/HomeScreen.js';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -10,9 +12,10 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<Connect2 />} />
-        <Route path="/login" element={<Connect2 />} />
-        <Route path="/register" element={<Connect2 />} />
+        <Route path="/" element={<Connect />} />
+        <Route path="/login" element={<Connect />} />
+        <Route path="/register" element={<Connect />} />
+        <Route path="/Home" element={<Home />} />
       </Routes>
     </Router>
   </React.StrictMode>

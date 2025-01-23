@@ -41,7 +41,7 @@ const validateUserInput = async (req, res, next) => {
     }    
 
     // Validate nickname: must be a string, if provided.
-    if (!nickname || typeof nickname !== 'string') {
+    if (nickname && typeof nickname !== 'string') {
         return res.status(400).json({ error: 'Invalid nickname format' });
     }
 

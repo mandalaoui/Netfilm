@@ -76,11 +76,11 @@ h6 {
 
 /* טקסט המציין שהתמונה לא חובה */
 .optional-text {
-    margin: 0;
+    position: relative;
+    left: 8px;
     font-size: 12px;
     color: #bbb;
-    text-align: left;
-    margin-left: -5px;
+    margin: 0;
     margin-bottom: 10px;
 }
 
@@ -127,4 +127,15 @@ h6 {
 
 .intro-actions button:hover {
     background-color: #cc0000;
+}
+
+.error-message {
+    position: relative;
+    text-align: left;
+    font-size: 12px;
+    color: #FF0000;
+    margin: 0;
+    margin-top: -8px;
+    margin-bottom: 6px;
+    display: none;
 }
