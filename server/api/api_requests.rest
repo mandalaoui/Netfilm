@@ -94,7 +94,7 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "lioriiii", "password": "123456", "nickname": "liori"
+"username": "sg", "password": "12", "nickname": "liori"
 }
 
 ### Connect to system
@@ -103,7 +103,7 @@ POST http://localhost:12345/api/tokens/
 Content-Type: application/json
 
 {
-"username": "maayan", "password": "123456"
+"username": "lior", "password": "123456"
 }
 
 ### Get a specific user by ID
