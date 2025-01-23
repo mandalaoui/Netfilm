@@ -1,0 +1,9 @@
+.movies-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+}

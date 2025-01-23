@@ -1,0 +1,95 @@
+.navbar {
+    background-color: rgb(16, 16, 16);
+    height: 60px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-primary {
+    height: 40px;
+    width: auto;
+    background-color: transparent;
+    border: none;
+    margin-left: 20px;
+    margin-top: 0;
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+}
+
+.search-logo, .user-logo, .netflix-logo {
+    align-self: center; /* מרכז את האלמנטים אנכית */
+  }
+
+.search-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+.search-logo:hover {
+    cursor: pointer;
+}
+
+.user-logo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.user-logo:hover {
+    cursor: pointer;
+}
+
+.netflix-logo {
+    height: 40px;
+    width: auto;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: -200px;
+    z-index: 1;
+    display: block;
+    margin: 0;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.25rem;
+    width: 400px;
+}
+
+.dropdown-item {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-item:hover {
+    color: white;
+    background-color: rgba(44, 44, 44, 0.204);
+}
+
+.dropdown-user-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    display: block;
+    margin: 0;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.25rem;
+    width: 200px;
+}
