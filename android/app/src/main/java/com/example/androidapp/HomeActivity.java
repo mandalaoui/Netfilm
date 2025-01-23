@@ -16,7 +16,6 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +32,6 @@ public class HomeActivity extends AppCompatActivity {
         final CategoryAdapter categoryAdapter = new CategoryAdapter(this);
         categoryAdapter.setCategories(categoryList);
         recyclerViewCategories.setAdapter(categoryAdapter);
+
     }
 }

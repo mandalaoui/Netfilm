@@ -10,4 +10,6 @@
     <string name="Register_username">UserName</string>
     <string name="Register_password_verification">password verification</string>
     <string name="Register_display_name">display name</string>
+    <string name="BaseUrl">http://10.0.2.2:12345/api/</string>
+    <string name="Register_register">register</string>
 </resources>

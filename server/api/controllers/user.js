@@ -5,7 +5,7 @@ const createUser = async (req, res) => {
     const newUser = await userService.createUser(req.body.username, req.body.password,
         req.body.photo, req.body.nickname, req.body.watchedMovies);
     const location = `/api/users/${newUser._id}`;
-    res.status(201).location(location).json();
+    res.status(201).location(location).json({});
 };
 
 // Retrieves a user by ID. Responds with 404 if the user is not found, otherwise returns the user as JSON.
