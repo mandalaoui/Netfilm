@@ -1,21 +1,14 @@
 package com.example.androidapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.androidapp.api.ApiResponse;
-import com.example.androidapp.api.UserApi;
+import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
 
 import retrofit2.Call;
@@ -41,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.editPassword.getText().toString();
             if (!username.isEmpty() && !password.isEmpty()) {
                 User user = new User(username, password);
-                UserApi userApi = new UserApi();
-                userApi.loginUser(user, new Callback<ApiResponse>() {
+                RequestApi requestApi = new RequestApi();
+                requestApi.loginUser(user, new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         Log.d("Register", "Response raw body: " + response.raw().body());

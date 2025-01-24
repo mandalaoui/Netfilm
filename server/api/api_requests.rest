@@ -94,7 +94,10 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "sg", "password": "1212221", "nickname": "liori"
+ "username": "sg",
+ "password": "1212221",
+ "nickname": "liori",
+ "photo": "ssdg.png"
 }
 
 ### Connect to system

@@ -3,6 +3,34 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+// const multer = require('multer');
+
+
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'uploads/'); // תיקיית יעד לשמירה על הקבצים
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, Date.now() + '-' + file.originalname); // שם הקובץ יהיה כולל תאריך כדי למנוע התנגשויות
+//     }
+// });
+
+// // הגדרת middleware של multer, המתיר לקבל תמונות בלבד
+// const upload = multer({
+//     storage: storage,
+//     fileFilter: function (req, file, cb) {
+//         const filetypes = /jpeg|jpg|png/;
+//         const mimetype = filetypes.test(file.mimetype);
+//         const extname = filetypes.test(file.originalname.toLowerCase());
+        
+//         if (mimetype && extname) {
+//             return cb(null, true);
+//         } else {
+//             cb(new Error('Invalid file type. Only JPEG, JPG, and PNG are allowed.'));
+//         }
+//     }
+// });
+
 
 // Importing route modules for different API endpoints
 const categories = require('./routes/category');

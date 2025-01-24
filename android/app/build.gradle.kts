@@ -36,6 +36,8 @@ android {
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.8.9")
+    implementation (libs.exoplayer.v2181)
+    implementation (libs.exoplayer2.exoplayer)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -45,6 +47,7 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.room.common)
+    implementation(libs.media3.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
