@@ -9,7 +9,7 @@ function Connect2() {
     
     return (
         <LocationProvider location={location}>
-            <div>
+            <div class="home-body">
                 <UpperMenu />
                 <MainMenu />
             </div>

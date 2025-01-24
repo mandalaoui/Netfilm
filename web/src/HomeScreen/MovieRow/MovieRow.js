@@ -1,75 +1,9 @@
 import './MovieRow.css';
 import { useRef, useState } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
-import movie1 from '../../data/pictures/img1.jpg'
+import movies from '../../data/movies/movies.js'
 
 function MovieRow({ category }) {
-    const movies = [
-        {
-            id: 1,
-            title: 'Movie 1',
-            image: movie1,
-            duration: '1h 30m',
-            releaseYear: '2022',
-            ageRating: 'PG',
-            categories: ['Action', 'Adventure', 'Drama']
-        },
-        {
-            id: 2,
-            title: 'Movie 2',
-            image: movie1,
-            duration: '2h 15m',
-            releaseYear: '2021',
-            ageRating: 'PG-13',
-            categories: ['Comedy', 'Drama']
-        },
-        {
-            id: 3,
-            title: 'Movie 3',
-            image: movie1,
-            duration: '2h 0m',
-            releaseYear: '2023',
-            ageRating: 'R',
-            categories: ['Thriller', 'Crime', 'Drama']
-        },
-        {
-            id: 4,
-            title: 'Movie 4',
-            image: movie1,
-            duration: '1h 45m',
-            releaseYear: '2020',
-            ageRating: 'G',
-            categories: ['Drama', 'Family']
-        },
-        {
-            id: 5,
-            title: 'Movie 5',
-            image: movie1,
-            duration: '1h 45m',
-            releaseYear: '2020',
-            ageRating: 'G',
-            categories: ['Drama', 'Family']
-        },
-        {
-            id: 6,
-            title: 'Movie 6',
-            image: movie1,
-            duration: '1h 45m',
-            releaseYear: '2020',
-            ageRating: 'G',
-            categories: ['Drama', 'Family']
-        },
-        {
-            id: 7,
-            title: 'Movie 7',
-            image: movie1,
-            duration: '1h 45m',
-            releaseYear: '2020',
-            ageRating: 'G',
-            categories: ['Drama', 'Family']
-        },
-    ];
-
     const rowRef = useRef(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(false);
@@ -78,7 +12,7 @@ function MovieRow({ category }) {
         const container = rowRef.current;
         const containerWidth = container.clientWidth;
         const scrollLeft = container.scrollLeft;
-        const scrollWidth = container.scrollWidth;
+        // const scrollWidth = container.scrollWidth;
         const windowwidth = window.innerWidth;
         // console.log("containerWidth: " + containerWidth);
         // console.log("scrollLeft: " + scrollLeft);
@@ -109,9 +43,13 @@ function MovieRow({ category }) {
             <h6>{category}</h6>
             <div className="movie-row">
                 <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
-                    {filteredMovies.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
-                    ))}
+                    {filteredMovies.length === 0 && category === "Watched" ? (
+                        <p className="no-movies-text">Haven't seen any movie yet</p>
+                    ) : (
+                        filteredMovies.map((movie) => (
+                            <MovieCard key={movie.id} movie={movie} />
+                        ))
+                    )}
                 </div>
             </div>
             <div className="arrow-container" style={{ width: window.innerWidth }}>

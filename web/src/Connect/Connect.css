@@ -1,8 +1,9 @@
-body { 
+.home-body { 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    width: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #000000;
@@ -14,7 +15,7 @@ body {
 }
 
 /* Dark overlay on top of the background image */
-body::before {
+.home-body::before {
     content: '';
     position: absolute;
     top: 0;
@@ -23,129 +24,4 @@ body::before {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Black overlay with 50% opacity */
     z-index: 1; /* Ensure it is below the content */
-}
-
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    z-index: 2;
-}
-
-.header-row .header {
-    font-size: 32px;
-    font-weight: bold;
-    color: red;
-    font-family: 'Arial', sans-serif;
-}
-
-.header-row .extra-elements {
-    display: flex;
-    gap: 10px;
-}
-
-.header-row .extra-elements > div {
-    visibility: visible;
-    color: white;
-    font-size: 16px;
-}
-
-/* Main container for the form */
-.container {
-    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    color: white;
-    z-index: 2; /* Ensure it is above the overlay */
-}
-
-.container > * {
-    margin: 10px 0;
-}
-
-/* Heading inside the container */
-h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #FFFFFF; /* White color for the heading */
-}
-
-/* Input fields */
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #bbb; /* Light gray border */
-    border-radius: 4px;
-    box-sizing: border-box;
-    text-align: left;
-    direction: ltr; /* Left-to-right text alignment */
-    background-color: #222; /* Dark background for input */
-    color: #ddd; /* Light gray text */
-    position: relative;
-}
-
-/* Focus state for input fields */
-input:focus {
-    outline: none; /* Remove default outline */
-    border: 2px solid #eee; /* Light border on focus */
-}
-
-/* Buttons */
-button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 4px;
-    background-color: #FF0000; /* Red button color */
-    color: white;
-    font-size: 16px;
-    cursor: pointer; /* Pointer cursor on hover */
-}
-
-/* Secondary button with different color */
-button.secondary {
-    background-color: #6c757d; /* Gray color for secondary button */
-}
-
-/* Button hover effect */
-button:hover {
-    filter: brightness(80%); /* Make button color darker when hovered */
-}
-
-button.secondary:hover {
-    filter: brightness(80%); /* Make secondary button darker when hovered */
-}
-
-/* Container for the image */
-.input-group {
-    position: relative;
-    width: 100%;
-}
-
-/* Profile Picture heading */
-h6 {
-    margin: 0;
-    font-size: 14px;
-    color: #FFFFFF;
-    text-align: left;
-    /* margin-bottom: 5px; */
-}
-
-/* Note about the image being optional */
-.optional-text {
-    margin: 0;
-    font-size: 12px;
-    color: #bbb;
-    text-align: left;
-    margin-bottom: 10px;
 }

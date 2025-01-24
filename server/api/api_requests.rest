@@ -130,3 +130,13 @@ Content-Type: application/json
 
 GET http://localhost:12345/api/users/:id 
 userId: <ID>
+
+
+### Upload a video
+
+POST http://localhost:12345/api/upload/video
+
+### Upload an image
+
+POST http://localhost:12345/api/upload/image 
+

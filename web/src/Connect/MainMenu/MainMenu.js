@@ -64,38 +64,119 @@ function MainMenu() {
             nickname: document.querySelector('input[placeholder="Nickname"]').value,
         };
 
+        console.log(userData);
+    
+        const imageInput = document.querySelector('input[type="file"]');
+        const imageFile = imageInput.files[0]; 
+    
+        const userResponse = await fetch("http://localhost:12345/api/users/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        });
+    
+        let userResponseBody = null;
         try {
-            const response = await fetch("http://localhost:12345/api/users/", {
+            userResponseBody = await userResponse.json();
+        } catch (e) {
+            console.warn("Failed to parse user JSON:", e);
+        }
+    
+        if (userResponse.ok) {
+            // alert("Registration successful!");
+            console.log("User created:", userResponseBody);
+    
+            const formData = new FormData();
+            formData.append('image', imageFile); 
+    
+            const imageResponse = await fetch("http://localhost:12345/api/upload/image", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(userData) // Send user data to the server
+                body: formData 
             });
-
-            let responseBody = null;
+    
+            let imageResponseBody = null;
             try {
-                responseBody = await response.json(); // Attempt to parse JSON response
+                imageResponseBody = await imageResponse.json();
             } catch (e) {
-                console.warn("Failed to parse JSON:", e); // Warn if JSON parsing fails
+                console.warn("Failed to parse image response:", e);
             }
-
-            if (response.ok) {
-                alert("Registration successful!"); // Success case
-                console.log("Response JSON:", responseBody);
-                window.location.href = "/login"; // Redirect to login page after success
-            } else if (response.status === 404) {
-                alert("Username already exists. Please try another one."); // Error for duplicate username
-            } else if (response.status === 400) {
-                alert("One or more of the provided inputs are invalid."); // Error for invalid inputs
+    
+            if (imageResponse.ok) {
+                console.log("Image uploaded:", imageResponseBody);
+                alert("Image uploaded successfully!");
+                // window.location.href = "/login"; לא למחוק
             } else {
-                alert(`Unknown error occurred: HTTP ${response.status}`); // Generic error message
+                alert("Failed to upload image.");
             }
-        } catch (error) {
-            console.error("Error during registration:", error); // Log error
-            alert("Network error: Please try again later."); // Display network error message
+        } else {
+            alert("Failed to register user.");
         }
     };
+    
+
+    // const handleRegister = async () => {
+    //     const userData = {
+    //         username: document.querySelector('input[placeholder="Username"]').value,
+    //         password: document.querySelector('input[placeholder="Password"]').value,
+    //         nickname: document.querySelector('input[placeholder="Nickname"]').value,
+    //     };
+    
+    //     const imageInput = document.querySelector('input[type="file"]');
+    //     const imageFile = imageInput.files[0]; // קבלת הקובץ שנבחר
+    
+    //     // יצירת FormData
+    //     const formData = new FormData();
+    //     formData.append('username', userData.username);
+    //     formData.append('password', userData.password);
+    //     formData.append('nickname', userData.nickname);
+    //     // formData.append('photo', imageFile); // שינוי בהתאם למשתנה `photo` בקוד השרת
+    
+    //     try {
+    //         const response = await fetch("http://localhost:12345/api/users/", {
+    //             method: "POST",
+    //             body: formData,
+    //         });
+    
+    //         if (response.ok) {
+    //             const location = response.headers.get('Location'); // קבלת ה-Location שהוגדר בתשובה
+    //             alert("Registration successful!");
+    //             console.log("User created at:", location);
+    //             window.location.href = "/login"; // הפניה לדף התחברות לאחר יצירת המשתמש
+    //         } else {
+    //             const errorResponse = await response.json();
+    //             if (response.status === 400) {
+    //                 alert(`Invalid input: ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
+    //             } else if (response.status === 404) {
+    //                 alert("Username already exists. Please try another one.");
+    //             } else {
+    //                 alert(`Error: ${response.status} ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during registration:", error);
+    //         alert("Network error: Please try again later.");
+    //     }
+    // };
+    
+
+    // export const handleRegister = async () => {
+    //     try {
+    //         const formData = new FormData();
+    //         Object.entries(userData).forEach(([key, value]) => {
+    //             formData.append(key, value);
+    //         });
+    //         const response = await axios.post(`${API_BASE_URL}/users`, formData, {
+    //             header: {
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //         });
+    //         return response.data;
+    //     } catch (error) {
+    //         throw error.response?.data || error.message;
+    //     }
+    // };
 
     const handleLogin = () => {
         const userData = {
@@ -112,7 +193,7 @@ function MainMenu() {
         })
             .then(response => response.json()) // Parse JSON response
             .then(data => {
-                console.log("Log In successful"); // Log success message
+                navigateToPage('../home');
             })
             .catch(error => console.error("Error during login:", error)); // Log login error
     };
@@ -128,7 +209,7 @@ function MainMenu() {
                 </div>
             )}
 
-            <div className={`container ${loc === "/" ? "hidden" : ""}`}>
+            <div className={`menu-container ${loc === "/" ? "hidden" : ""}`}>
                 {loc !== "/" && (
                     <>
                         <h1>{loc === "/login" ? "Login" : "Register"}</h1>

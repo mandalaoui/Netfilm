@@ -10,6 +10,7 @@ const movies = require('./routes/movie');
 const users = require('./routes/user');
 const tokens = require('./routes/tokens');
 const recommendations = require('./routes/recommend');
+const uploads = require('./routes/upload');
 
 // Loading environment variables from the configuration file based on the environment
 require('custom-env').env(process.env.NODE_ENV || 'local', './config');
@@ -31,6 +32,13 @@ app.use('/api/movies', movies);
 app.use('/api/users', users);
 app.use('/api/movies', recommendations);
 app.use('/api/tokens', tokens);
+
+app.use('/api/upload', uploads);
+app.use("/media", express.static("./public"));
+
+
+// app.use("/uploads",express.static("uploads"));
+
 
 // Start the server and listen on the port specified in environment variables
 app.listen(process.env.PORT);

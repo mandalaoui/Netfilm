@@ -4,6 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import './index.css';
 import Connect from './Connect/Connect.js';
 import Home from './HomeScreen/HomeScreen.js';
+import WatchMovie from './WatchMovie/WatchMovie.js';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+
 
 
 
@@ -16,6 +20,7 @@ root.render(
         <Route path="/login" element={<Connect />} />
         <Route path="/register" element={<Connect />} />
         <Route path="/Home" element={<Home />} />
+        <Route path="/Watch/:id" element={<WatchMovie />} />
       </Routes>
     </Router>
   </React.StrictMode>

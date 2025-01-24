@@ -1,4 +1,4 @@
-body { 
+.home-container { 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,21 +10,11 @@ body {
     background-color: #282828;
     background-position: center;
     background-repeat: no-repeat;
-    position: absolute;
+    position: relative;
     padding: 0;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
-body::before {
-    z-index: -1; /* Ensure it is below the content */
-}
 
-.home-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    min-height: 100vh; /* Make the container fill the entire viewport height */
-    position: relative;
-    overflow: hidden;
-}
 

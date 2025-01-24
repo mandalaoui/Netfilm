@@ -5,10 +5,11 @@ import MovieRow from '../MovieRow/MovieRow.js';
 function Movies() {
     return (
         <div className="movies-container">
+            <MovieRow category="Watched" />
             <MovieRow category="Action" />
             <MovieRow category="Comedy" />
             <MovieRow category="Drama" />
-            {/* <MovieRow category="Family" /> */}
+            <MovieRow category="Family" />
         </div>
     );
 }
