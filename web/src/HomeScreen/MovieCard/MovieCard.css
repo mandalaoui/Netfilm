@@ -3,36 +3,41 @@
   width: 250px;
   height: 150px;
   margin-right: 10px;
-  background-color: #1c1c1c;
-  overflow: hidden;
+  background-color: #282828;
+  overflow: visible;
   cursor: pointer;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
+  transform-origin: center;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+  z-index: 2;
 }
 
-.movie-card:hover{
+.movie-card:hover {
   position: relative;
-  width: 250px;
-  height: 350px;
-  margin-right: 10px;
-  background-color: #1c1c1c;
-  overflow: hidden;
-  cursor: pointer;
+  z-index: 10; 
+  transform: scale(1.35);
+  box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.6), -10px 20px 15px rgba(0, 0, 0, 0.3); /* שיפרתי את העפלה */
+  background-color: #282828;
+  overflow: visible;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  opacity: 1;
 }
 
 .movie-card:hover .movie-info {
-  opacity: 1; /* חושף את המידע המלא ב-hover */
+  opacity: 1;
+  background-color: #282828;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6), -10px 10px 15px rgba(0, 0, 0, 0.3); /* גוון בהיר יותר עם עיבוי */
 }
 
 .movie-card:hover .movie-title {
-  margin-top: 0px;
-}  
+  margin-top: 0px;  
+  background-color: #282828;
+  box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.5), -10px 20px 15px rgba(0, 0, 0, 0.2); /* צל יותר אחיד בצדדים */
+}
 
 .movie-image {
   width: 100%;
@@ -46,10 +51,8 @@
 }
 
 .movie-info {
-  opacity: 0; 
   padding: 10px;
   color: white;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -67,17 +70,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .play-button {
-  width: 40%;
+  margin-top: 0px;
+  width: 35%;
   padding: 5px 10px;
   background-color: #e50914;
   border: none;
   border-radius: 4px;
   color: white;
   cursor: pointer;
+  font-size: 12px;
 }
 
 .play-button:hover {
@@ -85,12 +91,12 @@
 }
 
 .movie-duration {
-  font-size: 14px;
+  font-size: 12px;
   color: #aaa;
 }
 
 .movie-meta {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .movie-meta p {
@@ -108,4 +114,27 @@
   padding: 5px;
   border-radius: 4px;
   font-size: 12px;
+}
+
+.delete-movie-button, .edit-movie-button {
+  position: absolute;
+  top: -5px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  /* transition: background-color 0.3s, transform 0.3s; */
+}
+
+.delete-movie-button {
+  right: 35%; 
+}
+
+.edit-movie-button {
+  left: 35%;
+}
+
+.delete-movie-button:hover, .edit-movie-button:hover {
+  transform: scale(1.1);
 }

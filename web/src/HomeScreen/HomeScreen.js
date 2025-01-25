@@ -27,6 +27,7 @@ function HomeScreen() {
                 ) : (
                     <Search query={searchQuery} />
                 )}
+                <div className="bottom-space"></div>
             </div>
         </LocationProvider>
     );

@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Connect from './Connect/Connect.js';
 import Home from './HomeScreen/HomeScreen.js';
 import WatchMovie from './WatchMovie/WatchMovie.js';
+import Admin from './Admin/Admin.js';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
@@ -19,8 +21,9 @@ root.render(
         <Route path="/" element={<Connect />} />
         <Route path="/login" element={<Connect />} />
         <Route path="/register" element={<Connect />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/Watch/:id" element={<WatchMovie />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/watch/:id" element={<WatchMovie />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   </React.StrictMode>

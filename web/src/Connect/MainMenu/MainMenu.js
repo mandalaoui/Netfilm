@@ -57,108 +57,107 @@ function MainMenu() {
         };
     }, []);
 
-    const handleRegister = async () => {
-        const userData = {
-            username: document.querySelector('input[placeholder="Username"]').value,
-            password: document.querySelector('input[placeholder="Password"]').value,
-            nickname: document.querySelector('input[placeholder="Nickname"]').value,
-        };
-
-        console.log(userData);
-    
-        const imageInput = document.querySelector('input[type="file"]');
-        const imageFile = imageInput.files[0]; 
-    
-        const userResponse = await fetch("http://localhost:12345/api/users/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(userData)
-        });
-    
-        let userResponseBody = null;
-        try {
-            userResponseBody = await userResponse.json();
-        } catch (e) {
-            console.warn("Failed to parse user JSON:", e);
-        }
-    
-        if (userResponse.ok) {
-            // alert("Registration successful!");
-            console.log("User created:", userResponseBody);
-    
-            const formData = new FormData();
-            formData.append('image', imageFile); 
-    
-            const imageResponse = await fetch("http://localhost:12345/api/upload/image", {
-                method: "POST",
-                body: formData 
-            });
-    
-            let imageResponseBody = null;
-            try {
-                imageResponseBody = await imageResponse.json();
-            } catch (e) {
-                console.warn("Failed to parse image response:", e);
-            }
-    
-            if (imageResponse.ok) {
-                console.log("Image uploaded:", imageResponseBody);
-                alert("Image uploaded successfully!");
-                // window.location.href = "/login"; לא למחוק
-            } else {
-                alert("Failed to upload image.");
-            }
-        } else {
-            alert("Failed to register user.");
-        }
-    };
-    
-
     // const handleRegister = async () => {
     //     const userData = {
     //         username: document.querySelector('input[placeholder="Username"]').value,
     //         password: document.querySelector('input[placeholder="Password"]').value,
     //         nickname: document.querySelector('input[placeholder="Nickname"]').value,
     //     };
+
+    //     console.log(userData);
     
     //     const imageInput = document.querySelector('input[type="file"]');
-    //     const imageFile = imageInput.files[0]; // קבלת הקובץ שנבחר
+    //     const imageFile = imageInput.files[0]; 
     
-    //     // יצירת FormData
-    //     const formData = new FormData();
-    //     formData.append('username', userData.username);
-    //     formData.append('password', userData.password);
-    //     formData.append('nickname', userData.nickname);
-    //     // formData.append('photo', imageFile); // שינוי בהתאם למשתנה `photo` בקוד השרת
+    //     const userResponse = await fetch("http://localhost:12345/api/users/", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify(userData)
+    //     });
     
+    //     let userResponseBody = null;
     //     try {
-    //         const response = await fetch("http://localhost:12345/api/users/", {
+    //         userResponseBody = await userResponse.json();
+    //     } catch (e) {
+    //         console.warn("Failed to parse user JSON:", e);
+    //     }
+    
+    //     if (userResponse.ok) {
+    //         // alert("Registration successful!");
+    //         console.log("User created:", userResponseBody);
+    
+    //         const formData = new FormData();
+    //         formData.append('image', imageFile); 
+    
+    //         const imageResponse = await fetch("http://localhost:12345/api/upload/image", {
     //             method: "POST",
-    //             body: formData,
+    //             body: formData 
     //         });
     
-    //         if (response.ok) {
-    //             const location = response.headers.get('Location'); // קבלת ה-Location שהוגדר בתשובה
-    //             alert("Registration successful!");
-    //             console.log("User created at:", location);
-    //             window.location.href = "/login"; // הפניה לדף התחברות לאחר יצירת המשתמש
-    //         } else {
-    //             const errorResponse = await response.json();
-    //             if (response.status === 400) {
-    //                 alert(`Invalid input: ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
-    //             } else if (response.status === 404) {
-    //                 alert("Username already exists. Please try another one.");
-    //             } else {
-    //                 alert(`Error: ${response.status} ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
-    //             }
+    //         let imageResponseBody = null;
+    //         try {
+    //             imageResponseBody = await imageResponse.json();
+    //         } catch (e) {
+    //             console.warn("Failed to parse image response:", e);
     //         }
-    //     } catch (error) {
-    //         console.error("Error during registration:", error);
-    //         alert("Network error: Please try again later.");
+    
+    //         if (imageResponse.ok) {
+    //             console.log("Image uploaded:", imageResponseBody);
+    //             alert("Image uploaded successfully!");
+    //             // window.location.href = "/login"; לא למחוק
+    //         } else {
+    //             alert("Failed to upload image.");
+    //         }
+    //     } else {
+    //         alert("Failed to register user.");
     //     }
     // };
+    
+
+    const handleRegister = async () => {
+        const userData = {
+            username: document.querySelector('input[placeholder="Username"]').value,
+            password: document.querySelector('input[placeholder="Password"]').value,
+            nickname: document.querySelector('input[placeholder="Nickname"]').value,
+        };
+    
+        const imageInput = document.querySelector('input[type="file"]');
+        const imageFile = imageInput.files[0]; 
+    
+        const formData = new FormData();
+        formData.append('username', userData.username);
+        formData.append('password', userData.password);
+        formData.append('nickname', userData.nickname);
+        formData.append('photo', imageFile);
+    
+        try {
+            const response = await fetch("http://localhost:12345/api/users/", {
+                method: "POST",
+                body: formData,
+            });
+    
+            if (response.ok) {
+                const location = response.headers.get('Location'); // קבלת ה-Location שהוגדר בתשובה
+                alert("Registration successful!");
+                console.log("User created at:", location);
+                window.location.href = "/login"; 
+            } else {
+                const errorResponse = await response.json();
+                if (response.status === 400) {
+                    alert(`Invalid input: ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
+                } else if (response.status === 404) {
+                    alert("Username already exists. Please try another one.");
+                } else {
+                    alert(`Error: ${response.status} ${errorResponse.errors?.join(', ') || 'Unknown error'}`);
+                }
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+            alert("Network error: Please try again later.");
+        }
+    };
     
 
     // export const handleRegister = async () => {

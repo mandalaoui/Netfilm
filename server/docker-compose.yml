@@ -38,6 +38,8 @@ services:
     tty: true
     stdin_open: true
     command: ["npm", "start"]
+    volumes:
+      - ./api/uploads:/usr/src/app/uploads
 
 networks:
   default:

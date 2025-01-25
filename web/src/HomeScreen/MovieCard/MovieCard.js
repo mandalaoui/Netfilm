@@ -1,5 +1,8 @@
 import './MovieCard.css';
+import { useLocation } from 'react-router-dom';
 import React from 'react';
+import { showConfirmationModal  } from '../../Admin/Verification/Verification.js'; 
+
 
 function MovieCard({ movie }) {
     const navigateTo = (loc) => {
@@ -9,6 +12,30 @@ function MovieCard({ movie }) {
     const handlePlayClick = () => {
         navigateTo(`../watch/${movie.id}`); // Navigate to the watch page with the movie ID
     };
+
+    const location = useLocation();
+
+    const handleDeleteClick = async () => {
+        const userConfirmed = await showConfirmationModal("movie",  movie.title, 'delete');
+        if (userConfirmed) {
+            // Perform the delete action here (e.g., call an API or update state)
+            console.log(`Movie ${movie.title} deleted.`);
+        } else {
+            console.log('Delete action was canceled.');
+        }
+    };
+
+    const handleEditClick = async () => {
+        const userConfirmed = await showConfirmationModal("movie", movie.title, 'edit');
+        if (userConfirmed) {
+            // Perform the edit action here (e.g., navigate to an edit page or open an editor)
+            console.log(`Editing movie ${movie.title}.`);
+        } else {
+            console.log('Edit action was canceled.');
+        }
+    };
+
+    const isAdminPage = location.pathname === '/admin'; 
 
     return (
         <div className="movie-card">
@@ -30,6 +57,17 @@ function MovieCard({ movie }) {
                         ))}
                     </div>
                 </div>
+                                
+                {isAdminPage && (
+                    <>
+                        <button className="delete-movie-button" onClick={handleDeleteClick}>
+                            <i className="bi bi-trash"></i>
+                        </button>
+                        <button className="edit-movie-button" onClick={handleEditClick}>
+                            <i className="bi bi-pencil-square"></i>
+                        </button>
+                    </>
+                )}
             </div>
         </div>
     );
