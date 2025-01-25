@@ -30,6 +30,9 @@ function MovieRow({ category }) {
     };
 
     const filteredMovies = movies.filter((movie) => movie.categories.includes(category));
+    if (!isAdminPage && filteredMovies.length === 0) {
+        return null; 
+    }
 
     const handleEditCategory = async () => {
         const userConfirmed = await showConfirmationModal("category", category, 'edit');

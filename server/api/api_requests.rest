@@ -68,7 +68,7 @@ userId: <ID>
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: <ID>
+userId: 6793f41b8221f4dda02b7e63
 
 ### Create a new category
 

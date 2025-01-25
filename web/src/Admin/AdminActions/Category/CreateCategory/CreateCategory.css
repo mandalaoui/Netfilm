@@ -1,0 +1,91 @@
+/* createCategory.css */
+.Create-Category-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    z-index: 5;
+}
+
+.Create-Category-modal-content {
+    background-color: rgb(28, 28, 28);
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.CC-close-btn {
+    position: absolute;
+    top: -5px;
+    padding-left: 80%;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    color: white;
+
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.CC-checkbox{
+    transform: scale(1.4);
+    padding-left: 25px;
+}
+
+.CC-movie-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.CC-movie-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.CC-movie-item input {
+    margin-right: 10px;
+}
+
+.Create-Category-btn {
+    width: 100%;
+    padding: 10px;
+    /* background-color: #28a745; */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* .Create-Category-btn:hover {
+    background-color: #218838;
+} */
+
+.Create-Category-btn:focus {
+    outline: none;
+}

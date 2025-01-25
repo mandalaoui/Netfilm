@@ -4,7 +4,7 @@ import MainMenu from './MainMenu/MainMenu.js';
 import { useLocation } from 'react-router-dom'; 
 import { LocationProvider } from '../LocationContext.js';
 
-function Connect2() {
+function Connect() {
     const location = useLocation();
     
     return (
@@ -17,4 +17,4 @@ function Connect2() {
     );
 }
 
-export default Connect2;
+export default Connect;
