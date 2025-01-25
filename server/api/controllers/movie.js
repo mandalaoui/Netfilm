@@ -3,7 +3,7 @@ const movieService = require('../services/movie');
 // Function to create a new movie
 const createMovie = async (req, res) => {
     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+        req.body.image, req.body.Publication_year, req.body.description,req.body.videoUrl, req.body.age);
     const location = `/api/movies/${newMovie._id}`;
     res.status(201).location(location).json();
 };
@@ -34,7 +34,7 @@ const getMovie = async (req, res) => {
 // Function to update an existing movie's details.
 const updateMovie = async (req, res) => {
     const movie = await movieService.updateMovie(req.params.id, req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+        req.body.image, req.body.Publication_year, req.body.description,req.body.videoUrl, req.body.age);
 
     // If no movie is found to update, responds with a 404 error
     if (!movie) {

@@ -59,6 +59,7 @@ app.use('/api/movies', movies);
 app.use('/api/users', users);
 app.use('/api/movies', recommendations);
 app.use('/api/tokens', tokens);
+app.use('/uploads', express.static('uploads'));
 
 // Start the server and listen on the port specified in environment variables
 app.listen(process.env.PORT);

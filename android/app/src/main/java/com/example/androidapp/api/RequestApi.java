@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.Movie;
 import com.example.androidapp.R;
 import com.example.androidapp.User;
 
@@ -59,6 +60,17 @@ public class RequestApi {
         Call<ApiResponse> call = apiService.login(user);
         call.enqueue(callback);
     }
+
+    public void getMovie(String movieId,String userId, final Callback<Movie> callback) {
+        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
+        Call<Movie> call = apiService.getMovie(movieId, userId);
+        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
+        call.enqueue(callback);
+        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
+
+    }
+
+
 
 
 }

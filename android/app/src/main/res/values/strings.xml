@@ -12,4 +12,9 @@
     <string name="Register_display_name">display name</string>
     <string name="BaseUrl">http://10.0.2.2:12345/api/</string>
     <string name="Register_register">register</string>
+    <string name="movie_year">year</string>
+    <string name="movie_title">movie title</string>
+    <string name="movie_time">movie time</string>
+    <string name="movie_play">Play</string>
+    <string name="movie_description">description</string>
 </resources>

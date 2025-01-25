@@ -8,11 +8,16 @@ userId: 679213ef1cebc10d8c2d7bc3
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: <ID>
+userId: 6793d58f1ef6aabb4a5638e1
 Content-Type: application/json
 
 {
-"name": "SpiderMan 3", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2012, "description": "good one", "age": 10
+    "name": "poo hadov",
+    "categories":[],
+    "movie_time":"2:30",
+    "Publication_year":2024,
+    "description": "try.",
+    "videoUrl": "uploads/poo.mp4"
 }
 
 ### Return movie according to user search
@@ -22,17 +27,21 @@ userId: <ID>
 
 ### Get a specific movie by ID
 
-GET http://localhost:12345/api/movies/:id 
-userId: <ID>
+GET http://localhost:12345/api/movies/6794d57dc3b3353fd3a318ac
+userId: 6793d58f1ef6aabb4a5638e1
 
 ### Update a movie
 
 PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
 Content-Type: application/json 
-userId: <ID>
+userId: 6793d58f1ef6aabb4a5638e1
 
 {
-"name": "after change", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2024, "description": "try.", "age":18
+"name": "after change",
+"movie_time":"2:30",
+"Publication_year":2024,
+"description": "try.",
+"videoUrl": "uploads/poo.mp4"
 }
 
 ### Delete a movie

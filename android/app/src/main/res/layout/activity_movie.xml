@@ -5,53 +5,177 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".MovieActivity">
 
-<!--    <com.google.android-->
-<!--        android:id="@+id/playerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
-    <VideoView
-        android:id="@+id/videoView"
+
+
+    <!--    <com.google.android.exoplayer2.ui.PlayerView-->
+    <!--        android:id="@+id/playerView"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+
+    <!-- FrameLayout מכיל את הוידאו ואת פס הבקרה -->
+
+    <!-- פס הבקרה שמופיע על הוידאו -->
+
+    <FrameLayout
+        android:id="@+id/videoFrame"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_centerHorizontal="true"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- VideoView במרכז ה-FrameLayout -->
+        <android.widget.VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="visible"/>
+
+        <!-- פס הבקרה שמופיע על הסרטון -->
+        <LinearLayout
+            android:id="@+id/videoControlPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#80FFFEFE"
+            android:visibility="gone"
+            android:padding="16dp"
+            android:layout_alignParentBottom="true">
+
+            <!-- כפתור Play/Pause -->
+            <ImageButton
+                android:id="@+id/btnPlayPause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_play"
+                android:contentDescription="Play/Pause"
+                android:background="@android:color/transparent" />
+
+            <!-- SeekBar לשליטה על מיקום הסרטון -->
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0"
+                android:thumbTint="#FFFFFF"
+                android:progressTint="#FFFFFF"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="10dp"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+    </FrameLayout>
 
     <TextView
-        android:id="@+id/videoTitle"
+        android:id="@+id/movieTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="שם הסרט"
+        android:text="@string/movie_title"
         android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:background="#66000000"
-        android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/videoView"
+        android:textColor="#FDF1F1"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/videoFrame"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498" />
+
+
+    <TextView
+        android:id="@+id/year"
+        android:layout_width="81dp"
+        android:layout_height="39dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/movie_year"
+        android:textColor="#F8F3F3"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/videoFrame" />
+
+    <TextView
+        android:id="@+id/movieTime"
+        android:layout_width="105dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/movie_time"
+        android:textColor="#FFFAFA"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/videoFrame" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="408dp"
+        android:layout_height="43dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#F8F4F4"
+        android:drawableStart="@drawable/ic_play"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:text="@string/movie_play"
+        android:textColor="#040303"
+        android:tint="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/movieDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.795" />
+
+    <TextView
+        android:id="@+id/movieDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="176dp"
+        android:padding="10dp"
+        android:text="@string/movie_description"
+        android:textColor="#FAF5F5"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/videoFrame" />
 
     <TextView
         android:id="@+id/recommendedTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="סרטים מומלצים"
-        android:textSize="18sp"
-        android:textColor="#000000"
+        android:layout_marginTop="12dp"
         android:padding="16dp"
-        app:layout_constraintTop_toBottomOf="@id/videoTitle"
+        android:text="More Like This"
+        android:textColor="#F8F3F3"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/movieDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewRecommended"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/recommendedTitle"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="197dp"
+        android:layout_height="174dp"
+        android:layout_marginTop="4dp"
+        android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recommendedTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -36,8 +36,7 @@ android {
 dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.8.9")
-    implementation (libs.exoplayer.v2181)
-    implementation (libs.exoplayer2.exoplayer)
+//    implementation (libs.exoplayer.v2181)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)

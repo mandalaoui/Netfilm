@@ -11,6 +11,7 @@ const Movie = new Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
+        required: false
     }],
     movie_time: {
         type: String,
@@ -28,10 +29,16 @@ const Movie = new Schema({
         type: String,
         default: ''
     },
+    videoUrl: {
+        type: String,
+        required: true
+    },
     age: {
         type: Number,
         required: false
     }
+
+
 });
 
 // Export the Movie model using the schema defined above

@@ -38,7 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        binding.btnBack.setOnClickListener(v -> {
+            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(i);
+        });
         // Initialize AppContext with activity context
 //        AppContext.initialize(this);
 
