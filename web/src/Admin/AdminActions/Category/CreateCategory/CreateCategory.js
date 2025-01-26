@@ -34,11 +34,11 @@ function CreateCategory() {
         const isPromoted = isPromotedValue;
         const movies = [];
             // movies: selectedMovies,  // סרטים שנבחרו
-         createCategory(name, isPromoted, movies)
+        createCategory(name, isPromoted, movies)
             .then(isSuccess => {
                 if (isSuccess) {
-                    document.querySelector('.Create-Category-modal-container').style.display = 'none'; 
-                    // window.location.href = '/admin';
+                    // document.querySelector('.Create-Category-modal-container').style.display = 'none'; 
+                    window.location.href = '/admin';
                 }
             });
     };

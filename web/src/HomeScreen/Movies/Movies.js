@@ -3,7 +3,7 @@ import React, { useState, useEffect  } from 'react';
 import MovieRow from '../MovieRow/MovieRow.js';
 import { useLocation } from 'react-router-dom';
 import CreateCategory from '../../Admin/AdminActions/Category/CreateCategory/CreateCategory.js';
-import { getAllCategories } from '../../Admin/AdminActions/AdminActions.js';
+import { getAllCategories, getCategoryById } from '../../Admin/AdminActions/AdminActions.js';
 
 
 
@@ -17,10 +17,25 @@ function Movies() {
 
     useEffect(() => {
         const userId = "6793f41b8221f4dda02b7e63";
-        getAllCategories(userId).then(fetchedCategories => {
-            setCategories(fetchedCategories);
-        });
+        const fetchCategories = async () => {
+            try {
+                const categoryIds = await getAllCategories(userId);
+                const categoryDetails = [];
+            for (const id of categoryIds) {
+                const category = await getCategoryById(id, userId);
+                if (category) {
+                    categoryDetails.push(category);
+                }
+            }
+            setCategories(categoryDetails);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        };
+        fetchCategories();
+        
     }, []);
+    
 
     const handleAddCategory = () => {
         setShowModal(true);
@@ -50,9 +65,9 @@ function Movies() {
                 </>
             )}
 
-            {location === "/home" && <MovieRow category="Watched" />}
+            {/* {location === "/home" && <MovieRow category={{ name: "Watched", movies: [...] }} />} */}
             {categories.map((category) => (
-                <MovieRow key={category} category={category} />
+                <MovieRow key={category.id} category={category} />
             ))}
         </div>
     );

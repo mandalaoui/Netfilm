@@ -65,10 +65,10 @@ function MainMenu() {
     //     };
 
     //     console.log(userData);
-    
+
     //     const imageInput = document.querySelector('input[type="file"]');
     //     const imageFile = imageInput.files[0]; 
-    
+
     //     const userResponse = await fetch("http://localhost:12345/api/users/", {
     //         method: "POST",
     //         headers: {
@@ -76,33 +76,33 @@ function MainMenu() {
     //         },
     //         body: JSON.stringify(userData)
     //     });
-    
+
     //     let userResponseBody = null;
     //     try {
     //         userResponseBody = await userResponse.json();
     //     } catch (e) {
     //         console.warn("Failed to parse user JSON:", e);
     //     }
-    
+
     //     if (userResponse.ok) {
     //         // alert("Registration successful!");
     //         console.log("User created:", userResponseBody);
-    
+
     //         const formData = new FormData();
     //         formData.append('image', imageFile); 
-    
+
     //         const imageResponse = await fetch("http://localhost:12345/api/upload/image", {
     //             method: "POST",
     //             body: formData 
     //         });
-    
+
     //         let imageResponseBody = null;
     //         try {
     //             imageResponseBody = await imageResponse.json();
     //         } catch (e) {
     //             console.warn("Failed to parse image response:", e);
     //         }
-    
+
     //         if (imageResponse.ok) {
     //             console.log("Image uploaded:", imageResponseBody);
     //             alert("Image uploaded successfully!");
@@ -114,7 +114,7 @@ function MainMenu() {
     //         alert("Failed to register user.");
     //     }
     // };
-    
+
 
     const handleRegister = async () => {
         const userData = {
@@ -122,27 +122,27 @@ function MainMenu() {
             password: document.querySelector('input[placeholder="Password"]').value,
             nickname: document.querySelector('input[placeholder="Nickname"]').value,
         };
-    
+
         const imageInput = document.querySelector('input[type="file"]');
-        const imageFile = imageInput.files[0]; 
-    
+        const imageFile = imageInput.files[0];
+
         const formData = new FormData();
         formData.append('username', userData.username);
         formData.append('password', userData.password);
         formData.append('nickname', userData.nickname);
         formData.append('photo', imageFile);
-    
+
         try {
             const response = await fetch("http://localhost:12345/api/users/", {
                 method: "POST",
                 body: formData,
             });
-    
+
             if (response.ok) {
                 const location = response.headers.get('Location'); // קבלת ה-Location שהוגדר בתשובה
                 alert("Registration successful!");
                 console.log("User created at:", location);
-                window.location.href = "/login"; 
+                window.location.href = "/login";
             } else {
                 const errorResponse = await response.json();
                 if (response.status === 400) {
@@ -158,7 +158,7 @@ function MainMenu() {
             alert("Network error: Please try again later.");
         }
     };
-    
+
 
     // export const handleRegister = async () => {
     //     try {
@@ -177,24 +177,36 @@ function MainMenu() {
     //     }
     // };
 
-    const handleLogin = () => {
+    const handleLogin = async () => {
         const userData = {
             username: document.querySelector('input[placeholder="Username"]').value,
             password: document.querySelector('input[placeholder="Password"]').value,
         };
 
-        fetch("http://localhost:12345/api/tokens/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(userData) // Send login data to server
-        })
-            .then(response => response.json()) // Parse JSON response
-            .then(data => {
+        const errorElement = document.getElementById('login-error');
+
+        try {
+            const response = await fetch("http://localhost:12345/api/tokens/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData) // Send login data to server
+            });
+            if (response.ok) {
                 navigateToPage('../home');
-            })
-            .catch(error => console.error("Error during login:", error)); // Log login error
+            } else if (response.status === 400 || response.status === 404) {
+                errorElement.textContent = "Username and/or password are incorrect.";
+                errorElement.style.display = "block";
+            } else {
+                errorElement.textContent = "An unexpected error occurred. Please try again.";
+                errorElement.style.display = "block";
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            errorElement.textContent = "Network error. Please check your connection.";
+            errorElement.style.display = "block";
+        }
     };
     return (
         <>
@@ -241,6 +253,7 @@ function MainMenu() {
 
                         {loc === "/login" && (
                             <>
+                                <p id="login-error" className="login-error-message" style={{ display: "none", color: "red" }}></p>
                                 <button onClick={handleLogin}>Login</button> {/* Button to handle login */}
                                 <button
                                     className="secondary"

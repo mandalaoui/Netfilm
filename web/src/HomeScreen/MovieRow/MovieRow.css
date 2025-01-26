@@ -112,6 +112,13 @@
   margin: 0;
 }
 
+.category-promotion{
+  display: flex;
+  justify-content: flex-start; 
+  color: white;
+  padding-right: 50%;
+}
+
 .category-actions {
   display: flex;
   gap: 10px;

@@ -82,8 +82,8 @@ Content-Type: application/json
 
 ### Get a specific category by ID
 
-GET http://localhost:12345/api/categories/6784159856b0b833f090f58d 
-userId: <ID>
+GET http://localhost:12345/api/categories/67956f7405674a481f9f6fde 
+userId: 6793f41b8221f4dda02b7e63
 
 ### Update a category
 

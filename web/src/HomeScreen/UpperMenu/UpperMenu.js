@@ -43,7 +43,7 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     };
 
     return (
-        <nav class="navbar border-body fixed-top full-width">
+        <nav className="navbar border-body fixed-top full-width">
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex me-auto">
                     <img src={netflixIcon} className="netflix-logo" alt="Netflix Logo"></img>
