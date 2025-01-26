@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.androidapp.api.ApiResponse;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
+import com.example.androidapp.entities.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;

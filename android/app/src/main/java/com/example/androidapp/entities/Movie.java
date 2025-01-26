@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 public class Movie {
     @PrimaryKey
+    private String id;
     private String name;
     private List<Category> categories;
     private String movie_time;
@@ -76,7 +77,8 @@ public class Movie {
         this.name = name;
     }
 
-    public Movie(String name, List<Category> categories, String movie_time, String image, Number publication_year, String description, Number age) {
+    public Movie(String id, String name, List<Category> categories, String movie_time, String image, Number publication_year, String description, Number age) {
+        this.id = id;
         this.name = name;
         this.categories = categories;
         this.movie_time = movie_time;

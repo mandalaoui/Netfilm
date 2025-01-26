@@ -1,16 +1,16 @@
 package com.example.androidapp.api;
 
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
+
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
-import com.example.androidapp.User;
-import com.example.androidapp.RegisterActivity;
-import com.google.gson.Gson;
+import com.example.androidapp.entities.Category;
+import com.example.androidapp.entities.User;
+import com.example.androidapp.repositories.CategoriesRepository;
 
-import java.io.IOException;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -23,10 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserApi {
     private Retrofit retrofit;
     private ApiService apiService;
-    private Context context;
 
     public UserApi() {
-//        this.context = context;
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -52,4 +50,19 @@ public class UserApi {
         Call<ApiResponse> call = apiService.login(user);
         call.enqueue(callback);
     }
+
+//    public void getCtegories(MutableLiveData<List<Category>> categories) {
+//        Call<List<Category>> call = apiService.getCategories();
+//        call.enqueue(new Callback<List<Category>>() {
+//            @Override
+//            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+//                categories.setValue(response.body());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Category>> call, Throwable t) {
+//                Log.i("UserApi","fail response");
+//            }
+//        });
+//    }
 }

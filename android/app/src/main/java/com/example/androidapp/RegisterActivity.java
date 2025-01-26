@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
+import com.example.androidapp.entities.User;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
