@@ -52,7 +52,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         if (movies != null) {
             final Movie current = movies.get(position);
             Glide.with(holder.itemView.getContext())
-                    .load(current.getImage())
+                    .load("http://10.0.2.2:12345/" + current.getImage())
                     .error(R.drawable.default_image)
                     .into(holder.movieImage);
 

@@ -5,26 +5,35 @@ import androidx.room.TypeConverter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ConverterMovie {
 
     @TypeConverter
-    public static String fromCategoriesList(List<Category> categories) {
+    public static String fromCategoryList(List<String> categories) {
         if (categories == null) {
             return null;
         }
-        Gson gson = new Gson();
-        return gson.toJson(categories);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String category : categories) {
+            stringBuilder.append(category).append(",");
+        }
+
+        if (stringBuilder.length() > 0) {
+            stringBuilder.setLength(stringBuilder.length() - 1);
+        }
+
+        return stringBuilder.toString();
     }
 
     @TypeConverter
-    public static List<Category> toCategoriesList(String data) {
-        if (data == null) {
+    public static List<String> toCategoryList(String data) {
+        if (data == null || data.isEmpty()) {
             return null;
         }
-        Gson gson = new Gson();
-        return gson.fromJson(data, new TypeToken<List<Category>>() {}.getType());
+        return Arrays.asList(data.split(","));
     }
 
     @TypeConverter

@@ -43,7 +43,7 @@ public class CategoryApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    String userId = "6773d84d1b9665553523cd58";
+    String userId = "6792b52c10a40e0b80dd798d";
     public void getCategories() {
         Call<List<Category>> call = apiService.getCategories(userId);
         call.enqueue(new Callback<List<Category>>() {
@@ -53,7 +53,7 @@ public class CategoryApi {
                     Log.d("CategoryApi", "Received categories: " + response.body());
                     if (response.body() != null && !response.body().isEmpty()) {
                         for (Category category : response.body()) {
-                            Log.d("CategoryApi", "Category: " + category.getCategoryName());
+                            Log.d("CategoryApi", "Category: " + category.getCategoryName() + "," + category.getMovies());
                         }
                     }
                     new Thread(() -> {

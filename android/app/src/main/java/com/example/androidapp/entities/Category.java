@@ -56,6 +56,7 @@ public class Category {
     public Category() {
     }
 
+
     public Category(int id, String categoryName, List<Movie> movies) {
         this.id = id;
         this.categoryName = categoryName;

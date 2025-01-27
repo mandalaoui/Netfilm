@@ -14,7 +14,7 @@ public class Movie {
     @NonNull
     private String id;
     private String name;
-    private List<Category> categories;
+    private List<String> categories;
     private String movie_time;
     private String image;
     private Number Publication_year;
@@ -29,11 +29,11 @@ public class Movie {
         this.name = name;
     }
 
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
@@ -89,7 +89,7 @@ public class Movie {
         this.name = name;
     }
 
-    public Movie(String id, String name, List<Category> categories, String movie_time, String image, Number publication_year, String description, Number age) {
+    public Movie(String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age) {
         this.id = id;
         this.name = name;
         this.categories = categories;

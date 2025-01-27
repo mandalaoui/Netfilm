@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation("com.google.android.material:material:1.6.0")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.swiperefreshlayout)
@@ -65,4 +66,9 @@ dependencies {
 
     implementation ("androidx.room:room-runtime:2.5.0")
     annotationProcessor ("androidx.room:room-compiler:2.5.0")
+
+    implementation ("androidx.appcompat:appcompat:1.3.1")
+    implementation ("com.google.android.material:material:1.6.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation ("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 }

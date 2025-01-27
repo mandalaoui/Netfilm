@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,14 +22,21 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView categoryTitle;
         RecyclerView lstMovies;
+        private MovieListAdapter movieListAdapter;
         private CategoryViewHolder(View itemView) {
             super(itemView);
             categoryTitle = itemView.findViewById(R.id.categoryTitle);
             lstMovies = itemView.findViewById(R.id.lstMovies);
-            final MovieListAdapter movieListAdapter = new MovieListAdapter(context);
+            movieListAdapter = new MovieListAdapter(context);
             lstMovies.setAdapter(movieListAdapter);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            lstMovies.setLayoutManager(layoutManager);
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false);
+            lstMovies.setLayoutManager(gridLayoutManager);
+        }
+        public void bindMovies(List<Movie> movies) {
+            if (movieListAdapter != null) {
+                movieListAdapter.setMovies(movies);
+            }
         }
     }
 
@@ -52,11 +60,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         if (categories != null) {
             final Category current = categories.get(position);
             Log.d("CategoryListAdapter", "Binding category: " + (current != null ? current.getCategoryName() : "null"));
+            Log.d("CategoryListAdapter", "Movies for category " + current.getCategoryName() + ": " + current.getMovies());
             holder.categoryTitle.setText(current.getCategoryName());
-
-//            MovieAdapter movieAdapter = new MovieAdapter(context);
-//            holder.recyclerViewMovies.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-//            holder.recyclerViewMovies.setAdapter(movieAdapter);
+//            holder.bindMovies(current.getMovies());
+            if (current.getMovies() != null && !current.getMovies().isEmpty()) {
+                holder.bindMovies(current.getMovies());
+            } else {
+                Log.d("CategoryListAdapter", "No movies available for this category");
+            }
         }
     }
     public void setCategories(List<Category> categories) {
@@ -72,50 +83,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return 0;
     }
 
-    public List<Category> setCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
-
-
-    //chat
-//    private List<Category> categories;
-//    private Context context;
-//
-//    public CategoryListAdapter(Context context, List<Category> categories) {
-//        this.context = context;
-//        this.categories = categories;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(context).inflate(R.layout.category_layout, parent, false);
-//        return new CategoryViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-//        Category category = categories.get(position);
-//        holder.categoryName.setText(category.getName());
-//
-//        MovieAdapter movieAdapter = new MovieAdapter(context, category.getMovies());
-//        holder.movieRecyclerView.setAdapter(movieAdapter);
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return categories.size();
-//    }
-//
-//    public static class CategoryViewHolder extends RecyclerView.ViewHolder {
-//        TextView categoryName;
-//        RecyclerView movieRecyclerView;
-//
-//        public CategoryViewHolder(View itemView) {
-//            super(itemView);
-//            categoryName = itemView.findViewById(R.id.categoryTitle);
-//            movieRecyclerView = itemView.findViewById(R.id.recyclerViewMovies);
-//            movieRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-//        }
-//    }
 }
