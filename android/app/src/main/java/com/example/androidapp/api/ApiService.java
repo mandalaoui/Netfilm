@@ -26,10 +26,27 @@ public interface ApiService {
             @Part("nickname") RequestBody nickname,
             @Part MultipartBody.Part profilePicture
     );
+    @Multipart
+    @POST("movies")
+    Call<Movie> createMovie(
+            @Header("userId") String userId,
+            @Part("name") RequestBody name,
+            @Part("year") RequestBody Publication_year,
+            @Part("time") RequestBody movie_time,
+            @Part("description") RequestBody description,
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part videoUrl
+    );
     @GET("movies/{movieId}")
     Call<Movie> getMovie(@Path("movieId") String movieId, @Header("userId") String userId);
     @GET("movies/{movieId}/recommend/")
     Call<List<Movie>> RecommendedMovies(@Path("movieId") String movieId, @Header("userId") String userId);
     @POST("tokens")
     Call<ApiResponse> login(@Body User user);
+
+//    @POST("categories/")
+//    Call<Void> createCategory(
+//            @Header("userId") String userId,       // שולחים את ה- userId כ- header
+//            @Body Category categoryRequest  // שולחים את הנתונים כ- body
+//    );
 }

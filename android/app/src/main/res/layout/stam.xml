@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="679dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="26dp">
+
+        <EditText
+            android:id="@+id/categoryNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter category name"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <!-- שדה isPromoted (לדוגמה, TextView או EditText) -->
+            <TextView
+                android:id="@+id/isPromotedLabel"
+                android:layout_width="262dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="Is Promoted?"
+                android:textSize="16sp" /> <!-- רווח בין השדה לכפתור -->
+
+            <!-- Switch לצורך סימון true/false -->
+            <Switch
+                android:id="@+id/isPromotedSwitch"
+                android:layout_width="57dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/movieListLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Select Movies"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/movieSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+
+            <!-- כפתור "Create Category" -->
+            <Button
+                android:id="@+id/createCategoryButton"
+                android:layout_width="347dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="Create Category"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="24dp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

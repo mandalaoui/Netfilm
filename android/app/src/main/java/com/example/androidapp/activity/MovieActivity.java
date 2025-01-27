@@ -105,7 +105,7 @@ public class MovieActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false); // 3 סרטים בשורה
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        RequestApi recommendMovie = new RequestApi();
+        RequestApi recommendMovie = new RequestApi(this);
         recommendMovie.getRecommendMovie(movieId,userId, new Callback<List<Movie>>() {
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful() && response.body() != null) {

@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 User user = new User(username, password, nickname);
 
-                RequestApi requestApi = new RequestApi();
+                RequestApi requestApi = new RequestApi(this);
                 Log.d("Register", "Starting registration request for user: " + user.getUsername());
                 requestApi.registerUser(user,imageFile, new Callback<User>() {
                     @Override

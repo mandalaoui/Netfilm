@@ -21,7 +21,16 @@ public class Movie {
     private String videoUrl;
     private String image;
 
-//
+    public Movie(String name, String movie_time, int publication_year, String description, String videoUrl, String image) {
+        this.name = name;
+        this.movie_time = movie_time;
+        Publication_year = publication_year;
+        this.description = description;
+        this.videoUrl = videoUrl;
+        this.image = image;
+    }
+
+    //
     public String getVideoUrl() {
         return videoUrl;
     }
@@ -37,6 +46,16 @@ public class Movie {
 
     public void setId(String _id) {
         this._id = _id;
+    }
+
+    public Movie(String name,int publication_year, String movie_time, String description) {
+        this.name = name;
+        this.movie_time = movie_time;
+        this.Publication_year = publication_year;
+        this.description = description;
+    }
+
+    public Movie() {
     }
 
     public String getName() {

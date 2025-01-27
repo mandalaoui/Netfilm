@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center"
+            android:layout_marginStart="100dp"
             android:padding="16dp">
 
             <Button
@@ -46,94 +47,116 @@
                 app:layout_constraintTop_toBottomOf="@id/showCreateMovieViewButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+            <Button
+                android:id="@+id/showCreateCategoryViewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create category"
+                android:backgroundTint="#A91616"
+                android:textColor="#FBF8F8"
+                app:layout_constraintTop_toBottomOf="@id/showDeleteMovieViewButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </LinearLayout>
 
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:orientation="vertical"
             android:padding="16dp">
 
             <EditText
                 android:id="@+id/movieNameInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="name"
                 android:hint="@string/managerCreate_movie_name"
                 android:inputType="textMultiLine"
-                android:autofillHints="name"/>
+                android:textColor="#FFFFFF"
+                android:textColorHint="#B0B0B0" />
 
             <EditText
                 android:id="@+id/movieYearInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="year"
                 android:hint="@string/managerCreate_year"
                 android:inputType="textMultiLine"
-                android:autofillHints="year"/>
+                android:textColor="#FFFFFF"
+                android:textColorHint="#B0B0B0" />
 
             <EditText
                 android:id="@+id/movieTimeInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="time"
                 android:hint="@string/managerCreate_time"
                 android:inputType="textMultiLine"
-                android:autofillHints="time"/>
+                android:textColor="#FFFFFF"
+                android:textColorHint="#B0B0B0" />
 
             <EditText
                 android:id="@+id/movieDescriptionInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="description"
                 android:hint="@string/managerCreate_description"
                 android:inputType="textMultiLine"
-                android:autofillHints="description"/>
-
-            <ImageView
-                android:id="@+id/imageViewProfilePic"
-                android:layout_width="94dp"
-                android:layout_height="89dp"
-                android:layout_marginTop="16dp"
-                android:contentDescription="Profile Picture"
-                android:src="@android:color/transparent"/>
-
+                android:textColor="#FFFFFF"
+                android:textColorHint="#B0B0B0" />
 
             <Button
                 android:id="@+id/btnChooseImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="false"
+                android:padding="0dp"
                 android:text="Choose Picture"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:padding="0dp"
-                android:focusable="false"
-                android:clickable="true"/>
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageViewProfilePic"
+                android:layout_width="119dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp" />
 
             <Button
                 android:id="@+id/btnChooseVideo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="124dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="20dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:text="Choose Video"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                android:padding="0dp"
+                android:clickable="true"
                 android:focusable="false"
-                android:clickable="true" />
+                android:padding="0dp"
+                android:text="Choose video"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="119dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp" />
 
             <Button
                 android:id="@+id/createMovieButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="393dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="#A91616"
-                android:textColor="#FBF8F8"
-                android:text="@string/manager_create_movie" />
-
+                android:text="@string/manager_create_movie"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,12 +170,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/manager_movie_id"
+                android:textColor="#FFFFFF"
                 android:inputType="textMultiLine"
                 android:autofillHints="id"/>
 
             <TextView
                 android:text="Are you sure you want to delete this movie?"
                 android:layout_width="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_height="wrap_content" />
 
             <Button
@@ -164,32 +189,112 @@
                 android:text="@string/manager_delete_movie" />
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:orientation="vertical"-->
-<!--            android:padding="16dp"-->
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="679dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="26dp">
+
+            <EditText
+                android:id="@+id/categoryNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter category name"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+
+                <!-- שדה isPromoted (לדוגמה, TextView או EditText) -->
+                <TextView
+                    android:id="@+id/isPromotedLabel"
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="Is Promoted?"
+                    android:textSize="16sp" /> <!-- רווח בין השדה לכפתור -->
+
+                <!-- Switch לצורך סימון true/false -->
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/isPromotedSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/movieListLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Select Movies"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewMovies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+
+                <!-- כפתור "Create Category" -->
+                <Button
+                    android:id="@+id/createCategoryButton"
+                    android:layout_width="347dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="Create Category"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="24dp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <!--        <LinearLayout-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/movieIdInput"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="@string/manager_movie_id"-->
-<!--                android:inputType="textMultiLine"-->
-<!--                android:autofillHints="id"/>-->
-
-<!--            <TextView-->
-<!--                android:text="Are you sure you want to delete this movie?"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content" />-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:padding="16dp">-->
 
 <!--            <Button-->
-<!--                android:id="@+id/deleteMovieButton"-->
+<!--                android:id="@+id/showCreateMovieViewButton"-->
 <!--                android:layout_width="wrap_content"-->
 <!--                android:layout_height="wrap_content"-->
 <!--                android:backgroundTint="#A91616"-->
+<!--                android:text="Create Movie View"-->
 <!--                android:textColor="#FBF8F8"-->
-<!--                android:text="@string/manager_delete_movie" />-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/showDeleteMovieViewButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Delete Movie View"-->
+<!--                android:backgroundTint="#A91616"-->
+<!--                android:textColor="#FBF8F8"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/showCreateMovieViewButton"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent" />-->
 <!--        </LinearLayout>-->
 
     </android.widget.ViewFlipper>

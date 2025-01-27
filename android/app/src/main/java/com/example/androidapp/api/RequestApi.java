@@ -1,11 +1,14 @@
 package com.example.androidapp.api;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.androidapp.AppContext;
 import com.example.androidapp.Movie;
 import com.example.androidapp.R;
+import com.example.androidapp.activity.ManagmentActivity;
 import com.example.androidapp.entities.User;
 
 import java.io.File;
@@ -26,8 +29,8 @@ public class RequestApi {
     private ApiService apiService;
     private Context context;
 
-    public RequestApi() {
-        this.context = AppContext.getContext();
+    public RequestApi(Context context) {
+        this.context = context;
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
@@ -72,9 +75,42 @@ public class RequestApi {
         call.enqueue(callback);
     }
 
+    public void createMovie(Movie movie, File imageFile, File videoFile) {
+        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), movie.getName());
+        RequestBody year = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(movie.getPublication_year()));
+        RequestBody time = RequestBody.create(MediaType.parse("text/plain"), movie.getMovie_time());
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), movie.getDescription());
 
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
+        requestFile = RequestBody.create(MediaType.parse("video/*"), videoFile);
+        MultipartBody.Part videoPart = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFile);
+        Log.d("VideoDetails", "name: " + name);
+        Log.d("VideoDetails", "year: " +year);
+        Log.d("VideoDetails", "time: " + time);
 
+        String userID = "679213ef1cebc10d8c2d7bc3";
+        Call<Movie> call = apiService.createMovie(userID,name, year, time, description, imagePart, videoPart);
+        call.enqueue(new Callback<Movie>() {
+            public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Movie created successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("RequestApi", "Movie created successfully");
+                } else {
+                    String errorMessage = "Failed to create movie: " + response.message();
+                    Log.e("RequestApi", "Failed to create movie: " + response.message());
+                    Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Log.e("RequestApi", "Error: " + t.getMessage());
+                Toast.makeText(context, "Network request failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 
 }
