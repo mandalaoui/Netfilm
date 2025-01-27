@@ -65,9 +65,10 @@ function Movies() {
             )}
 
             {/* {location === "/home" && <MovieRow category={{ name: "Watched", movies: [...] }} />} */}
-            {categories.map((category) => (
-                <MovieRow key={category.id} category={category} />
-            ))}
+            {categories.map((category) => {
+                // console.log(category);
+                return <MovieRow key={category.id} category={category} />;
+            })}
         </div>
     );
 }

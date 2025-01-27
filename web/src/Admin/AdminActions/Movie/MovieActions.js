@@ -70,4 +70,55 @@ const getMovieById = (movieId, userId) => {
     });
 };
 
-export { createMovie, getAllMovies, getMovieById}; 
+const updateMovie = (movieId, userId, formData) => {
+    return fetch(`http://localhost:12345/api/movies/${movieId}`, {
+        method: "PUT",
+        headers: {
+            "userId": userId,
+        },
+        body: formData,
+    })
+    .then(response => {
+        if (response.status === 204) {
+            alert("Movie updated successfully!");
+            return response.json(); 
+        } else {
+            return response.json().then(errorData => {
+                const errorMessage = `${JSON.stringify(errorData)}`;
+                alert(errorMessage);
+                return null;
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error updating movie:", error);
+        return null;
+    });
+};
+
+const deleteMovie = (movieId, userId) => {
+    return fetch(`http://localhost:12345/api/movies/${movieId}`, {
+        method: "DELETE",
+        headers: {
+            "userId": userId,
+        },
+    })
+    .then(response => {
+        if (response.status === 204) {
+            alert("Movie deleted successfully!");
+            return true; 
+        } else {
+            return response.json().then(errorData => {
+                const errorMessage = `${JSON.stringify(errorData)}`;
+                alert(errorMessage);
+                return false;
+            });
+        }
+    })
+    .catch(error => {
+        console.error("Error deleting movie:", error);
+        return false;
+    });
+};
+
+export { createMovie, getAllMovies, getMovieById, updateMovie , deleteMovie }; 

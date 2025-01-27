@@ -6,11 +6,6 @@ const createMovie = async (req, res) => {
     const video = req.files && req.files.movie ? req.files.movie[0].path : null;
     const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
 
-    // const image = req.file ? req.file.path : null;
-    // const video = null;
-    // const trailer = null;
-
-
     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
         image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
     const location = `/api/movies/${newMovie._id}`;
@@ -51,8 +46,12 @@ const getMovie = async (req, res) => {
 
 // Function to update an existing movie's details.
 const updateMovie = async (req, res) => {
+    const image = req.files && req.files.image ? req.files.image[0].path : null;
+    const video = req.files && req.files.movie ? req.files.movie[0].path : null;
+    const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
+
     const movie = await movieService.updateMovie(req.params.id, req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+        image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
 
     // If no movie is found to update, responds with a 404 error
     if (!movie) {

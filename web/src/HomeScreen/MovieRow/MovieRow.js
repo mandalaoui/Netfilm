@@ -2,12 +2,14 @@ import './MovieRow.css';
 import React, { useRef, useState, useEffect  } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
 // import movies from '../../data/movies/movies.js'
-import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
+// import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 import { useLocation } from 'react-router-dom';
 import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
 import { deleteCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
-// import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
+import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
 // import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
+import { getMovieById } from '../../Admin/AdminActions/Movie/MovieActions.js';
+
 
 function MovieRow({ category }) {
     const rowRef = useRef(null);
@@ -20,23 +22,25 @@ function MovieRow({ category }) {
     
     const [moviesByCategory, setMoviesByCategory] = useState([]);
     useEffect(() => {
-        const userId = "67964782c8b5942c5f45547f"; 
+        const userId = "67964782c8b5942c5f45547f";     
         const fetchMovies = async () => {
             try {
-                const allMovies = await getAllMovies(userId); // קריאה ל-getAllMovies עם ID של המשתמש
-                if (allMovies) {
-                    const moviesGroupedByCategory = allMovies.map((categoryMovies) => ({
-                        categoryName: categoryMovies.categoryName,
-                        movies: categoryMovies.movies
-                    }));
-                    setMoviesByCategory(moviesGroupedByCategory);
-                }
+                    const movies = await Promise.all(
+                        category.movies.map((movieId) => {
+                            return getMovieById(movieId, userId);
+                        })
+                );
+                setMoviesByCategory(movies);
             } catch (error) {
-                console.error("Error fetching movies:", error);
+                console.error("Error fetching movies by category:", error);
             }
         };
-        fetchMovies();
-    }, []);
+        if (category.movies && category.movies.length > 0) {
+            fetchMovies();
+        } else {
+            // console.log("No movies found for this category.");
+        }
+    }, [category.movies]);
 
     const handleScroll = () => {
         const container = rowRef.current;
@@ -53,9 +57,7 @@ function MovieRow({ category }) {
         container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     };
 
-    const categoryMovies = moviesByCategory.find((item) => item.categoryName === category.name);
-    const filteredMovies = categoryMovies ? categoryMovies.movies : [];  
-    if (!isAdminPage && filteredMovies.length === 0) {
+    if (!isAdminPage && moviesByCategory.length === 0) {
         return null; 
     }
 
@@ -96,12 +98,7 @@ function MovieRow({ category }) {
     };
 
     const handleAddMovie = () => {
-        // Placeholder for add movie functionality
-        // alert(`Add new movie to category: ${category.name}`);
-        // setShowMovieModal(true);
         window.location.href = `/admin/CreateMovie?specificCategory=${category.id}`;
-
-        // window.location.href = "/admin/CreateMovie";
     };
 
     return (
@@ -124,6 +121,7 @@ function MovieRow({ category }) {
                         <button className="edit-category-button" onClick={handleEditCategory}>
                             <i className="bi bi-pencil-square"></i>
                         </button>
+                        {showModal  && <EditCategory category={category}/> }
                         <button className="delete-category-button" onClick={handleDeleteCategory}>
                             <i className="bi bi-trash"></i>
                         </button>
@@ -138,11 +136,11 @@ function MovieRow({ category }) {
                             <i className="bi bi-plus-circle"></i>
                         </button>
                     )}
-                    {filteredMovies.length === 0 && category.name === "Watched" ? (
+                    {moviesByCategory.length === 0 && category.name === "Watched" ? (
                         <p className="no-movies-text">Haven't seen any movie yet</p>
                     ) : (
-                        filteredMovies.map((movie) => (
-                            <MovieCard key={movie.id} movie={movie} />
+                        moviesByCategory.map((movie) => (
+                            <MovieCard key={movie._id} movie={movie} />
                         ))
                     )}
                 </div>

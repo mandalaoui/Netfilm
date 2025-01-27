@@ -13,10 +13,12 @@
 .Edit-Category-modal-content {
     background-color: rgb(28, 28, 28);
     padding: 20px;
-    width: 600px;
+    width: 90%px;
+    max-width: 800px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
+    position: relative ;
+    z-index: 20;
 }
 
 .EC-close-btn {

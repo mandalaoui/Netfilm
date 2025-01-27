@@ -12,6 +12,7 @@ function CreateMovie() {
     const [currentCategory, setCurrentCategory] = useState(null);
     
     useEffect(() => {
+        console.log(specificCategory);
         if (specificCategory) {
             getCategoryById(specificCategory, "67964782c8b5942c5f45547f")
                 .then((category) => {
@@ -22,17 +23,6 @@ function CreateMovie() {
                 });
         }
     }, [specificCategory]);
-    
-
-    // const [movieName, setMovieName] = useState('');
-    // const [movieTime, setMovieTime] = useState('');
-    // const [publicationYear, setPublicationYear] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [age, setAge] = useState('');
-    // const [categories, setCategories] = useState([]);
-    // const [trailer, setTrailer] = useState(null);
-    // const [video, setVideo] = useState(null);
-    // const [image, setImage] = useState(null);
 
     useEffect(() => {
         function validateInput(input) {
@@ -103,8 +93,8 @@ function CreateMovie() {
 
         formData.append("name", document.querySelector('input[id="movieName"]').value);
         formData.append("movie_time", document.querySelector('input[id="movieTime"]').value);
-        // formData.append("Publication_year", parseInt(document.querySelector('input[id="publicationYear"]').value));
-        formData.append("Publication_year", parseInt(2022));
+        formData.append("Publication_year", parseInt(document.querySelector('input[id="publicationYear"]').value));
+        // formData.append("Publication_year", parseInt(2022));
         formData.append("description", document.querySelector('textarea[id="description"]').value);
         formData.append("age", parseInt(document.querySelector('input[id="age"]').value));
 
@@ -118,10 +108,10 @@ function CreateMovie() {
             formData.append("trailer", trailerFile);
         }
 
-        
-        const categories = ["6795fa4bc8b5942c5f450886"];
-        if (currentCategory)
-            categories = [currentCategory];
+        console.log(specificCategory);
+        let categories = ["6795fa4bc8b5942c5f450886"];
+        if (specificCategory != null)
+            categories = [specificCategory];
         categories.forEach(category => formData.append("categories[]", category));
 
         createMovie(formData).then(isSuccess => {
@@ -196,7 +186,7 @@ function CreateMovie() {
                 <div className="Create-Movie-btn">
                     <button onClick={handleSubmit}>Create Movie</button>
                 </div>
-                <p class="text-decoration-underline" onClick={handleReturn}>Return</p>
+                <p className="text-decoration-underline" onClick={handleReturn}>Return</p>
             </div>
         </div >
     );

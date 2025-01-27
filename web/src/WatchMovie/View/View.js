@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function View({ movie }) {
+        console.log(movie);
         const [isPlaying, setIsPlaying] = useState(false);
-        const videoSrc= movie.video;
+        const videoSrc = `http://localhost:12345/api/${movie.video}`;
+        console.log(videoSrc);
         const navigate = useNavigate();
 
         useEffect(() => {

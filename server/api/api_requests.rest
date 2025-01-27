@@ -33,9 +33,9 @@ userId: <ID>
 
 ### Update a movie
 
-PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
+PUT http://localhost:12345/api/movies/6797f5b69a55cc86adcf5455
 Content-Type: application/json 
-userId: <ID>
+userId: 67964782c8b5942c5f45547f
 
 {
 "name": "after change", 

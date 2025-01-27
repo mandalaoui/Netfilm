@@ -20,7 +20,12 @@ router.route('/')
 // Define routes for '/:id'
 router.route('/:id')
     .get(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieController.getMovie)
-    .put(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
+    .put(upload.fields([
+        { name: 'image', maxCount: 1 }, 
+        { name: 'movie', maxCount: 1 }, 
+        { name: 'trailer', maxCount: 1 } 
+    ]),
+    userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
     .delete(userValidation.validateUserIdHeader, movieValidation.validateMovieId, recommendcontroller.deleteMovie, movieController.deleteMovie);
 
 // Define route for searching movies with a query.

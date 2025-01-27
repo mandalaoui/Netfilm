@@ -2,10 +2,33 @@ import './EditCategory.css';
 import React, { useState, useEffect } from 'react';
 import { updateCategory } from '../CategoryActions.js';
 // import moviesData  from '../../../../data/movies/movies.js';
+import { getMovieById } from '../../Movie/MovieActions.js';
+
 
 function EditCategory({category}) {
     const [categoryName, setCategoryName] = useState(category.name || '');
     const [isPromotedValue, setIsPromoted] = useState(category.isPromoted || false);
+    const [movieNames, setMovieNames] = useState([]);
+
+    useEffect(() => {
+        // Fetch movie names using the IDs from the category
+        const fetchMovieNames = async () => {
+            try {
+                const names = await Promise.all(
+                    category.movies.map(async (movieId) => {
+                        const movie = await getMovieById(movieId, "67964782c8b5942c5f45547f");
+                        return movie?.name || 'Unknown Movie'; // Default to 'Unknown Movie' if the movie is not found
+                    })
+                );
+                setMovieNames(names);
+            } catch (error) {
+                console.error('Error fetching movie names:', error);
+            }
+        };
+
+        fetchMovieNames();
+    }, [category.movies]);
+    
     // const [movies, setMovies] = useState(category.movies || []);
 
     // useEffect(() => {
@@ -64,7 +87,11 @@ function EditCategory({category}) {
                         </div>
                         <div className="input-group">
                             <label>Movies:</label>
-                            <span>{category.movies.length > 0 ? category.movies.join(", ") : "No movies selected"}</span>
+                            <span>
+                                {movieNames.length > 0 
+                                    ? movieNames.join(", ") 
+                                    : "No movies selected"}
+                            </span>                        
                         </div>
                     </div>
 
@@ -92,7 +119,6 @@ function EditCategory({category}) {
                         <div className="input-group">
                             <label>Movies</label>
                             <div className="EC-movie-list">
-                                {/* אפשר להוסיף את הסרטים כאן אם רוצים */}
                             </div>
                         </div>
                     </div>

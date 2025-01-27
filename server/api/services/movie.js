@@ -69,7 +69,7 @@ const getMoviesByCategories = async (userId) => {
  };
 
 // Function to update an existing movie's details
-const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description, age) => {
+const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description, age, video, trailer) => {
     const movie = await getMovieById(id);
     if (!movie) return null;
 
@@ -99,6 +99,8 @@ const updateMovie = async (id, name, categories, movie_time, image, Publication_
     movie.Publication_year = Publication_year;
     movie.description = description;
     movie.age = age;
+    movie.video = video;
+    movie.trailer = trailer;
 
     // Add the movie to the new categories
     for (const categoryId of categories) {

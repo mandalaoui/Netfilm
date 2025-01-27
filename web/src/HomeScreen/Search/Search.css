@@ -7,6 +7,13 @@
     background-color: transparent; 
 }
 
+.search-results p {
+    font-size: 18px;
+    color: #666;
+    text-align: center;
+    width: 100%;
+}
+
 .movie-card {
     width: 200px;
     background-color: #fff;
