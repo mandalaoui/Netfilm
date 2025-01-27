@@ -1,13 +1,17 @@
 package com.example.androidapp.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
 import java.util.List;
 
 @Entity
+@TypeConverters(ConverterMovie.class)
 public class Movie {
     @PrimaryKey
+    @NonNull
     private String id;
     private String name;
     private List<Category> categories;
@@ -67,6 +71,14 @@ public class Movie {
 
     public Number getAge() {
         return age;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setAge(Number age) {

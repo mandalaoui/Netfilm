@@ -3,24 +3,28 @@ package com.example.androidapp.entities;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.adapters.Converters;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
+import androidx.room.TypeConverters;
 import java.util.List;
+
 @Entity
+@TypeConverters(ConverterCategory.class)
 public class Category {
     @PrimaryKey (autoGenerate = true)
     private int id;
-//    @NonNull
-//    @PrimaryKey
     private String categoryName;
-//    private List<Movie> movies;
+    private List<Movie> movies;
 
+    @Ignore
     public Category(String categoryName, List<Movie> movies) {
         this.categoryName = categoryName;
 //        this.movies = movies;
     }
 
+    @Ignore
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
@@ -32,23 +36,13 @@ public class Category {
     public void setId(int id) {
         this.id = id;
     }
-//    public List<Movie> getMovies() {
-//        return movies;
-//    }
-//
-//    public void setMovies(List<Movie> movies) {
-//        this.movies = movies;
-//    }
+    public List<Movie> getMovies() {
+        return movies;
+    }
 
-//    public String getName() {
-//        Log.d("Category", "Getting name: " + categoryName);
-//        return categoryName;
-//    }
-//
-//    public void setName(String name) {
-//        Log.d("Category", "Setting name: " + name);
-//        this.categoryName = name;
-//    }
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 
     public String getCategoryName() {
         return categoryName;
@@ -58,27 +52,14 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    //    public Boolean getPromoted() {
-//        return isPromoted;
-//    }
-
-//    public void setPromoted(Boolean promoted) {
-//        isPromoted = promoted;
-//    }
-
-//    public Category(String name, List<Movie> movies, Boolean isPromoted) {
-//        this.name = name;
-//        this.movies = movies;
-//        this.isPromoted = isPromoted;
-//    }
-//
-//    public Category(Category category) {
-//        this.name = category.getName();
-//        this.movies = movies;
-//        this.isPromoted = isPromoted;
-//    }
-
+    @Ignore
     public Category() {
+    }
+
+    public Category(int id, String categoryName, List<Movie> movies) {
+        this.id = id;
+        this.categoryName = categoryName;
+        this.movies = movies;
     }
 }
 

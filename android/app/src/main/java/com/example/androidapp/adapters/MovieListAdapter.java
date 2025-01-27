@@ -1,9 +1,11 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +42,23 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
 //        if (movieList != null) {
-        if (movies != null && !movies.isEmpty()) {
-            final Movie currentMovie = movies.get(position);
+//        if (movies != null && !movies.isEmpty()) {
+//            final Movie currentMovie = movies.get(position);
+//            Glide.with(holder.itemView.getContext())
+//                    .load(currentMovie.getImage())
+//                    .error(R.drawable.default_image)
+//                    .into(holder.movieImage);
+//        }
+        if (movies != null) {
+            final Movie current = movies.get(position);
             Glide.with(holder.itemView.getContext())
-                    .load(currentMovie.getImage())
+                    .load(current.getImage())
                     .error(R.drawable.default_image)
                     .into(holder.movieImage);
+
+//            MovieAdapter movieAdapter = new MovieAdapter(context);
+//            holder.recyclerViewMovies.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+//            holder.recyclerViewMovies.setAdapter(movieAdapter);
         }
     }
 
@@ -66,44 +79,5 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         return movies;
     }
 
-    //chat
-//    private Context context;
-//    private List<Movie> movies;
-//
-//    public MovieAdapter(Context context, List<Movie> movies) {
-//        this.context = context;
-//        this.movies = movies;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(context).inflate(R.layout.movie_layout, parent, false);
-//        return new MovieViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-//        Movie movie = movies.get(position);
-//        Glide.with(context)
-//                .load(movie.getImage())
-//                .centerCrop()  // אם תרצה לשמור על יחס התמונה ולחתוך את הקצוות
-//                .into(holder.movieImage);
-//
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return movies.size();
-//    }
-//
-//    public static class MovieViewHolder extends RecyclerView.ViewHolder {
-//        ImageView movieImage;
-//
-//        public MovieViewHolder(View itemView) {
-//            super(itemView);
-//            movieImage = itemView.findViewById(R.id.iv_movie);
-//        }
-//    }
 
 }

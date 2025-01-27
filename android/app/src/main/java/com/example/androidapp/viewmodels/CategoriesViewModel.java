@@ -44,21 +44,4 @@ public class CategoriesViewModel extends ViewModel {
         Log.d("CategoriesViewModel", "Reloading categories...");
         repository.reload();
     }
-
-    //chat
-//    private LiveData<List<Category>> categories = new MutableLiveData<>(new ArrayList<>());;
-//    private CategoriesRepository repository;
-//
-//    public CategoriesViewModel() {
-////        categories = new MutableLiveData<>();
-//        repository = new CategoriesRepository();
-//    }
-//
-//    public LiveData<List<Category>> getCategories() {
-//        return categories;
-//    }
-//
-//    public void loadCategories() {
-//        repository.fetchCategories(categories);
-//    }
 }

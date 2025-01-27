@@ -55,11 +55,11 @@ public class HomeActivity extends AppCompatActivity {
         lstCategories.setAdapter(categoryListAdapter);
         lstCategories.setLayoutManager(new LinearLayoutManager(this));
 
-        RecyclerView lstMovies = findViewById(R.id.lstMovies);
-        final MovieListAdapter movieListAdapter = new MovieListAdapter(this);
-        lstMovies.setAdapter(movieListAdapter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        lstMovies.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerView lstMovies = findViewById(R.id.lstMovies);
+//        final MovieListAdapter movieListAdapter = new MovieListAdapter(this);
+//        lstMovies.setAdapter(movieListAdapter);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//        lstMovies.setLayoutManager(new LinearLayoutManager(this));
 
         categoriesViewModel.reload();
 

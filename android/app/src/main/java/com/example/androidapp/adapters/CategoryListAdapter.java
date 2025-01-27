@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Category;
+import com.example.androidapp.entities.Movie;
 
 import java.util.List;
 
@@ -19,11 +20,15 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView categoryTitle;
-//        RecyclerView recyclerViewMovies;
+        RecyclerView lstMovies;
         private CategoryViewHolder(View itemView) {
             super(itemView);
             categoryTitle = itemView.findViewById(R.id.categoryTitle);
-//            recyclerViewMovies = itemView.findViewById(R.id.recyclerViewMovies);
+            lstMovies = itemView.findViewById(R.id.lstMovies);
+            final MovieListAdapter movieListAdapter = new MovieListAdapter(context);
+            lstMovies.setAdapter(movieListAdapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            lstMovies.setLayoutManager(layoutManager);
         }
     }
 

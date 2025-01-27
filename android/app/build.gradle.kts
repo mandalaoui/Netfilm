@@ -31,6 +31,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    configurations.all {
+        resolutionStrategy {
+            force ("androidx.room:room-compiler:2.5.0")
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +53,7 @@ dependencies {
 
     implementation(libs.room.common)
     implementation(libs.room.runtime)
+    implementation(libs.adapters)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -57,6 +63,6 @@ dependencies {
     annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
     annotationProcessor(libs.room.compiler)
 
-    implementation ("androidx.room:room-runtime:2.4.2")
-    annotationProcessor ("androidx.room:room-compiler:2.4.2")
+    implementation ("androidx.room:room-runtime:2.5.0")
+    annotationProcessor ("androidx.room:room-compiler:2.5.0")
 }
