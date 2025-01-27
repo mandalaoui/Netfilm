@@ -1,9 +1,16 @@
 package com.example.androidapp;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 import java.util.Locale;
+@Entity(tableName = "movies")
 
 public class Movie {
+    @PrimaryKey
+    @NonNull
     private String _id;
     private String name;
     private String movie_time;
@@ -12,7 +19,7 @@ public class Movie {
 
 //    private List<Category> categories;
     private String videoUrl;
-//    private String imageUrl;
+    private String image;
 
 //
     public String getVideoUrl() {
@@ -64,12 +71,12 @@ public class Movie {
         this.description = description;
     }
 //
-//    public String getImageUrl() {
-//        return imageUrl;
-//    }
-//
-//    public void setImageUrl(String imageUrl) {
-//        this.imageUrl = imageUrl;
-//    }
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 //
 }

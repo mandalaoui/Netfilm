@@ -12,11 +12,12 @@ userId: 6793d58f1ef6aabb4a5638e1
 Content-Type: application/json
 
 {
-    "name": "poo hadov",
+    "name": "movie_3",
     "categories":[],
     "movie_time":"2:30",
     "Publication_year":2024,
     "description": "try.",
+    "image": "uploads/moviePic_3.jpg",
     "videoUrl": "uploads/poo.mp4"
 }
 
@@ -41,6 +42,7 @@ userId: 6793d58f1ef6aabb4a5638e1
 "movie_time":"2:30",
 "Publication_year":2024,
 "description": "try.",
+"image": "uploads/moviePic_1.jpg",
 "videoUrl": "uploads/poo.mp4"
 }
 
@@ -51,14 +53,14 @@ userId: <ID>
 
 ### Get recommendation
 
-GET http://localhost:12345/api/movies/:id/recommend/ 
-userId: <ID>
+GET http://localhost:12345/api/movies/679629522d6eaf038e9e1768/recommend/ 
+userId: 67963d5d483e59c7cb61231b
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/ 
+POST http://localhost:12345/api/movies/679629522d6eaf038e9e1768/recommend/ 
 Content-Type: application/json 
-userId: <ID>
+userId: 67963d5d483e59c7cb61231b
 
 # CATEGORY
 
@@ -103,10 +105,10 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
- "username": "sg",
+ "username": "moshe",
  "password": "1212221",
- "nickname": "liori",
- "photo": "ssdg.png"
+ "photo": "uploads/moviePic_1.jpg",
+ "nickname": "kim"
 }
 
 ### Connect to system

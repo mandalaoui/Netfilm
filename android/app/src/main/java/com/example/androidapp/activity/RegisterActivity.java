@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.androidapp.R;
+import com.example.androidapp.entities.User;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 

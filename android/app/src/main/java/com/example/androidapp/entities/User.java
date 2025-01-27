@@ -1,9 +1,7 @@
-package com.example.androidapp;
+package com.example.androidapp.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.annotations.SerializedName;
 
 @Entity
 public class User {

@@ -17,4 +17,13 @@
     <string name="movie_time">movie time</string>
     <string name="movie_play">Play</string>
     <string name="movie_description">description</string>
+    <string name="movie_poster">movie_poster</string>
+    <string name="movieposter">moviePoster</string>
+    <string name="manager_delete_movie">Delete Movie</string>
+    <string name="manager_movie_id">movie id</string>
+    <string name="manager_create_movie">Create Movie</string>
+    <string name="managerCreate_movie_name">movie name</string>
+    <string name="managerCreate_year">Year</string>
+    <string name="managerCreate_time">time</string>
+    <string name="managerCreate_description">description</string>
 </resources>

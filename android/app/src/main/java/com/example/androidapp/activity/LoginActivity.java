@@ -1,4 +1,4 @@
-package com.example.androidapp;
+package com.example.androidapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidapp.entities.User;
 import com.example.androidapp.api.ApiResponse;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
@@ -47,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
-                                Intent i = new Intent(LoginActivity.this, MovieActivity.class);
-//                                intent.putExtra("USER_ID", userId);
+                                Intent i = new Intent(LoginActivity.this, ManagmentActivity.class);
+                                i.putExtra("movieId", "679629522d6eaf038e9e1768");
                                 startActivity(i);
                             }
                         } else if (response.code() == 404) {

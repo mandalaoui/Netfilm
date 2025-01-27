@@ -6,9 +6,10 @@ import android.util.Log;
 import com.example.androidapp.AppContext;
 import com.example.androidapp.Movie;
 import com.example.androidapp.R;
-import com.example.androidapp.User;
+import com.example.androidapp.entities.User;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -62,13 +63,16 @@ public class RequestApi {
     }
 
     public void getMovie(String movieId,String userId, final Callback<Movie> callback) {
-        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
         Call<Movie> call = apiService.getMovie(movieId, userId);
-        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
         call.enqueue(callback);
-        Log.d("API_REQUEST", "Sending registration request for user: 1" + movieId);
 
     }
+    public void getRecommendMovie(String movieId,String userId, final Callback<List<Movie>> callback) {
+        Call<List<Movie>> call = apiService.RecommendedMovies(movieId, userId);
+        call.enqueue(callback);
+    }
+
+
 
 
 
