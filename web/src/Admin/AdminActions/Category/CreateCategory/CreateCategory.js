@@ -1,6 +1,6 @@
 import './CreateCategory.css';
 import React, { useState, useEffect } from 'react';
-import { createCategory } from '../../AdminActions.js';
+import { createCategory } from '../CategoryActions.js';
 // import moviesData  from '../../../../data/movies/movies.js';
 
 function CreateCategory() {

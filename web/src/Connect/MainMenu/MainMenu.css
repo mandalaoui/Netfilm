@@ -136,13 +136,11 @@ h6 {
 }
 
 /* Error message styling */
-.error-message {
+.error-message-movie {
     position: relative;
     text-align: left;
     font-size: 12px;
     color: #FF0000;
-    margin: 0;
-    margin-top: -8px;
-    margin-bottom: 6px;
+    margin-bottom: -10px;
     display: none;
 }

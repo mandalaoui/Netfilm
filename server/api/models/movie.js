@@ -17,7 +17,7 @@ const Movie = new Schema({
         required: true
     },
     image: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: false
     },
     Publication_year: {
@@ -33,12 +33,12 @@ const Movie = new Schema({
         required: false
     },
     video: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: String,
+        required: false
     },
     trailer: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true
+        type: String,
+        required: false
     }
 });
 

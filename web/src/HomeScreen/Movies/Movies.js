@@ -3,20 +3,19 @@ import React, { useState, useEffect  } from 'react';
 import MovieRow from '../MovieRow/MovieRow.js';
 import { useLocation } from 'react-router-dom';
 import CreateCategory from '../../Admin/AdminActions/Category/CreateCategory/CreateCategory.js';
-import { getAllCategories, getCategoryById } from '../../Admin/AdminActions/AdminActions.js';
-
+// import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
+import { getAllCategories, getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
 
 
 function Movies() {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
-    const [showModal, setShowModal] = useState(false);
+    const [showCategoryModal, setshowCategoryModal] = useState(false);
+    // const [showMovieModal, setShowMovieModal] = useState(false);
     const [categories, setCategories] = useState([]);
-
     // const categories = ["Action", "Comedy", "Drama", "Family", "New", "SpiderMan"];
-
     useEffect(() => {
-        const userId = "6793f41b8221f4dda02b7e63";
+        const userId = "67964782c8b5942c5f45547f";
         const fetchCategories = async () => {
             try {
                 const categoryIds = await getAllCategories(userId);
@@ -33,16 +32,16 @@ function Movies() {
             }
         };
         fetchCategories();
-        
     }, []);
     
 
     const handleAddCategory = () => {
-        setShowModal(true);
+        setshowCategoryModal(true);
     };
 
     const handleAddMovie = () => {
-        alert('Open modal to add a new movie');
+        window.location.href = "/admin/CreateMovie";
+        // setShowMovieModal(true);
     };
 
     return (
@@ -53,7 +52,7 @@ function Movies() {
                         <button className="add-category-button" onClick={handleAddCategory}>
                             <i className="bi bi-plus-square"></i>
                         </button>
-                        {showModal && <CreateCategory />}
+                        {showCategoryModal && <CreateCategory />}
                         <span className="add-category-text">Add Category</span>
                     </div>
                     <div className="add-movie-container">

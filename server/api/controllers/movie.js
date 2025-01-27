@@ -2,11 +2,29 @@ const movieService = require('../services/movie');
 
 // Function to create a new movie
 const createMovie = async (req, res) => {
+    const image = req.files && req.files.image ? req.files.image[0].path : null;
+    const video = req.files && req.files.movie ? req.files.movie[0].path : null;
+    const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
+
+    // const image = req.file ? req.file.path : null;
+    // const video = null;
+    // const trailer = null;
+
+
     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+        image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
     const location = `/api/movies/${newMovie._id}`;
-    res.status(201).location(location).json();
+    res.status(201).location(location).json(newMovie);
 };
+
+
+
+// const createMovie = async (req, res) => {
+//     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
+//         req.body.image, req.body.Publication_year, req.body.description, req.body.age);
+//     const location = `/api/movies/${newMovie._id}`;
+//     res.status(201).location(location).json();
+// };
 
 // Function to get movies based on categories for a user.
 const getMovies = async (req, res) => {
@@ -14,7 +32,7 @@ const getMovies = async (req, res) => {
     const moviesByCategories = await movieService.getMoviesByCategories(userId);
 
     // If no movies are found, responds with a 400 error
-    if(!moviesByCategories) {
+    if (!moviesByCategories) {
         res.status(404).json({ error: ['Movie Not Found'] });
     }
     res.status(200).json(moviesByCategories);
@@ -28,7 +46,7 @@ const getMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(200).json(movie);    
+    res.status(200).json(movie);
 };
 
 // Function to update an existing movie's details.
@@ -74,4 +92,4 @@ const getMovieIncludeQuery = async (req, res) => {
 };
 
 // Exporting all functions to be used in routes
-module.exports = {createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery };
+module.exports = { createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery };

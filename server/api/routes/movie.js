@@ -4,35 +4,18 @@ const movieController = require('../controllers/movie');
 const movieValidation = require('../validation/movie');
 const userValidation = require('../validation/user');
 const recommendcontroller = require('../controllers/recommend');
-
-
-//////////////////////////////////////////////////
-
-const multer = require('multer');
-const path = require('path');
-// הגדרת המקום לשמור את הקבצים
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');  // המיקום שבו יאוחסנו הקבצים
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));  // שינוי שם הקובץ
-    }
-});
-
-// יצירת אובייקט multer (הוא ישמש לשמירה של קבצים)
-const upload = multer({ storage: storage });
-
-router.route('/')
-    .post(upload.single('video'),userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
-
-
-///////////////////////////////////////////////////
+const upload = require('../middleware/fileUpload.js');
 
 // Define routes for '/'
 router.route('/')
     .get(userValidation.validateUserIdHeader, movieController.getMovies)
-    //.post( userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie);
+    .post(
+        upload.fields([
+            { name: 'image', maxCount: 1 }, 
+            { name: 'movie', maxCount: 1 }, 
+            { name: 'trailer', maxCount: 1 } 
+        ]),
+        userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 
 // Define routes for '/:id'
 router.route('/:id')

@@ -1,6 +1,6 @@
 import './EditCategory.css';
 import React, { useState, useEffect } from 'react';
-import { updateCategory } from '../../AdminActions.js';
+import { updateCategory } from '../CategoryActions.js';
 // import moviesData  from '../../../../data/movies/movies.js';
 
 function EditCategory({category}) {
@@ -28,7 +28,7 @@ function EditCategory({category}) {
     // };
 
     const handleSubmit = () => {
-        const userId = '6793f41b8221f4dda02b7e63';
+        const userId = '67964782c8b5942c5f45547f';
         const categoryData = {
         name: categoryName,
         isPromoted: isPromotedValue,

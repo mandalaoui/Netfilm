@@ -13,7 +13,7 @@ function Recommended() {
         <div>
             <div className="video-recommended-container">
                 <div className="video-recommended">
-                    <video autoplay muted loop>
+                    <video autoPlay muted loop>
                         <source src={videoSrc} type="video/mp4" />
                     </video>
                 </div>

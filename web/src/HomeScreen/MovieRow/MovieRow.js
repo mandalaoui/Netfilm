@@ -1,11 +1,13 @@
 import './MovieRow.css';
-import { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect  } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
-import movies from '../../data/movies/movies.js'
+// import movies from '../../data/movies/movies.js'
+import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 import { useLocation } from 'react-router-dom';
 import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
-import { deleteCategory } from '../../Admin/AdminActions/AdminActions.js';
-import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
+import { deleteCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
+// import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
+// import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 
 function MovieRow({ category }) {
     const rowRef = useRef(null);
@@ -14,7 +16,27 @@ function MovieRow({ category }) {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
     const [showModal, setShowModal] = useState(false);
+    // const [showMovieModal, setShowMovieModal] = useState(false);
     
+    const [moviesByCategory, setMoviesByCategory] = useState([]);
+    useEffect(() => {
+        const userId = "67964782c8b5942c5f45547f"; 
+        const fetchMovies = async () => {
+            try {
+                const allMovies = await getAllMovies(userId); // קריאה ל-getAllMovies עם ID של המשתמש
+                if (allMovies) {
+                    const moviesGroupedByCategory = allMovies.map((categoryMovies) => ({
+                        categoryName: categoryMovies.categoryName,
+                        movies: categoryMovies.movies
+                    }));
+                    setMoviesByCategory(moviesGroupedByCategory);
+                }
+            } catch (error) {
+                console.error("Error fetching movies:", error);
+            }
+        };
+        fetchMovies();
+    }, []);
 
     const handleScroll = () => {
         const container = rowRef.current;
@@ -31,7 +53,8 @@ function MovieRow({ category }) {
         container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     };
 
-    const filteredMovies = movies.filter((movie) => movie.categories.includes(category.name));
+    const categoryMovies = moviesByCategory.find((item) => item.categoryName === category.name);
+    const filteredMovies = categoryMovies ? categoryMovies.movies : [];  
     if (!isAdminPage && filteredMovies.length === 0) {
         return null; 
     }
@@ -57,7 +80,7 @@ function MovieRow({ category }) {
     };
 
     const handleDeleteCategory = async () => {
-        const userId = "6793f41b8221f4dda02b7e63";
+        const userId = "67964782c8b5942c5f45547f";
         const userConfirmed = await showConfirmationModal("category", category.name, 'delete');
         if (userConfirmed) {
             deleteCategory(category.id, userId)
@@ -74,7 +97,11 @@ function MovieRow({ category }) {
 
     const handleAddMovie = () => {
         // Placeholder for add movie functionality
-        alert(`Add new movie to category: ${category.name}`);
+        // alert(`Add new movie to category: ${category.name}`);
+        // setShowMovieModal(true);
+        window.location.href = `/admin/CreateMovie?specificCategory=${category.id}`;
+
+        // window.location.href = "/admin/CreateMovie";
     };
 
     return (
@@ -97,7 +124,6 @@ function MovieRow({ category }) {
                         <button className="edit-category-button" onClick={handleEditCategory}>
                             <i className="bi bi-pencil-square"></i>
                         </button>
-                        {showModal && <EditCategory category={category} />}
                         <button className="delete-category-button" onClick={handleDeleteCategory}>
                             <i className="bi bi-trash"></i>
                         </button>

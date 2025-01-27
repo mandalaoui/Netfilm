@@ -28,9 +28,9 @@ const validateMovieInput = async (req, res, next) => {
     }
 
     // Check if 'Publication_year' is provided and is a number
-    if (!Publication_year || typeof Publication_year !== 'number') {
-        return res.status(400).json({ error: 'Invalid or missing Publication_year' });
-    }
+    // if (!Publication_year || typeof Publication_year !== 'number') {
+    //     return res.status(400).json({ error: 'Invalid or missing Publication_year' });
+    // }
 
     // check Validate 'Publication_year' ,must not be greater than the current year.
     const currentYear = new Date().getFullYear();
@@ -40,9 +40,9 @@ const validateMovieInput = async (req, res, next) => {
 
     // Check if 'age' is a number if provided
     if (age !== undefined) {
-        if (typeof age !== 'number') {
-            return res.status(400).json({ error: 'Age must be a number' });
-        }
+        // if (typeof age !== 'number') {
+        //     return res.status(400).json({ error: 'Age must be a number' });
+        // }
         if (age > 18) {
             return res.status(400).json({ error: 'Age cannot be greater than 18' });
         }

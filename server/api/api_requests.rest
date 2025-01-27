@@ -3,7 +3,7 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: <ID>
+userId: 67964782c8b5942c5f45547f
 
 ### Create a new movie
 
@@ -68,7 +68,7 @@ userId: <ID>
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: 6793f41b8221f4dda02b7e63
+userId: 67964782c8b5942c5f45547f
 
 ### Create a new category
 

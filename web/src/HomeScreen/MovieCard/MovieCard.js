@@ -10,7 +10,7 @@ function MovieCard({ movie }) {
     };
     // Function to handle play button click
     const handlePlayClick = () => {
-        navigateTo(`../watch/${movie.id}`); // Navigate to the watch page with the movie ID
+        navigateTo(`../watch/${movie._id}`); // Navigate to the watch page with the movie ID
     };
 
     const location = useLocation();
@@ -40,7 +40,7 @@ function MovieCard({ movie }) {
     return (
         <div className="movie-card">
             <div className="movie-image">
-                <img src={movie.image} alt={movie.title} onClick={handlePlayClick}/>
+            <img src={`http://localhost:12345/api/${movie.image}`} alt={movie.title} onClick={handlePlayClick}/>
             </div>
             <div className="movie-title">{movie.title}</div>
             <div className="movie-info">

@@ -6,6 +6,7 @@ import Connect from './Connect/Connect.js';
 import Home from './HomeScreen/HomeScreen.js';
 import WatchMovie from './WatchMovie/WatchMovie.js';
 import Admin from './Admin/Admin.js';
+import CreateMovie from './Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -24,6 +25,7 @@ root.render(
         <Route path="/home" element={<Home />} />
         <Route path="/watch/:id" element={<WatchMovie />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/CreateMovie" element={<CreateMovie />} />
       </Routes>
     </Router>
   </React.StrictMode>

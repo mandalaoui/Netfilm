@@ -57,64 +57,17 @@ function MainMenu() {
         };
     }, []);
 
-    // const handleRegister = async () => {
-    //     const userData = {
-    //         username: document.querySelector('input[placeholder="Username"]').value,
-    //         password: document.querySelector('input[placeholder="Password"]').value,
-    //         nickname: document.querySelector('input[placeholder="Nickname"]').value,
-    //     };
-
-    //     console.log(userData);
-
-    //     const imageInput = document.querySelector('input[type="file"]');
-    //     const imageFile = imageInput.files[0]; 
-
-    //     const userResponse = await fetch("http://localhost:12345/api/users/", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify(userData)
-    //     });
-
-    //     let userResponseBody = null;
-    //     try {
-    //         userResponseBody = await userResponse.json();
-    //     } catch (e) {
-    //         console.warn("Failed to parse user JSON:", e);
-    //     }
-
-    //     if (userResponse.ok) {
-    //         // alert("Registration successful!");
-    //         console.log("User created:", userResponseBody);
-
-    //         const formData = new FormData();
-    //         formData.append('image', imageFile); 
-
-    //         const imageResponse = await fetch("http://localhost:12345/api/upload/image", {
-    //             method: "POST",
-    //             body: formData 
-    //         });
-
-    //         let imageResponseBody = null;
-    //         try {
-    //             imageResponseBody = await imageResponse.json();
-    //         } catch (e) {
-    //             console.warn("Failed to parse image response:", e);
-    //         }
-
-    //         if (imageResponse.ok) {
-    //             console.log("Image uploaded:", imageResponseBody);
-    //             alert("Image uploaded successfully!");
-    //             // window.location.href = "/login"; לא למחוק
-    //         } else {
-    //             alert("Failed to upload image.");
-    //         }
-    //     } else {
-    //         alert("Failed to register user.");
-    //     }
-    // };
-
+    const validateUserData = (userData) => {
+        if (!userData.username) return alert("Please enter username");
+        if (!userData.password) return alert("Please enter password");
+    
+        const repeatedPassword = document.querySelector('input[placeholder="Confirm"]').value;
+        if (userData.password !== repeatedPassword) return alert("Passwords do not match.");
+    
+        if (!userData.nickname) return alert("Please enter nickname");
+        return true;
+    };
+    
 
     const handleRegister = async () => {
         const userData = {
@@ -122,6 +75,8 @@ function MainMenu() {
             password: document.querySelector('input[placeholder="Password"]').value,
             nickname: document.querySelector('input[placeholder="Nickname"]').value,
         };
+        if(!validateUserData(userData))
+            return;
 
         const imageInput = document.querySelector('input[type="file"]');
         const imageFile = imageInput.files[0];
@@ -130,7 +85,8 @@ function MainMenu() {
         formData.append('username', userData.username);
         formData.append('password', userData.password);
         formData.append('nickname', userData.nickname);
-        formData.append('photo', imageFile);
+        if (imageFile != null)
+            formData.append('photo', imageFile);
 
         try {
             const response = await fetch("http://localhost:12345/api/users/", {
@@ -159,29 +115,13 @@ function MainMenu() {
         }
     };
 
-
-    // export const handleRegister = async () => {
-    //     try {
-    //         const formData = new FormData();
-    //         Object.entries(userData).forEach(([key, value]) => {
-    //             formData.append(key, value);
-    //         });
-    //         const response = await axios.post(`${API_BASE_URL}/users`, formData, {
-    //             header: {
-    //                 "Content-Type": "multipart/form-data",
-    //             },
-    //         });
-    //         return response.data;
-    //     } catch (error) {
-    //         throw error.response?.data || error.message;
-    //     }
-    // };
-
     const handleLogin = async () => {
         const userData = {
             username: document.querySelector('input[placeholder="Username"]').value,
             password: document.querySelector('input[placeholder="Password"]').value,
         };
+        if (!userData.username) return alert("Please enter username");
+        if (!userData.password) return alert("Please enter password");
 
         const errorElement = document.getElementById('login-error');
 
