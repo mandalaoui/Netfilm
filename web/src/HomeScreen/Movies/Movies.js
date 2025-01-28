@@ -4,8 +4,8 @@ import MovieRow from '../MovieRow/MovieRow.js';
 import { useLocation } from 'react-router-dom';
 import CreateCategory from '../../Admin/AdminActions/Category/CreateCategory/CreateCategory.js';
 // import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
-import { getAllCategories, getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
-
+import { deleteCategory, getAllCategories, getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
+// import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 
 function Movies() {
     const location = useLocation();
@@ -14,19 +14,28 @@ function Movies() {
     // const [showMovieModal, setShowMovieModal] = useState(false);
     const [categories, setCategories] = useState([]);
     // const categories = ["Action", "Comedy", "Drama", "Family", "New", "SpiderMan"];
+
     useEffect(() => {
-        const userId = "67964782c8b5942c5f45547f";
         const fetchCategories = async () => {
             try {
-                const categoryIds = await getAllCategories(userId);
+                const categoryIds = await getAllCategories();
                 const categoryDetails = [];
             for (const id of categoryIds) {
-                const category = await getCategoryById(id, userId);
+                const category = await getCategoryById(id);
                 if (category) {
                     categoryDetails.push(category);
                 }
             }
             setCategories(categoryDetails);
+            const unAttachedCategory = categoryDetails.find(cat => cat.name === "unAttached");
+                if (unAttachedCategory && unAttachedCategory.movies.length === 0) {
+                    const isDeleted = await deleteCategory(unAttachedCategory.id);
+                    if (isDeleted) {
+                        window.location.href = "/admin";
+                    } else {
+                        console.log('Failed to delete "unAttached" category.');
+                    }
+                }
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }
@@ -68,7 +77,7 @@ function Movies() {
             {categories.map((category) => {
                 // console.log(category);
                 return <MovieRow key={category.id} category={category} />;
-            })}
+            })}            
         </div>
     );
 }

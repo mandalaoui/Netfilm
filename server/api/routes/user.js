@@ -6,7 +6,7 @@ const upload = require('../middleware/fileUpload.js');
 
 // Route for creating a new user. Validates input before calling the controller's createUser function.
 router.route('/')
-    .post(userValidation.validateUserInput, upload.single('photo'), userController.createUser)
+    .post(upload.single('photo'), userValidation.validateUserInput, userController.createUser)
 
 // Route for retrieving a user by their ID. Calls the controller's getUser function.
 router.route('/:id')

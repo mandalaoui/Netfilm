@@ -8,12 +8,8 @@ import WatchMovie from './WatchMovie/WatchMovie.js';
 import Admin from './Admin/Admin.js';
 import CreateMovie from './Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 import EditMovie from './Admin/AdminActions/Movie/EditMovie/EditMovie.js';
-
+import { AuthGuard, AdminGuard } from './TokenGuard.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-
-
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,11 +19,11 @@ root.render(
         <Route path="/" element={<Connect />} />
         <Route path="/login" element={<Connect />} />
         <Route path="/register" element={<Connect />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/watch/:id" element={<WatchMovie />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/CreateMovie" element={<CreateMovie />} />
-        <Route path="/admin/EditMovie" element={<EditMovie />} />
+        <Route path="/home" element={<AuthGuard> <Home /> </AuthGuard>} />
+        <Route path="/watch/:id" element={<AuthGuard> <WatchMovie /> </AuthGuard>} />
+        <Route path="/admin" element={<AdminGuard> <Admin /> </AdminGuard>} />
+        <Route path="/admin/CreateMovie" element={<AdminGuard> <CreateMovie /> </AdminGuard>} />
+        <Route path="/admin/EditMovie" element={<AdminGuard> <EditMovie /> </AdminGuard>} />
       </Routes>
     </Router>
   </React.StrictMode>

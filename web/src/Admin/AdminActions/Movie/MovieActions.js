@@ -2,7 +2,7 @@ const createMovie = (formData) => {
     return fetch("http://localhost:12345/api/movies/", {
         method: "POST",
         headers: {
-            "userId": "6796506284c579985efe2882",
+            "userId": localStorage.getItem('userId'),
         },
         body: formData,
     })
@@ -22,11 +22,11 @@ const createMovie = (formData) => {
     }); 
 };
 
-const getAllMovies = (userId) => {
+const getAllMovies = () => {
     return fetch("http://localhost:12345/api/movies/", {
         method: "GET",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         },
     })
     .then(response => {
@@ -46,11 +46,11 @@ const getAllMovies = (userId) => {
     });
 };
 
-const getMovieById = (movieId, userId) => {
+const getMovieById = (movieId) => {
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "GET",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         },
     })
     .then(response => {
@@ -70,18 +70,18 @@ const getMovieById = (movieId, userId) => {
     });
 };
 
-const updateMovie = (movieId, userId, formData) => {
+const updateMovie = (movieId, formData) => {
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "PUT",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         },
         body: formData,
     })
     .then(response => {
         if (response.status === 204) {
             alert("Movie updated successfully!");
-            return response.json(); 
+            return true; 
         } else {
             return response.json().then(errorData => {
                 const errorMessage = `${JSON.stringify(errorData)}`;
@@ -96,11 +96,11 @@ const updateMovie = (movieId, userId, formData) => {
     });
 };
 
-const deleteMovie = (movieId, userId) => {
+const deleteMovie = (movieId) => {
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "DELETE",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         },
     })
     .then(response => {

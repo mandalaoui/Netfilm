@@ -1,11 +1,11 @@
 import './MovieRow.css';
-import React, { useRef, useState, useEffect  } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
 // import movies from '../../data/movies/movies.js'
 // import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 import { useLocation } from 'react-router-dom';
 import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
-import { deleteCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
+import { getCategoryById, getAllCategories, createCategory, deleteCategory, updateCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
 // import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 import { getMovieById } from '../../Admin/AdminActions/Movie/MovieActions.js';
@@ -19,16 +19,15 @@ function MovieRow({ category }) {
     const isAdminPage = location.pathname === "/admin";
     const [showModal, setShowModal] = useState(false);
     // const [showMovieModal, setShowMovieModal] = useState(false);
-    
+
     const [moviesByCategory, setMoviesByCategory] = useState([]);
     useEffect(() => {
-        const userId = "67964782c8b5942c5f45547f";     
         const fetchMovies = async () => {
             try {
-                    const movies = await Promise.all(
-                        category.movies.map((movieId) => {
-                            return getMovieById(movieId, userId);
-                        })
+                const movies = await Promise.all(
+                    category.movies.map((movieId) => {
+                        return getMovieById(movieId);
+                    })
                 );
                 setMoviesByCategory(movies);
             } catch (error) {
@@ -58,7 +57,7 @@ function MovieRow({ category }) {
     };
 
     if (!isAdminPage && moviesByCategory.length === 0) {
-        return null; 
+        return null;
     }
 
     const handleEditCategory = async () => {
@@ -82,18 +81,78 @@ function MovieRow({ category }) {
     };
 
     const handleDeleteCategory = async () => {
-        const userId = "67964782c8b5942c5f45547f";
         const userConfirmed = await showConfirmationModal("category", category.name, 'delete');
-        if (userConfirmed) {
-            deleteCategory(category.id, userId)
-            .then(isSuccess => {
-                if (isSuccess) {
-                    // alert(`Category: ${category.name} - deleted`);
-                    window.location.href = "/admin";
-                }
-            });
-        } else {
+        if (!userConfirmed) {
             console.log('Delete action was canceled.');
+            return;
+        }
+
+        try {
+            // שליפת כל הסרטים בקטגוריה
+            const moviesInCategory = category.movies; // assuming `category.movies` is an array of movie IDs
+            console.log('Movies in category:', moviesInCategory);
+
+            // בדיקה לסרטים עם קטגוריה יחידה
+            const moviesWithSingleCategory = [];
+            for (const movieId of moviesInCategory) {
+                const movie = await getMovieById(movieId);
+                if (movie && movie.categories.length === 1) { // יש רק קטגוריה אחת לסרט
+                    moviesWithSingleCategory.push(movieId);
+                }
+            }
+            console.log('Movies with single category:', moviesWithSingleCategory);
+
+            const allCategoryIds = await getAllCategories();
+            const allCategories = await Promise.all(
+                allCategoryIds.map(async (categoryId) => {
+                    const categoryDetails = await getCategoryById(categoryId);
+                    return categoryDetails;
+                })
+            );
+            // טיפול בקטגוריה "unAttached"
+            let unAttachedCategory = allCategories.find(cat => cat.name === "unAttached");
+            if (!unAttachedCategory) {
+                console.log('Creating "unAttached" category...');
+                const isCreated = await createCategory("unAttached", false, []);
+                if (!isCreated) {
+                    alert("Failed to create 'unAttached' category. Aborting delete.");
+                    return;
+                }
+                console.log('"unAttached" categoryCreated !');
+
+                // שליפת הקטגוריה החדשה מהשרת (כדי לקבל את ה-ID שלה)
+                const updatedCategoryIds = await getAllCategories();
+            const updatedCategories = await Promise.all(
+                updatedCategoryIds.map(async (categoryId) => {
+                    const categoryDetails = await getCategoryById(categoryId);
+                    return categoryDetails;
+                })
+            );
+
+            // חפש את הקטגוריה "unAttached" במערך המעודכן
+            unAttachedCategory = updatedCategories.find(cat => cat.name === "unAttached");
+            }
+            console.log(`unAttachedCategory done!${unAttachedCategory}`);
+
+            if (unAttachedCategory && unAttachedCategory.movies !== undefined) {
+                console.log('it is not undefined!');
+                const updatedMovies = [...unAttachedCategory.movies, ...moviesWithSingleCategory];
+                const isUpdated = await updateCategory(unAttachedCategory.id, { ...unAttachedCategory, movies: updatedMovies });
+                if (!isUpdated) {
+                    alert("Failed to update 'unAttached' category. Aborting delete.");
+                    return;
+                }
+
+                console.log(`Movies added to 'unAttached': ${moviesWithSingleCategory}`);
+                const isDeleted = await deleteCategory(category.id);
+                if (isDeleted) {
+                    window.location.href = "/admin";
+                } else {
+                    alert(`Failed to delete category: ${category.name}`);
+                }
+            }
+        } catch (error) {
+            console.error("Error during category deletion process:", error);
         }
     };
 
@@ -118,14 +177,14 @@ function MovieRow({ category }) {
                             {category.isPromoted ? "promoted" : "not promoted"}
                         </h6>
                         <div className="category-actions">
-                        <button className="edit-category-button" onClick={handleEditCategory}>
-                            <i className="bi bi-pencil-square"></i>
-                        </button>
-                        {showModal  && <EditCategory category={category}/> }
-                        <button className="delete-category-button" onClick={handleDeleteCategory}>
-                            <i className="bi bi-trash"></i>
-                        </button>
-                    </div>
+                            <button className="edit-category-button" onClick={handleEditCategory}>
+                                <i className="bi bi-pencil-square"></i>
+                            </button>
+                            {showModal && <EditCategory category={category} />}
+                            <button className="delete-category-button" onClick={handleDeleteCategory}>
+                                <i className="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </>
                 )}
             </div>

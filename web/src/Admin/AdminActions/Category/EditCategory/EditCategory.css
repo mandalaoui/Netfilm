@@ -105,3 +105,65 @@ h3 {
 .edit-Category-btn:focus {
     outline: none;
 }
+
+.movie-update-category-list {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;  /* גובה מקסימלי עבור הרשימה */
+    overflow-y: auto;   /* מאפשר גלילה אנכית */
+    overflow-x: hidden;
+    /* padding-right: 10px; מרווח לפס הגלילה */
+    border: 1px solid #ccc;  /* גבול סביב הרשימה */
+    border-radius: 5px;  /* קצוות מעוגלות */
+    /* background-color: #f9f9f9;  צבע רקע בהיר */
+}
+
+.movie-update-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 8px 0;
+    white-space: nowrap;
+    cursor: pointer;
+    padding-right: 10px;
+    flex-wrap: wrap;
+
+}
+
+.movie-update-category-item input {
+    transform: scale(1.2);
+    order: 2;
+    cursor: pointer;
+}
+
+.movies-update-category-label {
+    display: flex;
+    align-items: center;
+    gap: 20%;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+    width: 100%; 
+    max-width: 80%; 
+    word-wrap: break-word;
+    flex-wrap: wrap;
+}
+
+.movie-update-category-item input:checked + .movie-update-category-label {
+    font-weight: normal;
+}
+
+.movie-update-category-name {
+    font-size: 16px;
+    word-wrap: break-word;
+}
+
+.movie-update-category-year {
+    font-size: 14px;
+    font-weight: bold;
+    color: #8a8a8a;
+    word-wrap: break-word;
+}

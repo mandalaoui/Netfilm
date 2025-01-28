@@ -18,7 +18,7 @@ const Movie = new Schema({
     },
     image: {
         type: String,
-        required: false
+        required: true
     },
     Publication_year: {
         type: Number,
@@ -34,11 +34,11 @@ const Movie = new Schema({
     },
     video: {
         type: String,
-        required: false
+        required: true
     },
     trailer: {
         type: String,
-        required: false
+        required: true
     }
 });
 

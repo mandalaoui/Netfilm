@@ -73,7 +73,6 @@ h2 {
 .Create-Category-btn {
     width: 100%;
     padding: 10px;
-    /* background-color: #28a745; */
     color: white;
     border: none;
     border-radius: 4px;
@@ -81,10 +80,71 @@ h2 {
     font-size: 16px;
 }
 
-/* .Create-Category-btn:hover {
-    background-color: #218838;
-} */
 
 .Create-Category-btn:focus {
     outline: none;
+}
+
+.input-group-add-movie{
+    margin-bottom: 30px;
+    color: white;
+    width: 100%;
+    max-height: 100px;
+    border-radius: 4px;
+}
+
+.movies-in-category-list {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;  /* גובה מקסימלי עבור הרשימה */
+    overflow-y: auto;   /* מאפשר גלילה אנכית */
+    overflow-x: hidden;
+    /* padding-right: 10px; מרווח לפס הגלילה */
+    border: 1px solid #ccc;  /* גבול סביב הרשימה */
+    border-radius: 5px;  /* קצוות מעוגלות */
+    /* background-color: #f9f9f9;  צבע רקע בהיר */
+}
+
+.movies-in-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 8px 0;
+    white-space: nowrap;
+    cursor: pointer;
+    padding-right: 10px;
+
+}
+
+.movies-in-category-item input {
+    transform: scale(1.2);
+    order: 2;
+    cursor: pointer;
+}
+
+.movies-in-category-label {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+    width: 100%; 
+}
+
+.movies-in-category-item input:checked + .movies-in-category-label {
+    font-weight: normal;
+}
+
+.movie-from-category-name {
+    font-size: 16px;
+}
+
+.movie-from-category-year {
+    font-size: 14px;
+    font-weight: bold;
+    color: #8a8a8a;
 }

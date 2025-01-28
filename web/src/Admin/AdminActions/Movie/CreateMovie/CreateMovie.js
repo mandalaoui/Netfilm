@@ -3,18 +3,43 @@ import UpperMenu from '../../../../HomeScreen/UpperMenu/UpperMenu.js';
 import React, { useState, useEffect } from 'react';
 import { createMovie } from '../MovieActions.js';
 import { useLocation } from 'react-router-dom';
-import { getCategoryById } from '../../Category/CategoryActions.js';
+import { getCategoryById, getAllCategories } from '../../Category/CategoryActions.js';
 
 function CreateMovie() {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const specificCategory = queryParams.get('specificCategory');
     const [currentCategory, setCurrentCategory] = useState(null);
-    
+    const [allCategories, setAllCategories] = useState([]);
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    useEffect(() => {
+        // Fetch all categories for selection
+        const fetchAllCategories = async () => {
+            try {
+                const categories = await getAllCategories();
+                const allCategoryDetails = await Promise.all(
+                    categories.map(async (category) => {
+                        const fullCategory = await getCategoryById(category); // משיג את האובייקט המלא
+                        return fullCategory; // מחזיר את האובייקט המלא
+                    })
+                );
+                console.log('Fetched all categories:', allCategoryDetails);  // Check fetched categories
+
+                setAllCategories(allCategoryDetails);
+                // console.log(categories);
+            } catch (error) {
+                console.error("Error fetching all categories:", error);
+            }
+        };
+
+        fetchAllCategories();
+    }, []);
+
     useEffect(() => {
         console.log(specificCategory);
         if (specificCategory) {
-            getCategoryById(specificCategory, "67964782c8b5942c5f45547f")
+            getCategoryById(specificCategory)
                 .then((category) => {
                     setCurrentCategory(category); // Update state when the category is fetched
                 })
@@ -108,10 +133,17 @@ function CreateMovie() {
             formData.append("trailer", trailerFile);
         }
 
-        console.log(specificCategory);
-        let categories = ["6795fa4bc8b5942c5f450886"];
-        if (specificCategory != null)
+        let categories = [];
+        if (specificCategory !== null)
             categories = [specificCategory];
+        else if(selectedCategories.length === 0 || selectedCategories == null)
+        {
+            alert("At least one category must be chosen");
+            return;
+        }
+        else
+            categories = selectedCategories;
+
         categories.forEach(category => formData.append("categories[]", category));
 
         createMovie(formData).then(isSuccess => {
@@ -123,6 +155,18 @@ function CreateMovie() {
 
     const handleReturn = () => {
         window.location.href = '/admin';
+    };
+
+    const handleCategoryChange = (e, categoryId) => {
+        console.log('Category selected:', categoryId); // נוודא שהקטגוריה מתעדכנת
+
+        const updatedCategories = e.target.checked
+            ? [...selectedCategories, categoryId] // אם נבחר, נוסיף את הקטגוריה
+            : selectedCategories.filter((id) => id !== categoryId); // אם בוטלה הבחירה, נסיר את הקטגוריה
+
+        setSelectedCategories(updatedCategories);
+        console.log('Updated selected categories:', updatedCategories); // נוודא שהקטגוריות מתעדכנות כראוי
+
     };
 
     return (
@@ -172,15 +216,28 @@ function CreateMovie() {
                             <p className="error-message-movie" id="trailer-error">Please upload a trailer file.</p>
                         </div>
                         <div className="input-group">
-                            {currentCategory ? (
-                                <>
-                                <h6>Category</h6>
-                                <div className="category-display">{currentCategory.name}</div>
-                                </>
-                                ) : (
-                                <textarea placeholder="Categories" id="categories"/>
+                            <h6>Categories</h6>
+                            {specificCategory ? (
+                                <small>• {currentCategory?.name}</small>
+                            ) : (
+                                <div className="categories-in-movie-list">
+                                    {allCategories.map((category) => (
+                                        <div key={category.id} className="categories-in-movie-item">
+                                            <input
+                                                type="checkbox"
+                                                id={`categories-in-movie-${category.id}`}
+                                                checked={selectedCategories.includes(category.id)}
+                                                onChange={(e) => handleCategoryChange(e, category.id)}
+                                            />
+                                            <label htmlFor={`categories-in-movie-${category.id}`} className="categories-in-movie-label">
+                                                {category.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
+
                     </div>
                 </div>
                 <div className="Create-Movie-btn">

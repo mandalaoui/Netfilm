@@ -27,30 +27,30 @@
   opacity: 1;
 }
 
-.movie-card:hover .movie-info {
+.movie-card:hover .movie-card-info {
   opacity: 1;
   background-color: #282828;
   box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6), -10px 10px 15px rgba(0, 0, 0, 0.3); /* גוון בהיר יותר עם עיבוי */
 }
 
-.movie-card:hover .movie-title {
+.movie-card:hover .movie-card-title {
   margin-top: 0px;  
   background-color: #282828;
   box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.5), -10px 20px 15px rgba(0, 0, 0, 0.2); /* צל יותר אחיד בצדדים */
 }
 
-.movie-image {
+.movie-card-image {
   width: 100%;
   height: 100%;
 }
 
-.movie-image img {
+.movie-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.movie-info {
+.movie-card-info {
   padding: 10px;
   color: white;
   flex-grow: 1;
@@ -58,7 +58,7 @@
   flex-direction: column;
 }
 
-.movie-title {
+.movie-card-title {
   background-color: #28282871;
   font-size: 18px;
   font-weight: bold;
@@ -67,7 +67,7 @@
   color: white;
 }
 
-.movie-controls {
+.movie-card-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,7 +75,7 @@
   margin-top: 0px;
 }
 
-.play-button {
+.movie-card-play-button {
   margin-top: 0px;
   width: 35%;
   padding: 5px 10px;
@@ -87,37 +87,37 @@
   font-size: 12px;
 }
 
-.play-button:hover {
+.movie-card-play-button:hover {
   background-color: #f40612;
 }
 
-.movie-duration {
+.movie-card-movie_time {
   font-size: 12px;
   color: #aaa;
 }
 
-.movie-meta {
+.movie-card-meta {
   font-size: 12px;
 }
 
-.movie-meta p {
+.movie-card-meta p {
   margin: 5px 0;
 }
 
-.movie-categories {
+.movie-card-categories {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
 }
 
-.movie-category {
+.movie-card-category {
   background-color: rgba(255, 255, 255, 0.2);
   padding: 5px;
   border-radius: 4px;
   font-size: 12px;
 }
 
-.delete-movie-button, .edit-movie-button {
+.delete-movie-card-button, .edit-movie-card-button {
   position: absolute;
   top: -5px;
   background: none;
@@ -128,14 +128,14 @@
   /* transition: background-color 0.3s, transform 0.3s; */
 }
 
-.delete-movie-button {
+.delete-movie-card-button {
   right: 35%; 
 }
 
-.edit-movie-button {
+.edit-movie-card-button {
   left: 35%;
 }
 
-.delete-movie-button:hover, .edit-movie-button:hover {
+.delete-movie-card-button:hover, .edit-movie-card-button:hover {
   transform: scale(1.1);
 }

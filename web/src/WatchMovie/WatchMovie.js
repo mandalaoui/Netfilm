@@ -11,7 +11,7 @@ function WatchMovie() {
 
     useEffect(() => {
         // Fetch movie data by ID
-        getMovieById(id, "67964782c8b5942c5f45547f")
+        getMovieById(id)
             .then((movieData) => {
                 setMovie(movieData); // Update the movie state when the data is fetched
                 // setLoading(false); // Set loading to false after fetching
@@ -25,9 +25,6 @@ function WatchMovie() {
     if (!movie) {
         return <div>Error: Movie not found!</div>;
     }
-
-//     const movie = getMovieById(id, "67964782c8b5942c5f45547f");
-//     console.log(movie);
 
     return (
             <div className="watcher">

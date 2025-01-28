@@ -24,7 +24,11 @@ const User = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie',
         default: ''
-    }]
+    }],
+    isAdmin : {
+        type: Boolean,
+        required: true
+    }
 });
 
 // Exports the User model to be used in other parts of the application.

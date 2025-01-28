@@ -9,7 +9,7 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "userId": "67964782c8b5942c5f45547f",
+            "userId": localStorage.getItem('userId'),
         },
         body: JSON.stringify(categoryData)
     })
@@ -29,11 +29,11 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
     }); 
 };
 
-const getAllCategories = (userId) => {
+const getAllCategories = () => {
     return fetch("http://localhost:12345/api/categories/", {
         method: "GET",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         }
     })
     .then(response => response.json())
@@ -47,11 +47,11 @@ const getAllCategories = (userId) => {
     });
 };
 
-const getCategoryById = (categoryId, userId) => {
+const getCategoryById = (categoryId) => {
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "GET",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         }
     })
     .then((response) => {
@@ -84,12 +84,12 @@ const getCategoryById = (categoryId, userId) => {
     });
 };
 
-const updateCategory = (categoryId, userId, categoryData) => {
+const updateCategory = (categoryId, categoryData) => {
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         },
         body: JSON.stringify(categoryData),
     })
@@ -107,11 +107,11 @@ const updateCategory = (categoryId, userId, categoryData) => {
     });
 };
 
-const deleteCategory = (categoryId, userId) => {
+const deleteCategory = (categoryId) => {
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "DELETE",
         headers: {
-            "userId": userId,
+            "userId": localStorage.getItem('userId'),
         }
     })
     .then(response => {

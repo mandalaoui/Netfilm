@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { showConfirmationModal  } from '../../Admin/Verification/Verification.js'; 
 import { getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
-import { deleteMovie, updateMovie } from '../../Admin/AdminActions/Movie/MovieActions.js';
+import { deleteMovie } from '../../Admin/AdminActions/Movie/MovieActions.js';
 
 function MovieCard({ movie }) {
     const [categories, setCategories] = useState([]);
@@ -24,7 +24,7 @@ function MovieCard({ movie }) {
         const userConfirmed = await showConfirmationModal("movie",  movie.name, 'delete');
         if (userConfirmed) {
             try {
-                const isDeleted = await deleteMovie(movie._id, "67964782c8b5942c5f45547f");
+                const isDeleted = await deleteMovie(movie._id);
                 if (isDeleted) {
                     navigateTo('/admin');
                     // console.log(`Movie "${movie.name}" deleted successfully.`);
@@ -56,7 +56,7 @@ function MovieCard({ movie }) {
         const fetchCategories = async () => {
             const fetchedCategories = await Promise.all(
                 movie.categories.map(async (categoryId) => {
-                    const category = await getCategoryById(categoryId, "67964782c8b5942c5f45547f");
+                    const category = await getCategoryById(categoryId);
                     return category.name; // Extract only the name
                 })
             );
@@ -68,32 +68,32 @@ function MovieCard({ movie }) {
 
     return (
         <div className="movie-card">
-            <div className="movie-image">
+            <div className="movie-card-image">
             <img src={`http://localhost:12345/api/${movie.image}`} alt={movie.name} onClick={handlePlayClick}/>
             </div>
-            <div className="movie-title">{movie.name}</div>
-            <div className="movie-info">
-                <div className="movie-controls">
-                    <button className="play-button" onClick={handlePlayClick}>▶ Play</button>
-                    <span className="movie-movie_time">{movie.movie_time}</span>
+            <div className="movie-card-title">{movie.name}</div>
+            <div className="movie-card-info">
+                <div className="movie-card-controls">
+                    <button className="movie-card-play-button" onClick={handlePlayClick}>▶ Play</button>
+                    <span className="movie-card-movie_time">{movie.movie_time}</span>
                 </div>
                 
-                <div className="movie-meta">
+                <div className="movie-card-meta">
                     <p>{movie.Publication_year
                     } | {movie.age}</p>
-                    <div className="movie-categories">
+                    <div className="movie-card-categories">
                     {categories.map((categoryName, index) => (
-                            <span key={index} className="movie-category">{categoryName}</span>
+                            <span key={index} className="movie-card-category">{categoryName}</span>
                         ))}
                     </div>
                 </div>
                                 
                 {isAdminPage && (
                     <>
-                        <button className="delete-movie-button" onClick={handleDeleteClick}>
+                        <button className="delete-movie-card-button" onClick={handleDeleteClick}>
                             <i className="bi bi-trash"></i>
                         </button>
-                        <button className="edit-movie-button" onClick={handleEditClick}>
+                        <button className="edit-movie-card-button" onClick={handleEditClick}>
                             <i className="bi bi-pencil-square"></i>
                         </button>
                     </>

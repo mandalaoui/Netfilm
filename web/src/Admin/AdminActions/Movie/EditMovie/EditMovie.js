@@ -3,7 +3,7 @@ import UpperMenu from '../../../../HomeScreen/UpperMenu/UpperMenu.js';
 import React, { useState, useEffect } from 'react';
 import { updateMovie } from '../MovieActions.js';
 // import { useLocation } from 'react-router-dom';
-import { getCategoryById } from '../../Category/CategoryActions.js';
+import { getCategoryById, getAllCategories } from '../../Category/CategoryActions.js';
 import { getMovieById } from '../MovieActions.js';
 
 
@@ -13,15 +13,41 @@ function EditMovie() {
     // const specificCategory = queryParams.get('specificCategory');
     const [currentMovie, setCurrentMovie] = useState(''); // State to store the current movie
     const [movieCategories, setMovieCategories] = useState([]); // State for storing movie categories
+    const [allCategories, setAllCategories] = useState([]);
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+
+    useEffect(() => {
+        // Fetch all categories for selection
+        const fetchAllCategories = async () => {
+            try {
+                const categories = await getAllCategories();
+                const allCategoryDetails = await Promise.all(
+                    categories.map(async (category) => {
+                        const fullCategory = await getCategoryById(category); // משיג את האובייקט המלא
+                        return fullCategory; // מחזיר את האובייקט המלא
+                    })
+                );
+                console.log(allCategoryDetails);
+
+                setAllCategories(allCategoryDetails);
+                // console.log(categories);
+            } catch (error) {
+                console.error("Error fetching all categories:", error);
+            }
+        };
+
+        fetchAllCategories();
+    }, []);
 
     useEffect(() => {
         // Fetch movie details when movieId is available
         const fetchMovie = async () => {
             if (movieId) {
                 try {
-                    const movie = await getMovieById(movieId, "67964782c8b5942c5f45547f");
+                    const movie = await getMovieById(movieId);
                     setCurrentMovie(movie);
                     // console.log(currentMovie.name);
                 } catch (error) {
@@ -38,7 +64,7 @@ function EditMovie() {
             const fetchCategories = async () => {
                 try {
                     const categories = await Promise.all(
-                        currentMovie.categories.map((categoryId) => getCategoryById(categoryId, "67964782c8b5942c5f45547f"))
+                        currentMovie.categories.map((categoryId) => getCategoryById(categoryId))
                     );
                     setMovieCategories(categories);
                 } catch (error) {
@@ -102,6 +128,10 @@ function EditMovie() {
         };
     }, []);
 
+    const handleReturn = () => {
+        window.location.href = '/admin';
+    };
+    
     const handleSubmit = () => {
         const renameFilePath = (filePath, newName) => {
             const ext = filePath.split('.').pop();
@@ -134,26 +164,40 @@ function EditMovie() {
             formData.append("trailer", trailerFile);
         }
 
-        let categories = movieCategories.map(category => category.id);
-        categories.forEach(category => formData.append("categories[]", category));
-            //// כרגע לוקח את הישן
+        // const selectedCategories = Array.from(document.querySelector('select[id="categories"]').selectedOptions).map(
+        //     (option) => option.value
+        // );
+        // selectedCategories.forEach((category) => formData.append("categories[]", category));
 
-        updateMovie(movieId, "6796506284c579985efe2882", formData).then(isSuccess => {
+        selectedCategories.forEach((category) => formData.append("categories[]", category));
+
+        updateMovie(movieId, formData).then(isSuccess => {
             if (isSuccess) {
-                window.location.href = '/admin';
+                handleReturn();
+            } else {
+                console.error('Failed to update movie');
             }
         });
     };
 
-    const handleReturn = () => {
-        window.location.href = '/admin';
+    
+
+    const handleCategoryChange = (e, categoryId) => {
+        const updatedCategories = e.target.checked
+            ? [...selectedCategories, categoryId] // אם נבחר, נוסיף את הקטגוריה
+            : selectedCategories.filter((id) => id !== categoryId); // אם בוטלה הבחירה, נסיר את הקטגוריה
+    
+        setSelectedCategories(updatedCategories);
     };
+    
+    
+
 
     return (
         <div className="Edit-Movie-body">
             <UpperMenu />
             <div className="Edit-Movie-modal-content">
-                <button className="close-btn-new-movie" onClick={() => window.location.href = '/admin'}>
+                <button className="close-btn-new-movie" onClick={handleReturn}>
                     <i className="bi bi-x-lg"></i>
                 </button>
                 <h2>Edit Movie - "{currentMovie ? currentMovie.name : "Loading..."}"</h2>
@@ -203,19 +247,19 @@ function EditMovie() {
                     </div>
 
                     <div className="modal-movie-form">
-                    <h3>New Movie</h3>
+                        <h3>New Movie</h3>
                         <div className="modal-movie-left">
                             <div className="input-group">
                                 <input type="text" id="movieName" placeholder="Movie Name" />
                                 <p className="error-message-movie" id="movieName-error">Movie name must be at least 2 characters long.</p>
                             </div>
                             <div className="input-group">
-                                <input type="text" id="movieTime" placeholder="Duration (e.g., 1:30)" />
-                                <p className="error-message-movie" id="movieTime-error">Duration must be in the format "1:30".</p>
-                            </div>
-                            <div className="input-group">
                                 <input type="number" id="publicationYear" placeholder="Publication Year" />
                                 <p className="error-message-movie" id="publicationYear-error">Year must be between 0 and the current year.</p>
+                            </div>
+                            <div className="input-group">
+                                <input type="text" id="movieTime" placeholder="Duration (e.g., 1:30)" />
+                                <p className="error-message-movie" id="movieTime-error">Duration must be in the format "1:30".</p>
                             </div>
                             <div className="input-group">
                                 <input type="number" id="age" placeholder="Age Rating" />
@@ -223,6 +267,24 @@ function EditMovie() {
                             </div>
                             <div className="input-group">
                                 <textarea placeholder="Description" id="description"></textarea>
+                            </div>
+                            <div className="input-group">
+                                <h6>Categories</h6>
+                                <div className="category-list">
+                                    {allCategories.map((category) => (
+                                        <div key={category.id} className="category-item">
+                                            <input
+                                                type="checkbox"
+                                                id={`category-${category.id}`}
+                                                checked={selectedCategories.includes(category.id)} 
+                                                onChange={(e) => handleCategoryChange(e, category.id)}
+                                            />
+                                            <label htmlFor={`category-${category.id}`} className="category-label">
+                                                {category.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                         <div className="modal-movie-right">
@@ -245,10 +307,9 @@ function EditMovie() {
                     </div>
                 </div>
                 <div className="Create-Movie-btn">
-                        <button onClick={handleSubmit}>Update Movie</button>
-                    </div>
-                    <p className="text-decoration-underline" onClick={handleReturn}>Return</p>
-
+                    <button onClick={handleSubmit}>Update Movie</button>
+                </div>
+                <p className="text-decoration-underline" onClick={handleReturn}>Return</p>
             </div >
         </div>
     );

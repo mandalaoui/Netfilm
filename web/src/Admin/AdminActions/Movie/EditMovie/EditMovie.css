@@ -172,3 +172,62 @@ h3 {
 input[type="file"] {
     cursor: pointer;
 }
+
+/* #categories {
+    color: black; /* מוודא שהטקסט יהיה בצבע שחור */
+    /* background-color: #fff; /* רקע לבן ל-select */
+    /* border: 1px solid #ccc; /* גבול רך */
+    /* padding: 8px; ריפוד פנימי */
+    /* border-radius: 6px; פינות מעוגלות */
+    /* font-size: 1rem; גודל גופן */
+/* } */
+
+/* צבע טקסט שחור עבור האופציות בתוך ה-select */
+/* #categories option {
+    color: black; /* טקסט שחור */
+    /* background-color: #fff; רקע לבן לאופציות */
+/* } */
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;  /* גובה מקסימלי עבור הרשימה */
+    overflow-y: auto;   /* מאפשר גלילה אנכית */
+    overflow-x: hidden;
+    /* padding-right: 10px; מרווח לפס הגלילה */
+    border: 1px solid #ccc;  /* גבול סביב הרשימה */
+    border-radius: 5px;  /* קצוות מעוגלות */
+    /* background-color: #f9f9f9;  צבע רקע בהיר */
+}
+
+.category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 8px 0;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.category-item input {
+    transform: scale(1.2); /* שינוי גודל ה-checkbox אם רצוי */
+    order: 2;
+    cursor: pointer;
+}
+
+.category-label {
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+    width: 100%; 
+}
+
+.category-item input:checked + .category-label {
+    font-weight: normal;
+}
+
+.category-label {
+    font-weight: normal !important;
+}

@@ -172,3 +172,51 @@ h2 {
     color: white;
     cursor: pointer;
 }
+
+.categories-in-movie-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.categories-in-movie-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 8px 0;
+    white-space: nowrap;
+    cursor: pointer;
+
+}
+
+.categories-in-movie-item input {
+    transform: scale(1.2); /* שינוי גודל ה-checkbox אם רצוי */
+    order: 2;
+    cursor: pointer;
+}
+
+.categories-in-movie-label {
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+    width: 100%; 
+}
+
+.categories-in-movie-item input:checked + .categories-in-movie-label {
+    font-weight: normal;
+}
+
+.categories-in-movie-label {
+    font-weight: normal !important;
+}
+
+.input-group small{
+    padding: 10px;
+}

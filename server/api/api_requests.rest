@@ -8,7 +8,7 @@ userId: 67964782c8b5942c5f45547f
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: <ID>
+userId: 67964782c8b5942c5f45547f
 Content-Type: application/json
 
 {
@@ -112,8 +112,8 @@ Content-Type: application/json
 {
 "username": "lioriii", 
 "password": "123456", 
-"nickname": "liori"
-
+"nickname": "liori",
+"isAdmin": true
 }
 
 ### Connect to system

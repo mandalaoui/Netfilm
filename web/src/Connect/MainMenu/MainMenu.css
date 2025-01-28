@@ -77,10 +77,10 @@ h6 {
 /* Optional text note for profile picture */
 .optional-text {
     position: relative;
-    left: 8px;
+    /* left: 8px; */
     font-size: 12px;
     color: #bbb;
-    margin: 0;
+    /* margin: 0; */
     margin-bottom: 10px;
 }
 
@@ -143,4 +143,36 @@ h6 {
     color: #FF0000;
     margin-bottom: -10px;
     display: none;
+}
+
+.admin-checkbox-container {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px; 
+}
+
+.Is-Admin-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3); /* הגדלת הקובייה */
+}
+
+.profile-picture{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-picture-text{
+    display: flex;
+    flex-direction: row;
+}
+.profile-picture h6,
+.profile-picture .optional-text {
+    display: inline-block; 
+    margin-right: 10px;
 }

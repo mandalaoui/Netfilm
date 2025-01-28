@@ -1,11 +1,12 @@
 import './MainMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 
 function MainMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
-
+    const [isAdminValue, setIsAdmin] = useState(false);
     // Function to navigate between pages
     const navigateToPage = (page) => {
         window.location.href = page; // Navigate to the given page
@@ -60,22 +61,24 @@ function MainMenu() {
     const validateUserData = (userData) => {
         if (!userData.username) return alert("Please enter username");
         if (!userData.password) return alert("Please enter password");
-    
+
         const repeatedPassword = document.querySelector('input[placeholder="Confirm"]').value;
         if (userData.password !== repeatedPassword) return alert("Passwords do not match.");
-    
+
         if (!userData.nickname) return alert("Please enter nickname");
         return true;
     };
-    
+
 
     const handleRegister = async () => {
+        console.log(`isAdmin: ${isAdminValue}`);
         const userData = {
             username: document.querySelector('input[placeholder="Username"]').value,
             password: document.querySelector('input[placeholder="Password"]').value,
             nickname: document.querySelector('input[placeholder="Nickname"]').value,
-        };
-        if(!validateUserData(userData))
+            isAdmin: isAdminValue,
+        }
+        if (!validateUserData(userData))
             return;
 
         const imageInput = document.querySelector('input[type="file"]');
@@ -85,9 +88,9 @@ function MainMenu() {
         formData.append('username', userData.username);
         formData.append('password', userData.password);
         formData.append('nickname', userData.nickname);
+        formData.append('isAdmin', userData.isAdmin);
         if (imageFile != null)
             formData.append('photo', imageFile);
-
         try {
             const response = await fetch("http://localhost:12345/api/users/", {
                 method: "POST",
@@ -95,7 +98,7 @@ function MainMenu() {
             });
 
             if (response.ok) {
-                const location = response.headers.get('Location'); // קבלת ה-Location שהוגדר בתשובה
+                const location = response.headers.get('Location');
                 alert("Registration successful!");
                 console.log("User created at:", location);
                 window.location.href = "/login";
@@ -134,6 +137,17 @@ function MainMenu() {
                 body: JSON.stringify(userData) // Send login data to server
             });
             if (response.ok) {
+                const data = await response.json(); // Parse response
+                const { token } = data;
+                
+                localStorage.setItem('authToken', token);
+                const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decode the JWT token
+                const userId = decodedToken.id;
+                const isAdmin = decodedToken.isAdmin;
+
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('isAdmin', isAdmin);
+
                 navigateToPage('../home');
             } else if (response.status === 400 || response.status === 404) {
                 errorElement.textContent = "Username and/or password are incorrect.";
@@ -176,9 +190,21 @@ function MainMenu() {
                                 <p className="error-message" id="confirm-error">Passwords do not match.</p>
                                 <input type="text" id="nickname" placeholder="Nickname" />
                                 <p className="error-message" id="nickname-error">Nickname cannot be less than 3 letters.</p>
-                                <div className="input-group">
-                                    <h6>Profile Picture</h6>
-                                    <small className="optional-text">*optional</small> {/* Optional profile picture */}
+                                <div className="admin-checkbox-container">
+                                    <label>Admin</label>
+                                    <div className="Is-Admin-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            checked={isAdminValue}
+                                            onChange={(e) => setIsAdmin(e.target.checked)}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="profile-picture">
+                                    <div className="profile-picture-text">
+                                        <h6>Profile Picture</h6>
+                                        <small className="optional-text">*optional</small> {/* Optional profile picture */}
+                                    </div>
                                     <input type="file" accept="image/*" /> {/* Profile picture upload */}
                                 </div>
                                 <button onClick={handleRegister}>Register</button> {/* Button to register user */}
