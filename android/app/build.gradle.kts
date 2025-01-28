@@ -34,6 +34,8 @@ android {
     configurations.all {
         resolutionStrategy {
             force ("androidx.room:room-compiler:2.5.0")
+            force ("com.google.android.material:material:1.9.0")
+            force ("androidx.appcompat:appcompat:1.6.0")
         }
     }
 }
@@ -45,30 +47,32 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation("com.google.android.material:material:1.6.0")
+//    implementation(libs.appcompat)
+//    implementation(libs.material)
     implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.swiperefreshlayout)
+//    implementation(libs.constraintlayout)
+//    implementation(libs.swiperefreshlayout)
 
     implementation(libs.room.common)
-    implementation(libs.room.runtime)
+//    implementation(libs.room.runtime)
     implementation(libs.adapters)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.github.bumptech.glide:glide:4.15.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
-    implementation ("com.github.bumptech.glide:glide:4.13.2")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
-    annotationProcessor(libs.room.compiler)
+//    implementation ("com.github.bumptech.glide:glide:4.13.2")
+//    annotationProcessor ("com.github.bumptech.glide:compiler:4.13.2")
+//    annotationProcessor(libs.room.compiler)
 
     implementation ("androidx.room:room-runtime:2.5.0")
     annotationProcessor ("androidx.room:room-compiler:2.5.0")
 
-    implementation ("androidx.appcompat:appcompat:1.3.1")
-    implementation ("com.google.android.material:material:1.6.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.0")
+//    implementation ("androidx.appcompat:appcompat:1.3.1")
+    implementation ("androidx.appcompat:appcompat:1.6.0")
+//    implementation ("com.google.android.material:material:1.6.0")
+    implementation ("com.google.android.material:material:1.9.0")
+//    implementation ("androidx.constraintlayout:constraintlayout:2.1.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 }

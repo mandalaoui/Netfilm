@@ -41,24 +41,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-//        if (movieList != null) {
-//        if (movies != null && !movies.isEmpty()) {
-//            final Movie currentMovie = movies.get(position);
-//            Glide.with(holder.itemView.getContext())
-//                    .load(currentMovie.getImage())
-//                    .error(R.drawable.default_image)
-//                    .into(holder.movieImage);
-//        }
         if (movies != null) {
             final Movie current = movies.get(position);
             Glide.with(holder.itemView.getContext())
                     .load("http://10.0.2.2:12345/" + current.getImage())
                     .error(R.drawable.default_image)
                     .into(holder.movieImage);
-
-//            MovieAdapter movieAdapter = new MovieAdapter(context);
-//            holder.recyclerViewMovies.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-//            holder.recyclerViewMovies.setAdapter(movieAdapter);
         }
     }
 

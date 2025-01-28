@@ -51,18 +51,4 @@ public class UserApi {
         call.enqueue(callback);
     }
 
-//    public void getCtegories(MutableLiveData<List<Category>> categories) {
-//        Call<List<Category>> call = apiService.getCategories();
-//        call.enqueue(new Callback<List<Category>>() {
-//            @Override
-//            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-//                categories.setValue(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Category>> call, Throwable t) {
-//                Log.i("UserApi","fail response");
-//            }
-//        });
-//    }
 }

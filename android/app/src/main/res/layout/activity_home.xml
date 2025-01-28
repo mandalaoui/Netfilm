@@ -1,26 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:background="#000000"-->
+<!--    android:orientation="vertical"-->
+<!--    tools:context=".HomeActivity">-->
+
+<!--    <Toolbar-->
+<!--        android:id="@+id/toolBar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:background="#000000"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/menu"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/home"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:backgroundTint="#000000"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_home"/>-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/admin"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:backgroundTint="#000000"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_admin"/>-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/search"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:backgroundTint="#000000"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_admin"-->
+<!--            android:layout_marginLeft="200dp"/>-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/exit"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:backgroundTint="#000000"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_exit"/>-->
+
+<!--    </Toolbar>-->
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/menu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="130dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/lstCategories"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolBar">-->
+
+<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
+<!--            android:id="@+id/collapsingToolbarLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">-->
+
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--                android:id="@+id/toolbar"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:title="My Collapsing Toolbar"-->
+<!--                android:titleTextColor="#FFFFFF"-->
+<!--                app:layout_collapseMode="pin"-->
+<!--                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>-->
+
+<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/lstCategories"-->
+<!--        android:layout_width="411dp"-->
+<!--        android:layout_height="516dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/menu"-->
+<!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>/>-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#000000"
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
-
     <Toolbar
-        android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:background="#000000"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:elevation="4dp">
 
         <ImageButton
+            android:id="@+id/home"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:backgroundTint="#000000"
@@ -28,6 +119,7 @@
             android:src="@drawable/ic_home"/>
 
         <ImageButton
+            android:id="@+id/admin"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:backgroundTint="#000000"
@@ -35,80 +127,66 @@
             android:src="@drawable/ic_admin"/>
 
         <ImageButton
+            android:id="@+id/search"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:backgroundTint="#000000"
             android:padding="10dp"
-            android:src="@drawable/ic_admin"
+            android:src="@drawable/ic_search"
             android:layout_marginLeft="200dp"/>
+
+        <ImageButton
+            android:id="@+id/exit"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#000000"
+            android:padding="10dp"
+            android:src="@drawable/ic_exit"/>
 
     </Toolbar>
 
+    <!-- AppBarLayout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/menu"
-        android:layout_width="404dp"
+        android:layout_width="match_parent"
         android:layout_height="130dp"
-        app:layout_constraintBottom_toTopOf="@+id/lstCategories"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar">
+        android:layout_marginTop="48dp"
+        android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:title="My Collapsing Toolbar"-->
+<!--            android:titleTextColor="#FFFFFF" -->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
+
+        <TextView
+            android:id="@+id/random_movie"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:title="My Collapsing Toolbar"
-            android:titleTextColor="#FFFFFF"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+            android:layout_height="match_parent"
+            android:text="movie"
+            android:textColor="#0000FF"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstCategories"
-        android:layout_width="411dp"
-        android:layout_height="516dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!--&lt;!&ndash;    <androidx.recyclerview.widget.RecyclerView&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@+id/lstCategories"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:id="@+id/lstCategories"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--<androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent">-->
-<!--    -->
-<!--    <Toolbar-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"/>-->
-<!--    -->
-<!--    -->
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/menu"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp">-->
-<!--        -->
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/lstCategories"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="600dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/menu" />-->
-
-<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->

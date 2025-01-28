@@ -31,10 +31,6 @@ public class CategoryApi {
         this.categoryListData = categoryListData;
         this.dao = dao;
 
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .build();
-
         retrofit = new Retrofit.Builder()
                 .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
