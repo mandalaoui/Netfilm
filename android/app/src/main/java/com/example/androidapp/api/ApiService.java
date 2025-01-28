@@ -2,6 +2,11 @@ package com.example.androidapp.api;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import com.example.androidapp.entities.Category;
+import com.example.androidapp.entities.User;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -12,9 +17,6 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 import com.example.androidapp.Movie;
-import com.example.androidapp.entities.User;
-
-import java.util.List;
 
 public interface ApiService {
 
@@ -49,4 +51,6 @@ public interface ApiService {
 //            @Header("userId") String userId,       // שולחים את ה- userId כ- header
 //            @Body Category categoryRequest  // שולחים את הנתונים כ- body
 //    );
+    @GET("movies")
+    Call<List<Category>> getCategories(@Header("userId") String userId);
 }

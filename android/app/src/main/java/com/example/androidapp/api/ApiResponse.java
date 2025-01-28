@@ -32,6 +32,4 @@ public class ApiResponse {
         this.token = token;
     }
 
-
-
 }

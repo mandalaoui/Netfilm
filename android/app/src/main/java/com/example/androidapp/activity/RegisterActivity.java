@@ -20,6 +20,7 @@ import com.example.androidapp.R;
 import com.example.androidapp.entities.User;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
+import com.example.androidapp.entities.User;
 
 import java.io.File;
 import java.io.IOException;

@@ -11,6 +11,7 @@ import com.example.androidapp.entities.User;
 import com.example.androidapp.api.ApiResponse;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
+import com.example.androidapp.entities.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(this, NetflixActivity.class);
             startActivity(i);
         });
+        Toast.makeText(this, "tost", Toast.LENGTH_LONG).show();
 
         binding.btnSignIn.setOnClickListener(v -> {
             String username = binding.editMailOrName.getText().toString();
