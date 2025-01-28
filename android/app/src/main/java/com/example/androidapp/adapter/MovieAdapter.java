@@ -16,14 +16,14 @@ import com.example.androidapp.R;
 
 import java.util.List;
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieViewHolder> {
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movie> recommendedMovies;
     private Context context;
     private OnMovieClickListener onMovieClickListener;
 
 
-    public MovieListAdapter(Context context,List<Movie> recommendedMovies, OnMovieClickListener listener) {
+    public MovieAdapter(Context context, List<Movie> recommendedMovies, OnMovieClickListener listener) {
         this.recommendedMovies = recommendedMovies;
         this.context = context;
         this.onMovieClickListener = listener;
