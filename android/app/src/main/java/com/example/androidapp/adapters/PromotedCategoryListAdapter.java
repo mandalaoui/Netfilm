@@ -8,16 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.R;
-import com.example.androidapp.entities.Category;
+import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.Movie;
 
 import java.util.List;
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.CategoryViewHolder> {
+public class PromotedCategoryListAdapter extends RecyclerView.Adapter<PromotedCategoryListAdapter.CategoryViewHolder> {
 
     class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView categoryTitle;
@@ -41,24 +40,24 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     }
 
     private final LayoutInflater mInfalter;
-    private List<Category> categories;
+    private List<PromotedCategory> categories;
     private Context context;
 
-    public CategoryListAdapter(Context context) {
+    public PromotedCategoryListAdapter(Context context) {
         mInfalter = LayoutInflater.from(context);
         this.context = context;
     }
 
     @Override
     public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInfalter.inflate(R.layout.category_layout, parent, false);
+        View view = mInfalter.inflate(R.layout.promoted_category_layout, parent, false);
         return new CategoryViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CategoryViewHolder holder, int position) {
         if (categories != null) {
-            final Category current = categories.get(position);
+            final PromotedCategory current = categories.get(position);
             Log.d("CategoryListAdapter", "Binding category: " + (current != null ? current.getCategoryName() : "null"));
             Log.d("CategoryListAdapter", "Movies for category " + current.getCategoryName() + ": " + current.getMovies());
             holder.categoryTitle.setText(current.getCategoryName());
@@ -70,7 +69,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             }
         }
     }
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<PromotedCategory> categories) {
         Log.d("CategoryListAdapter", "Categories set in adapter: " + categories.size());
         this.categories = categories;
         notifyDataSetChanged();
@@ -83,7 +82,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
         return 0;
     }
 
-    public List<Category> getCategories() {
+    public List<PromotedCategory> getCategories() {
         return categories;
     }
 }

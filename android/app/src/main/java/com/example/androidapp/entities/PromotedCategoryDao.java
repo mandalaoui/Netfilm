@@ -9,26 +9,26 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface CategoryDao {
-    @Query("SELECT * FROM category")
-    List<Category> index();
+public interface PromotedCategoryDao {
+    @Query("SELECT * FROM PromotedCategory")
+    List<PromotedCategory> index();
 
 //    @Query("SELECT * FROM category WHERE id = :id")
 //    Category get(int id);
 
     @Insert
-    void insert(Category... categories);
+    void insert(PromotedCategory... categories);
 
     @Update
-    void update(Category... categories);
+    void update(PromotedCategory... categories);
 
     @Delete
-    void delete(Category... categories);
+    void delete(PromotedCategory... categories);
 
-    @Query("DELETE FROM category")
+    @Query("DELETE FROM PromotedCategory")
     void clear();
 
     @Insert
-    void insertList(List<Category> categories);
+    void insertList(List<PromotedCategory> categories);
 
 }

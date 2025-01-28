@@ -6,28 +6,27 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
-import com.example.androidapp.api.CategoryApi;
-import com.example.androidapp.api.UserApi;
-import com.example.androidapp.entities.Category;
-import com.example.androidapp.entities.CategoryDao;
+import com.example.androidapp.api.PromotedCategoryApi;
+import com.example.androidapp.entities.PromotedCategory;
+import com.example.androidapp.entities.PromotedCategoryDao;
 import com.example.androidapp.entities.LocalDatabase;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class CategoriesRepository {
-    private CategoryDao dao;
+public class PromotedCategoriesRepository {
+    private PromotedCategoryDao dao;
     private CategoryListData categoryListData;
-    private CategoryApi api;
+    private PromotedCategoryApi api;
 
-    public CategoriesRepository() {
+    public PromotedCategoriesRepository() {
         LocalDatabase db = LocalDatabase.getInstance(AppContext.getContext());
         dao = db.categoryDao();
         categoryListData = new CategoryListData();
-        api = new CategoryApi(categoryListData, dao);
+        api = new PromotedCategoryApi(categoryListData, dao);
     }
 
-    class CategoryListData extends MutableLiveData<List<Category>> {
+    class CategoryListData extends MutableLiveData<List<PromotedCategory>> {
         public CategoryListData () {
             super();
             setValue(new LinkedList<>());
@@ -39,14 +38,14 @@ public class CategoriesRepository {
 
             new Thread(() -> {
 //                categoryListData.postValue(dao.index());
-                List<Category> categories = dao.index();
+                List<PromotedCategory> categories = dao.index();
                 Log.d("CategoryApi", "Categories loaded from DB: " + categories);
                 postValue(categories);
             }).start();
         }
     }
 
-    public LiveData<List<Category>> getAll() {
+    public LiveData<List<PromotedCategory>> getAll() {
         return categoryListData;
     }
 

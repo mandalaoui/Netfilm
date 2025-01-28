@@ -1,6 +1,6 @@
 package com.example.androidapp.api;
 
-import com.example.androidapp.entities.Category;
+import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.User;
 
 import java.util.List;
@@ -19,5 +19,5 @@ public interface ApiService {
     Call<ApiResponse> login(@Body User user);
 
     @GET("movies")
-    Call<List<Category>> getCategories(@Header("userId") String userId);
+    Call<List<PromotedCategory>> getCategories(@Header("userId") String userId);
 }

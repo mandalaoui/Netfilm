@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
-public class ConverterCategory {
+public class ConverterPromotedCategory {
 
     @TypeConverter
     public static String fromMoviesList(List<Movie> movies) {

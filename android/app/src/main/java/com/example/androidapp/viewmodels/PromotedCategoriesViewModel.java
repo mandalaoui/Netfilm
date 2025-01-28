@@ -3,23 +3,19 @@ package com.example.androidapp.viewmodels;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.androidapp.entities.Category;
-import com.example.androidapp.entities.Movie;
-import com.example.androidapp.repositories.CategoriesRepository;
+import com.example.androidapp.entities.PromotedCategory;
+import com.example.androidapp.repositories.PromotedCategoriesRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class CategoriesViewModel extends ViewModel {
-    private CategoriesRepository repository;
-    private LiveData<List<Category>> categories;
+public class PromotedCategoriesViewModel extends ViewModel {
+    private PromotedCategoriesRepository repository;
+    private LiveData<List<PromotedCategory>> categories;
 
-    public CategoriesViewModel() {
-        repository = new CategoriesRepository();
+    public PromotedCategoriesViewModel() {
+        repository = new PromotedCategoriesRepository();
         categories = repository.getAll();
 
 //        categories.add(new Category("Action", Arrays.asList(new Movie("Movie 1"), new Movie("Movie 2"))));
@@ -27,7 +23,7 @@ public class CategoriesViewModel extends ViewModel {
 
     }
 
-    public LiveData<List<Category>> get() {
+    public LiveData<List<PromotedCategory>> get() {
         Log.d("CategoriesViewModel", "Categories list: " + categories.getValue());
         return categories;
     }

@@ -104,6 +104,7 @@
     tools:context=".HomeActivity">
 
     <Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#000000"
@@ -118,22 +119,24 @@
             android:padding="10dp"
             android:src="@drawable/ic_home"/>
 
+        <SearchView
+            android:id="@+id/search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:iconifiedByDefault="true"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:icon="@drawable/ic_search"/>
+
         <ImageButton
             android:id="@+id/admin"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:backgroundTint="#000000"
             android:padding="10dp"
+            android:layout_marginLeft="200dp"
             android:src="@drawable/ic_admin"/>
-
-        <ImageButton
-            android:id="@+id/search"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#000000"
-            android:padding="10dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginLeft="200dp"/>
 
         <ImageButton
             android:id="@+id/exit"
@@ -145,22 +148,12 @@
 
     </Toolbar>
 
-    <!-- AppBarLayout -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_marginTop="48dp"
         android:fitsSystemWindows="true">
-
-
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:title="My Collapsing Toolbar"-->
-<!--            android:titleTextColor="#FFFFFF" -->
-<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
 
         <TextView
             android:id="@+id/random_movie"
@@ -172,7 +165,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstCategories"
         android:layout_width="match_parent"

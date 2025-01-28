@@ -6,28 +6,26 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
-import com.example.androidapp.entities.Category;
-import com.example.androidapp.entities.CategoryDao;
+import com.example.androidapp.entities.PromotedCategory;
+import com.example.androidapp.entities.PromotedCategoryDao;
 
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CategoryApi {
+public class PromotedCategoryApi {
 
-    private MutableLiveData<List<Category>> categoryListData;
-    private CategoryDao dao;
+    private MutableLiveData<List<PromotedCategory>> categoryListData;
+    private PromotedCategoryDao dao;
 
     Retrofit retrofit;
     ApiService apiService;
 
-    public CategoryApi(MutableLiveData<List<Category>> categoryListData, CategoryDao dao) {
+    public PromotedCategoryApi(MutableLiveData<List<PromotedCategory>> categoryListData, PromotedCategoryDao dao) {
         this.categoryListData = categoryListData;
         this.dao = dao;
 
@@ -41,15 +39,15 @@ public class CategoryApi {
 
     String userId = "6792b52c10a40e0b80dd798d";
     public void getCategories() {
-        Call<List<Category>> call = apiService.getCategories(userId);
-        call.enqueue(new Callback<List<Category>>() {
+        Call<List<PromotedCategory>> call = apiService.getCategories(userId);
+        call.enqueue(new Callback<List<PromotedCategory>>() {
             @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+            public void onResponse(Call<List<PromotedCategory>> call, Response<List<PromotedCategory>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("CategoryApi", "Received categories: " + response.body());
                     if (response.body() != null && !response.body().isEmpty()) {
-                        for (Category category : response.body()) {
-                            Log.d("CategoryApi", "Category: " + category.getCategoryName() + "," + category.getMovies());
+                        for (PromotedCategory promotedCategory : response.body()) {
+                            Log.d("CategoryApi", "Category: " + promotedCategory.getCategoryName() + "," + promotedCategory.getMovies());
                         }
                     }
                     new Thread(() -> {
@@ -65,7 +63,7 @@ public class CategoryApi {
                 }
             }
             @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
+            public void onFailure(Call<List<PromotedCategory>> call, Throwable t) {
                 Log.e("CategoryApi", "Error fetching categories: " + t.getMessage());
             }
         });

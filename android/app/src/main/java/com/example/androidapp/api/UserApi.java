@@ -2,21 +2,14 @@ package com.example.androidapp.api;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
-import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.User;
-import com.example.androidapp.repositories.CategoriesRepository;
-
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
