@@ -2,8 +2,12 @@ const movieService = require('../services/movie');
 
 // Function to create a new movie
 const createMovie = async (req, res) => {
+    const image = req.files && req.files.image ? req.files.image[0].path : null;
+    const video = req.files && req.files.movie ? req.files.movie[0].path : null;
+    // const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
+
     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description,req.body.videoUrl, req.body.age);
+        image, req.body.Publication_year, req.body.description,video, req.body.age);
     const location = `/api/movies/${newMovie._id}`;
     res.status(201).location(location).json();
 };

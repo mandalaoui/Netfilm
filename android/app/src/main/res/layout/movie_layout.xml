@@ -22,44 +22,4 @@
                 android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
-
-    <!--    <ImageView-->
-<!--        android:id="@+id/moviePoster_1"-->
-<!--        android:layout_width="116dp"-->
-<!--        android:layout_height="195dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:contentDescription="@string/movie_poster"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.946"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/moviePoster_2"-->
-<!--        android:layout_width="116dp"-->
-<!--        android:layout_height="198dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:contentDescription="@string/movie_poster"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.054"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/moviePoster_3"-->
-<!--        android:layout_width="116dp"-->
-<!--        android:layout_height="195dp"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:contentDescription="@string/movie_poster"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,20 +2,9 @@ const express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user');
 const userValidation = require('../validation/user')
-const multer = require('multer');
-const path = require('path');
-// הגדרת המקום לשמור את הקבצים
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');  // המיקום שבו יאוחסנו הקבצים
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));  // שינוי שם הקובץ
-    }
-});
+const upload = require('../middleware/fileUpload.js')
 
-// יצירת אובייקט multer (הוא ישמש לשמירה של קבצים)
-const upload = multer({ storage: storage });
+module.exports = upload;
 // Route for creating a new user. Validates input before calling the controller's createUser function.
 router.route('/')
     .post(upload.single('photo'),userValidation.validateUserInput, userController.createUser);

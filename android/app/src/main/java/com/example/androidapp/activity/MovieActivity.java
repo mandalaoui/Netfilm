@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 import androidx.media3.common.MediaItem;
@@ -18,7 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.Movie;
-import com.example.androidapp.adapter.MovieListAdapter;
+import com.example.androidapp.adapter.MovieAdapter;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityMovieBinding;
 import com.example.androidapp.viewmodels.MovieViewModel;
@@ -41,7 +40,7 @@ public class MovieActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Button btnPlay;
     private List<Movie> recommendedMoviesList = new ArrayList<>();
-    MovieListAdapter movieListAdapter;
+    MovieAdapter movieListAdapter;
     String videoUrl;
 
     @Override
@@ -124,7 +123,7 @@ public class MovieActivity extends AppCompatActivity {
 
         });
 
-        movieListAdapter = new MovieListAdapter(this, recommendedMoviesList, new MovieListAdapter.OnMovieClickListener() {
+        movieListAdapter = new MovieAdapter(this, recommendedMoviesList, new MovieAdapter.OnMovieClickListener() {
             @Override
             public void onMovieClick(Movie movie) {
                 MovieOnClick(movie);

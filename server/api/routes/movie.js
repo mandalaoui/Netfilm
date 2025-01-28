@@ -4,12 +4,18 @@ const movieController = require('../controllers/movie');
 const movieValidation = require('../validation/movie');
 const userValidation = require('../validation/user');
 const recommendcontroller = require('../controllers/recommend');
-
+const upload = require('../middleware/fileUpload.js');
 
 // Define routes for '/'
 router.route('/')
     .get(userValidation.validateUserIdHeader, movieController.getMovies)
-    .post( userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie);
+    .post(
+        upload.fields([
+            { name: 'image', maxCount: 1 }, 
+            { name: 'movie', maxCount: 1 }, 
+            // { name: 'trailer', maxCount: 1 } 
+        ]),
+        userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 
 // Define routes for '/:id'
 router.route('/:id')

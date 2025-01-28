@@ -5,36 +5,28 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import android.widget.ViewFlipper;
-import android.widget.ViewSwitcher;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.Movie;
 import com.example.androidapp.R;
-import com.example.androidapp.adapter.MovieListAdapter;
+import com.example.androidapp.adapter.MovieAdapter;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityManagmentBinding;
-import com.example.androidapp.databinding.ActivityMovieBinding;
 
 import java.io.File;
 import java.util.List;
@@ -63,7 +55,7 @@ public class ManagmentActivity extends AppCompatActivity {
 
 
     private RecyclerView recyclerViewMovies;
-    private MovieListAdapter moviesAdapter;
+    private MovieAdapter moviesAdapter;
     private List<Movie> allMovies;
 
     @Override
