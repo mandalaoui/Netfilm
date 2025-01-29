@@ -1,12 +1,29 @@
 package com.example.androidapp;
 
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.example.androidapp.entities.ConverterCategory;
+import com.example.androidapp.entities.ConverterMovie;
+import com.example.androidapp.entities.Movie;
+
+import java.util.List;
+@Entity
+@TypeConverters(ConverterCategory.class)
 public class Category {
+    @PrimaryKey
+    @NonNull
     private String _id;
-    private List<String> categoryList;
+    @ColumnInfo(name = "movies")
+
+    private List<String> movies;
+
     private String isPromoted;
     private String name ;
+
 
     public String getId() {
         return _id;
@@ -33,17 +50,23 @@ public class Category {
     }
 
     // Constructor
-    public Category(List<String> categoryList) {
-        this.categoryList = categoryList;
-    }
+//    public Category(List<String> movies) {
+//        this.movies = movies;
+//    }
 
     // Getter
-    public List<String> getCategoryList() {
-        return categoryList;
+    public List<String> getMovies() {
+        return movies;
+    }
+
+    public Category(String name, String isPromoted, List<String> movies) {
+        this.name = name;
+        this.isPromoted = isPromoted;
+        this.movies = movies;
     }
 
     // Setter
-    public void setCategoryList(List<String> categoryList) {
-        this.categoryList = categoryList;
+    public void setMovies(List<String> movies) {
+        this.movies = movies;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public class Movie {
     @PrimaryKey
     @NonNull
-    private String id;
+    private String _id;
     private String name;
 
     private List<String> categories;
@@ -85,11 +85,11 @@ public class Movie {
     }
 
     public String getId() {
-        return id;
+        return _id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this._id = id;
     }
 
     public void setAge(int age) {

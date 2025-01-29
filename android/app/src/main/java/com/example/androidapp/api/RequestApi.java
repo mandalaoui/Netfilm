@@ -4,19 +4,24 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.androidapp.AppContext;
 import com.example.androidapp.Category;
+import com.example.androidapp.MovieDao;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.User;
 
 import org.json.JSONArray;
-
+import com.example.androidapp.MovieDatabase;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -35,6 +40,11 @@ public class RequestApi {
     private ApiService apiService;
     private Context context;
     private RequestBody categoriesRequestBody;
+    private MovieDao movieDao;
+    private MutableLiveData<List<Movie>> movieListData;
+//    private MovieDatabase MovieDatabase;
+    private List<Movie> allMoviesList = new ArrayList<>();
+
     public RequestApi(Context context) {
         this.context = context;
         OkHttpClient client = new OkHttpClient.Builder()
@@ -146,15 +156,10 @@ public class RequestApi {
 
         List<String> categories = movieCreate.getCategories();
         Log.d("Categories", categories.toString());
-        if (categories != null && !categories.isEmpty()) {
-            JSONArray categoriesJsonArray = new JSONArray();
-            for (String category : categories) {
-                categoriesJsonArray.put(category);
-            }
 
-            categoriesRequestBody = RequestBody.create(categoriesJsonArray.toString(), MediaType.parse("application/json"));
-            Log.d("RequestBody", categoriesJsonArray.toString());
-        }
+         categoriesRequestBody = RequestBody.create(
+                TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
+        );
 
 
         RequestBody name = RequestBody.create(movieCreate.getName(),MediaType.parse("text/plain"));
@@ -167,12 +172,6 @@ public class RequestApi {
 
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
-        Log.d("VideoDetails", "name: " + movieCreate.getName());
-        Log.d("VideoDetails", "time: " + (movieCreate.getMovie_time()));
-        Log.d("VideoDetails", "year: " + String.valueOf(movieCreate.getPublication_year()));
-        Log.d("VideoDetails", "description: " + movieCreate.getDescription());
-        Log.d("VideoDetails", "image: " + imageFile.getAbsolutePath());
-        Log.d("VideoDetails", "video: " + videoFile.getAbsolutePath());
 
         String userId= "679213ef1cebc10d8c2d7bc3";
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
@@ -201,5 +200,80 @@ public class RequestApi {
         });
     }
 
+    public List<Movie> createCategory() {
+        String userId = "679178e884e6da9a833f5452";
+        Call<List<Category>> call = apiService.getAllCategories(userId);
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("RequestApi", "Movie get successfully");
+                    List<Category> categories = response.body();
+                    List<String> allMovies = new ArrayList<>();
+                    List<String> uniqueMoviesList = new ArrayList<>();
+
+                    for (Category category : categories) {
+                        Log.d("RequestApi", "1 : " + category.getMovies().toString());
+                        List<String> moviesInCategory = category.getMovies();
+                        if (moviesInCategory != null) {
+                            allMovies.addAll(moviesInCategory);  // מאחד את כל הסרטים לרשימה אחת
+                        }
+                    }
+                    Log.d("RequestApi", "2 : " + allMovies.toString());
+                    for (String movie : allMovies) {
+                        if (!uniqueMoviesList.contains(movie)) {
+                            uniqueMoviesList.add(movie);  // אם הסרט לא נמצא ברשימה, נוסיף אותו
+                        }
+                    }
+
+                    for (String movieId : uniqueMoviesList) {
+                        Log.d("RequestApi", "Movie get successfully");
+                        getListOfMovies(movieId, allMoviesList);
+                    }
+//                    callback.onResponse(call, response);
+                } else {
+//                    callback.onFailure(call, new Throwable("Response was not successful"));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+//                callback.onFailure(call, t);
+            }
+        });
+        return allMoviesList;
+    }
+//    private void insert(Movie movie) {
+//        MovieDatabase.databaseWriteExecutor.execute(() -> {
+//            movieDao.insertMovie(movie);
+//        });
+//    }
+    private void getListOfMovies(String movieId,final List<Movie> allMoviesList) {
+        String userId = "679178e884e6da9a833f5452";
+        Call<Movie> call = apiService.getMovie(movieId, userId);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                if (response.isSuccessful()) {
+                    Movie movie = response.body();
+                    Log.d("RequestApi", "Movie get successfully" + movie.getName());
+                    Log.d("RequestApi", "Movie get successfully" + movie.getImage());
+
+                    if (movie != null && !allMoviesList.contains(movie)) {
+                        allMoviesList.add(movie); // מוסיפים את הסרט לרשימה
+                    }
+                } else {
+                    Log.e("Movie", "Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                // במקרה של כישלון בקשה (כמו חיבור לא זמין)
+//                callback.onFailure(call, t);
+            }
+        });
+    }
 
 }

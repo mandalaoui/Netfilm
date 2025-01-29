@@ -1,29 +1,35 @@
 package com.example.androidapp.viewmodels;
 
+import android.app.Application;
+import android.content.Context;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.repositories.MovieRepository;
 
-public class MovieViewModel extends ViewModel {
+import java.util.List;
 
-    private MovieRepository movieRepository;
-    private LiveData<Movie> movieLiveData;
+public class MovieViewModel extends AndroidViewModel {
+    private MovieRepository repository;
+    private LiveData<List<Movie>> moviesFromApi;
 
-    public MovieViewModel() {
-        movieRepository = new MovieRepository();
-        movieLiveData = movieRepository.getMovie();
+    public MovieViewModel(Application application) {
+        super(application);
+        repository = new MovieRepository(application);
+        moviesFromApi = repository.getMoviesFromApi();
     }
 
-    public void setSelectedMovie(Movie movie){
-        movieRepository.setSelectedMovie(movie);
+    public LiveData<List<Movie>> getMoviesFromApi() {
+        return moviesFromApi;
     }
 
-    public LiveData<Movie> getMovie() {
-        return movieLiveData;
-
+    public void fetchMoviesFromApi() {
+        repository.fetchMoviesFromApi();
     }
+
 
 //    public LiveData<Movie> getMovie(String movieId, String userId) {
 //        movieRepository.getMovie(movieId, userId, new Callback<Movie>() {

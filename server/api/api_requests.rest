@@ -7,9 +7,9 @@ userId: 679213ef1cebc10d8c2d7bc3
 
 ### Create a new movie
 
-    POST http://localhost:12345/api/movies/
-    userId: 6793d58f1ef6aabb4a5638e1
-    Content-Type: application/json
+POST http://localhost:12345/api/movies/
+userId: 6793d58f1ef6aabb4a5638e1
+Content-Type: application/json
 
     {
         "name": "movie_6",

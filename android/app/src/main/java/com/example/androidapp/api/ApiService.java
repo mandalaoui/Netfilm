@@ -57,4 +57,6 @@ public interface ApiService {
 
     @GET("categories")
     Call<List<Category>> getAllCategories(@Header("userId") String userId);
+    @GET("movies")
+    Call<List<Movie>> getMovies(@Header("userId") String userId);
 }

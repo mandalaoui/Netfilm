@@ -1,5 +1,6 @@
 package com.example.androidapp.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -50,21 +51,15 @@ public class ManagmentActivity extends AppCompatActivity {
     private Button createMovieViewButton;
     private Button deleteMovieViewButton;
     private Button createCategoryViewButton;
-    private ViewFlipper viewFlipper;
     private EditText create_movieNameInput;
     private TextView deleteConfirmationText;
     private ActivityManagmentBinding binding;
 
-    private Button btnCreateCategory;
     private String selectedImageUri;
     private String selectedVideoUri;
     private Movie movie;
-    private EditText create_nameCategory;
-    private SwitchMaterial  create_isPromotedSwitch;
-    private Spinner categorySpinner;
 
     private List<String> selectedCategories;
-    private RecyclerView recyclerViewMovies;
     private MovieAdapter moviesAdapter;
     private List<Movie> allMovies;
     private ListView categoryListView;
@@ -81,12 +76,8 @@ public class ManagmentActivity extends AppCompatActivity {
 //        viewFlipper = binding.ViewFlipper;
 
 
-//        categorySpinner = binding.categorySpinner;
 
 
-//        btnCreateCategory = binding.createCategoryButton;
-//        create_nameCategory = binding.categoryNameInput;
-//        create_isPromotedSwitch = binding.isPromotedSwitch;
 
 
 //        viewFlipper.setDisplayedChild(0);
@@ -100,31 +91,15 @@ public class ManagmentActivity extends AppCompatActivity {
 //            viewFlipper.setDisplayedChild(2);
 //        });
 //
-//        createCategoryViewButton.setOnClickListener(v -> {
-//            viewFlipper.setDisplayedChild(3);
-//            createCategory();
-//        });
-
-
+        createCategoryViewButton.setOnClickListener(v -> {
+            Intent i = new Intent(ManagmentActivity.this, CreateCategoryActivity.class);
+            startActivity(i);
+        });
 
 
     }
 
 
-    private void createCategory() {
 
-        String nameCategoty = create_nameCategory.getText().toString();
-        boolean isPromoted = create_isPromotedSwitch.isChecked();
-
-        recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
-        recyclerViewMovies.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        if (nameCategoty.isEmpty()) {
-            Toast.makeText(this, "Category name is required", Toast.LENGTH_SHORT).show();
-        } else {
-            btnCreateCategory.setOnClickListener(v -> {
-            });
-        }
-    }
 }
 

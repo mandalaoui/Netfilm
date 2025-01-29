@@ -195,6 +195,11 @@ public class CreateMovieActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickVideoLauncher.launch(intent);
     }
+    private void openImageChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");  // Filter only image files
+        pickImageLauncher.launch(intent); // Waiting for a response from the action
+    }
     private void requestPermissionsForVideo() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
@@ -214,11 +219,7 @@ public class CreateMovieActivity extends AppCompatActivity {
                 }
             });
 
-    private void openImageChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");  // Filter only image files
-        pickImageLauncher.launch(intent); // Waiting for a response from the action
-    }
+
 
     private ActivityResultLauncher<Intent> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

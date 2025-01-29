@@ -1,5 +1,5 @@
 const movieService = require('../services/movie');
-
+const mongoose = require('mongoose');
 // Function to create a new movie
 const createMovie = async (req, res) => {
 
@@ -7,9 +7,10 @@ const createMovie = async (req, res) => {
     const video = req.files && req.files.video ? req.files.video[0].path : null;
     // const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
     // const categories = req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId));
-    const categories = Array.isArray(req.body.categories) 
-    ? req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId))
-    : [];
+    let categories = [];
+    if (req.body.categories) {
+        categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+    }
     const newMovie = await movieService.createMovie(req.body.name, categories, req.body.movie_time,
         image, req.body.Publication_year, req.body.description,video);
     const location = `/api/movies/${newMovie._id}`;
