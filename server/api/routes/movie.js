@@ -12,10 +12,10 @@ router.route('/')
     .post(
         upload.fields([
             { name: 'image', maxCount: 1 }, 
-            { name: 'movie', maxCount: 1 }, 
+            { name: 'video', maxCount: 1 }
             // { name: 'trailer', maxCount: 1 } 
-        ]),
-        userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
+        ]),movieController.createMovie)
+        // userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 
 // Define routes for '/:id'
 router.route('/:id')

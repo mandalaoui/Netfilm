@@ -77,46 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                 User user = new User(username, password, nickname);
 
                 RequestApi requestApi = new RequestApi(this);
-                Log.d("Register", "Starting registration request for user: " + user.getUsername());
-                requestApi.registerUser(user,imageFile, new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-
-                        Log.d("Register", "Response raw body: " + response.raw().body());
-
-                        if (response.isSuccessful()) {
-                            if (response.code() == 201) {
-                                Log.d("API_RESPONSE", "User successfully created!");
-                                runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "User created successfully!", Toast.LENGTH_LONG).show());
-                            } else {
-                                if (response.body() != null) {
-                                    Log.d("API_RESPONSE", "User created: " + response.body());
-                                    runOnUiThread(() -> Toast.makeText(RegisterActivity.this, "User created: " + response.body().getUsername(), Toast.LENGTH_LONG).show());
-                                }
-                            }
-                        } else {
-
-                            try {
-                                if (response.errorBody() != null) {
-                                    String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
-                                    Log.e("Register", "Error: " + errorMessage);
-                                }
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Log.e("Register", "An error occurred");
-                            }
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Log.e("Register", "Registration failed with error: " + t.getMessage());
-                        // Logging the error
-                        t.printStackTrace();
-                        runOnUiThread(() ->Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show());
-//                            Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                requestApi.registerUser(user,imageFile);
+                }
         });
 
     }

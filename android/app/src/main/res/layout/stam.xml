@@ -5,79 +5,126 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+
     <LinearLayout
-        android:layout_width="400dp"
-        android:layout_height="679dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="26dp">
+        android:padding="16dp">
 
-        <EditText
-            android:id="@+id/categoryNameInput"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter category name"
-            android:inputType="text" />
+            android:fillViewport="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:padding="16dp">
-
-            <!-- שדה isPromoted (לדוגמה, TextView או EditText) -->
-            <TextView
-                android:id="@+id/isPromotedLabel"
-                android:layout_width="262dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Is Promoted?"
-                android:textSize="16sp" /> <!-- רווח בין השדה לכפתור -->
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Switch לצורך סימון true/false -->
-            <Switch
-                android:id="@+id/isPromotedSwitch"
-                android:layout_width="57dp"
-                android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/movieNameInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/managerCreate_movie_name"
+                    android:inputType="textMultiLine"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#B0B0B0" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/movieYearInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="year"
+                    android:hint="@string/managerCreate_year"
+                    android:inputType="textMultiLine"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#B0B0B0" />
 
-        <TextView
-            android:id="@+id/movieListLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Select Movies"
-            android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/movieTimeInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="time"
+                    android:hint="@string/managerCreate_time"
+                    android:inputType="textMultiLine"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#B0B0B0" />
 
-        <Spinner
-            android:id="@+id/movieSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+                <EditText
+                    android:id="@+id/movieDescriptionInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="description"
+                    android:hint="@string/managerCreate_description"
+                    android:inputType="textMultiLine"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#B0B0B0" />
 
+                <!-- ListView להצגת קטגוריות -->
+                <ListView
+                    android:id="@+id/categoryListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:choiceMode="multipleChoice" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp">
+                <Button
+                    android:id="@+id/btnChooseImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:padding="0dp"
+                    android:text="Choose Picture"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
+                <ImageView
+                    android:id="@+id/imageViewProfilePic"
+                    android:layout_width="119dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp" />
 
-            <!-- כפתור "Create Category" -->
-            <Button
-                android:id="@+id/createCategoryButton"
-                android:layout_width="347dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="Create Category"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="24dp" />
+                <Button
+                    android:id="@+id/btnChooseVideo"
+                    android:layout_width="124dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:padding="0dp"
+                    android:text="Choose video"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
-        </RelativeLayout>
+                <VideoView
+                    android:id="@+id/videoView"
+                    android:layout_width="119dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp" />
+
+                <Button
+                    android:id="@+id/createMovieButton"
+                    android:layout_width="393dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#A91616"
+                    android:text="@string/manager_create_movie"
+                    android:textColor="#FFFFFF" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

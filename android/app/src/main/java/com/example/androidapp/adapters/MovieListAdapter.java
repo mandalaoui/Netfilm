@@ -1,11 +1,9 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
-import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

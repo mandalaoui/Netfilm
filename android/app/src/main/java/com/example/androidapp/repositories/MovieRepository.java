@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.androidapp.AppContext;
 import com.example.androidapp.MovieDao;
 import com.example.androidapp.MovieDatabase;
-import com.example.androidapp.Movie;
+import com.example.androidapp.entities.Movie;
 
 public class MovieRepository {
     private MovieDao dao;

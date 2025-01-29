@@ -2,14 +2,18 @@ const movieService = require('../services/movie');
 
 // Function to create a new movie
 const createMovie = async (req, res) => {
-    const image = req.files && req.files.image ? req.files.image[0].path : null;
-    const video = req.files && req.files.movie ? req.files.movie[0].path : null;
-    // const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
 
-    const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-        image, req.body.Publication_year, req.body.description,video, req.body.age);
+    const image = req.files && req.files.image ? req.files.image[0].path : null;
+    const video = req.files && req.files.video ? req.files.video[0].path : null;
+    // const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
+    // const categories = req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId));
+    const categories = Array.isArray(req.body.categories) 
+    ? req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId))
+    : [];
+    const newMovie = await movieService.createMovie(req.body.name, categories, req.body.movie_time,
+        image, req.body.Publication_year, req.body.description,video);
     const location = `/api/movies/${newMovie._id}`;
-    res.status(201).location(location).json();
+    res.status(201).location(location).json({});
 };
 
 // Function to get movies based on categories for a user.

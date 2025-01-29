@@ -7,19 +7,44 @@ userId: 679213ef1cebc10d8c2d7bc3
 
 ### Create a new movie
 
-POST http://localhost:12345/api/movies/
-userId: 6793d58f1ef6aabb4a5638e1
-Content-Type: application/json
+    POST http://localhost:12345/api/movies/
+    userId: 6793d58f1ef6aabb4a5638e1
+    Content-Type: application/json
 
-{
-    "name": "movie_3",
-    "categories":[],
-    "movie_time":"2:30",
-    "Publication_year":2024,
-    "description": "try.",
-    "image": "uploads/moviePic_3.jpg",
-    "videoUrl": "uploads/poo.mp4"
-}
+    {
+        "name": "movie_6",
+        "categories":["6798b26552ed132324ff9943", "6798b26b52ed132324ff9948","6798b25952ed132324ff993e", "677414bbcc263c85d0d0fa1a"],
+        "movie_time":"2:30",
+        "Publication_year":2024,
+        "description": "try.",
+        "image": "server\api\uploads\moviePic_1.jpg",
+        "video": "uploads/poo.mp4"
+    }
+
+# curl -X POST http://localhost:12345/api/movies/ \
+#     -H "userId: 6793d58f1ef6aabb4a5638e1" \
+#     -F "name=movie_10" \
+#     -F "categories=[\"6798b26552ed132324ff9943\", \"6798b26b52ed132324ff9948\", \"6798b25952ed132324ff993e\", \"677414bbcc263c85d0d0fa1a\"]" \
+#     -F "movie_time=2:30" \
+#     -F "Publication_year=2024" \
+#     -F "description=try." \
+#     -F "image=@/path/uploads/moviePic_1.jpg" \
+#     -F "video=@/path/uploads/poo.mp4"
+
+# POST http://localhost:12345/api/movies/
+# userId: 6793d58f1ef6aabb4a5638e1
+# Content-Type: multipart/form-data
+
+# {
+#     "name": "movie_6",
+#     "categories":["6798b26552ed132324ff9943", "6798b26b52ed132324ff9948","6798b25952ed132324ff993e", "677414bbcc263c85d0d0fa1a"],
+#     "movie_time":"2:30",
+#     "Publication_year":2024,
+#     "description": "try.",
+#     "image": "uploads/1737996620418.jpg",
+#     "video": "uploads/poo.mp4"
+# }
+
 
 ### Return movie according to user search
 
@@ -42,6 +67,7 @@ userId: 6793d58f1ef6aabb4a5638e1
 "movie_time":"2:30",
 "Publication_year":2024,
 "description": "try.",
+ "categories":["6798b26552ed132324ff9943"],
 "image": "uploads/moviePic_1.jpg",
 "videoUrl": "uploads/poo.mp4"
 }
@@ -67,16 +93,16 @@ userId: 67963d5d483e59c7cb61231b
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: <ID>
+userId: 679178e884e6da9a833f5452
 
 ### Create a new category
 
 POST http://localhost:12345/api/categories/ 
-userId: <ID> 
+userId: 679178e884e6da9a833f5452
 Content-Type: application/json
 
 {
-"name": "Family", "isPromoted": false, "movies": []
+"name": "Action", "isPromoted": true, "movies": []
 }
 
 ### Get a specific category by ID
@@ -105,7 +131,7 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
- "username": "moshe",
+ "username": "kimmmm",
  "password": "1212221",
  "photo": "uploads/moviePic_1.jpg",
  "nickname": "kim"

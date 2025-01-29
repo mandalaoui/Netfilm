@@ -1,17 +1,22 @@
 package com.example.androidapp.api;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.androidapp.AppContext;
-import com.example.androidapp.Movie;
+import com.example.androidapp.Category;
 import com.example.androidapp.R;
-import com.example.androidapp.activity.ManagmentActivity;
+import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.User;
 
+import org.json.JSONArray;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -21,6 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -28,7 +34,7 @@ public class RequestApi {
     private Retrofit retrofit;
     private ApiService apiService;
     private Context context;
-
+    private RequestBody categoriesRequestBody;
     public RequestApi(Context context) {
         this.context = context;
         OkHttpClient client = new OkHttpClient.Builder()
@@ -42,7 +48,7 @@ public class RequestApi {
 
         apiService = retrofit.create(ApiService.class);
     }
-    public void registerUser(User user,File imageFile, final Callback<User> callback) {
+    public void registerUser(User user,File imageFile) {
         RequestBody username = RequestBody.create(user.getUsername(), MediaType.parse("text/plain"));
         RequestBody password = RequestBody.create(user.getPassword(), MediaType.parse("text/plain"));
         RequestBody nickname = RequestBody.create(user.getNickname(), MediaType.parse("text/plain"));
@@ -50,13 +56,55 @@ public class RequestApi {
         Log.d("UserDetails", "Password: " + user.getPassword());
         Log.d("UserDetails", "Nickname: " + user.getNickname());
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        RequestBody requestFile = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("photo", imageFile.getName(), requestFile);
 
         Log.d("API_REQUEST", "Sending registration request for user: " + user.getUsername());
 
         Call<User> call = apiService.post(username, password, nickname, imagePart);
-        call.enqueue(callback);
+        Log.d("Register", "Starting registration request for user: " + user.getUsername());
+        call.enqueue(new Callback<User>() {
+
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                Log.d("Register", "Response raw body: " + response.raw().body());
+
+                if (response.isSuccessful()) {
+                    if (response.code() == 201) {
+                        Log.d("API_RESPONSE", "User successfully created!");
+                        Toast.makeText(context, "User created successfully!", Toast.LENGTH_LONG).show();
+//                        Intent i = new Intent(context, HomeActivity.class);
+//                        i.putExtra("movieId", "679629522d6eaf038e9e1768");
+//                        startActivity(context, i, null);
+                    } else {
+                        if (response.body() != null) {
+                            Log.d("API_RESPONSE", "User created: " + response.body());
+                            Toast.makeText(context, "User created: " + response.body().getUsername(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                } else {
+
+                    try {
+                        if (response.errorBody() != null) {
+                            String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
+                            Log.e("Register", "Error: " + errorMessage);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Log.e("Register", "An error occurred");
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("Register", "Registration failed with error: " + t.getMessage());
+                // Logging the error
+                t.printStackTrace();
+                Toast.makeText(context, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void loginUser(User user, final Callback<ApiResponse> callback) {
@@ -75,32 +123,73 @@ public class RequestApi {
         call.enqueue(callback);
     }
 
-    public void createMovie(Movie movie, File imageFile, File videoFile) {
-        RequestBody name = RequestBody.create(MediaType.parse("text/plain"), movie.getName());
-        RequestBody year = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(movie.getPublication_year()));
-        RequestBody time = RequestBody.create(MediaType.parse("text/plain"), movie.getMovie_time());
-        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), movie.getDescription());
+    public void getCategories(final Callback<List<Category>> callback) {
+        String userid = "679178e884e6da9a833f5452";
+        Call<List<Category>> call = apiService.getAllCategories(userid);
 
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    callback.onFailure(call, new Throwable("Failed to get categories"));
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
+    public void createMovie(Movie movieCreate, File imageFile, File videoFile) {
 
-        requestFile = RequestBody.create(MediaType.parse("video/*"), videoFile);
-        MultipartBody.Part videoPart = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFile);
-        Log.d("VideoDetails", "name: " + name);
-        Log.d("VideoDetails", "year: " +year);
-        Log.d("VideoDetails", "time: " + time);
+        List<String> categories = movieCreate.getCategories();
+        Log.d("Categories", categories.toString());
+        if (categories != null && !categories.isEmpty()) {
+            JSONArray categoriesJsonArray = new JSONArray();
+            for (String category : categories) {
+                categoriesJsonArray.put(category);
+            }
 
-        String userID = "679213ef1cebc10d8c2d7bc3";
-        Call<Movie> call = apiService.createMovie(userID,name, year, time, description, imagePart, videoPart);
+            categoriesRequestBody = RequestBody.create(categoriesJsonArray.toString(), MediaType.parse("application/json"));
+            Log.d("RequestBody", categoriesJsonArray.toString());
+        }
+
+
+        RequestBody name = RequestBody.create(movieCreate.getName(),MediaType.parse("text/plain"));
+        RequestBody year = RequestBody.create(String.valueOf(movieCreate.getPublication_year()),MediaType.parse("text/plain"));
+        RequestBody time = RequestBody.create(movieCreate.getMovie_time(),MediaType.parse("text/plain") );
+        RequestBody description = RequestBody.create(movieCreate.getDescription(),MediaType.parse("text/plain"));
+
+        RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
+        MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
+
+        RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
+        MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
+        Log.d("VideoDetails", "name: " + movieCreate.getName());
+        Log.d("VideoDetails", "time: " + (movieCreate.getMovie_time()));
+        Log.d("VideoDetails", "year: " + String.valueOf(movieCreate.getPublication_year()));
+        Log.d("VideoDetails", "description: " + movieCreate.getDescription());
+        Log.d("VideoDetails", "image: " + imageFile.getAbsolutePath());
+        Log.d("VideoDetails", "video: " + videoFile.getAbsolutePath());
+
+        String userId= "679213ef1cebc10d8c2d7bc3";
+        Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
+            @Override
             public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "Movie created successfully", Toast.LENGTH_SHORT).show();
                     Log.d("RequestApi", "Movie created successfully");
                 } else {
-                    String errorMessage = "Failed to create movie: " + response.message();
                     Log.e("RequestApi", "Failed to create movie: " + response.message());
-                    Toast.makeText(context, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+                    try {
+                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
+                        Log.e("Error Response", errorResponse);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 

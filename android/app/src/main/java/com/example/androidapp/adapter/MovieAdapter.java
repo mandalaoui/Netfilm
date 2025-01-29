@@ -11,8 +11,8 @@ import android.widget.VideoView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.androidapp.Movie;
 import com.example.androidapp.R;
+import com.example.androidapp.entities.Movie;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvDescription = itemView.findViewById(R.id.movieDescription);
             tvTime = itemView.findViewById(R.id.movieTime);
             videoView = itemView.findViewById(R.id.videoView);
-            moviePoster = itemView.findViewById(R.id.moviePoster);
+            moviePoster = itemView.findViewById(R.id.iv_movie);
         }
     }
 

@@ -16,10 +16,10 @@ import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.Movie;
 import com.example.androidapp.adapter.MovieAdapter;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityMovieBinding;
+import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.util.ArrayList;
