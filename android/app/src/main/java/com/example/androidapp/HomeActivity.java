@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
@@ -16,17 +17,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.adapters.PromotedCategoryListAdapter;
+import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.databinding.ActivityHomeBinding;
+import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.PromotedCategoriesViewModel;
 import com.google.android.material.appbar.AppBarLayout;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
     private PromotedCategoriesViewModel promotedCategoriesViewModel;
     private ActivityHomeBinding binding;
+    private RecyclerView searchedMovies;
+    private MovieListAdapter movieListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,25 +98,56 @@ public class HomeActivity extends AppCompatActivity {
             popupMenu.show();
         });
 
+        searchedMovies = binding.searchedMovies;
+        searchedMovies.setVisibility(View.GONE);
+        movieListAdapter = new MovieListAdapter(this);
+        searchedMovies.setAdapter(movieListAdapter);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
+        searchedMovies.setLayoutManager(gridLayoutManager);
+
         SearchView searchView = binding.search;
-//        EditText searchEditText = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-//        searchEditText.setHintTextColor(Color.WHITE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // אם המשתמש שולח את החיפוש
                 Log.d("Search", "Query submitted: " + query);
+                searchMovie(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                searchView.setVisibility(View.VISIBLE);
                 // עדכון בזמן שהמשתמש מקליד
                 Log.d("Search", "Query changed: " + newText);
-                // כאן תוכל להוסיף לוגיקה כדי להציג תוצאות חיפוש
+                if (newText.isEmpty()) {
+                    searchedMovies.setVisibility(View.GONE);
+                } else {
+                    searchedMovies.setVisibility(View.VISIBLE);
+                    searchMovie(newText);
+                }
                 return false;
             }
         });
+    }
+
+    private void searchMovie(String query) {
+        MovieApi movieApi = new MovieApi();
+        movieApi.getSearchedMovies(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Movie> movies = response.body();
+                    Log.d("API Response", "Searched movies received: " + movies.toString());
+                    movieListAdapter.setMovies(response.body());
+                } else {
+                    Log.e("API Response", "Response error: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
+                Log.e("API Failure", "Failed to load searched movies: " + t.getMessage());
+            }
+        }, query);
     }
 
     private void showExitDialog() {
@@ -113,7 +157,6 @@ public class HomeActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        finish();
                         Intent intent = new Intent(HomeActivity.this, NetflixActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

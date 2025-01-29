@@ -107,8 +107,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#000000"
         android:orientation="horizontal"
+        android:backgroundTint="#000000"
         android:elevation="4dp">
 
         <ImageButton
@@ -125,9 +125,10 @@
             android:layout_height="match_parent"
             android:padding="10dp"
             android:iconifiedByDefault="true"
-            android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:icon="@drawable/ic_search"/>
+            android:queryHint="Search here"
+            android:textColorHint="@android:color/white"
+            android:textColor="#FFFFFF"/>
 
         <ImageButton
             android:id="@+id/admin"
@@ -147,6 +148,13 @@
             android:src="@drawable/ic_exit"/>
 
     </Toolbar>
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/searchedMovies"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="660dp"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:background="#000000"/>-->
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/menu"
@@ -170,6 +178,13 @@
         android:layout_width="match_parent"
         android:layout_height="530dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchedMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:background="#000000"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

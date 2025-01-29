@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 import java.util.List;
 
 @Entity
-@TypeConverters(ConverterPromotedCategory.class)
+@TypeConverters(ConverterCategory.class)
 public class PromotedCategory {
     @PrimaryKey (autoGenerate = true)
     private int id;

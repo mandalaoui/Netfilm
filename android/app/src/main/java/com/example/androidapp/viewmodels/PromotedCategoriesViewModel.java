@@ -17,10 +17,6 @@ public class PromotedCategoriesViewModel extends ViewModel {
     public PromotedCategoriesViewModel() {
         repository = new PromotedCategoriesRepository();
         categories = repository.getAll();
-
-//        categories.add(new Category("Action", Arrays.asList(new Movie("Movie 1"), new Movie("Movie 2"))));
-//        categories.add(new Category("Comedy", Arrays.asList(new Movie("Movie 3"), new Movie("Movie 4"))));
-
     }
 
     public LiveData<List<PromotedCategory>> get() {

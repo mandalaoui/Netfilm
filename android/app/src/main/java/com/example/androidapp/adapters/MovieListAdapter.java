@@ -1,13 +1,16 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
+//import com.example.androidapp.MovieActivity;
 import com.example.androidapp.entities.Movie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,10 +27,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         mInfalter = LayoutInflater.from(context);
     }
     class MovieViewHolder extends RecyclerView.ViewHolder {
-        ImageView movieImage;
+        ImageButton movieImage;
         private MovieViewHolder(View itemView) {
             super(itemView);
-            movieImage = itemView.findViewById(R.id.iv_movie);
+            movieImage = itemView.findViewById(R.id.imageBtnMovie);
         }
     }
 
@@ -41,10 +44,19 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         if (movies != null) {
             final Movie current = movies.get(position);
+            Log.d("MovieListAtapter", current.getImage());
             Glide.with(holder.itemView.getContext())
                     .load("http://10.0.2.2:12345/" + current.getImage())
-                    .error(R.drawable.default_image)
                     .into(holder.movieImage);
+
+            holder.movieImage.setTag(current);
+
+//            holder.movieImage.setOnClickListener(v -> {
+//                Movie movie = (Movie) v.getTag();
+//                Intent intent = new Intent(v.getContext(), MovieActivity.class);
+//                intent.putExtra("movie", movie.getId());
+//                v.getContext().startActivity(intent);
+//            });
         }
     }
 
