@@ -119,7 +119,7 @@ const updateMovie = async (id, name, categories, movie_time, image, Publication_
 const deleteMovie = async (id) => {
     const movie = await getMovieById(id);
     if (!movie) return null;
-
+    
     // Remove the movie from all relevant categories.
     const categories = movie.categories;
     for (const categoryId of categories) {

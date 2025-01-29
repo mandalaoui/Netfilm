@@ -3,17 +3,13 @@ import React, { useState, useEffect  } from 'react';
 import MovieRow from '../MovieRow/MovieRow.js';
 import { useLocation } from 'react-router-dom';
 import CreateCategory from '../../Admin/AdminActions/Category/CreateCategory/CreateCategory.js';
-// import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 import { deleteCategory, getAllCategories, getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
-// import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 
 function Movies() {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
     const [showCategoryModal, setshowCategoryModal] = useState(false);
-    // const [showMovieModal, setShowMovieModal] = useState(false);
     const [categories, setCategories] = useState([]);
-    // const categories = ["Action", "Comedy", "Drama", "Family", "New", "SpiderMan"];
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -50,7 +46,6 @@ function Movies() {
 
     const handleAddMovie = () => {
         window.location.href = "/admin/CreateMovie";
-        // setShowMovieModal(true);
     };
 
     return (
@@ -75,7 +70,6 @@ function Movies() {
 
             {/* {location === "/home" && <MovieRow category={{ name: "Watched", movies: [...] }} />} */}
             {categories.map((category) => {
-                // console.log(category);
                 return <MovieRow key={category.id} category={category} />;
             })}            
         </div>

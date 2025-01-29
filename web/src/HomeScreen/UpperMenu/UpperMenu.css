@@ -31,7 +31,7 @@
     align-items: center;
 }
 
-.search-logo, .user-logo, .netflix-logo {
+.search-logo, .user-logo, .netfilm-logo {
     align-self: center;
   }
 
@@ -66,7 +66,7 @@
 
 .search-input:focus {
     outline: none;
-    border-color: #fff; /* White border on focus */
+    border-color: #fff;
     background-color: rgba(0, 0, 0, 0.8);
 }
 
@@ -100,7 +100,7 @@
     cursor: pointer;
 }
 
-.netflix-logo {
+.netfilm-logo {
     height: 40px;
     width: auto;
 }

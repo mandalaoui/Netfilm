@@ -1,7 +1,5 @@
 import './EditCategory.css';
 import React, { useState, useEffect } from 'react';
-// import { updateCategory } from '../CategoryActions.js';
-// import moviesData  from '../../../../data/movies/movies.js';
 import { getMovieById } from '../../Movie/MovieActions.js';
 import { updateCategory, getAllCategories, getCategoryById } from '../CategoryActions.js';
 
@@ -12,7 +10,6 @@ function EditCategory({ category }) {
     const [movieNames, setMovieNames] = useState([]);
 
     const [allCategories, setAllCategories] = useState([]);
-    // const [allMoviesById, setAllMoviesById] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
     
@@ -41,7 +38,6 @@ function EditCategory({ category }) {
         const fetchAllMovies = async () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
-                // setAllMoviesById(allMoviesId);                    
 
                 const allMoviesDetails = await Promise.all(
                     allMoviesId.map(async (movieId) => {
@@ -79,38 +75,15 @@ function EditCategory({ category }) {
         fetchMovieNames();
     }, [category.movies]);
 
-    // const [movies, setMovies] = useState(category.movies || []);
-
-    // useEffect(() => {
-    //     fetch('http://localhost:12345/api/movies')  
-    //         .then(response => response.json())
-    //         .then(data => setMovies(data))
-    //         .catch(error => {
-    //             console.error("Error fetching movies:", error);
-    //             setMovies(moviesData);  // אם קרה שגיאה, טוענים את המידע המקומי
-    //         });
-    // }, []);
-
-    // פונקציה לשינוי סטייט כאשר סרט נבחר או מבוטל
-    // const toggleMovieSelection = (movieId) => {
-    //     setSelectedMovies((prevSelected) =>
-    //         prevSelected.includes(movieId)
-    //             ? prevSelected.filter(id => id !== movieId) // אם הסרט כבר נבחר, מסירים אותו
-    //             : [...prevSelected, movieId] // אם לא נבחר, מוסיפים אותו לרשימה
-    //     );
-    // };
-
     const handleSubmit = () => {
         const categoryData = {
             name: categoryName,
             isPromoted: isPromotedValue,
             movies: selectedMovies,
         }
-        // movies: selectedMovies,  // סרטים שנבחרו
         updateCategory(category.id, categoryData)
             .then(isSuECess => {
                 if (isSuECess) {
-                    // document.querySelector('.Create-Category-modal-container').style.display = 'none'; 
                     window.location.href = '/admin';
                 }
             });

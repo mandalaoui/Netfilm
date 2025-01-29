@@ -5,6 +5,7 @@ const movieValidation = require('../validation/movie');
 const userValidation = require('../validation/user');
 const recommendcontroller = require('../controllers/recommend');
 const upload = require('../middleware/fileUpload.js');
+const { deleteMovieFilesMiddleware } = require('../middleware/fileDelete.js');
 
 // Define routes for '/'
 router.route('/')
@@ -26,7 +27,7 @@ router.route('/:id')
         { name: 'trailer', maxCount: 1 } 
     ]),
     userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
-    .delete(userValidation.validateUserIdHeader, movieValidation.validateMovieId, recommendcontroller.deleteMovie, movieController.deleteMovie);
+    .delete(userValidation.validateUserIdHeader, movieValidation.validateMovieId, deleteMovieFilesMiddleware, recommendcontroller.deleteMovie, movieController.deleteMovie);
 
 // Define route for searching movies with a query.
 router.route('/search/:query')

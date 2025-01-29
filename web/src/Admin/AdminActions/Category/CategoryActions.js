@@ -56,7 +56,7 @@ const getCategoryById = (categoryId) => {
     })
     .then((response) => {
         if (response.status === 200) {
-            return response.json(); // מחזיר את האובייקט כ־JSON
+            return response.json(); 
         } else {
             alert(`ID is not available, try another one - ${response.status}`);
             throw new Error(`Error: ${response.status} - ${response.statusText}`);

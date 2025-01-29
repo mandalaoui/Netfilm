@@ -1,18 +1,18 @@
 import './UpperMenu.css';
-import userIcon from '../../data/pictures/user.png';
-import netflixIcon from '../../data/pictures/netflix.jpg';
-import searchIcon from '../../data/pictures/search.png';
+import userIcon from '../../icons/user.png';
+import netfilmIcon from '../../icons/NETFILM.png';
+import searchIcon from '../../icons/search.png';
 import { useState, useEffect  } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getUserById } from '../../Admin/AdminActions/User/UserActions';
 
 function UpperMenu({ searchQuery, onSearchChange }) {
+    const navigate = useNavigate();
     const navigateTo = (loc) => {
         window.location.href = loc;
     };
 
     const [showUserOptions, setShowUserOptions] = useState(false);
-    const [showOptions, setShowOptions] = useState(false);
     const [searchActive, setSearchActive] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [userImage, setUserImage] = useState(null);
@@ -55,12 +55,8 @@ function UpperMenu({ searchQuery, onSearchChange }) {
         setShowUserOptions(false);
     };
 
-    const handleOptionsHover = () => {
-        setShowOptions(true);
-    };
-
-    const handleOptionsLeave = () => {
-        setShowOptions(false);
+    const handleHome = () => {
+        navigate('/home');
     };
 
     const handleLogOut = () => {
@@ -83,26 +79,10 @@ function UpperMenu({ searchQuery, onSearchChange }) {
         <nav className="navbar border-body fixed-top full-width">
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex me-auto">
-                    <img src={netflixIcon} className="netflix-logo" alt="Netflix Logo"></img>
-                    <div
-                        onMouseEnter={handleOptionsHover}
-                        onMouseLeave={handleOptionsLeave}
-                        className="position-relative"
-                    >
-                        <button
-                            className="btn btn-primary me-2"
-                            type="button"
-                        >
-                            <i className="bi bi-arrow-down"></i> Options
-                        </button>
-                        {showOptions && (
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href='/'>Home</a></li>
-                                <li><a className="dropdown-item" href='/'>Recommended</a></li>
-                                <li><a className="dropdown-item" href='/'>My Movies</a></li>
-                            </ul>
-                        )}
-                    </div>
+                    <img src={netfilmIcon} className="netfilm-logo" alt="Netfilm Logo"></img>
+                    <button className="btn btn-primary me-2" type="button" onClick={handleHome}>
+                        <i className="bi bi-house"></i> Home
+                    </button>
                 </div>
                 <div className="d-flex search-container">
                     <img src={searchIcon} className="search-logo" alt="Search Logo" onClick={openSearch}></img>

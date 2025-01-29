@@ -20,14 +20,13 @@ function CreateMovie() {
                 const categories = await getAllCategories();
                 const allCategoryDetails = await Promise.all(
                     categories.map(async (category) => {
-                        const fullCategory = await getCategoryById(category); // משיג את האובייקט המלא
-                        return fullCategory; // מחזיר את האובייקט המלא
+                        const fullCategory = await getCategoryById(category);
+                        return fullCategory; 
                     })
                 );
                 console.log('Fetched all categories:', allCategoryDetails);  // Check fetched categories
 
                 setAllCategories(allCategoryDetails);
-                // console.log(categories);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
             }
@@ -119,7 +118,6 @@ function CreateMovie() {
         formData.append("name", document.querySelector('input[id="movieName"]').value);
         formData.append("movie_time", document.querySelector('input[id="movieTime"]').value);
         formData.append("Publication_year", parseInt(document.querySelector('input[id="publicationYear"]').value));
-        // formData.append("Publication_year", parseInt(2022));
         formData.append("description", document.querySelector('textarea[id="description"]').value);
         formData.append("age", parseInt(document.querySelector('input[id="age"]').value));
 
@@ -148,7 +146,7 @@ function CreateMovie() {
 
         createMovie(formData).then(isSuccess => {
             if (isSuccess) {
-                //window.location.href = '/admin';
+                handleReturn();
             }
         });
     };
@@ -158,14 +156,14 @@ function CreateMovie() {
     };
 
     const handleCategoryChange = (e, categoryId) => {
-        console.log('Category selected:', categoryId); // נוודא שהקטגוריה מתעדכנת
+        console.log('Category selected:', categoryId);
 
         const updatedCategories = e.target.checked
-            ? [...selectedCategories, categoryId] // אם נבחר, נוסיף את הקטגוריה
-            : selectedCategories.filter((id) => id !== categoryId); // אם בוטלה הבחירה, נסיר את הקטגוריה
+            ? [...selectedCategories, categoryId] 
+            : selectedCategories.filter((id) => id !== categoryId); 
 
         setSelectedCategories(updatedCategories);
-        console.log('Updated selected categories:', updatedCategories); // נוודא שהקטגוריות מתעדכנות כראוי
+        console.log('Updated selected categories:', updatedCategories);
 
     };
 

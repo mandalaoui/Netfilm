@@ -12,7 +12,7 @@ function UpperMenu() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark transparent-bg fixed-top full-width">
             <div className="container-fluid d-flex justify-content-between align-items-center">
-                <div className="header ms-2">NETFLIX</div>
+                <div className="header ms-2">NETFILM</div>
 
                 {loc === "/" && (
                     <div className="d-flex me-2">

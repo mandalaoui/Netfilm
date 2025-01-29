@@ -12,15 +12,6 @@ const createMovie = async (req, res) => {
     res.status(201).location(location).json(newMovie);
 };
 
-
-
-// const createMovie = async (req, res) => {
-//     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-//         req.body.image, req.body.Publication_year, req.body.description, req.body.age);
-//     const location = `/api/movies/${newMovie._id}`;
-//     res.status(201).location(location).json();
-// };
-
 // Function to get movies based on categories for a user.
 const getMovies = async (req, res) => {
     const userId = req.header('userId');

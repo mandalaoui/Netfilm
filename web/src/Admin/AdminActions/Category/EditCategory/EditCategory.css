@@ -110,13 +110,11 @@ h3 {
     padding-left: 10px;
     display: flex;
     flex-direction: column;
-    max-height: 100px;  /* גובה מקסימלי עבור הרשימה */
-    overflow-y: auto;   /* מאפשר גלילה אנכית */
+    max-height: 100px;
+    overflow-y: auto;
     overflow-x: hidden;
-    /* padding-right: 10px; מרווח לפס הגלילה */
-    border: 1px solid #ccc;  /* גבול סביב הרשימה */
-    border-radius: 5px;  /* קצוות מעוגלות */
-    /* background-color: #f9f9f9;  צבע רקע בהיר */
+    border: 1px solid #ccc; 
+    border-radius: 5px;
 }
 
 .movie-update-category-item {

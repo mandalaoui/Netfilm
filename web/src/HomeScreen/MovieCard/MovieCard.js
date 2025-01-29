@@ -14,11 +14,13 @@ function MovieCard({ movie }) {
     };
     // Function to handle play button click
     const handlePlayClick = () => {
-        // console.log(`movie: ${movie.name}`);
-        navigateTo(`../watch/${movie._id}`); // Navigate to the watch page and pass the movie as state
+        navigateTo(`../watchMovie/${movie._id}`);
+    };
+    
+    const handleInfoClick = () => {
+        navigateTo(`../movie/${movie._id}`); 
     };
 
-    // const location = useLocation();
 
     const handleDeleteClick = async () => {
         const userConfirmed = await showConfirmationModal("movie",  movie.name, 'delete');
@@ -27,8 +29,6 @@ function MovieCard({ movie }) {
                 const isDeleted = await deleteMovie(movie._id);
                 if (isDeleted) {
                     navigateTo('/admin');
-                    // console.log(`Movie "${movie.name}" deleted successfully.`);
-                    // alert(`Movie "${movie.name}" has been deleted.`);
                 } else {
                     alert(`Failed to delete movie "${movie.name}".`);
                 }
@@ -69,7 +69,7 @@ function MovieCard({ movie }) {
     return (
         <div className="movie-card">
             <div className="movie-card-image">
-            <img src={`http://localhost:12345/api/${movie.image}`} alt={movie.name} onClick={handlePlayClick}/>
+            <img src={`http://localhost:12345/api/${movie.image}`} alt={movie.name} onClick={handleInfoClick}/>
             </div>
             <div className="movie-card-title">{movie.name}</div>
             <div className="movie-card-info">

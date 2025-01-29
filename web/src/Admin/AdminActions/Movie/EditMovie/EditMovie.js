@@ -2,15 +2,11 @@ import './EditMovie.css';
 import UpperMenu from '../../../../HomeScreen/UpperMenu/UpperMenu.js';
 import React, { useState, useEffect } from 'react';
 import { updateMovie } from '../MovieActions.js';
-// import { useLocation } from 'react-router-dom';
 import { getCategoryById, getAllCategories } from '../../Category/CategoryActions.js';
 import { getMovieById } from '../MovieActions.js';
 
 
 function EditMovie() {
-    // const location = useLocation();
-    // const queryParams = new URLSearchParams(location.search);
-    // const specificCategory = queryParams.get('specificCategory');
     const [currentMovie, setCurrentMovie] = useState(''); // State to store the current movie
     const [movieCategories, setMovieCategories] = useState([]); // State for storing movie categories
     const [allCategories, setAllCategories] = useState([]);
@@ -26,14 +22,13 @@ function EditMovie() {
                 const categories = await getAllCategories();
                 const allCategoryDetails = await Promise.all(
                     categories.map(async (category) => {
-                        const fullCategory = await getCategoryById(category); // משיג את האובייקט המלא
-                        return fullCategory; // מחזיר את האובייקט המלא
+                        const fullCategory = await getCategoryById(category);
+                        return fullCategory; 
                     })
                 );
                 console.log(allCategoryDetails);
 
                 setAllCategories(allCategoryDetails);
-                // console.log(categories);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
             }
@@ -49,7 +44,6 @@ function EditMovie() {
                 try {
                     const movie = await getMovieById(movieId);
                     setCurrentMovie(movie);
-                    // console.log(currentMovie.name);
                 } catch (error) {
                     console.error("Error fetching movie:", error);
                 }
@@ -150,7 +144,6 @@ function EditMovie() {
         formData.append("name", document.querySelector('input[id="movieName"]').value);
         formData.append("movie_time", document.querySelector('input[id="movieTime"]').value);
         formData.append("Publication_year", parseInt(document.querySelector('input[id="publicationYear"]').value));
-        // formData.append("Publication_year", parseInt(2022));
         formData.append("description", document.querySelector('textarea[id="description"]').value);
         formData.append("age", parseInt(document.querySelector('input[id="age"]').value));
 
@@ -163,11 +156,6 @@ function EditMovie() {
         if (renamedTrailer) {
             formData.append("trailer", trailerFile);
         }
-
-        // const selectedCategories = Array.from(document.querySelector('select[id="categories"]').selectedOptions).map(
-        //     (option) => option.value
-        // );
-        // selectedCategories.forEach((category) => formData.append("categories[]", category));
 
         selectedCategories.forEach((category) => formData.append("categories[]", category));
 
@@ -184,8 +172,8 @@ function EditMovie() {
 
     const handleCategoryChange = (e, categoryId) => {
         const updatedCategories = e.target.checked
-            ? [...selectedCategories, categoryId] // אם נבחר, נוסיף את הקטגוריה
-            : selectedCategories.filter((id) => id !== categoryId); // אם בוטלה הבחירה, נסיר את הקטגוריה
+            ? [...selectedCategories, categoryId] 
+            : selectedCategories.filter((id) => id !== categoryId);
     
         setSelectedCategories(updatedCategories);
     };

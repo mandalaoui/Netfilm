@@ -1,0 +1,72 @@
+.video-random-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-top: 60px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-random video {
+    display: block;
+    width: 100%;
+    height: auto; 
+    object-fit: cover; 
+}
+
+.video-random-details {
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    bottom: 0;
+    left: 3%;
+    padding: 5px 5px;
+    border-radius: 10px;
+    flex-direction: column;
+}
+
+.random-movie-title-overlay {
+    position: absolute;
+    top: 40%;    
+    left: 5%;
+    font-size: min(9vw, 4rem); 
+    font-weight: bold;
+    text-shadow: 6px 4px 15px rgba(0, 0, 0, 0.9);
+    color: white;
+    z-index: 2;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.random-movie-buttons {
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+}
+
+.random-movie-buttons button {
+    font-size: min(1.5vw, 1rem); /* Smaller button size */
+    padding: min(4px, 1.5vw) min(15px, 3vw); /* Adjust padding for smaller size */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+.random-movie-buttons button:hover {
+    background-color: #b20710;
+}
+
+.random-movie-buttons .watch-btn {
+    background-color: #e50914; /* Red for "Watch" */
+    color: white;
+}
+
+.random-movie-buttons .info-btn {
+    background-color: #7d7d7d; /* Grey for "More Info" */
+    color: white;
+}

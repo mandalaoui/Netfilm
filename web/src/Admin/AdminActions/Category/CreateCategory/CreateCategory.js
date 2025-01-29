@@ -1,7 +1,6 @@
 import './CreateCategory.css';
 import React, { useState, useEffect } from 'react';
 import { createCategory } from '../CategoryActions.js';
-// import moviesData  from '../../../../data/movies/movies.js';
 import { updateCategory, getAllCategories, getCategoryById } from '../CategoryActions.js';
 import { getMovieById } from '../../Movie/MovieActions.js';
 
@@ -10,7 +9,6 @@ function CreateCategory() {
     const [isPromotedValue, setIsPromoted] = useState(false);
 
     const [allCategories, setAllCategories] = useState([]);
-    // const [allMoviesById, setAllMoviesById] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
 
@@ -40,7 +38,6 @@ function CreateCategory() {
         const fetchAllMovies = async () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
-                // setAllMoviesById(allMoviesId);                    
 
                 const allMoviesDetails = await Promise.all(
                     allMoviesId.map(async (movieId) => {
@@ -60,14 +57,14 @@ function CreateCategory() {
     }, [allCategories]);
 
     const handleMovieChange = (e, moviesId) => {
-        console.log('Category selected:', moviesId); // נוודא שהקטגוריה מתעדכנת
+        console.log('Category selected:', moviesId); 
 
         const updatedMovies = e.target.checked
-            ? [...selectedMovies, moviesId] // אם נבחר, נוסיף את הקטגוריה
-            : selectedMovies.filter((id) => id !== moviesId); // אם בוטלה הבחירה, נסיר את הקטגוריה
+            ? [...selectedMovies, moviesId] 
+            : selectedMovies.filter((id) => id !== moviesId); 
 
         setSelectedMovies(updatedMovies);
-        console.log('Updated selected categories:', updatedMovies); // נוודא שהקטגוריות מתעדכנות כראוי
+        console.log('Updated selected categories:', updatedMovies); 
 
     };
 
@@ -92,11 +89,9 @@ function CreateCategory() {
         const name = categoryName;
         const isPromoted = isPromotedValue;
         const movies = selectedMovies;
-        // movies: selectedMovies,  // סרטים שנבחרו
         createCategory(name, isPromoted, movies)
             .then(isSuccess => {
                 if (isSuccess) {
-                    // document.querySelector('.Create-Category-modal-container').style.display = 'none'; 
                     window.location.href = '/admin';
                 }
             });

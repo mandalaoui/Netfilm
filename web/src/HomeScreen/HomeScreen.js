@@ -1,6 +1,6 @@
 import './HomeScreen.css';
 import UpperMenu from './UpperMenu/UpperMenu.js';
-import Recommended from './Recommended/Recommended.js';
+import HomeScreenMovie from './HomeScreenMovie/HomeScreenMovie.js';
 import Movies from './Movies/Movies.js';
 import Search from './Search/Search.js';
 import { useLocation } from 'react-router-dom';
@@ -21,7 +21,7 @@ function HomeScreen() {
                 <UpperMenu searchQuery={searchQuery} onSearchChange={handleSearchChange} />
                 {searchQuery === '' ? (
                     <>
-                        <Recommended />
+                        <HomeScreenMovie />
                         <Movies />
                     </>
                 ) : (

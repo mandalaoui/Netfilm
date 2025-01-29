@@ -6,7 +6,6 @@
   background-color: #282828;
   overflow: visible;
   cursor: pointer;
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
@@ -14,40 +13,41 @@
   transform-origin: center;
   transition: transform 0.3s ease, z-index 0.3s ease;
   z-index: 2;
+  border-radius: 0px !important;
 }
 
 .movie-card:hover {
   position: relative;
   z-index: 10; 
   transform: scale(1.35);
-  box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.6), -10px 20px 15px rgba(0, 0, 0, 0.3); /* שיפרתי את העפלה */
+  box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.6), -10px 20px 15px rgba(0, 0, 0, 0.3);
   background-color: #282828;
   overflow: visible;
-  border-radius: 8px;
+  border-radius: 8px !important;
   opacity: 1;
 }
 
 .movie-card:hover .movie-card-info {
   opacity: 1;
   background-color: #282828;
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6), -10px 10px 15px rgba(0, 0, 0, 0.3); /* גוון בהיר יותר עם עיבוי */
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.6), -10px 10px 15px rgba(0, 0, 0, 0.3); 
 }
 
 .movie-card:hover .movie-card-title {
   margin-top: 0px;  
   background-color: #282828;
-  box-shadow: 10px 20px 15px rgba(0, 0, 0, 0.5), -10px 20px 15px rgba(0, 0, 0, 0.2); /* צל יותר אחיד בצדדים */
 }
 
 .movie-card-image {
-  width: 100%;
-  height: 100%;
+  inset: 0;
+
 }
 
 .movie-card-image img {
   width: 100%;
-  height: 100%;
+  height: 150px;
   object-fit: cover;
+  overflow: hidden;
 }
 
 .movie-card-info {
@@ -56,9 +56,13 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  background-color: #282828;
 }
 
 .movie-card-title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   background-color: #28282871;
   font-size: 18px;
   font-weight: bold;
@@ -125,7 +129,6 @@
   color: white;
   font-size: 20px;
   cursor: pointer;
-  /* transition: background-color 0.3s, transform 0.3s; */
 }
 
 .delete-movie-card-button {

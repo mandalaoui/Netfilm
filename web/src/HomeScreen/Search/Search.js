@@ -1,47 +1,11 @@
 import './Search.css';
 import { useEffect, useState } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
-// import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 
 function Search({ query }) {
-    // const [moviesByCategory, setMoviesByCategory] = useState([]);
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-
-
-    // useEffect(() => {
-    //     const fetchMovies = async () => {
-    //         try {
-    //             const allMovies = await getAllMovies();
-    //             if (allMovies) {
-    //                 const moviesGroupedByCategory = allMovies.map((categoryMovies) => ({
-    //                     categoryName: categoryMovies.categoryName,
-    //                     movies: categoryMovies.movies
-    //                 }));
-    //                 setMoviesByCategory(moviesGroupedByCategory);
-    //             }
-    //         } catch (error) {
-    //             console.error("Error fetching movies:", error);
-    //         }
-    //     };
-    //     fetchMovies();
-    // }, []);
-
-    // useEffect(() => {
-    //     if (query.trim() === "") {
-    //         setFilteredMovies([]);
-    //         return;
-    //     }
-
-    //     const allMovies = moviesByCategory.flatMap((category) => category.movies);
-
-    //     const filtered = allMovies.filter((movie) =>
-    //         movie.name.toLowerCase().includes(query.toLowerCase())
-    //     );
-
-    //     setFilteredMovies(filtered);
-    // }, [query, moviesByCategory]);
 
     const fetchMoviesByQuery = async (searchQuery) => {
         setIsLoading(true);

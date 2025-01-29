@@ -55,7 +55,7 @@ const getMovieById = (movieId) => {
     })
     .then(response => {
         if (response.status === 200) {
-            return response.json(); // מחזיר את המידע של הסרט הספציפי
+            return response.json();
         } else {
             return response.json().then(errorData => {
                 const errorMessage = `${JSON.stringify(errorData)}`;

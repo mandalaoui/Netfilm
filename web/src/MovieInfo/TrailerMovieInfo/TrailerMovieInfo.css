@@ -1,0 +1,16 @@
+.current-movie-info-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: black;
+
+}
+
+.current-movie-info-trailer video {
+    display: block;
+    width: 100%;
+    height: auto; 
+    object-fit: cover;
+    margin-top: 0;
+}
+

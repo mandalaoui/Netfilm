@@ -18,7 +18,6 @@ function MovieRow({ category }) {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
     const [showModal, setShowModal] = useState(false);
-    // const [showMovieModal, setShowMovieModal] = useState(false);
 
     const [moviesByCategory, setMoviesByCategory] = useState([]);
     useEffect(() => {
@@ -37,9 +36,41 @@ function MovieRow({ category }) {
         if (category.movies && category.movies.length > 0) {
             fetchMovies();
         } else {
-            // console.log("No movies found for this category.");
         }
     }, [category.movies]);
+
+    useEffect(() => {
+        const movieListWrapper = rowRef.current;
+        
+        if (movieListWrapper) {
+            const savedScrollPosition = localStorage.getItem('scrollPosition');
+            if (savedScrollPosition) {
+                movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
+            }
+    
+            const handleScroll = () => {
+                localStorage.setItem('scrollPosition', movieListWrapper.scrollLeft);
+            };
+    
+            movieListWrapper.addEventListener('scroll', handleScroll);
+    
+            window.addEventListener('load', () => {
+                if (savedScrollPosition) {
+                    movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
+                }
+            });
+    
+            return () => {
+                movieListWrapper.removeEventListener('scroll', handleScroll);
+                window.removeEventListener('load', () => {
+                    if (savedScrollPosition) {
+                        movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
+                    }
+                });
+            };
+        }
+    }, []);
+    
 
     const handleScroll = () => {
         const container = rowRef.current;
@@ -61,23 +92,10 @@ function MovieRow({ category }) {
     }
 
     const handleEditCategory = async () => {
-        // const userId = "6793f41b8221f4dda02b7e63";
         const userConfirmed = await showConfirmationModal("category", category.name, 'edit');
         if (userConfirmed) {
             setShowModal(true);
         }
-        //     const CategotyData = null;
-        //     updateCategory(category.id, userId, CategotyData)
-        //     .then(isSuccess => {
-        //         if (isSuccess) {
-        //             // alert(`Category: ${category.name} - deleted`);
-        //             window.location.href = "/admin";
-        //         }
-        //     });
-        // } else {
-        //     console.log('Delete action was canceled.');
-        // }
-
     };
 
     const handleDeleteCategory = async () => {
@@ -88,15 +106,13 @@ function MovieRow({ category }) {
         }
 
         try {
-            // שליפת כל הסרטים בקטגוריה
-            const moviesInCategory = category.movies; // assuming `category.movies` is an array of movie IDs
+            const moviesInCategory = category.movies; 
             console.log('Movies in category:', moviesInCategory);
 
-            // בדיקה לסרטים עם קטגוריה יחידה
             const moviesWithSingleCategory = [];
             for (const movieId of moviesInCategory) {
                 const movie = await getMovieById(movieId);
-                if (movie && movie.categories.length === 1) { // יש רק קטגוריה אחת לסרט
+                if (movie && movie.categories.length === 1) { 
                     moviesWithSingleCategory.push(movieId);
                 }
             }
@@ -109,7 +125,6 @@ function MovieRow({ category }) {
                     return categoryDetails;
                 })
             );
-            // טיפול בקטגוריה "unAttached"
             let unAttachedCategory = allCategories.find(cat => cat.name === "unAttached");
             if (!unAttachedCategory) {
                 console.log('Creating "unAttached" category...');
@@ -120,17 +135,15 @@ function MovieRow({ category }) {
                 }
                 console.log('"unAttached" categoryCreated !');
 
-                // שליפת הקטגוריה החדשה מהשרת (כדי לקבל את ה-ID שלה)
                 const updatedCategoryIds = await getAllCategories();
-            const updatedCategories = await Promise.all(
-                updatedCategoryIds.map(async (categoryId) => {
-                    const categoryDetails = await getCategoryById(categoryId);
-                    return categoryDetails;
-                })
-            );
+                const updatedCategories = await Promise.all(
+                    updatedCategoryIds.map(async (categoryId) => {
+                        const categoryDetails = await getCategoryById(categoryId);
+                        return categoryDetails;
+                    })
+                );
 
-            // חפש את הקטגוריה "unAttached" במערך המעודכן
-            unAttachedCategory = updatedCategories.find(cat => cat.name === "unAttached");
+                unAttachedCategory = updatedCategories.find(cat => cat.name === "unAttached");
             }
             console.log(`unAttachedCategory done!${unAttachedCategory}`);
 
@@ -160,6 +173,7 @@ function MovieRow({ category }) {
         window.location.href = `/admin/CreateMovie?specificCategory=${category.id}`;
     };
 
+
     return (
         <div
             className="movie-row-container"
@@ -188,34 +202,38 @@ function MovieRow({ category }) {
                     </>
                 )}
             </div>
-            <div className="movie-row">
-                <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
-                    {isAdminPage && (
-                        <button className="add-movie-button" onClick={handleAddMovie}>
-                            <i className="bi bi-plus-circle"></i>
+            {canScrollLeft && (
+                    <div className='left-arrow-wrapper'> 
+                        <button className="scroll-arrow left" onClick={() => scrollRow('left')}>
+                            &#8249;
                         </button>
-                    )}
-                    {moviesByCategory.length === 0 && category.name === "Watched" ? (
-                        <p className="no-movies-text">Haven't seen any movie yet</p>
-                    ) : (
-                        moviesByCategory.map((movie) => (
-                            <MovieCard key={movie._id} movie={movie} />
-                        ))
-                    )}
+                    </div>
+                )}
+            <div className="movie-row">
+                <div className="movie-list-wrapper">
+                    <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
+                        {isAdminPage && (
+                            <button className="add-movie-button" onClick={handleAddMovie}>
+                                <i className="bi bi-plus-circle"></i>
+                            </button>
+                        )}
+                        {moviesByCategory.length === 0 && category.name === "Watched" ? (
+                            <p className="no-movies-text">Haven't seen any movie yet</p>
+                        ) : (
+                            moviesByCategory.map((movie) => (
+                                <MovieCard key={movie._id} movie={movie} />
+                            ))
+                        )}
+                    </div>
                 </div>
-            </div>
-            <div className="arrow-container" style={{ width: window.innerWidth }}>
-                {canScrollLeft && (
-                    <button className="scroll-arrow left" onClick={() => scrollRow('left')}>
-                        &#8249;
-                    </button>
-                )}
+            </div>                
                 {canScrollRight && (
-                    <button className="scroll-arrow right" onClick={() => scrollRow('right')}>
-                        &#8250;
-                    </button>
+                    <div className='right-arrow-wrapper'> 
+                        <button className="scroll-arrow right" onClick={() => scrollRow('right')}>
+                            &#8250;
+                        </button>
+                    </div>
                 )}
-            </div>
         </div>
     );
 }

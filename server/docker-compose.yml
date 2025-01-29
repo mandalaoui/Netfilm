@@ -40,7 +40,6 @@ services:
     command: ["npm", "start"]
     volumes:
         - netflix:/usr/src/app/uploads
-      # - ./api/uploads:/usr/src/app/uploads
 
 networks:
   default:
@@ -49,4 +48,3 @@ networks:
 
 volumes:
   netflix:
-
