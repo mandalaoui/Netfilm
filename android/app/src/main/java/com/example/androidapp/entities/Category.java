@@ -1,14 +1,10 @@
-package com.example.androidapp;
+package com.example.androidapp.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
-
-import com.example.androidapp.entities.ConverterCategory;
-import com.example.androidapp.entities.ConverterMovie;
-import com.example.androidapp.entities.Movie;
 
 import java.util.List;
 @Entity
@@ -21,7 +17,7 @@ public class Category {
 
     private List<String> movies;
 
-    private String isPromoted;
+    private boolean isPromoted;
     private String name ;
 
 
@@ -41,25 +37,20 @@ public class Category {
         this.name = name ;
     }
 
-    public String getIsPromoted() {
+    public boolean getIsPromoted() {
         return isPromoted;
     }
 
-    public void setIsPromoted(String isPromoted) {
+    public void setIsPromoted(boolean isPromoted) {
         this.isPromoted = isPromoted;
     }
-
-    // Constructor
-//    public Category(List<String> movies) {
-//        this.movies = movies;
-//    }
 
     // Getter
     public List<String> getMovies() {
         return movies;
     }
 
-    public Category(String name, String isPromoted, List<String> movies) {
+    public Category(String name, boolean isPromoted, List<String> movies) {
         this.name = name;
         this.isPromoted = isPromoted;
         this.movies = movies;

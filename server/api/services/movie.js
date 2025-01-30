@@ -20,6 +20,8 @@ const createMovie = async (name, categories, movie_time, image, Publication_year
     return await movie.save();
 };
 
+const getAllMovie = async () => { return await Movie.find({}); };
+
 // Function to get a movie by its ID
 const getMovieById = async (id) => { 
     const getC = await Movie.findById(id);
@@ -154,4 +156,4 @@ const movieIncludeQuery =  async (query) => {
 }
 
 // Exporting all functions to be used in the service layer.
-module.exports = {createMovie, getMovieById, updateMovie, deleteMovie, getMoviesByCategories, movieIncludeQuery }
+module.exports = {createMovie, getMovieById, updateMovie, deleteMovie, getMoviesByCategories, movieIncludeQuery ,getAllMovie}

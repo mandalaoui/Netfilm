@@ -14,7 +14,12 @@ const createMovie = async (req, res) => {
     const newMovie = await movieService.createMovie(req.body.name, categories, req.body.movie_time,
         image, req.body.Publication_year, req.body.description,video);
     const location = `/api/movies/${newMovie._id}`;
-    res.status(201).location(location).json({});
+    res.status(201).location(location).json(newMovie);
+};
+
+const getAllMovie =  async (req, res) => {
+    const movies = await movieService.getAllMovie(); // קבלת כל הסרטים
+    res.status(200).json(movies); 
 };
 
 // Function to get movies based on categories for a user.
@@ -60,7 +65,7 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json();
+    res.status(204).json({});
 };
 
 // Function to search for movies using a query parameter.
@@ -83,4 +88,4 @@ const getMovieIncludeQuery = async (req, res) => {
 };
 
 // Exporting all functions to be used in routes
-module.exports = {createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery };
+module.exports = {createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery ,getAllMovie};

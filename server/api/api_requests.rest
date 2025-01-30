@@ -56,6 +56,11 @@ userId: <ID>
 GET http://localhost:12345/api/movies/6794d57dc3b3353fd3a318ac
 userId: 6793d58f1ef6aabb4a5638e1
 
+### Get all movie
+
+GET http://localhost:12345/api/movies/allmovies
+userId: 679178e884e6da9a833f5452
+
 ### Update a movie
 
 PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
@@ -102,7 +107,7 @@ userId: 679178e884e6da9a833f5452
 Content-Type: application/json
 
 {
-"name": "Action", "isPromoted": true, "movies": []
+"name": "Child", "isPromoted": true, "movies": []
 }
 
 ### Get a specific category by ID
@@ -112,13 +117,13 @@ userId: <ID>
 
 ### Update a category
 
-PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+PATCH http://localhost:12345/api/categories/677414bbcc263c85d0d0fa1a 
 userId: <ID> 
 Content-Type: application/json
 
-{ "name": "Action & Adventure", "isPromoted": false, "movies": [] }
+{ "name": "Romantic", "true": false, "movies": [] }
 
-### Delete a category
+### Delete a category   
 
 DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e 
 userId: <ID>

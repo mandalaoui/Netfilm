@@ -11,40 +11,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.androidapp.Category;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
 import com.example.androidapp.adapter.CategoryAdapter;
 import com.example.androidapp.adapter.MovieAdapter;
 import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityCreateMovieBinding;
-import com.example.androidapp.databinding.ActivityManagmentBinding;
 import com.example.androidapp.entities.Movie;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import org.json.JSONArray;
+import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,6 +46,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     private EditText movieIdInput;
     private Button btnCreateMovie;
     private EditText create_movieNameInput;
+    private MovieViewModel movieViewModel;
 
     private String selectedImageUri;
     private String selectedVideoUri;
@@ -71,6 +61,8 @@ public class CreateMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateMovieBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
         create_movieNameInput = binding.movieNameInput;
         create_movieYearInput = binding.movieYearInput;
@@ -133,7 +125,6 @@ public class CreateMovieActivity extends AppCompatActivity {
             boolean isChecked = categoryListView.isItemChecked(position);
             Log.d("Category Clicked", "Category: " + selectedCategory.getName() + ", Checked: " + isChecked);
 
-            // אם נבחרה קטגוריה, הוסף את ה-ID שלה לרשימה
             if (isChecked) {
                 if (selectedCategory.getId() != null) {
                     selectedCategories.add(selectedCategory.getId());
@@ -181,9 +172,9 @@ public class CreateMovieActivity extends AppCompatActivity {
                 return;
             }
             videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
-            RequestApi requestApi = new RequestApi(this);
-            requestApi.createMovie(movie, imageFile, videoFile);
-
+            movieViewModel.add(movie, imageFile, videoFile);
+//            RequestApi requestApi = new RequestApi(this);
+//            requestApi.createMovie(movie, imageFile, videoFile);
 
         }
 

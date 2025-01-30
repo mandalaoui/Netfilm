@@ -7,21 +7,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.Category;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
 import com.example.androidapp.adapter.MovieAdapter;
 import com.example.androidapp.databinding.ActivityCreateCategoryBinding;
-import com.example.androidapp.databinding.ActivityCreateMovieBinding;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -44,6 +38,7 @@ public class CreateCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_category);
         binding = ActivityCreateCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -54,44 +49,57 @@ public class CreateCategoryActivity extends AppCompatActivity {
 
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>(), this::onMovieSelected);
+        movieAdapter = new MovieAdapter(this, new ArrayList<>());
         recyclerViewMovies.setAdapter(movieAdapter);
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-        movieViewModel.fetchMoviesFromApi();
+        movieViewModel.reload();
 
-        movieViewModel.getMoviesFromApi().observe(this, movies -> {
-            if (movies != null && !movies.isEmpty()) {
-                Log.e("MovieViewModel",movies.toString());
-                movieAdapter.setMovies(movies);
-            } else {
-                Toast.makeText(this, "Failed to load movies", Toast.LENGTH_SHORT).show();
-            }
+        movieViewModel.get().observe(this,movies -> {
+            movieAdapter.setMovies(movies);
         });
+
+//        movieViewModel.fetchMoviesFromApi();
+
+//        movieViewModel.getMoviesFromApi().observe(this, movies -> {
+//            if (movies != null && !movies.isEmpty()) {
+//                Log.e("MovieViewModel",movies.toString());
+//                movieAdapter.setMovies(movies);
+//            } else {
+//                Toast.makeText(this, "Failed to load movies", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         btnCreateCategory.setOnClickListener(v -> {
             String categoryName = create_nameCategory.getText().toString();
             boolean isPromoted = create_isPromotedSwitch.isChecked();
+            List<String> selectedIds = movieAdapter.getSelectedMovieIds();
 
             if (categoryName.isEmpty()) {
                 Toast.makeText(this, "Category name is required", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // יצירת קטגוריה עם הסרטים שנבחרו
-//            Category category = new Category(categoryName, isPromoted, selectedMovies);
-//            movieViewModel.insertCategory(category);
+            Category category = new Category(categoryName, isPromoted, selectedIds);
 
             Toast.makeText(this, "Category created", Toast.LENGTH_SHORT).show();
         });
 
     }
-    private void onMovieSelected(Movie movie, boolean isSelected) {
-        if (isSelected) {
-            selectedMovies.add(movie);  // הוספת סרט שנבחר
-        } else {
-            selectedMovies.remove(movie);  // הסרת סרט שנבחר
-        }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        movieViewModel.reload();
     }
+
+    private void onMovieSelected(Movie movie, boolean isSelected) {
+//        if (isSelected) {
+//            selectedMovies.add(movie);  // הוספת סרט שנבחר
+//        } else {
+//            selectedMovies.remove(movie);  // הסרת סרט שנבחר
+//        }
+    }
+
 }

@@ -17,6 +17,8 @@ router.route('/')
         ]),movieController.createMovie)
         // userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 
+router.route('/allmovies/')
+    .get(userValidation.validateUserIdHeader, movieController.getAllMovie);
 // Define routes for '/:id'
 router.route('/:id')
     .get(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieController.getMovie)
@@ -26,6 +28,7 @@ router.route('/:id')
 // Define route for searching movies with a query.
 router.route('/search/:query')
     .get(userValidation.validateUserIdHeader, movieController.getMovieIncludeQuery);
+
 
 // Export the router to be used in the main application.
 module.exports = router;

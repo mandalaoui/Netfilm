@@ -3,7 +3,7 @@ package com.example.androidapp.api;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-import com.example.androidapp.Category;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.User;
 
@@ -11,6 +11,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -57,6 +58,13 @@ public interface ApiService {
 
     @GET("categories")
     Call<List<Category>> getAllCategories(@Header("userId") String userId);
-    @GET("movies")
+    @GET("movies/allmovies")
     Call<List<Movie>> getMovies(@Header("userId") String userId);
+    @GET("movies/search/{query}")
+    Call<List<Movie>> getSearchedMovies(@Header("userId") String userId, @Path("query") String query);
+
+    @DELETE("movies/{movieId}")
+        Call<Movie> deleteMovie(@Path("movieId") String movieId, @Header("userId") String userId);
+
+
 }
