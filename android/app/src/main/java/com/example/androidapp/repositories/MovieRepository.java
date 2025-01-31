@@ -72,8 +72,8 @@ public class MovieRepository {
     }
 
     public void deleteMovieById(String movieId) {
-//        MovieDatabase.databaseWriteExecutor.execute(() -> {
-            dao.deleteMovieById(movieId); // מחיקת הסרט מהמאגר לפי ה-ID
+//        LocalDatabase.databaseWriteExecutor.execute(() -> {
+        new Thread(() -> dao.deleteMovieById(movieId)).start();
 //        });
         api.deleteMovie(movieId);
     }

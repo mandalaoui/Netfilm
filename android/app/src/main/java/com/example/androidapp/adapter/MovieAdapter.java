@@ -58,9 +58,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             Log.e("MovieViewModel", "No movies available or response is null");
         }
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.moviePoster.setOnClickListener(v -> {
             String movieId = movie.getId();
-
+            Log.d("MovieAdapter", "movie ID: " + movieId);
             if (selectedMovieIds.contains(movieId)) {
                 selectedMovieIds.remove(movieId);
                 Log.d("MovieAdapter", "Deselected movie ID: " + movieId);

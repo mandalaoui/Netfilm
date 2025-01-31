@@ -1,6 +1,7 @@
 package com.example.androidapp.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
 
         Category category = categories.get(position);
         TextView categoryNameTextView = convertView.findViewById(android.R.id.text1);
+        categoryNameTextView.setTextColor(Color.WHITE);
         categoryNameTextView.setText(category.getName());
 
         return convertView;

@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.entities.Category;
@@ -62,6 +63,11 @@ public class CreateMovieActivity extends AppCompatActivity {
         binding = ActivityCreateMovieBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        NestedScrollView scrollView = findViewById(R.id.scrollview);
+        scrollView.post(() -> {
+            scrollView.scrollTo(0, 0);
+        });
+
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
         create_movieNameInput = binding.movieNameInput;
@@ -71,6 +77,7 @@ public class CreateMovieActivity extends AppCompatActivity {
 //        movieIdInput = binding.movieIdInput;
         btnCreateMovie = binding.createMovieButton;
         categoryListView = binding.categoryListView;
+
 
         btnCreateMovie.setOnClickListener(v -> {
             createMovie();

@@ -25,11 +25,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovies"
-        android:layout_width="392dp"
+        android:layout_width="match_parent"
         android:layout_height="527dp"
         android:layout_alignBottom="@+id/deleteMovieButton"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.473"

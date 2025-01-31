@@ -144,12 +144,12 @@ public class MovieApi {
 
     public void deleteMovie(String movieId) {
         String userId = "679178e884e6da9a833f5452";
-        Call<Movie> call = apiService.deleteMovie(userId,movieId);
+        Call<Movie> call = apiService.deleteMovie(movieId,userId);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.isSuccessful()) {
-
+                    Log.d("MovieApi", "Movie delete successfully");
                 } else {
                     Log.e("Movie", "Error: " + response.code());
                 }
