@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,6 +25,17 @@ import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 
 import java.io.File;
+
+import com.example.androidapp.R;
+import com.example.androidapp.api.UserApi;
+import com.example.androidapp.databinding.ActivityRegisterBinding;
+import com.example.androidapp.entities.User;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -46,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
         });
+
         binding.btnSignIn.setOnClickListener(v -> {
             String username = binding.UserName.getText().toString();
             String password = binding.editPassword.getText().toString();
@@ -169,6 +185,5 @@ public class RegisterActivity extends AppCompatActivity {
 //        }
         return "app/src/main/res/drawable/userdefult.jpg";
     }
-
 
 }

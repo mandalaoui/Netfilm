@@ -1,11 +1,9 @@
 package com.example.androidapp.api;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
-import com.example.androidapp.entities.Category;
-import com.example.androidapp.entities.Movie;
+import
+import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.User;
+
 
 import java.util.List;
 
@@ -66,5 +64,22 @@ public interface ApiService {
     @DELETE("movies/{movieId}")
         Call<Movie> deleteMovie(@Path("movieId") String movieId, @Header("userId") String userId);
 
+
+}
+
+    @GET("movies")
+    Call<List<PromotedCategory>> getCategories(@Header("userId") String userId);
+
+    @GET("movies/search/{query}")
+    Call<List<Movie>> getSearchedMovies(@Header("userId") String userId, @Path("query") String query);
+
+    @GET("categories")
+    Call<List<Category>> getAllCategories(@Header("userId") String userId);
+
+    @GET("movies/{id}")
+    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
+
+    @GET("movies/{id}/recommend")
+    Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);
 
 }

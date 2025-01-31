@@ -6,8 +6,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.androidapp.entities.User;
+
 import com.example.androidapp.api.LoginResponse;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                             LoginResponse loginResponse = response.body();
                             if (loginResponse.getToken() != null) {
                                 String userId = loginResponse.getToken();
+
                                 Log.d("Register", "User successfully logged i ");
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();

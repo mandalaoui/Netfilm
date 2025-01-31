@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.VideoView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.databinding.ActivityMainBinding;
@@ -11,6 +12,7 @@ import com.example.androidapp.databinding.ActivityMainBinding;
 public class NetflixActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private VideoView videoView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class NetflixActivity extends AppCompatActivity {
 //            // הצגת התוכן הרגיל (כגון RecyclerView או כפתור התחברות)
 //            binding.btnStart.setVisibility(View.VISIBLE);
 //        });
+
         binding.btnStart.setOnClickListener(v -> {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);

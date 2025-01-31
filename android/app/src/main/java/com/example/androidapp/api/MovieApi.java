@@ -3,6 +3,7 @@ package com.example.androidapp.api;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -18,6 +19,12 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import com.example.androidapp.entities.Movie;
+import com.example.androidapp.dao.MovieDao;
+import com.example.androidapp.entities.PromotedCategory;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,9 +35,17 @@ public class MovieApi {
     private MutableLiveData<List<Movie>> movieListData;
     private MovieDao dao;
 
-
     Retrofit retrofit;
     ApiService apiService;
+
+    public MovieApi() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        apiService = retrofit.create(ApiService.class);
+    }
 
     public MovieApi(MutableLiveData<List<Movie>> movieListData, MovieDao dao) {
         this.movieListData = movieListData;
@@ -159,5 +174,6 @@ public class MovieApi {
                 Log.e("MovieApi", "Error delete movie: " + t.getMessage());
             }
         });
+
     }
 }

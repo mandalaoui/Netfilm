@@ -21,8 +21,16 @@ public class Movie {
     private String image;
     private int Publication_year;
     private String description;
-    private int age;
+    private Number age;
     private String video;
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
     public String getName() {
         return name;
@@ -44,13 +52,6 @@ public class Movie {
         return movie_time;
     }
 
-    public String getVideo() {
-        return video;
-    }
-
-    public void setVideo(String video) {
-        this.video = video;
-    }
 
     public void setMovie_time(String movie_time) {
         this.movie_time = movie_time;
@@ -80,7 +81,7 @@ public class Movie {
         this.description = description;
     }
 
-    public int getAge() {
+    public Number getAge() {
         return age;
     }
 
@@ -92,9 +93,6 @@ public class Movie {
         this._id = id;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
     @Ignore
     public Movie(String name) {
         this.name = name;
@@ -119,5 +117,17 @@ public class Movie {
         this.categories = categories;
     }
     public Movie() {
+    }
+
+    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age, String video) {
+        this.id = id;
+        this.name = name;
+        this.categories = categories;
+        this.movie_time = movie_time;
+        this.image = image;
+        Publication_year = publication_year;
+        this.description = description;
+        this.age = age;
+        this.video = video;
     }
 }

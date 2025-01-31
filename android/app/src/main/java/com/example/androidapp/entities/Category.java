@@ -6,6 +6,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+
+import java.util.List;
+
 import java.util.List;
 @Entity
 @TypeConverters(ConverterCategory.class)
@@ -18,6 +21,7 @@ public class Category {
     private List<String> movies;
 
     private boolean isPromoted;
+
     private String name ;
 
 
@@ -44,6 +48,7 @@ public class Category {
     public void setIsPromoted(boolean isPromoted) {
         this.isPromoted = isPromoted;
     }
+
 
     // Getter
     public List<String> getMovies() {

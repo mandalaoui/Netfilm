@@ -6,15 +6,16 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-
 import com.example.androidapp.dao.MovieDao;
+import com.example.androidapp.dao.CategoryDao;
+import com.example.androidapp.dao.PromotedCategoryDao;
 
-@Database(entities = {Movie.class, Category.class}, version = 5)
+@Database(entities = {PromotedCategory.class, Movie.class, Category.class}, version = 6)
 @TypeConverters(ConverterMovie.class)
 public abstract class LocalDatabase extends RoomDatabase {
     private static LocalDatabase instance;
-//    public abstract PromotedCategoryDao promotedCategoryDao();
-//    public abstract CategoryDao categoryDao();
+    public abstract PromotedCategoryDao promotedCategoryDao();
+    public abstract CategoryDao categoryDao();
 
     public abstract MovieDao movieDao();
 

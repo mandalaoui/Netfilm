@@ -17,6 +17,7 @@
     <string name="movie_time">movie time</string>
     <string name="movie_play">Play</string>
     <string name="movie_description">description</string>
+<<<<<<< HEAD
     <string name="movie_poster">movie_poster</string>
     <string name="movieposter">moviePoster</string>
     <string name="manager_delete_movie">Delete Movie</string>
@@ -28,4 +29,6 @@
     <string name="managerCreate_description">description</string>
     <string name="managar_choose_video">Choose Video</string>
     <string name="manager_choose_picture">Choose Picture</string>
+=======
+>>>>>>> f8fe860dcc9984d88bddde9d4aa7f5f7e9dacaf4
 </resources>

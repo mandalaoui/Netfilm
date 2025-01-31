@@ -35,11 +35,19 @@
         <activity
             android:name=".activities.VideoMovieActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.CategoriesActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.MovieActivity"
-            android:exported="false" /> <!-- <activity -->
-        <!-- android:name=".activity.HomeActivity" -->
-        <!-- android:exported="false" /> -->
+            android:exported="false" />
+        <activity
+            android:name=".activities.ManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false" />
