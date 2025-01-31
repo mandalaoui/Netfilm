@@ -17,9 +17,9 @@ public class Movie {
     private List<String> categories;
     private String movie_time;
     private String image;
-    private Number Publication_year;
+    private int Publication_year;
     private String description;
-    private Number age;
+    private int age;
     private String video;
 
     public String getVideo() {
@@ -62,11 +62,11 @@ public class Movie {
         this.image = image;
     }
 
-    public Number getPublication_year() {
+    public int getPublication_year() {
         return Publication_year;
     }
 
-    public void setPublication_year(Number publication_year) {
+    public void setPublication_year(int publication_year) {
         Publication_year = publication_year;
     }
 
@@ -77,7 +77,7 @@ public class Movie {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Number getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -88,8 +88,7 @@ public class Movie {
     public void setId(String id) {
         this.id = id;
     }
-
-    public void setAge(Number age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -97,7 +96,7 @@ public class Movie {
         this.name = name;
     }
 
-    public Movie(String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age) {
+    public Movie(String id, String name, List<String> categories, String movie_time, String image, int publication_year, String description, int age) {
         this.id = id;
         this.name = name;
         this.categories = categories;
@@ -108,7 +107,7 @@ public class Movie {
         this.age = age;
     }
 
-    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age, String video) {
+    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, int publication_year, String description, int age, String video) {
         this.id = id;
         this.name = name;
         this.categories = categories;
