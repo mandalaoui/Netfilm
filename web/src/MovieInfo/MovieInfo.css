@@ -48,7 +48,7 @@
     font-size: min(7vw, 4rem);
     font-weight: bold;
     text-shadow: 6px 4px 15px rgba(0, 0, 0, 0.9);
-    color: var(--text-color); /* Using text color variable */
+    color: var(--text-color-dark); /* Using text color variable */
     z-index: 2;
     padding: 5px 5px;
     border-radius: 10px;

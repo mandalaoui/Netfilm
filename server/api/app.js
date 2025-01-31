@@ -15,7 +15,11 @@ const recommendations = require('./routes/recommend');
 require('custom-env').env(process.env.NODE_ENV || 'local', './config');
 
 // Connecting to MongoDB using the connection string from environment variables
-mongoose.connect(process.env.CONNECTION_STRING);
+// mongoose.connect(process.env.CONNECTION_STRING);
+mongoose.connect(process.env.CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connected successfully'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
 
 // Initialize Express app
 var app = express();

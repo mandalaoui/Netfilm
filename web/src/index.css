@@ -23,7 +23,6 @@
     --border-color-light: #000000; /* Border color for light mode */
     --overlay-background-dark: rgba(0, 0, 0, 0.5); /* Overlay background for dark mode */
     --overlay-background-light: rgba(255, 255, 255, 0.5); /* Overlay background for light mode */
-    --button-background: var(--button-background-dark); /* Default button background */
     --button-hover-background: rgba(101, 101, 101, 0.2); /* Button hover background */
     --search-background: var(--background-color-light); /* Default search field background */
     --search-focus-background: rgba(0, 0, 0, 0.8); /* Search focus background */
@@ -40,7 +39,6 @@
 .light-mode {
     --background-color: var(--background-color-light); /* Light mode background */
     --text-color: var(--text-color-light); /* Light mode text color */
-    --button-background: var(--button-background-light); /* Light mode button background */
     --admin-box: var(--admin-box-light); /* Light mode admin box */
     --modal-background: var(--modal-background-light); /* Light mode modal background */
     --arrow: var(--arrow-dark);
@@ -61,7 +59,6 @@
 .dark-mode {
     --background-color: var(--background-color-dark); /* Dark mode background */
     --text-color: var(--text-color-dark); /* Dark mode text color */
-    --button-background: var(--button-background-dark); /* Dark mode button background */
     --admin-box: var(--admin-box-dark); /* Dark mode admin box */
     --modal-background: var(--modal-background-dark); /* Dark mode modal background */
     --arrow: var(--arrow-light);

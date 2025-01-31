@@ -74,7 +74,8 @@ function UpperMenu({ searchQuery, onSearchChange }) {
 
     // Navigate to the home page
     const handleHome = () => {
-        navigate('/home');
+        localStorage.setItem("showAllCategories", "false");
+        window.location.href = '/home';
     };
 
     // Log out the user
@@ -109,6 +110,11 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     const handleLightMode = () => {
         setIsLightMode(prev => !prev);
       };
+
+    const handleMoviesBy = () => {
+        localStorage.setItem('showAllCategories', 'true');
+        window.location.href = '/home';
+    }
       
 
     return (
@@ -116,8 +122,11 @@ function UpperMenu({ searchQuery, onSearchChange }) {
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex me-auto">
                     <img src={netfilmIcon} className="netfilm-logo" alt="Netfilm Logo"></img>
-                    <button className="btn btn-primary me-2" type="button" onClick={handleHome}>
+                    <button className="btn btn-primary" type="button" onClick={handleHome}>
                         <i className="bi bi-house"></i> Home
+                    </button>
+                    <button className="btn btn-primary" type="button" onClick={handleMoviesBy}>
+                        Movies by Categories
                     </button>
                 </div>
                 <div className="d-flex search-container">

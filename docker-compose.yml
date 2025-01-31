@@ -1,0 +1,61 @@
+services:
+  # tests:
+  #   build:
+  #     context: ./src
+  #     dockerfile: Dockerfile.tests
+  #   stdin_open: true
+  #   tty: true
+  
+  server:
+    build:
+      context: ./server/src
+      dockerfile: Dockerfile.server
+    container_name: netflix-project
+    image: netflix-recommender
+    stdin_open: true
+    tty: true
+    command: ["sh", "-c", "./runProject"]
+  
+  # client:
+  #   build:
+  #     context: ./server/src
+  #     dockerfile: Dockerfile.client
+  #   tty: true
+  #   stdin_open: true
+  #   init: true
+  #   container_name: netflix-project
+  #   working_dir: /usr/src/client/myclient
+
+  api:
+    build:
+      context: ./server/api
+      dockerfile: Dockerfile.api
+    container_name: app
+    image: netflix-app
+    environment:
+    - NODE_ENV=local
+    - ENV_FILE_PATH=./server/api/config/.env.local
+    tty: true
+    stdin_open: true
+    command: ["npm", "start"]
+    volumes:
+        - netflix:/usr/src/app/uploads
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.web
+    container_name: netflix-web
+    image: netflix-web
+    stdin_open: true
+    tty: true
+    volumes:
+      - netflix:/usr/src/app/uploads
+
+networks:
+  default:
+    name: app_network
+    driver: bridge
+
+volumes:
+  netflix:

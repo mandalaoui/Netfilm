@@ -1,4 +1,4 @@
-.Create-Category-modal-container {
+/* .Create-Category-modal-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,18 +7,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 5;
-}
+    z-index: 20;
+    opacity: 1;
+} */
 
-.Create-Category-modal-content {
+/* .Create-Category-modal-content {
     background-color: var(--top-menu-background);
     padding: 20px;
     width: 400px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
-}
-
+    z-index: 20;
+    opacity: 1;
+} */
+/* 
 .CC-close-btn {
     color: var(--text-color);
     position: absolute;
@@ -28,7 +31,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-}
+} */
 
 .Create-Category-modal-content h2 {
     text-align: center;
@@ -71,7 +74,7 @@
     margin-right: 10px;
 }
 
-.Create-Category-btn {
+.Create-Category-btn button{
     width: 100%;
     padding: 10px;
     color: var(--text-color);
@@ -79,6 +82,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    background-color: red;
 }
 
 

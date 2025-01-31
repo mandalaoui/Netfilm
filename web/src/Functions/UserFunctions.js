@@ -1,5 +1,6 @@
 // Fetch recommendations for a given movie
 const getRecommendations = async (movieId) => {
+    if(movieId === "" || !movieId) return [];
     return fetch (`http://localhost:12345/api/movies/${movieId}/recommend/`, {
             method: "GET",
             headers: {

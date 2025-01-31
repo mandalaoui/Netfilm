@@ -102,9 +102,9 @@ function CreateCategory() {
     return (
         <div className="Create-Category-modal-container">
             <div className="Create-Category-modal-content">
-                <button className="CC-close-btn" onClick={() => window.location.href = '/admin'}>
+                {/* <button className="CC-close-btn" onClick={() => window.location.href = '/admin'}>
                     <i className="bi bi-x-lg"></i>
-                </button>
+                </button> */}
                 <h2>Add Category</h2>
                 <div className="input-group-CC">
                     <input

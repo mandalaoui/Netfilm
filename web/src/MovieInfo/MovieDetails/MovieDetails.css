@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     color: var(--text-color); /* Apply text color */
-    background-color: var(--background-color-dark); /* Apply background color */
+    background-color: var(--background-color); /* Apply background color */
     font-family: Arial, sans-serif;
     padding-bottom: 50px;
 }
@@ -23,25 +23,21 @@
 /* Play buttons */
 .movie-details-play-movie, 
 .movie-details-play-trailer {
-    background-color: var(--button-background); /* Apply button background */
     color: var(--text-color); /* Apply button text color */
     font-size: 1.2rem;
     padding: 12px 24px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
 }
 
-/* Play trailer button - Different color */
-.movie-details-play-trailer {
-    background-color: #5e5e5e;
+.movie-details-play-movie{
+    background-color: #ff000d;
 }
 
-/* Button hover effect */
-.movie-details-play-movie:hover, 
-.movie-details-play-trailer:hover {
-    background-color: #b20710;
+
+.movie-details-play-trailer{
+    background-color: rgb(164, 164, 164);
 }
 
 /* Movie details info */
@@ -116,8 +112,8 @@
         font-size: 1rem;
     }
 
-    .movie-details-play-movie {
-        font-size: 0.9rem;
+    .movie-details-play-movie .movie-details-play-trailer {
+        font-size: 0.8rem;
         padding: 8px 16px;
     }
 }

@@ -33,7 +33,7 @@ input:focus {
 }
 
 /* Button styling */
-button {
+.intro-container button, .menu-container button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -145,18 +145,18 @@ h6 {
     display: none;
 }
 
-.admin-checkbox-container {
+/* .admin-checkbox-container {
     font-size: 22px;
     display: flex;
     align-items: center;
     gap: 30px;
     margin-bottom: 20px; 
-}
+} */
 
-.Is-Admin-checkbox {
+/* .Is-Admin-checkbox {
     display: flex;
     align-items: center;
-}
+} */
 
 input[type="checkbox"] {
     transform: scale(1.3);

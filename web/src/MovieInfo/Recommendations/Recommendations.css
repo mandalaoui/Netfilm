@@ -8,6 +8,10 @@
     flex-direction: column;
     overflow: visible;
 }
+
+.Recommendations-container h2{
+    color: var(--text-color);
+}
 .recommended-movies{
     display: flex;
     flex-wrap: wrap;
@@ -22,8 +26,9 @@
 
 .Recommendations-container p {
     font-size: 18px;
-    color: #666;
+    color: var(--text-color);
     text-align: center;
     width: 100%;
 }
+
 

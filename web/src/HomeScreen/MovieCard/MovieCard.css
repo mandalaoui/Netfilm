@@ -109,12 +109,12 @@
   color: #ffffff;
 }
 
-.movie-card-meta {
-  font-size: 14px;
-}
-
 .movie-card-meta p {
+  left: 0;
+  font-size: 14px;
   margin: 5px 10px;
+  color: white !important;
+  text-align: left !important;
 }
 
 .movie-card-categories {
@@ -160,13 +160,14 @@
   width: 10%;
   margin-top: 20%;
   right: 15%;
-  background: none;
   font-size: 20px;
   cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .edit-movie-card-button {
-  bottom: 0;
+  bottom: 10%;
 }
 
 .delete-movie-card-button:hover, .edit-movie-card-button:hover {
@@ -176,5 +177,4 @@
 .delete-movie-card-button .bi,
 .edit-movie-card-button .bi{
   color: white;
-  background-color: rgba(0, 0, 0, 0.079);
 }

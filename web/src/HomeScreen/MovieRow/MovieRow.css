@@ -1,4 +1,5 @@
 .movie-row-container {
+  
   position: relative; 
   width: 100%;
   height: 230px; 
@@ -108,6 +109,8 @@
   background: none;
   cursor: pointer;
   font-size: 45px;
+  border: none;
+  color: var(--text-color);
 }
 
 .add-movie-button-to-category:hover {

@@ -50,12 +50,11 @@ userId: 67964782c8b5942c5f45547f
 ### Delete a movie
 
 DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588 
-userId: <ID>
+userId: 6798e8adcdbc5797a1978c48
 
 ### Get recommendation
-
-GET http://localhost:12345/api/movies/:id/recommend/ 
-userId: <ID>
+GET http://localhost:12345/api/movies/679b4a4ef93d51ac00e8ff7b/recommend/ 
+userId: 679b6dfae6a32cbb58a86182
 
 ### Add movie to user's watchlist
 

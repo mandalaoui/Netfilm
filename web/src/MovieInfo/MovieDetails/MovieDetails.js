@@ -57,11 +57,11 @@ function MovieDetails({ movie }) {
                 </div>
             </div>
             <div className="movie-details-actions">
-                <button className="movie-details-play-trailer" onClick={handlePlayTrailerClick}>
-                    Watch Trailer
-                </button>
                 <button className="movie-details-play-movie" onClick={handlePlayClick}>
                     Watch Movie
+                </button>
+                <button className="movie-details-play-trailer" onClick={handlePlayTrailerClick}>
+                    Watch Trailer
                 </button>
             </div> 
         </div>

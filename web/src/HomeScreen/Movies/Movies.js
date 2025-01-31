@@ -12,6 +12,7 @@ function Movies() {
     const [showCategoryModal, setshowCategoryModal] = useState(false);
     const [categories, setCategories] = useState([]);
     const [watchList, setwatchList] = useState([]);
+    const [showAllCategories, setShowAllCategories] = useState(true);
 
     // Fetch categories from the server when the component mounts
     useEffect(() => {
@@ -62,6 +63,15 @@ function Movies() {
         fetchUserData();
     }, []);
 
+    useEffect(() => {
+        const toShowAll = async () => {
+            const showAll = localStorage.getItem('showAllCategories') === 'true';
+            console.log("showAll: ", showAll);
+            console.log("showAllCategories: ", localStorage.getItem('showAllCategories'));
+            setShowAllCategories(showAll);
+        }
+        toShowAll();
+    }, []);
 
     // Handler to show the category modal
     const handleAddCategory = () => {
@@ -81,7 +91,14 @@ function Movies() {
                         <button className="add-category-button" onClick={handleAddCategory}>
                             <i className="bi bi-plus-square"></i>
                         </button>
-                        {showCategoryModal && <CreateCategory />}
+                        {showCategoryModal && (
+                            <div className="modal-background">
+                                <div className="modal-content">
+                                    <button className="modal-close-button" onClick={() => setshowCategoryModal(false)}>X</button>
+                                    <CreateCategory />
+                                </div>
+                            </div>
+                        )}
                         <span className="add-category-text">Add Category</span>
                     </div>
                     <div className="add-movie-container">
@@ -95,7 +112,10 @@ function Movies() {
             
             <MovieRow key={1} category={{ name: "Watched", movies: watchList, isPromoted: true }} />
             {categories.map((category) => {
+                if (isAdminPage || showAllCategories || category.isPromoted) {
                 return <MovieRow key={category.id} category={category} />;
+                }
+                return null;
             })}            
         </div>
     );

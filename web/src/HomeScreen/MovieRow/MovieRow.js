@@ -19,7 +19,7 @@ function MovieRow({ category }) {
 
     // Effect to check if the category is "unAttached" and set the state accordingly
     useEffect(() => {
-        if(category.name === "unAttached")
+        if (category.name === "unAttached")
             setIsUnAttached(true);
     }, [category.name]);
 
@@ -37,7 +37,7 @@ function MovieRow({ category }) {
                 } else {
                     setMoviesByCategory([]); // במידה ואין סרטים, מנקה את המצב
                 }
-                } catch (error) {
+            } catch (error) {
                 console.error("Error fetching movies by category:", error);
             }
         };
@@ -167,22 +167,22 @@ function MovieRow({ category }) {
                 <h6 className="category-title">{category.name}</h6>
                 {isAdminPage && (
                     <>
-                    {!isUnAttached && (
-                        <>
-                        <h6 className="category-promotion">
-                            {category.isPromoted ? "promoted" : "not promoted"}
-                        </h6>
-                        <div className="category-actions">
-                            <button className="edit-category-button" onClick={handleEditCategory}>
-                                <i className="bi bi-pencil-square"></i>
-                            </button>
-                            {showModal && <EditCategory category={category} />}
-                            <button className="delete-category-button" onClick={handleDeleteCategory}>
-                                <i className="bi bi-trash"></i>
-                            </button>
-                        </div>
-                        </>
-                    )}
+                        {!isUnAttached && (
+                            <>
+                                <h6 className="category-promotion">
+                                    {category.isPromoted ? "promoted" : "not promoted"}
+                                </h6>
+                                <div className="category-actions">
+                                    <button className="edit-category-button" onClick={handleEditCategory}>
+                                        <i className="bi bi-pencil-square"></i>
+                                    </button>
+                                    {showModal && <EditCategory category={category} />}
+                                    <button className="delete-category-button" onClick={handleDeleteCategory}>
+                                        <i className="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </>
                 )}
             </div>
@@ -194,26 +194,26 @@ function MovieRow({ category }) {
                 </div>
             )}
             <div className="movie-row">
-                    <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
-                        {isAdminPage && (
-                            <>
+                <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
+                    {isAdminPage && (
+                        <>
                             {!isUnAttached && (
-                            <button className="add-movie-button-to-category" onClick={handleAddMovie}>
-                                <i className="bi bi-plus-circle"></i>
-                            </button>
+                                <button className="add-movie-button-to-category" onClick={handleAddMovie}>
+                                    <i className="bi bi-plus-circle"></i>
+                                </button>
                             )}
-                            </>
-                        )}
-                        {!isAdminPage && category.name === "Watched" &&  moviesByCategory.length === 0 ? (
-                            <p className="no-movies-text">Haven't seen any movie yet</p>
-                        ) : (
-                            moviesByCategory.map((movie) => (
-                                <>
+                        </>
+                    )}
+                    {!isAdminPage && category.name === "Watched" && moviesByCategory.length === 0 ? (
+                        <p className="no-movies-text">Haven't seen any movie yet</p>
+                    ) : (
+                        moviesByCategory.map((movie) => (
+                            <>
                                 <MovieCard key={movie._id} movie={movie} />
-                                </>
-                            ))
-                        )}
-                    </div>
+                            </>
+                        ))
+                    )}
+                </div>
             </div>
             {canScrollRight && (
                 <div className='right-arrow-wrapper'>

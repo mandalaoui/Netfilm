@@ -1,12 +1,11 @@
 import './MainMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useGlobalContext } from '../../GlobalContext.js';
 
 function MainMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
-    const [isAdminValue, setIsAdmin] = useState(false);
     const { fileUrl } = useGlobalContext(); 
     // Function to navigate between pages
     const navigateToPage = (page) => {
@@ -89,7 +88,6 @@ function MainMenu() {
             username: document.querySelector('input[placeholder="Username"]').value,
             password: document.querySelector('input[placeholder="Password"]').value,
             nickname: document.querySelector('input[placeholder="Nickname"]').value,
-            isAdmin: isAdminValue,
         }
         if (!validateUserData(userData))
             return;
@@ -101,7 +99,6 @@ function MainMenu() {
         formData.append('username', userData.username);
         formData.append('password', userData.password);
         formData.append('nickname', userData.nickname);
-        formData.append('isAdmin', userData.isAdmin);
         if (imageFile != null)
             formData.append('photo', imageFile);
         try {
@@ -203,16 +200,6 @@ function MainMenu() {
                                 <p className="error-message" id="confirm-error">Passwords do not match.</p>
                                 <input type="text" id="nickname" placeholder="Nickname" />
                                 <p className="error-message" id="nickname-error">Please enter nickname.</p>
-                                <div className="admin-checkbox-container">
-                                    <label>Admin</label>
-                                    <div className="Is-Admin-checkbox">
-                                        <input
-                                            type="checkbox"
-                                            checked={isAdminValue}
-                                            onChange={(e) => setIsAdmin(e.target.checked)}
-                                        />
-                                    </div>
-                                </div>
                                 <div className="profile-picture">
                                     <div className="profile-picture-text">
                                         <h6>Profile Picture</h6>

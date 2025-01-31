@@ -5,17 +5,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: nowrap;
 }
 
 .btn-primary {
     height: 40px;
-    width: auto;
+    max-width: 20vw;
     background-color: transparent;
     border: none;
-    margin-left: 20px;
+    margin-left: 10px;
     margin-top: 0;
     margin-bottom: 5px;
     color: var(--text-color);
+    font-size: 0.8rem; /* Make the text smaller */
 }
 
 .btn-primary:hover {
@@ -24,7 +26,7 @@
 }
 
 .d-flex.me-auto {
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 .search-container {
@@ -73,12 +75,12 @@
 
 .clear-search {
     position: absolute;
-    left: 40%;
-    top: 32%;
+    right: 10%;
+    top: 50%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    color: var(--color-text-light-dark);
+    color: var(--text-color);
     font-size: 1rem;
     cursor: pointer;
     padding: 0;
@@ -136,4 +138,22 @@
     border: 1px solid var(--border-color-light-transparent); 
     border-radius: 0.25rem;
     width: 200px;
+}
+
+.btn-primary {
+    font-size: 0.8rem; /* Default font size */
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+    .btn-primary {
+        font-size: 1rem; /* Increase font size for larger screens */
+    }
+}
+
+/* Extra large screens */
+@media (min-width: 1200px) {
+    .btn-primary {
+        font-size: 1.2rem; /* Further increase font size for extra large screens */
+    }
 }
