@@ -54,6 +54,7 @@ dependencies {
     implementation("com.google.android.exoplayer:exoplayer:2.15.1")
     implementation ("androidx.media3:media3-exoplayer:1.0.0")
     implementation ("androidx.media3:media3-ui:1.0.0")
+
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)

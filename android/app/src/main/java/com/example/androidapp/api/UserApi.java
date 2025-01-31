@@ -1,12 +1,17 @@
 package com.example.androidapp.api;
+import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.activities.HomeActivity;
+import com.example.androidapp.activities.LoginActivity;
+import com.example.androidapp.activities.RegisterActivity;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.R;
@@ -29,37 +34,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserApi {
-//    private Retrofit retrofit;
-//    private ApiService apiService;
-//
-//    public RequestApi() {
-//
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                .build();
-//
-//        retrofit = new Retrofit.Builder()
-//                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build();
-//
-//        apiService = retrofit.create(ApiService.class);
-//    }
-//    public void registerUser(User user, final Callback<User> callback) {
-//
-//        Log.d("API_REQUEST", "Sending registration request for user: " + user.getUsername());
-//
-//        Call<User> call = apiService.post(user);
-//        call.enqueue(callback);
-//    }
-//
-//    public void loginUser(User user, final Callback<ApiResponse> callback) {
-//        Log.d("API_REQUEST", "Sending registration request for user: 1" + user.getUsername());
-//        Call<ApiResponse> call = apiService.login(user);
-//        call.enqueue(callback);
-//    }
-
-
     private Retrofit retrofit;
     private ApiService apiService;
     private Context context;
@@ -86,7 +60,6 @@ public class UserApi {
         Log.d("UserDetails", "Username: " + user.getUsername());
         Log.d("UserDetails", "Password: " + user.getPassword());
         Log.d("UserDetails", "Nickname: " + user.getNickname());
-
         RequestBody requestFile = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("photo", imageFile.getName(), requestFile);
 
@@ -105,9 +78,8 @@ public class UserApi {
                     if (response.code() == 201) {
                         Log.d("API_RESPONSE", "User successfully created!");
                         Toast.makeText(context, "User created successfully!", Toast.LENGTH_LONG).show();
-//                        Intent i = new Intent(context, HomeActivity.class);
-//                        i.putExtra("movieId", "679629522d6eaf038e9e1768");
-//                        startActivity(context, i, null);
+//                        Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
+//                        startActivity(i);
                     } else {
                         if (response.body() != null) {
                             Log.d("API_RESPONSE", "User created: " + response.body());
@@ -137,19 +109,51 @@ public class UserApi {
             }
         });
     }
-
-    public void loginUser(User user, final Callback<LoginResponse> callback) {
+    public void loginUser(User user) {
         Log.d("API_REQUEST", "Sending registration request for user: 1" + user.getUsername());
         Call<LoginResponse> call = apiService.login(user);
-        call.enqueue(callback);
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                Log.d("Register", "Response raw body: " + response.raw().body());
+                if (response.isSuccessful() && response.body() != null) {
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse.getToken() != null) {
+                        String userId = loginResponse.getToken();
+
+                        Log.d("Register", "User successfully logged i ");
+
+                        Toast.makeText(context, "User successfully logged in!", Toast.LENGTH_SHORT).show();
+
+                        Intent i = new Intent(context, HomeActivity.class);
+                        i.putExtra("movieId", "679629522d6eaf038e9e1768");
+                        startActivity(context,i,null);
+                    }
+                } else if (response.code() == 404) {
+                    Log.d("Register", "The user is not in the system ");
+
+                    Toast.makeText(context, "The user is not in the system, please check the login information", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d("Register", "Login error");
+
+                    Toast.makeText(context, "Login error, please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e("LoginActivity", "Error connecting to the server", t);
+
+                Toast.makeText(context, "Error connecting to the server, please try again", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+//        call.enqueue(callback);
 
-    public void getRecommendMovie(String movieId,String userId, final Callback<List<Movie>> callback) {
-        Call<List<Movie>> call = apiService.RecommendedMovies(movieId, userId);
-        call.enqueue(callback);
-    }
-
+//    public void getRecommendMovie(String movieId,String userId, final Callback<List<Movie>> callback) {
+//        Call<List<Movie>> call = apiService.RecommendedMovies(movieId, userId);
+//        call.enqueue(callback);
+//    }
     public void getCategories(final Callback<List<Category>> callback) {
         String userid = "679178e884e6da9a833f5452";
         Call<List<Category>> call = apiService.getAllCategories(userid);
@@ -169,6 +173,5 @@ public class UserApi {
             }
         });
     }
-
 }
 

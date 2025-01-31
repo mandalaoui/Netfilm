@@ -4,7 +4,7 @@ const userService = require('../services/user');
 const createUser = async (req, res) => {
     const photo = req.file ? req.file.path : null;
     const newUser = await userService.createUser(req.body.username, req.body.password,
-        photo, req.body.nickname, req.body.watchedMovies);
+        photo, req.body.nickname, req.body.watchedMovies, false);
     const location = `/api/users/${newUser._id}`;
     res.status(201).location(location).json({});
 };

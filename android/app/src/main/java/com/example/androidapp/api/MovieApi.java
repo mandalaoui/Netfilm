@@ -176,4 +176,57 @@ public class MovieApi {
         });
 
     }
+
+    public void recommend(String movieId, final Callback<List<Movie>> callback) {
+        String userId = "679178e884e6da9a833f5452";
+        Call<List<Movie>> call = apiService.getRecommendation(userId, movieId);
+        call.enqueue(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                if (response.isSuccessful()) {
+                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    if (response.code() == 404) {
+                        callback.onFailure(call, new Throwable("Failed to get searched movies"));
+                    } else {
+                        callback.onFailure(call, new Throwable("Failed to get searched movies"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
+                callback.onFailure(call,t);
+            }
+        });
+    }
+
+
+//    public void recommend(String movieId) {
+//        String userId = "679178e884e6da9a833f5452";
+//        Call<List<Movie>> call = apiService.getRecommendation(userId,movieId);
+//        call.enqueue(new Callback<List<Movie>>() {
+//            @Override
+//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+//                if (response.isSuccessful()) {
+//                    new Thread(() -> {
+//                        movieListData.postValue(response.body());
+//                    }).start();
+//                    Log.d("MovieApi", "Movie recommend successfully");
+//                } else {
+//                    if (response.code() == 404) {
+//                        new Thread(() -> {
+//                            movieListData.postValue(null); // במקרה של 404, נתון יהיה null
+//                        }).start();
+//                        Log.e("MovieApi", "Error 404: Resource not found");
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<List<Movie>> call, Throwable t) {
+//                Log.e("MovieApi", "Error recommend movie: " + t.getMessage());
+//            }
+//        });
+//    }
 }

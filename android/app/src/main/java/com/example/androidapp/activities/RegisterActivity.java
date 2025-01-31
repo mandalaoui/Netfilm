@@ -27,7 +27,6 @@ import com.example.androidapp.databinding.ActivityRegisterBinding;
 import java.io.File;
 
 import com.example.androidapp.R;
-import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 import com.example.androidapp.entities.User;
 

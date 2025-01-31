@@ -10,16 +10,32 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
+import androidx. media3.common. MediaItem;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+//import com.google.android.exoplayer2.MediaItem;
 
+import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.adapters.MovieListAdapter;
+import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.databinding.ActivityMovieBinding;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.viewmodels.MovieViewModel;
+//import com.google.android.exoplayer2.MediaItem;
+//import com.google.android.exoplayer2.SimpleExoPlayer;
 //import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieActivity extends AppCompatActivity {
     private ActivityMovieBinding binding;
@@ -32,7 +48,11 @@ public class MovieActivity extends AppCompatActivity {
     private Button btnPlay;
     private List<Movie> recommendedMoviesList = new ArrayList<>();
     MovieListAdapter movieListAdapter;
+    private RecyclerView recyclerView;
     String videoUrl;
+    private MovieAdapter movieAdapter;
+
+    private MovieViewModel movieViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +70,7 @@ public class MovieActivity extends AppCompatActivity {
         tvDescription = binding.movieDescription;
         moviePlayer = binding.moviePlayer;
         btnPlay = binding.btnPlay;
+        recyclerView = binding.recyclerViewRecommended;
 
         Intent intent = getIntent();
         tvName.setText(intent.getStringExtra("name"));
@@ -58,82 +79,48 @@ public class MovieActivity extends AppCompatActivity {
         tvYear.setText(intent.getStringExtra("Publication_year"));
         tvTime.setText(intent.getStringExtra("movie_time"));
         tvDescription.setText(intent.getStringExtra("description"));
-//        moviePlayer.setText(intent.getStringExtra("video"));
 
-//        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-//        movieViewModel.get().observe(this, movie -> {
-//            if (movie != null) {
-//                tvName.setText(movie.getName());
-//                tvYear.setText(String.valueOf(movie.getPublication_year()));
-//                tvDescription.setText(movie.getDescription());
-//                tvTime.setText(movie.getMovie_time());
-//
-//                videoUrl = movie.getVideoUrl();
-//                if (videoUrl != null && !videoUrl.isEmpty()) {
-//                    if (!videoUrl.startsWith("http")) {
-//                        videoUrl = "http://10.0.2.2:12345/" + videoUrl;
-//                    }
-//
-//                    Uri videoUri = Uri.parse(videoUrl);
-//                    MediaItem mediaItem = MediaItem.fromUri(videoUri);
-//                    exoPlayer.setMediaItem(mediaItem);
-//                    exoPlayer.prepare();
-//                    exoPlayer.play();
-////                    videoView.setVideoURI(videoUri);
-////                    videoView.start();
-////                    videoView.setOnPreparedListener(mp -> {
-////                                Log.d("VideoView", "Video is prepared and will start now.");
-////                                MediaController mc = new MediaController(MovieActivity.this);
-////                                mc.setAnchorView(videoView);
-////                                videoView.setMediaController(mc);
-////                                videoView.start();
-////                            });
-//                }
-//            }
+        exoPlayer = new ExoPlayer.Builder(this).build();
+        moviePlayer.setPlayer(exoPlayer);
+
+        String videoUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("video");
+        if (videoUrl != null) {
+            MediaItem mediaItem = MediaItem.fromUri(videoUrl);
+
+            exoPlayer.setMediaItem(mediaItem);
+            exoPlayer.prepare();
+            exoPlayer.play();
+        } else {
+            Log.e("MovieActivity", "Video URL is null or empty");
+        }
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
+        movieAdapter = new MovieAdapter(this, new ArrayList<>());
+        recyclerView.setAdapter(movieAdapter);
+
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
+
+//        movieViewModel.recommend(intent.getStringExtra("id"));
+        MovieApi movieApi = new MovieApi();
+        movieApi.recommend(movieId , new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    movieListAdapter.setMovies(response.body());
+                }
+                 else {
+                    Log.e("API Response", "Response error: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Movie>> call, Throwable t){
+                Log.e("API Failure", "Failed to load searched movies: " + t.getMessage());
+            }
+
+        });
+//        movieViewModel.get().observe(this,movies -> {
+//            movieAdapter.setMovies(movies);
 //        });
 
-//        btnPlay.setOnClickListener(view -> {
-//            Intent i = new Intent(this, VideoMovieActivity.class);
-//            i.putExtra("videoUrl",videoUrl);
-//            startActivity(i);
-//        });
-//
-//        RecyclerView recyclerView = binding.recyclerViewRecommended;
-////        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(gridLayoutManager);
-
-//        RequestApi recommendMovie = new RequestApi(this);
-//        recommendMovie.getRecommendMovie(movieId,userId, new Callback<List<Movie>>() {
-//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    recommendedMoviesList.clear();
-//                    recommendedMoviesList.addAll(response.body());
-//                    movieListAdapter.notifyDataSetChanged();
-//                } else {
-//                    Log.e("API", "Error: " + response.code());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Movie>> call, Throwable t) {
-//                Log.e("API", "Error fetching recommended movies: " + t.getMessage());
-//            }
-//
-//        });
-//
-//        movieListAdapter = new MovieListAdapter(this, recommendedMoviesList, new MovieListAdapter.OnMovieClickListener() {
-//            @Override
-//            public void onMovieClick(Movie movie) {
-//                MovieOnClick(movie);
-//            }
-//        });
-//        recyclerView.setAdapter(movieListAdapter);
-//
-//    }
-//    public void MovieOnClick(Movie movie) {
-//        movieViewModel.setSelectedMovie(movie);
-//    }
     }
-
 }

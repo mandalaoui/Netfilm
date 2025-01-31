@@ -70,6 +70,10 @@ public class MovieRepository {
         api.deleteMovie(movieId);
     }
 
+//    public void recommend(String id) {
+//        api.recommend(id);
+//    }
+
 }
 
 
