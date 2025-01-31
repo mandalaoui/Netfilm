@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.dao.CategoryDao;
@@ -20,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CategoryApi {
     private MutableLiveData<List<Category>> categoryListData;
     private CategoryDao dao;
+//    private MyApplication token;
 
     Retrofit retrofit;
     ApiService apiService;
@@ -35,8 +37,9 @@ public class CategoryApi {
 
         apiService = retrofit.create(ApiService.class);
     }
+    MyApplication myApplication = MyApplication.getInstance();
 
-    String userId = "6792b52c10a40e0b80dd798d";
+    String userId = myApplication.getGlobalUserId();
     public void getCategories() {
         Call<List<Category>> call = apiService.getAllCategories(userId);
         call.enqueue(new Callback<List<Category>>() {

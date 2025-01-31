@@ -3,12 +3,14 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.activities.LoginActivity;
 import com.example.androidapp.activities.RegisterActivity;
@@ -17,6 +19,8 @@ import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.User;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,6 +44,7 @@ public class UserApi {
     private RequestBody categoriesRequestBody;
     private MovieDao movieDao;
     private MutableLiveData<List<Movie>> movieListData;
+//    private MyApplication myApplication;
     public UserApi(Context context) {
         this.context = context;
         OkHttpClient client = new OkHttpClient.Builder()
@@ -119,14 +124,14 @@ public class UserApi {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getToken() != null) {
-                        String userId = loginResponse.getToken();
-
+//                        String userId = loginResponse.getUserId();
+//                        token.setGlobalToken(userId);
+                        extractDataFromToken(loginResponse.getToken());
                         Log.d("Register", "User successfully logged i ");
 
                         Toast.makeText(context, "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
                         Intent i = new Intent(context, HomeActivity.class);
-                        i.putExtra("movieId", "679629522d6eaf038e9e1768");
                         startActivity(context,i,null);
                     }
                 } else if (response.code() == 404) {
@@ -172,6 +177,37 @@ public class UserApi {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    public void extractDataFromToken(String token) {
+        try {
+            // 1. JWT מבנה: header.payload.signature
+            String[] parts = token.split("\\.");
+
+            // 2. הפונקציה מפענחת את ה-payload (החלק השני בטוקן)
+            String payload = parts[1];
+
+            // 3. דה-קידוד של ה-payload מ-Base64
+            String decodedPayload = new String(Base64.decode(payload, Base64.URL_SAFE));
+
+            // 4. המרת ה-payload ל-JSONObject
+            JSONObject jsonPayload = new JSONObject(decodedPayload);
+
+            // 5. חילוץ ה-id וה-isAdmin
+            MyApplication myApplication = MyApplication.getInstance();
+            myApplication.setGlobalUserId(jsonPayload.getString("id"));
+            myApplication.setAdmin(jsonPayload.getBoolean("isAdmin"));
+            String userId = jsonPayload.getString("id");
+            boolean isAdmin = jsonPayload.getBoolean("isAdmin");
+
+            // הדפסת הערכים
+            System.out.println("User ID: " + userId);
+            System.out.println("isAdmin: " + isAdmin);
+
+            // כאן אתה יכול להחזיר את המידע או לשמור אותו לשימוש מאוחר יותר
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

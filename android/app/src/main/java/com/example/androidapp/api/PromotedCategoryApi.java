@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.dao.PromotedCategoryDao;
@@ -21,6 +22,7 @@ public class PromotedCategoryApi {
 
     private MutableLiveData<List<PromotedCategory>> categoryListData;
     private PromotedCategoryDao dao;
+//    private MyApplication token;
 
     Retrofit retrofit;
     ApiService apiService;
@@ -36,8 +38,9 @@ public class PromotedCategoryApi {
 
         apiService = retrofit.create(ApiService.class);
     }
+    MyApplication myApplication = MyApplication.getInstance();
 
-    String userId = "679178e884e6da9a833f5452";
+    String userId = myApplication.getGlobalUserId();
     public void getCategories() {
         Call<List<PromotedCategory>> call = apiService.getCategories(userId);
         call.enqueue(new Callback<List<PromotedCategory>>() {

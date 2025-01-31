@@ -4,7 +4,8 @@ import android.app.Application;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
-    private String globalVariable;
+    private String globalUserId;
+    private boolean isAdmin;
 
     @Override
     public void onCreate() {
@@ -16,11 +17,19 @@ public class MyApplication extends Application {
         return instance;
     }
 
-    public String getGlobalVariable() {
-        return globalVariable;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setGlobalVariable(String value) {
-        this.globalVariable = value;
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public String getGlobalUserId() {
+        return globalUserId;
+    }
+
+    public void setGlobalUserId(String value) {
+        this.globalUserId = value;
     }
 }

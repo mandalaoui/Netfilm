@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.Movie;
@@ -35,6 +36,7 @@ public class MovieApi {
     private MutableLiveData<List<Movie>> movieListData;
     private MovieDao dao;
 
+//    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 
@@ -59,7 +61,9 @@ public class MovieApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    String userId = "679178e884e6da9a833f5452";
+    MyApplication myApplication = MyApplication.getInstance();
+
+    String userId = myApplication.getGlobalUserId();
 
     public void getSearchedMovies(final Callback<List<Movie>> callback, String query) {
         Call<List<Movie>> call = apiService.getSearchedMovies(userId, query);
@@ -80,7 +84,6 @@ public class MovieApi {
         });
     }
     public void getListOfMovies() {
-        String userId = "679178e884e6da9a833f5452";
         Call<List<Movie>> call = apiService.getMovies(userId);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
@@ -126,7 +129,6 @@ public class MovieApi {
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
-        String userId= "679213ef1cebc10d8c2d7bc3";
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -158,7 +160,6 @@ public class MovieApi {
     }
 
     public void deleteMovie(String movieId) {
-        String userId = "679178e884e6da9a833f5452";
         Call<Movie> call = apiService.deleteMovie(movieId,userId);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -178,7 +179,6 @@ public class MovieApi {
     }
 
     public void recommend(String movieId, final Callback<List<Movie>> callback) {
-        String userId = "679178e884e6da9a833f5452";
         Call<List<Movie>> call = apiService.getRecommendation(userId, movieId);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
