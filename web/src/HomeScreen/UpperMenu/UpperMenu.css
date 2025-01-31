@@ -1,5 +1,5 @@
 .navbar {
-    background-color: rgb(16, 16, 16);
+    background-color: var(--top-menu-background);
     height: 60px;
     width: auto;
     display: flex;
@@ -15,11 +15,12 @@
     margin-left: 20px;
     margin-top: 0;
     margin-bottom: 5px;
-
+    color: var(--text-color);
 }
 
 .btn-primary:hover {
-    background-color: transparent;
+    background-color: var(--button-hover-background);
+    color: var(--text-color);
 }
 
 .d-flex.me-auto {
@@ -57,17 +58,17 @@
     height: 30px;
     padding: 10px;
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color-light-transparent);
     margin-left: 5px !important;
-    background-color: #fff;
+    background-color: var(--search-background);
     font-size: 1rem;
     transition: width 0.3s ease;
 }
 
 .search-input:focus {
     outline: none;
-    border-color: #fff;
-    background-color: rgba(0, 0, 0, 0.8);
+    border-color: var(--border-color);
+    background-color: var(--search-background);
 }
 
 .clear-search {
@@ -77,7 +78,7 @@
     transform: translateY(-50%);
     background: transparent;
     border: none;
-    color: #aaa;
+    color: var(--color-text-light-dark);
     font-size: 1rem;
     cursor: pointer;
     padding: 0;
@@ -94,10 +95,12 @@
     border-radius: 50%;
     margin-right: 20px;
     margin-left: 20px;
+    background-color: var(--user-logo-background);
 }
 
 .user-logo:hover {
     cursor: pointer;
+    background-color: var(--user-logo-hover-background);
 }
 
 .netfilm-logo {
@@ -105,24 +108,9 @@
     width: auto;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: -100px;
-    z-index: 1;
-    display: block;
-    margin: 0;
-    padding: 0.5rem 0;
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 0.25rem;
-    width: 400px;
-}
-
 .dropdown-item {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.8);
+    color: var(--text-color);
+    background-color: var(--dropdown-background);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -130,8 +118,8 @@
 }
 
 .dropdown-item:hover {
-    color: white;
-    background-color: rgba(44, 44, 44, 0.204);
+    color: var(--text-color);
+    background-color: var(--dropdown-item-hover-background);
     cursor: pointer;
 }
 
@@ -142,10 +130,10 @@
     z-index: 1;
     display: block;
     margin: 0;
-    padding: 0.5rem 0;
+    padding: 0rem 0;
     font-size: 1rem;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: var(--dropdown-item-background);
+    border: 1px solid var(--border-color-light-transparent); 
     border-radius: 0.25rem;
     width: 200px;
 }

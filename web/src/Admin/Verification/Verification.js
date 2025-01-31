@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'; 
 import './Verification.css';
 
+// This component renders a confirmation modal asking if the user is sure about an action.
 function Verification({ type, title, actionType, onConfirm }) {
     const handleConfirmation = (confirmed) => {
         onConfirm(confirmed); 
@@ -22,6 +23,7 @@ function Verification({ type, title, actionType, onConfirm }) {
     );
 }
 
+// This function shows the confirmation modal and returns a promise that resolves with the user's choice.
 export const showConfirmationModal = (type, title, actionType) => {
     return new Promise((resolve) => {
         const modalContainer = document.createElement('div');

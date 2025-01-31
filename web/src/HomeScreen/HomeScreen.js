@@ -8,9 +8,10 @@ import { LocationProvider } from '../LocationContext.js';
 import { useState } from 'react';
 
 function HomeScreen() {
-    const location = useLocation();
-    const [searchQuery, setSearchQuery] = useState('');
+    const location = useLocation(); // Get current location of the app
+    const [searchQuery, setSearchQuery] = useState(''); // State to hold search query
 
+    // Function to handle changes in search input
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };

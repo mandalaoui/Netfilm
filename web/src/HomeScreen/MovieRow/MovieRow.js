@@ -1,15 +1,11 @@
 import './MovieRow.css';
 import React, { useRef, useState, useEffect } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
-// import movies from '../../data/movies/movies.js'
-// import { getAllMovies } from '../../Admin/AdminActions/Movie/MovieActions.js';
 import { useLocation } from 'react-router-dom';
 import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
 import { getCategoryById, getAllCategories, createCategory, deleteCategory, updateCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
-// import CreateMovie from '../../Admin/AdminActions/Movie/CreateMovie/CreateMovie.js';
 import { getMovieById } from '../../Admin/AdminActions/Movie/MovieActions.js';
-
 
 function MovieRow({ category }) {
     const rowRef = useRef(null);
@@ -18,8 +14,16 @@ function MovieRow({ category }) {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
     const [showModal, setShowModal] = useState(false);
-
     const [moviesByCategory, setMoviesByCategory] = useState([]);
+    const [isUnAttached, setIsUnAttached] = useState(false);
+
+    // Effect to check if the category is "unAttached" and set the state accordingly
+    useEffect(() => {
+        if(category.name === "unAttached")
+            setIsUnAttached(true);
+    }, [category.name]);
+
+    // Effect to fetch movies related to the category when the component mounts or category changes
     useEffect(() => {
         const fetchMovies = async () => {
             try {
@@ -28,50 +32,23 @@ function MovieRow({ category }) {
                         return getMovieById(movieId);
                     })
                 );
-                setMoviesByCategory(movies);
-            } catch (error) {
+                if (Array.isArray(movies) && movies.length > 0) {
+                    setMoviesByCategory(movies);
+                } else {
+                    setMoviesByCategory([]); // במידה ואין סרטים, מנקה את המצב
+                }
+                } catch (error) {
                 console.error("Error fetching movies by category:", error);
             }
         };
         if (category.movies && category.movies.length > 0) {
             fetchMovies();
         } else {
+            setMoviesByCategory([]); // במידה ואין סרטים, מנקה את המצב
         }
     }, [category.movies]);
 
-    useEffect(() => {
-        const movieListWrapper = rowRef.current;
-        
-        if (movieListWrapper) {
-            const savedScrollPosition = localStorage.getItem('scrollPosition');
-            if (savedScrollPosition) {
-                movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
-            }
-    
-            const handleScroll = () => {
-                localStorage.setItem('scrollPosition', movieListWrapper.scrollLeft);
-            };
-    
-            movieListWrapper.addEventListener('scroll', handleScroll);
-    
-            window.addEventListener('load', () => {
-                if (savedScrollPosition) {
-                    movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
-                }
-            });
-    
-            return () => {
-                movieListWrapper.removeEventListener('scroll', handleScroll);
-                window.removeEventListener('load', () => {
-                    if (savedScrollPosition) {
-                        movieListWrapper.scrollLeft = parseInt(savedScrollPosition, 10);
-                    }
-                });
-            };
-        }
-    }, []);
-    
-
+    // Handler for scrolling functionality to enable/disable left and right scrolling buttons
     const handleScroll = () => {
         const container = rowRef.current;
         const containerWidth = container.clientWidth;
@@ -81,16 +58,23 @@ function MovieRow({ category }) {
         setCanScrollLeft(scrollLeft > 0);
     };
 
+    // Function to scroll the movie row by a certain amount (based on direction)
     const scrollRow = (direction) => {
         const container = rowRef.current;
         const scrollAmount = 0.8 * rowRef.current.clientWidth;
         container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
     };
 
-    if (!isAdminPage && moviesByCategory.length === 0) {
+    // If it's not an admin page and there are no movies in the category (excluding "Watched"), don't render this row
+    if (!isAdminPage && moviesByCategory.length === 0 && category.name !== "Watched") {
+        return null;
+    }
+    // If it's an admin page and the category is "Watched", don't render this row (as it's handled elsewhere)
+    if (isAdminPage && category.name === "Watched") {
         return null;
     }
 
+    // Handler for editing category (show confirmation modal)
     const handleEditCategory = async () => {
         const userConfirmed = await showConfirmationModal("category", category.name, 'edit');
         if (userConfirmed) {
@@ -98,6 +82,7 @@ function MovieRow({ category }) {
         }
     };
 
+    // Handler for deleting category
     const handleDeleteCategory = async () => {
         const userConfirmed = await showConfirmationModal("category", category.name, 'delete');
         if (!userConfirmed) {
@@ -106,18 +91,17 @@ function MovieRow({ category }) {
         }
 
         try {
-            const moviesInCategory = category.movies; 
-            console.log('Movies in category:', moviesInCategory);
-
+            // Process for deleting the category and handling movies in that category
+            const moviesInCategory = category.movies;
             const moviesWithSingleCategory = [];
+            // Check each movie to see if it only belongs to this category
             for (const movieId of moviesInCategory) {
                 const movie = await getMovieById(movieId);
-                if (movie && movie.categories.length === 1) { 
+                if (movie && movie.categories.length === 1) {
                     moviesWithSingleCategory.push(movieId);
                 }
             }
-            console.log('Movies with single category:', moviesWithSingleCategory);
-
+            // Fetch all categories to check for the "unAttached" category
             const allCategoryIds = await getAllCategories();
             const allCategories = await Promise.all(
                 allCategoryIds.map(async (categoryId) => {
@@ -126,15 +110,14 @@ function MovieRow({ category }) {
                 })
             );
             let unAttachedCategory = allCategories.find(cat => cat.name === "unAttached");
+            // If "unAttached" category doesn't exist, create it
             if (!unAttachedCategory) {
-                console.log('Creating "unAttached" category...');
                 const isCreated = await createCategory("unAttached", false, []);
                 if (!isCreated) {
                     alert("Failed to create 'unAttached' category. Aborting delete.");
                     return;
                 }
-                console.log('"unAttached" categoryCreated !');
-
+                // Re-fetch categories after creating "unAttached"
                 const updatedCategoryIds = await getAllCategories();
                 const updatedCategories = await Promise.all(
                     updatedCategoryIds.map(async (categoryId) => {
@@ -145,18 +128,14 @@ function MovieRow({ category }) {
 
                 unAttachedCategory = updatedCategories.find(cat => cat.name === "unAttached");
             }
-            console.log(`unAttachedCategory done!${unAttachedCategory}`);
-
+            // If "unAttached" category exists, update it with the movies that only belong to this category
             if (unAttachedCategory && unAttachedCategory.movies !== undefined) {
-                console.log('it is not undefined!');
                 const updatedMovies = [...unAttachedCategory.movies, ...moviesWithSingleCategory];
                 const isUpdated = await updateCategory(unAttachedCategory.id, { ...unAttachedCategory, movies: updatedMovies });
                 if (!isUpdated) {
                     alert("Failed to update 'unAttached' category. Aborting delete.");
                     return;
                 }
-
-                console.log(`Movies added to 'unAttached': ${moviesWithSingleCategory}`);
                 const isDeleted = await deleteCategory(category.id);
                 if (isDeleted) {
                     window.location.href = "/admin";
@@ -169,6 +148,7 @@ function MovieRow({ category }) {
         }
     };
 
+    // Handler for adding a movie to the current category
     const handleAddMovie = () => {
         window.location.href = `/admin/CreateMovie?specificCategory=${category.id}`;
     };
@@ -187,6 +167,8 @@ function MovieRow({ category }) {
                 <h6 className="category-title">{category.name}</h6>
                 {isAdminPage && (
                     <>
+                    {!isUnAttached && (
+                        <>
                         <h6 className="category-promotion">
                             {category.isPromoted ? "promoted" : "not promoted"}
                         </h6>
@@ -199,41 +181,47 @@ function MovieRow({ category }) {
                                 <i className="bi bi-trash"></i>
                             </button>
                         </div>
+                        </>
+                    )}
                     </>
                 )}
             </div>
             {canScrollLeft && (
-                    <div className='left-arrow-wrapper'> 
-                        <button className="scroll-arrow left" onClick={() => scrollRow('left')}>
-                            &#8249;
-                        </button>
-                    </div>
-                )}
+                <div className='left-arrow-wrapper'>
+                    <button className="scroll-arrow left" onClick={() => scrollRow('left')}>
+                        &#8249;
+                    </button>
+                </div>
+            )}
             <div className="movie-row">
-                <div className="movie-list-wrapper">
                     <div className="movie-list" ref={rowRef} onScroll={handleScroll}>
                         {isAdminPage && (
-                            <button className="add-movie-button" onClick={handleAddMovie}>
+                            <>
+                            {!isUnAttached && (
+                            <button className="add-movie-button-to-category" onClick={handleAddMovie}>
                                 <i className="bi bi-plus-circle"></i>
                             </button>
+                            )}
+                            </>
                         )}
-                        {moviesByCategory.length === 0 && category.name === "Watched" ? (
+                        {!isAdminPage && category.name === "Watched" &&  moviesByCategory.length === 0 ? (
                             <p className="no-movies-text">Haven't seen any movie yet</p>
                         ) : (
                             moviesByCategory.map((movie) => (
+                                <>
                                 <MovieCard key={movie._id} movie={movie} />
+                                </>
                             ))
                         )}
                     </div>
+            </div>
+            {canScrollRight && (
+                <div className='right-arrow-wrapper'>
+                    <button className="scroll-arrow right" onClick={() => scrollRow('right')}>
+                        &#8250;
+                    </button>
                 </div>
-            </div>                
-                {canScrollRight && (
-                    <div className='right-arrow-wrapper'> 
-                        <button className="scroll-arrow right" onClick={() => scrollRow('right')}>
-                            &#8250;
-                        </button>
-                    </div>
-                )}
+            )}
         </div>
     );
 }

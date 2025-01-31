@@ -5,10 +5,10 @@ import { updateCategory, getAllCategories, getCategoryById } from '../CategoryAc
 
 
 function EditCategory({ category }) {
+    // State hooks to manage category data and UI elements
     const [categoryName, setCategoryName] = useState(category.name || '');
     const [isPromotedValue, setIsPromoted] = useState(category.isPromoted || false);
     const [movieNames, setMovieNames] = useState([]);
-
     const [allCategories, setAllCategories] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
@@ -35,6 +35,7 @@ function EditCategory({ category }) {
     }, []);
 
     useEffect(() => {
+        // Fetch all movies associated with the categories
         const fetchAllMovies = async () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
@@ -46,7 +47,8 @@ function EditCategory({ category }) {
                     })
                 );
                 const validMovies = allMoviesDetails.filter((movie) => movie !== null);
-                setAllMovies(validMovies);
+                const uniqueMovies = Array.from(new Map(validMovies.map(movie => [movie._id, movie])).values());
+                setAllMovies(uniqueMovies);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
             }
@@ -75,6 +77,7 @@ function EditCategory({ category }) {
         fetchMovieNames();
     }, [category.movies]);
 
+    // Handle form submission to update the category
     const handleSubmit = () => {
         const categoryData = {
             name: categoryName,
@@ -89,37 +92,34 @@ function EditCategory({ category }) {
             });
     };
 
+    // Handle form submission to update the category
     const handleMovieChange = (e, moviesId) => {
-        console.log('Category selected:', moviesId); 
-
         const updatedMovies = e.target.checked
             ? [...selectedMovies, moviesId]
             : selectedMovies.filter((id) => id !== moviesId); 
 
         setSelectedMovies(updatedMovies);
-        console.log('Updated selected categories:', updatedMovies);
-
     };
 
     return (
         <div className="Edit-Category-modal-container">
             <div className="Edit-Category-modal-content">
+                <h2>Edit Category</h2>
                 <button className="EC-close-btn" onClick={() => window.location.href = '/admin'}>
                     <i className="bi bi-x-lg"></i>
                 </button>
-                <h2>Edit Category</h2>
                 <div className="category-layout">
                     <div className="current-category">
                         <h3>Current Category</h3>
-                        <div className="input-group">
+                        <div className="input-group-ec">
                             <label>Name:</label>
                             <span>{category.name}</span>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-ec">
                             <label>Promotion:</label>
                             <span>{category.isPromoted ? "Promoted" : "Not Promoted"}</span>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-ec">
                             <label>Movies:</label>
                             <span>
                                 {movieNames.length > 0 
@@ -130,7 +130,7 @@ function EditCategory({ category }) {
                     </div>
                     <div className="new-category">
                         <h3>New Category</h3>
-                        <div className="input-group">
+                        <div className="input-group-ec">
                             <label>Name:</label>
                             <input
                                 type="text"
@@ -139,7 +139,7 @@ function EditCategory({ category }) {
                                 onChange={(e) => setCategoryName(e.target.value)}
                             />
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-ec">
                             <label>Promotion:</label>
                             <div className="EC-checkbox">
                                 <input
@@ -149,8 +149,8 @@ function EditCategory({ category }) {
                                 />
                             </div>
                         </div>
-                        <div className="input-group-update-movie">
-                            <h7>Movies</h7>
+                        <div className="input-group-ec-update-movie">
+                            <label>Movies:</label>
                             <div className="movie-update-category-list">
                                 {allMovies.map((movie) => (
                                     <div key={movie._id} className="movie-update-category-item">

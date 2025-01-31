@@ -1,14 +1,19 @@
 import './MovieCard.css';
 import { useLocation } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { showConfirmationModal  } from '../../Admin/Verification/Verification.js'; 
+import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
 import { getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import { deleteMovie } from '../../Admin/AdminActions/Movie/MovieActions.js';
+import { useGlobalContext } from '../../GlobalContext.js';
 
+// MovieCard component receives a 'movie' object as a prop
 function MovieCard({ movie }) {
     const [categories, setCategories] = useState([]);
     const location = useLocation();
+    const { fileUrl } = useGlobalContext(); 
 
+
+    // Helper function to navigate to different pages
     const navigateTo = (loc) => {
         window.location.href = loc;
     };
@@ -16,14 +21,16 @@ function MovieCard({ movie }) {
     const handlePlayClick = () => {
         navigateTo(`../watchMovie/${movie._id}`);
     };
-    
+
+    // Function to handle the info button click
     const handleInfoClick = () => {
-        navigateTo(`../movie/${movie._id}`); 
+        navigateTo(`../movie/${movie._id}`);
     };
 
 
+    // Function to handle delete movie action
     const handleDeleteClick = async () => {
-        const userConfirmed = await showConfirmationModal("movie",  movie.name, 'delete');
+        const userConfirmed = await showConfirmationModal("movie", movie.name, 'delete');
         if (userConfirmed) {
             try {
                 const isDeleted = await deleteMovie(movie._id);
@@ -41,6 +48,7 @@ function MovieCard({ movie }) {
         }
     };
 
+    // Function to handle edit movie action
     const handleEditClick = async () => {
         const userConfirmed = await showConfirmationModal("movie", movie.name, 'edit');
         if (userConfirmed) {
@@ -50,8 +58,9 @@ function MovieCard({ movie }) {
         }
     };
 
-    const isAdminPage = location.pathname === '/admin'; 
+    const isAdminPage = location.pathname === '/admin';
 
+    // Fetch categories associated with the movie on mount
     useEffect(() => {
         const fetchCategories = async () => {
             const fetchedCategories = await Promise.all(
@@ -68,26 +77,23 @@ function MovieCard({ movie }) {
 
     return (
         <div className="movie-card">
-            <div className="movie-card-image">
-            <img src={`http://localhost:12345/api/${movie.image}`} alt={movie.name} onClick={handleInfoClick}/>
+            <div className="movie-card-image" >
+                <img src={`${fileUrl}${movie.image}`} alt={movie.name} />
             </div>
-            <div className="movie-card-title">{movie.name}</div>
-            <div className="movie-card-info">
-                <div className="movie-card-controls">
-                    <button className="movie-card-play-button" onClick={handlePlayClick}>▶ Play</button>
-                    <span className="movie-card-movie_time">{movie.movie_time}</span>
-                </div>
-                
+            <div className="movie-card-title" onClick={handleInfoClick} >{movie.name}</div>
+            <button className="movie-card-play-button" onClick={handlePlayClick}>▶ Play</button>
+            <div className="movie-card-info" onClick={handleInfoClick}>
                 <div className="movie-card-meta">
                     <p>{movie.Publication_year
-                    } | {movie.age}</p>
+                    } | {movie.age} | {movie.movie_time}</p>
                     <div className="movie-card-categories">
-                    {categories.map((categoryName, index) => (
+                        {categories.map((categoryName, index) => (
                             <span key={index} className="movie-card-category">{categoryName}</span>
                         ))}
                     </div>
                 </div>
-                                
+            </div>
+            <div className="admin-card-options">
                 {isAdminPage && (
                     <>
                         <button className="delete-movie-card-button" onClick={handleDeleteClick}>

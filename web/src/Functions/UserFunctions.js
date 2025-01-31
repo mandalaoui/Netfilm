@@ -1,4 +1,3 @@
-import { getMovieById } from "../Admin/AdminActions/Movie/MovieActions";
 // Fetch recommendations for a given movie
 const getRecommendations = async (movieId) => {
     return fetch (`http://localhost:12345/api/movies/${movieId}/recommend/`, {
@@ -16,21 +15,17 @@ const getRecommendations = async (movieId) => {
             }
         })
         .then(data => {
-            if (!data) return null;
-    
-            console.log(`movieIds: ${JSON.stringify(data)}`);
-            if (!Array.isArray(data) || data.length === 0) {
-                console.error('No recommended movies found');
+            if (!data) return []; 
+            if (Array.isArray(data)) {
+                return data;
+            } else {
                 return [];
             }
-    
-            return Promise.all(data.map(movie => movie && movie._id ? getMovieById(movie._id) : null));
         })
-        .then(movieDetails => movieDetails.filter(movie => movie !== null))
-    .catch((error) => {
-        console.error("Error fetching recommendations:", error);
-        return null;
-    });
+        .catch((error) => {
+            console.error("Error fetching recommendations:", error);
+            return []; 
+        });
 };
 
 // Add a movie to the user's watchlist

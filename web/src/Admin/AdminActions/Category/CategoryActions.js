@@ -1,3 +1,4 @@
+// Function to create a new category
 const createCategory = (C_name, C_isPromoted, C_movies) => {
     const categoryData = {
         name: C_name,
@@ -29,6 +30,7 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
     }); 
 };
 
+// Function to get all categories
 const getAllCategories = () => {
     return fetch("http://localhost:12345/api/categories/", {
         method: "GET",
@@ -38,7 +40,6 @@ const getAllCategories = () => {
     })
     .then(response => response.json())
     .then(data => {
-        // console.log("Categories fetched successfully:", data);
         return data.map((category) => category._id);
     })
     .catch(error => {
@@ -47,7 +48,9 @@ const getAllCategories = () => {
     });
 };
 
+// Function to get a category by its ID
 const getCategoryById = (categoryId) => {
+    if(!categoryId) return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "GET",
         headers: {
@@ -64,18 +67,15 @@ const getCategoryById = (categoryId) => {
     })
     .then((data) => {
         if (!data) {
-            // console.error("No data received for category:", categoryId);
+            console.error("No data received for category:", categoryId);
             return null;
         }
-
         const category = {
             id: data._id,
             name: data.name,
             isPromoted: data.isPromoted,
-            movies: data.movies || [], // ברירת מחדל לרשימה ריקה אם movies לא קיים
+            movies: data.movies || [],
         };
-
-        // console.log("Category fetched successfully:", category);
         return category;
     })
     .catch((error) => {
@@ -84,7 +84,9 @@ const getCategoryById = (categoryId) => {
     });
 };
 
+// Function to update an existing category
 const updateCategory = (categoryId, categoryData) => {
+    if(!categoryId) return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "PATCH",
         headers: {
@@ -107,7 +109,9 @@ const updateCategory = (categoryId, categoryData) => {
     });
 };
 
+// Function to delete a category by its ID
 const deleteCategory = (categoryId) => {
+    if(!categoryId) return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "DELETE",
         headers: {

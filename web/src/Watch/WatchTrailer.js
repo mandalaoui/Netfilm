@@ -9,14 +9,13 @@ function WatchMovie() {
     const [movie, setMovie] = useState(null);
 
     useEffect(() => {
-        // Fetch movie data by ID
+        // Fetch movie data by ID when the component mounts or the ID changes
         getMovieById(id)
             .then((movieData) => {
                 setMovie(movieData); // Update the movie state when the data is fetched
             })
             .catch((error) => {
                 console.error("Error fetching movie:", error);
-                // setLoading(false); // Stop loading even if there is an error
             });
     }, [id]);
 

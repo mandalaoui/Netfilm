@@ -5,9 +5,9 @@ import { updateCategory, getAllCategories, getCategoryById } from '../CategoryAc
 import { getMovieById } from '../../Movie/MovieActions.js';
 
 function CreateCategory() {
+    // State variables for category name and promotion status
     const [categoryName, setCategoryName] = useState('');
     const [isPromotedValue, setIsPromoted] = useState(false);
-
     const [allCategories, setAllCategories] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
@@ -24,8 +24,6 @@ function CreateCategory() {
                         return fullCategory;
                     })
                 );
-                console.log('Fetched all categories:', allCategoryDetails);
-
                 setAllCategories(allCategoryDetails);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
@@ -35,6 +33,7 @@ function CreateCategory() {
     }, []);
 
     useEffect(() => {
+        // Fetch all movies that belong to the fetched categories
         const fetchAllMovies = async () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
@@ -46,7 +45,8 @@ function CreateCategory() {
                     })
                 );
                 const validMovies = allMoviesDetails.filter((movie) => movie !== null);
-                setAllMovies(validMovies);
+                const uniqueMovies = Array.from(new Map(validMovies.map(movie => [movie._id, movie])).values());
+                setAllMovies(uniqueMovies);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
             }
@@ -56,21 +56,19 @@ function CreateCategory() {
         }
     }, [allCategories]);
 
+    // Handle movie selection changes
     const handleMovieChange = (e, moviesId) => {
-        console.log('Category selected:', moviesId); 
-
         const updatedMovies = e.target.checked
             ? [...selectedMovies, moviesId] 
             : selectedMovies.filter((id) => id !== moviesId); 
 
         setSelectedMovies(updatedMovies);
-        console.log('Updated selected categories:', updatedMovies); 
-
     };
 
+    // Handle form submission
     const handleSubmit = async () => {
-
         try {
+            // Check if "unAttached" category exists and remove selected movies from it
             const unAttachedCategory = allCategories.find(category => category.name === "unAttached");
             if (unAttachedCategory) {
                 const moviesToRemove = unAttachedCategory.movies.filter(movieId => selectedMovies.includes(movieId));
@@ -86,6 +84,7 @@ function CreateCategory() {
             console.error("Error during category update:", error);
         }
 
+        // Create new category with selected movies
         const name = categoryName;
         const isPromoted = isPromotedValue;
         const movies = selectedMovies;
@@ -107,7 +106,7 @@ function CreateCategory() {
                     <i className="bi bi-x-lg"></i>
                 </button>
                 <h2>Add Category</h2>
-                <div className="input-group">
+                <div className="input-group-CC">
                     <input
                         type="text"
                         placeholder="Category Name"
@@ -115,7 +114,7 @@ function CreateCategory() {
                         onChange={(e) => setCategoryName(e.target.value)}
                     />
                 </div>
-                <div className="input-group">
+                <div className="input-group-CC">
                     <h7>Promotion</h7>
                     <div className="CC-checkbox">
                         <input
@@ -125,7 +124,7 @@ function CreateCategory() {
                         />
                     </div>
                 </div>
-                <div className="input-group-add-movie">
+                <div className="input-group-CC-add-movie">
                     <h7>Movies</h7>
                     <div className="movies-in-category-list">
                         {allMovies.map((movie) => (

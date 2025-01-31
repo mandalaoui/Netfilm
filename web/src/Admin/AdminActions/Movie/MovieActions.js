@@ -1,3 +1,4 @@
+// This function creates a new movie by sending form data to the server.
 const createMovie = (formData) => {
     return fetch("http://localhost:12345/api/movies/", {
         method: "POST",
@@ -22,6 +23,7 @@ const createMovie = (formData) => {
     }); 
 };
 
+// This function fetches all movies from the server.
 const getAllMovies = () => {
     return fetch("http://localhost:12345/api/movies/", {
         method: "GET",
@@ -46,7 +48,9 @@ const getAllMovies = () => {
     });
 };
 
+// This function fetches a single movie by its ID.
 const getMovieById = (movieId) => {
+    if(!movieId) return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "GET",
         headers: {
@@ -70,7 +74,9 @@ const getMovieById = (movieId) => {
     });
 };
 
+// This function updates an existing movie by its ID with the provided form data.
 const updateMovie = (movieId, formData) => {
+    if(!movieId) return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "PUT",
         headers: {
@@ -96,7 +102,9 @@ const updateMovie = (movieId, formData) => {
     });
 };
 
+// This function deletes a movie by its ID.
 const deleteMovie = (movieId) => {
+    if(!movieId) return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "DELETE",
         headers: {

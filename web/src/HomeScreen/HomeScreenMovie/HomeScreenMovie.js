@@ -1,13 +1,15 @@
 import './HomeScreenMovie.css';
 import { useState, useEffect, useRef } from 'react';
 import { AllMovies } from '../../Admin/AdminActions/Movie/AllMovies/AllMovies';
+import { useGlobalContext } from '../../GlobalContext';
 
 function HomeScreenMovie() {
     const { allMovies } = AllMovies();
     const [videoSrc, setVideoSrc] = useState('');
     const [selectedMovie, setSelectedMovie] = useState(null);
     const videoRef = useRef(null);
-    console.log("All Movies:", allMovies);
+    const { fileUrl } = useGlobalContext(); 
+
 
     useEffect(() => {
         if (allMovies.length > 0) {
@@ -19,9 +21,9 @@ function HomeScreenMovie() {
 
     useEffect(() => {
         if (selectedMovie) {
-            setVideoSrc(`http://localhost:12345/api/${selectedMovie.trailer}`);
+            setVideoSrc(`${fileUrl}${selectedMovie.trailer}`);
         }
-    }, [selectedMovie]);
+    }, [selectedMovie, fileUrl]);
 
     useEffect(() => {
         if (videoRef.current && videoSrc) {

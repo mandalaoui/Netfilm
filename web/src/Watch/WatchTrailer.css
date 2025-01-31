@@ -2,6 +2,6 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: black;
-    color: white;
+    background-color: var(--background-color); /* Uses theme variable */
+    color: var(--text-color); /* Uses theme variable */
 }

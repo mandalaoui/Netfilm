@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function View({ movie }) {
-        const [isPlaying, setIsPlaying] = useState(false);
-        const videoSrc = `http://localhost:12345/api/${movie}`;
-        console.log(videoSrc);
+        const [isPlaying, setIsPlaying] = useState(false);  // Track if the video is playing
+        const videoSrc = `${getComputedStyle(document.documentElement).getPropertyValue('--FILE_URL')}${movie}`; // Movie video source
         const navigate = useNavigate();
 
         useEffect(() => {
@@ -19,14 +18,14 @@ function View({ movie }) {
         const handlePlay = () => {
                 const video = document.querySelector('video');
                 if (video) {
-                        video.muted = false;
-                        video.play();
-                        setIsPlaying(true); 
+                        video.muted = false;  // Unmute the video
+                        video.play(); // Start playing the video
+                        setIsPlaying(true); // Update state to reflect the video is playing
                 }
         };
 
         const goToHome = () => {
-                navigate('../../home');
+                navigate('../../home'); // Navigate to the home screen
             };
 
         return (

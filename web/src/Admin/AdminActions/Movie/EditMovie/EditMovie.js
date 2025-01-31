@@ -23,11 +23,9 @@ function EditMovie() {
                 const allCategoryDetails = await Promise.all(
                     categories.map(async (category) => {
                         const fullCategory = await getCategoryById(category);
-                        return fullCategory; 
+                        return fullCategory;
                     })
                 );
-                console.log(allCategoryDetails);
-
                 setAllCategories(allCategoryDetails);
             } catch (error) {
                 console.error("Error fetching all categories:", error);
@@ -53,6 +51,7 @@ function EditMovie() {
         fetchMovie(); // Call the async function to fetch the movie details
     }, [movieId]);
 
+    // Fetches categories for the current movie
     useEffect(() => {
         if (currentMovie && currentMovie.categories.length > 0) {
             const fetchCategories = async () => {
@@ -70,6 +69,7 @@ function EditMovie() {
         }
     }, [currentMovie]);
 
+    // Validates form input fields
     useEffect(() => {
         function validateInput(input) {
             const errorElement = document.querySelector(`#${input.id}-error`);
@@ -122,10 +122,12 @@ function EditMovie() {
         };
     }, []);
 
+    // Handles returning to the admin page
     const handleReturn = () => {
         window.location.href = '/admin';
     };
-    
+
+    // Handles form submission for updating a movie
     const handleSubmit = () => {
         const renameFilePath = (filePath, newName) => {
             const ext = filePath.split('.').pop();
@@ -168,18 +170,14 @@ function EditMovie() {
         });
     };
 
-    
-
+    // Handles category change for the movie
     const handleCategoryChange = (e, categoryId) => {
         const updatedCategories = e.target.checked
-            ? [...selectedCategories, categoryId] 
+            ? [...selectedCategories, categoryId]
             : selectedCategories.filter((id) => id !== categoryId);
-    
+
         setSelectedCategories(updatedCategories);
     };
-    
-    
-
 
     return (
         <div className="Edit-Movie-body">
@@ -264,7 +262,7 @@ function EditMovie() {
                                             <input
                                                 type="checkbox"
                                                 id={`category-${category.id}`}
-                                                checked={selectedCategories.includes(category.id)} 
+                                                checked={selectedCategories.includes(category.id)}
                                                 onChange={(e) => handleCategoryChange(e, category.id)}
                                             />
                                             <label htmlFor={`category-${category.id}`} className="category-label">

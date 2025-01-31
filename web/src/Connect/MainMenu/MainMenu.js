@@ -1,12 +1,13 @@
 import './MainMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
 import { useEffect, useState } from 'react';
-
+import { useGlobalContext } from '../../GlobalContext.js';
 
 function MainMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
     const [isAdminValue, setIsAdmin] = useState(false);
+    const { fileUrl } = useGlobalContext(); 
     // Function to navigate between pages
     const navigateToPage = (page) => {
         window.location.href = page; // Navigate to the given page
@@ -21,7 +22,7 @@ function MainMenu() {
                 username: () => /^[a-zA-Z0-9]+$/.test(input.value.trim()) && input.value.trim().length >= 3, // Validates username format
                 password: () => input.value.trim().length >= 6, // Validates password length
                 confirm: () => input.value === document.querySelector('#password').value, // Confirms password match
-                nickname: () => input.value.trim().length >= 3 // Validates nickname length
+                nickname: () => input.value.trim().length >= 1 // Validates nickname length
             };
 
             const isValid = validationRules[input.id]?.();
@@ -59,19 +60,31 @@ function MainMenu() {
     }, []);
 
     const validateUserData = (userData) => {
-        if (!userData.username) return alert("Please enter username");
-        if (!userData.password) return alert("Please enter password");
-
+        if (!userData.username) {
+            alert("Please enter username");
+            return false;
+        }
+        if (!userData.password) {
+            alert("Please enter password");
+            return false;
+        }
+    
         const repeatedPassword = document.querySelector('input[placeholder="Confirm"]').value;
-        if (userData.password !== repeatedPassword) return alert("Passwords do not match.");
-
-        if (!userData.nickname) return alert("Please enter nickname");
+        if (userData.password !== repeatedPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+    
+        if (!userData.nickname) {
+            alert("Please enter nickname");
+            return false;
+        }
+        
         return true;
     };
 
 
     const handleRegister = async () => {
-        console.log(`isAdmin: ${isAdminValue}`);
         const userData = {
             username: document.querySelector('input[placeholder="Username"]').value,
             password: document.querySelector('input[placeholder="Password"]').value,
@@ -92,7 +105,7 @@ function MainMenu() {
         if (imageFile != null)
             formData.append('photo', imageFile);
         try {
-            const response = await fetch("http://localhost:12345/api/users/", {
+            const response = await fetch(`${fileUrl}users/`, {
                 method: "POST",
                 body: formData,
             });
@@ -129,7 +142,7 @@ function MainMenu() {
         const errorElement = document.getElementById('login-error');
 
         try {
-            const response = await fetch("http://localhost:12345/api/tokens/", {
+            const response = await fetch(`${fileUrl}tokens/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -189,7 +202,7 @@ function MainMenu() {
                                 <input type="password" id="confirm" placeholder="Confirm" />
                                 <p className="error-message" id="confirm-error">Passwords do not match.</p>
                                 <input type="text" id="nickname" placeholder="Nickname" />
-                                <p className="error-message" id="nickname-error">Nickname cannot be less than 3 letters.</p>
+                                <p className="error-message" id="nickname-error">Please enter nickname.</p>
                                 <div className="admin-checkbox-container">
                                     <label>Admin</label>
                                     <div className="Is-Admin-checkbox">

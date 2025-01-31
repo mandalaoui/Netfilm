@@ -36,7 +36,6 @@ function CreateMovie() {
     }, []);
 
     useEffect(() => {
-        console.log(specificCategory);
         if (specificCategory) {
             getCategoryById(specificCategory)
                 .then((category) => {
@@ -156,64 +155,60 @@ function CreateMovie() {
     };
 
     const handleCategoryChange = (e, categoryId) => {
-        console.log('Category selected:', categoryId);
-
         const updatedCategories = e.target.checked
             ? [...selectedCategories, categoryId] 
             : selectedCategories.filter((id) => id !== categoryId); 
 
         setSelectedCategories(updatedCategories);
-        console.log('Updated selected categories:', updatedCategories);
-
     };
 
     return (
         <div className="Create-Movie-body">
             <UpperMenu />
             <div className="Create-Movie-modal-content">
-                <button className="close-btn" onClick={() => window.location.href = '/admin'}>
+                <button className="close-btn-c-m" onClick={() => window.location.href = '/admin'}>
                     <i className="bi bi-x-lg"></i>
                 </button>
                 <h2>Create New Movie</h2>
                 <div className="modal-movie-center">
                     <div className="modal-movie-left">
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <input type="text" id="movieName" placeholder="Movie Name" />
                             <p className="error-message-movie" id="movieName-error">Movie name must be at least 2 characters long.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <input type="text" id="movieTime" placeholder="Duration (e.g., 1:30)" />
                             <p className="error-message-movie" id="movieTime-error">Duration must be in the format "1:30".</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <input type="number" id="publicationYear" placeholder="Publication Year" />
                             <p className="error-message-movie" id="publicationYear-error">Year must be between 0 and the current year.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <input type="number" id="age" placeholder="Age Rating" />
                             <p className="error-message-movie" id="age-error">Age must be even and greater than 0.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <textarea placeholder="Description" id="description" ></textarea>
                         </div>
                     </div>
                     <div className="modal-movie-right">
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <h6>Movie</h6>
                             <input type="file" id="video" accept="video/*" />
                             <p className="error-message-movie" id="video-error">Please upload a movie file.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <h6>Movie Picture</h6>
                             <input type="file" id="image" accept="image/*" />
                             <p className="error-message-movie" id="image-error">Please upload a movie picture.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <h6>Trailer</h6>
                             <input type="file" id="trailer" accept="video/*" />
                             <p className="error-message-movie" id="trailer-error">Please upload a trailer file.</p>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-c-m">
                             <h6>Categories</h6>
                             {specificCategory ? (
                                 <small>• {currentCategory?.name}</small>

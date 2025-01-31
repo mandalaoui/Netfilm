@@ -5,12 +5,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    color: white;
-    background-color: #181818;
+    color: var(--text-color); /* Apply text color */
+    background-color: var(--background-color-dark); /* Apply background color */
     font-family: Arial, sans-serif;
     padding-bottom: 50px;
 }
 
+/* Movie details actions */
 .movie-details-actions {
     margin-right: 10%;
     width: 35%;
@@ -19,10 +20,11 @@
     gap: 15px;
 }
 
+/* Play buttons */
 .movie-details-play-movie, 
 .movie-details-play-trailer {
-    background-color: #e50914;
-    color: white;
+    background-color: var(--button-background); /* Apply button background */
+    color: var(--text-color); /* Apply button text color */
     font-size: 1.2rem;
     padding: 12px 24px;
     border: none;
@@ -30,14 +32,19 @@
     cursor: pointer;
     transition: background 0.3s ease-in-out;
 }
+
+/* Play trailer button - Different color */
 .movie-details-play-trailer {
     background-color: #5e5e5e;
 }
+
+/* Button hover effect */
 .movie-details-play-movie:hover, 
 .movie-details-play-trailer:hover {
     background-color: #b20710;
 }
 
+/* Movie details info */
 .movie-details-info {
     display: flex;
     align-items: center;
@@ -49,25 +56,29 @@
     margin-left: 5%;
 }
 
+/* Movie image styling */
 .movie-details-image {
     width: 50%;
     border-radius: 10px;
 }
 
+/* Movie description */
 .movie-details {
     text-align: left;
     font-size: 1.3rem;
     max-width: 600px;
 }
 
+/* Movie details paragraph styling */
 .movie-details p {
     margin: 5px 0;
     line-height: 1.5;
 }
 
-.movie-card-category {
-    background-color: #333;
-    color: #fff;
+/* Category styling */
+.movie-details-category {
+    background-color: var(--admin-box); /* Apply admin box background */
+    color: var(--text-color); /* Apply text color */
     padding: 5px 10px;
     border-radius: 3px;
     margin: 5px;
@@ -75,6 +86,7 @@
     font-size: 0.9rem;
 }
 
+/* Media queries for responsiveness */
 @media (max-width: 1000px) {
     .movie-details-container {
         font-size: 1rem;
