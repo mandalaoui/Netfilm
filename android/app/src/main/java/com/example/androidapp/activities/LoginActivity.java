@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                i.putExtra("movieId", "679629522d6eaf038e9e1768");
+                                i.putExtra("movieId", "6792b52c10a40e0b80dd798d");
                                 startActivity(i);
                             }
                         } else if (response.code() == 404) {

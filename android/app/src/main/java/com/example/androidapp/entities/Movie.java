@@ -97,9 +97,6 @@ public class Movie {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
 //    public String getId() {
 //        return _id;
 //    }
@@ -113,8 +110,6 @@ public class Movie {
         this.name = name;
     }
 
-    public Movie(String id, String name, List<String> categories, String movie_time, String image, int publication_year, String description, int age) {
-        this.id = id;
 //    public Movie(String id, String name, String movie_time, String image, int publication_year, String description, int age) {
 //        this.id = id;
 //        this.name = name;
@@ -145,6 +140,6 @@ public class Movie {
         this.Publication_year = publication_year;
         this.description = description;
         this.age = age;
+        this.video = video;
     }
-
 }

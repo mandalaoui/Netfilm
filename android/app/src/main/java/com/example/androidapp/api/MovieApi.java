@@ -59,7 +59,7 @@ public class MovieApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    String userId = "679178e884e6da9a833f5452";
+    String userId = "6792b52c10a40e0b80dd798d";
 
     public void getSearchedMovies(final Callback<List<Movie>> callback, String query) {
         Call<List<Movie>> call = apiService.getSearchedMovies(userId, query);
@@ -80,7 +80,7 @@ public class MovieApi {
         });
     }
     public void getListOfMovies() {
-        String userId = "679178e884e6da9a833f5452";
+        String userId = "6792b52c10a40e0b80dd798d";
         Call<List<Movie>> call = apiService.getMovies(userId);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
@@ -126,7 +126,7 @@ public class MovieApi {
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
-        String userId= "679213ef1cebc10d8c2d7bc3";
+        String userId= "6792b52c10a40e0b80dd798d";
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -158,7 +158,7 @@ public class MovieApi {
     }
 
     public void deleteMovie(String movieId) {
-        String userId = "679178e884e6da9a833f5452";
+        String userId = "6792b52c10a40e0b80dd798d";
         Call<Movie> call = apiService.deleteMovie(movieId,userId);
         call.enqueue(new Callback<Movie>() {
             @Override
