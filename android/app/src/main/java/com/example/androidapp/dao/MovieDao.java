@@ -21,7 +21,7 @@ public interface MovieDao {
 //    @Query("SELECT * FROM movies")
 //    LiveData<List<Movie>> getAllMovies();
 
-    @Query("DELETE FROM movies WHERE _id = :movieId")
+    @Query("DELETE FROM Movie WHERE _id = :movieId")
     void deleteMovieById(String movieId);
 
 //    @Query("SELECT * FROM movies")
@@ -32,8 +32,8 @@ public interface MovieDao {
     @Query("SELECT * FROM Movie")
     List<Movie> index();
 
-    @Query("SELECT * FROM Movie WHERE id = :id")
-    Movie getMovieById(String id);
+//    @Query("SELECT * FROM movies WHERE id = :id")
+//    Movie getMovieById(String id);
 
     @Insert
     void insert(Movie... movies);
@@ -44,7 +44,7 @@ public interface MovieDao {
 //    @Delete
 //    void delete(Movie... movies);
 
-
+    @Query("DELETE FROM Movie")
     void clear();
 
     @Insert

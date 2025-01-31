@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
-                                Intent i = new Intent(LoginActivity.this, ManagmentActivity.class);
+                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                 i.putExtra("movieId", "679629522d6eaf038e9e1768");
                                 startActivity(i);
                             }

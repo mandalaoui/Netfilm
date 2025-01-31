@@ -59,7 +59,7 @@ public class MovieApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    String userId = "6792b52c10a40e0b80dd798d";
+    String userId = "679178e884e6da9a833f5452";
 
     public void getSearchedMovies(final Callback<List<Movie>> callback, String query) {
         Call<List<Movie>> call = apiService.getSearchedMovies(userId, query);

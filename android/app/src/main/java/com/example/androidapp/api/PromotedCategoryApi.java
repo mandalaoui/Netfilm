@@ -37,7 +37,7 @@ public class PromotedCategoryApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    String userId = "6792b52c10a40e0b80dd798d";
+    String userId = "679178e884e6da9a833f5452";
     public void getCategories() {
         Call<List<PromotedCategory>> call = apiService.getCategories(userId);
         call.enqueue(new Callback<List<PromotedCategory>>() {

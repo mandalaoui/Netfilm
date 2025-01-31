@@ -57,7 +57,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         }
 
         holder.moviePoster.setOnClickListener(v -> {
-            String movieId = movie.getId();
+            String movieId = movie.get_id();
             Log.d("MovieAdapter", "movie ID: " + movieId);
             if (selectedMovieIds.contains(movieId)) {
                 selectedMovieIds.remove(movieId);

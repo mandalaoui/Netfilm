@@ -1,12 +1,15 @@
 package com.example.androidapp.api;
 
-import
+import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.User;
+import com.example.androidapp.entities.Category;
 
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -41,8 +44,10 @@ public interface ApiService {
     );
     @GET("movies/{movieId}")
     Call<Movie> getMovie(@Path("movieId") String movieId, @Header("userId") String userId);
+
     @GET("movies/{movieId}/recommend/")
     Call<List<Movie>> RecommendedMovies(@Path("movieId") String movieId, @Header("userId") String userId);
+
     @POST("tokens")
     Call<LoginResponse> login(@Body User user);
 
@@ -62,22 +67,14 @@ public interface ApiService {
     Call<List<Movie>> getSearchedMovies(@Header("userId") String userId, @Path("query") String query);
 
     @DELETE("movies/{movieId}")
-        Call<Movie> deleteMovie(@Path("movieId") String movieId, @Header("userId") String userId);
-
-
-}
+    Call<Movie> deleteMovie(@Path("movieId") String movieId, @Header("userId") String userId);
 
     @GET("movies")
     Call<List<PromotedCategory>> getCategories(@Header("userId") String userId);
 
-    @GET("movies/search/{query}")
-    Call<List<Movie>> getSearchedMovies(@Header("userId") String userId, @Path("query") String query);
 
-    @GET("categories")
-    Call<List<Category>> getAllCategories(@Header("userId") String userId);
-
-    @GET("movies/{id}")
-    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
+//    @GET("movies/{id}")
+//    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
 
     @GET("movies/{id}/recommend")
     Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);

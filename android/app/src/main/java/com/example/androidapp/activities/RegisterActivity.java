@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnBack.setOnClickListener(v -> {
-            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
             startActivity(i);
         });
         // Initialize AppContext with activity context

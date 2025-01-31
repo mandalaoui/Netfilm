@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 
 import java.util.List;
 
-@Entity (tableName = "movies")
+@Entity (tableName = "Movie")
 @TypeConverters(ConverterMovie.class)
 public class Movie {
     @PrimaryKey
@@ -20,8 +20,9 @@ public class Movie {
     private String movie_time;
     private String image;
     private int Publication_year;
+
     private String description;
-    private Number age;
+    private int age;
     private String video;
 
     public String getVideo() {
@@ -52,7 +53,18 @@ public class Movie {
         return movie_time;
     }
 
+    @NonNull
+    public String get_id() {
+        return _id;
+    }
 
+    public void set_id(@NonNull String _id) {
+        this._id = _id;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
     public void setMovie_time(String movie_time) {
         this.movie_time = movie_time;
     }
@@ -81,17 +93,17 @@ public class Movie {
         this.description = description;
     }
 
-    public Number getAge() {
+    public int getAge() {
         return age;
     }
 
-    public String getId() {
-        return _id;
-    }
-
-    public void setId(String id) {
-        this._id = id;
-    }
+//    public String getId() {
+//        return _id;
+//    }
+//
+//    public void setId(String id) {
+//        this._id = id;
+//    }
 
     @Ignore
     public Movie(String name) {
@@ -119,13 +131,13 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age, String video) {
-        this.id = id;
+    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, int publication_year, String description, int age, String video) {
+        this._id = id;
         this.name = name;
         this.categories = categories;
         this.movie_time = movie_time;
         this.image = image;
-        Publication_year = publication_year;
+        this.Publication_year = publication_year;
         this.description = description;
         this.age = age;
         this.video = video;
