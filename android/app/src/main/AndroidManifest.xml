@@ -21,33 +21,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activity.DeleteMovieActivity"
+            android:name=".activities.DeleteMovieActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CreateCategoryActivity"
+            android:name=".activities.CreateCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.CreateMovieActivity"
+            android:name=".activities.CreateMovieActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.ManagmentActivity"
+            android:name=".activities.ManagmentActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.VideoMovieActivity"
+            android:name=".activities.VideoMovieActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MovieActivity"
+            android:name=".activities.MovieActivity"
             android:exported="false" /> <!-- <activity -->
         <!-- android:name=".activity.HomeActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.NetflixActivity"
+            android:name=".activities.NetflixActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

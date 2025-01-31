@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 
 import com.example.androidapp.dao.MovieDao;
 
-@Database(entities = {Movie.class, Category.class}, version = 4)
+@Database(entities = {Movie.class, Category.class}, version = 5)
 @TypeConverters(ConverterMovie.class)
 public abstract class LocalDatabase extends RoomDatabase {
     private static LocalDatabase instance;

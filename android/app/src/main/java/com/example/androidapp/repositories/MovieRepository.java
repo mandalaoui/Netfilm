@@ -1,6 +1,5 @@
 package com.example.androidapp.repositories;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,19 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.androidapp.AppContext;
 import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.dao.MovieDao;
-import com.example.androidapp.entities.Category;
-import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.entities.LocalDatabase;
 import com.example.androidapp.entities.Movie;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieRepository {
     private MovieDao dao;
@@ -77,39 +69,6 @@ public class MovieRepository {
 //        });
         api.deleteMovie(movieId);
     }
-
-//    private RequestApi requestApi;
-//    private MutableLiveData<List<Movie>> moviesFromApi = new MutableLiveData<>();
-//    private List<Category> categories = new ArrayList<>();
-//    private List<Movie> allMoviesList = new ArrayList<>();
-//
-//
-//    public MovieRepository(Application application) {
-//        requestApi = new RequestApi(application);
-//    }
-//
-//    public LiveData<List<Movie>> getMoviesFromApi() {
-//        return moviesFromApi;
-//    }
-//
-//    public void fetchMoviesFromApi() {
-//        requestApi.getListOfMovies(new Callback<List<Movie>>() {
-//            @Override
-//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    List<Movie> movies = response.body();
-//                    moviesFromApi.setValue(movies);
-//                } else {
-//                    Log.e("Movie", "Error: " + response.code());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Movie>> call, Throwable t) {
-//                Log.e("Movie", "Error: " + t.getMessage());
-//            }
-//        });
-//    }
 
 }
 

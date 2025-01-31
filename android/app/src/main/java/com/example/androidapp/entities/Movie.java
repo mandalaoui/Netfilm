@@ -22,7 +22,7 @@ public class Movie {
     private int Publication_year;
     private String description;
     private int age;
-    private String videoUrl;
+    private String video;
 
     public String getName() {
         return name;
@@ -44,12 +44,12 @@ public class Movie {
         return movie_time;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getVideo() {
+        return video;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public void setMovie_time(String movie_time) {

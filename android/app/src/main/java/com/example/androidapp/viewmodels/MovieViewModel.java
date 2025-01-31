@@ -45,51 +45,5 @@ public class MovieViewModel extends ViewModel {
         Log.d("CategoriesViewModel", "Reloading categories...");
         repository.reload();
     }
-//    private MovieRepository repository;
-//    private LiveData<List<Movie>> allMovies;
-//    private LiveData<List<Movie>> moviesFromApi;
-//
-//    public MovieViewModel(Application application) {
-//        super(application);
-//        repository = new MovieRepository(application);
-//        allMovies = repository.getAllMovies();
-//        moviesFromApi = repository.getMoviesFromApi();
-//    }
-//
-//    public LiveData<List<Movie>> getAllMovies() {
-//        return allMovies;
-//    }
-//
-//    public LiveData<List<Movie>> getMoviesFromApi() {
-//        return moviesFromApi;
-//    }
-//
-//    public void insertCategory(Category category) {
-//        repository.insertCategory(category);
-//    }
-//}
-//}
-//    public void fetchMoviesFromApi() {
-//        movieRepository.fetchMoviesFromApi();
-//    }
 
-
-
-
-
-//    public LiveData<Movie> getMovie(String movieId, String userId) {
-//        movieRepository.getMovie(movieId, userId, new Callback<Movie>() {
-//            @Override
-//            public void onResponse(Call<Movie> call, Response<Movie> response) {
-//                if (response.isSuccessful()) {
-//                    movieLiveData.setValue(response.body());
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Movie> call, Throwable t) {
-//            }
-//        });
-//        return movieLiveData;
-//    }
 }

@@ -1,7 +1,6 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
-import com.example.androidapp.adapter.MovieAdapter;
+import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityCreateCategoryBinding;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;

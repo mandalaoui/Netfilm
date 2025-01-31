@@ -46,7 +46,7 @@ public interface ApiService {
     @GET("movies/{movieId}/recommend/")
     Call<List<Movie>> RecommendedMovies(@Path("movieId") String movieId, @Header("userId") String userId);
     @POST("tokens")
-    Call<ApiResponse> login(@Body User user);
+    Call<LoginResponse> login(@Body User user);
 
 //    @POST("categories/")
 //    Call<Void> createCategory(

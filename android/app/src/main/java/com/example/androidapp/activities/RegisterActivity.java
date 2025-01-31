@@ -1,4 +1,4 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,16 +17,10 @@ import androidx.core.content.ContextCompat;
 
 import com.example.androidapp.R;
 import com.example.androidapp.entities.User;
-import com.example.androidapp.api.RequestApi;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
-import com.example.androidapp.entities.User;
 
 import java.io.File;
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -76,8 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 User user = new User(username, password, nickname);
 
-                RequestApi requestApi = new RequestApi(this);
-                requestApi.registerUser(user,imageFile);
+                UserApi userApi = new UserApi(this);
+                userApi.registerUser(user,imageFile);
                 }
         });
 

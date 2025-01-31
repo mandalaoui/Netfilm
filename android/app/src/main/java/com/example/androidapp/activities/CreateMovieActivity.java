@@ -1,4 +1,4 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,9 +24,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
-import com.example.androidapp.adapter.CategoryAdapter;
-import com.example.androidapp.adapter.MovieAdapter;
-import com.example.androidapp.api.RequestApi;
+import com.example.androidapp.adapters.CategoryAdapter;
+import com.example.androidapp.adapters.MovieAdapter;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityCreateMovieBinding;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
@@ -90,7 +90,7 @@ public class CreateMovieActivity extends AppCompatActivity {
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
         });
-        RequestApi apiRequest = new RequestApi(this);
+        UserApi apiRequest = new UserApi(this);
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {

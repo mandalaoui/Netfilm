@@ -1,4 +1,4 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +8,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.entities.User;
-import com.example.androidapp.api.ApiResponse;
-import com.example.androidapp.api.RequestApi;
+import com.example.androidapp.api.LoginResponse;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
-import com.example.androidapp.entities.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,15 +36,15 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.editPassword.getText().toString();
             if (!username.isEmpty() && !password.isEmpty()) {
                 User user = new User(username, password);
-                RequestApi requestApi = new RequestApi(this);
-                requestApi.loginUser(user, new Callback<ApiResponse>() {
+                UserApi userApi = new UserApi(this);
+                userApi.loginUser(user, new Callback<LoginResponse>() {
                     @Override
-                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         Log.d("Register", "Response raw body: " + response.raw().body());
                         if (response.isSuccessful() && response.body() != null) {
-                            ApiResponse apiResponse = response.body();
-                            if (apiResponse.getToken() != null) {
-                                String userId = apiResponse.getToken();
+                            LoginResponse loginResponse = response.body();
+                            if (loginResponse.getToken() != null) {
+                                String userId = loginResponse.getToken();
                                 Log.d("Register", "User successfully logged i ");
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                     @Override
-                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
                         Log.e("LoginActivity", "Error connecting to the server", t);
 
                         Toast.makeText(LoginActivity.this, "Error connecting to the server, please try again", Toast.LENGTH_SHORT).show();

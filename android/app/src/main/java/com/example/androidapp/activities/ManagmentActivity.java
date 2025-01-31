@@ -1,4 +1,4 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androidapp.adapter.MovieAdapter;
+import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityManagmentBinding;
 
 import java.util.List;

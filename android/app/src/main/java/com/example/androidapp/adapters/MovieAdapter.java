@@ -1,4 +1,4 @@
-package com.example.androidapp.adapter;
+package com.example.androidapp.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Movie;
 
@@ -99,7 +97,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvDescription = itemView.findViewById(R.id.movieDescription);
             tvTime = itemView.findViewById(R.id.movieTime);
             videoView = itemView.findViewById(R.id.videoView);
-            moviePoster = itemView.findViewById(R.id.iv_movie);
+            moviePoster = itemView.findViewById(R.id.imageBtnMovie);
         }
     }
 

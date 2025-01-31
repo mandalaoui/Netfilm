@@ -1,26 +1,18 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.R;
-import com.example.androidapp.adapter.MovieAdapter;
-import com.example.androidapp.databinding.ActivityCreateCategoryBinding;
-import com.example.androidapp.databinding.ActivityCreateMovieBinding;
+import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityDeleteMovieBinding;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;

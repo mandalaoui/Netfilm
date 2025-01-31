@@ -1,9 +1,7 @@
-package com.example.androidapp.activity;
+package com.example.androidapp.activities;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.media3.ui.PlayerView;
