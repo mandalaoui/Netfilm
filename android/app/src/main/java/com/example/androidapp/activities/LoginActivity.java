@@ -6,11 +6,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.androidapp.entities.User;
 
 import com.example.androidapp.api.LoginResponse;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
-import com.example.androidapp.entities.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,14 +43,15 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("Register", "Response raw body: " + response.raw().body());
                         if (response.isSuccessful() && response.body() != null) {
                             LoginResponse loginResponse = response.body();
-                            if (loginResponse.getUserId() != null) {
-                                String userId = loginResponse.getUserId();
+                            if (loginResponse.getToken() != null) {
+                                String userId = loginResponse.getToken();
+
                                 Log.d("Register", "User successfully logged i ");
 
                                 Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-//                                intent.putExtra("USER_ID", userId);
+                                i.putExtra("movieId", "679629522d6eaf038e9e1768");
                                 startActivity(i);
                             }
                         } else if (response.code() == 404) {

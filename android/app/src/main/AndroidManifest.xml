@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".AppContext"
@@ -17,6 +20,22 @@
         android:theme="@style/Theme.AndroidApp"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.DeleteMovieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CreateCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CreateMovieActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ManagmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.VideoMovieActivity"
+            android:exported="false" />
+
         <activity
             android:name=".activities.CategoriesActivity"
             android:exported="false" />

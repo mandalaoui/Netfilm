@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".activities.CreateCategoryActivity">
+
+
+
+    <!-- RecyclerView -->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="105dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="16dp"
+            android:text="create category"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/categoryNameInput"
+            android:layout_width="380dp"
+            android:layout_height="74dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="591dp"
+            android:hint="Enter category name"
+            android:inputType="text"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#B0B0B0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/isPromotedLabel"
+            android:layout_width="203dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="108dp"
+            android:layout_marginBottom="551dp"
+            android:gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:text="Is Promoted?"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/categoryNameInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/movieListLabel"
+            android:layout_width="123dp"
+            android:layout_height="41dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="147dp"
+            android:layout_marginBottom="429dp"
+            android:textColor="#FFFFFF"
+            android:text="Select Movies"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintTop_toTopOf="@+id/categoryNameInput" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewMovies"
+            android:layout_width="391dp"
+            android:layout_height="312dp"
+            android:layout_alignBottom="@+id/createCategoryButton"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="76dp"
+            android:orientation="horizontal" />
+
+        <Button
+            android:id="@+id/createCategoryButton"
+            android:layout_width="347dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#A91616"
+            android:text="Create Category" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/isPromotedSwitch"
+            android:layout_width="72dp"
+            android:layout_height="61dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="180dp"
+            android:layout_marginBottom="483dp" />
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

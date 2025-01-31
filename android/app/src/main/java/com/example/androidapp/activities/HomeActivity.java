@@ -103,16 +103,16 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("HomeActivity", menu.getItem(item.getItemId() - 1).toString());
                 switch (item.getItemId()) {
                     case 1:
-                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        intent = new Intent(HomeActivity.this, CreateMovieActivity.class);
                         break;
                     case 2:
                         intent = new Intent(HomeActivity.this, ManagementActivity.class);
                         break;
                     case 3:
-                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        intent = new Intent(HomeActivity.this, DeleteMovieActivity.class);
                         break;
                     case 4:
-                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        intent = new Intent(HomeActivity.this, CreateCategoryActivity.class);
                         break;
                     case 5:
                         intent = new Intent(HomeActivity.this, ManagementActivity.class);

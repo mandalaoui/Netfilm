@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 
 
 // Function to create a new movie and add it to the relevant categories.
-const createMovie = async (name, categories, movie_time, image, Publication_year, description, age) => {
-    const movie = new Movie({ name, categories, movie_time, image, Publication_year, description, age });
+const createMovie = async (name, categories, movie_time, image, Publication_year, description, video) => {
+    const movie = new Movie({ name, categories, movie_time, image, Publication_year, description, video });
 
     // Add the movie to each category's movie list
     for (const categoryId of categories) {
@@ -19,6 +19,8 @@ const createMovie = async (name, categories, movie_time, image, Publication_year
     // Save the new movie in the database
     return await movie.save();
 };
+
+const getAllMovie = async () => { return await Movie.find({}); };
 
 // Function to get a movie by its ID
 const getMovieById = async (id) => { 
@@ -69,7 +71,7 @@ const getMoviesByCategories = async (userId) => {
  };
 
 // Function to update an existing movie's details
-const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description, age) => {
+const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description,videoUrl, age) => {
     const movie = await getMovieById(id);
     if (!movie) return null;
 
@@ -99,6 +101,7 @@ const updateMovie = async (id, name, categories, movie_time, image, Publication_
     movie.Publication_year = Publication_year;
     movie.description = description;
     movie.age = age;
+    movie.videoUrl = videoUrl;
 
     // Add the movie to the new categories
     for (const categoryId of categories) {
@@ -153,4 +156,4 @@ const movieIncludeQuery =  async (query) => {
 }
 
 // Exporting all functions to be used in the service layer.
-module.exports = {createMovie, getMovieById, updateMovie, deleteMovie, getMoviesByCategories, movieIncludeQuery }
+module.exports = {createMovie, getMovieById, updateMovie, deleteMovie, getMoviesByCategories, movieIncludeQuery ,getAllMovie}

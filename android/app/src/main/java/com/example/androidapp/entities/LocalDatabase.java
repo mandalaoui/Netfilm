@@ -6,9 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-
-import com.example.androidapp.dao.CategoryDao;
 import com.example.androidapp.dao.MovieDao;
+import com.example.androidapp.dao.CategoryDao;
 import com.example.androidapp.dao.PromotedCategoryDao;
 
 @Database(entities = {PromotedCategory.class, Movie.class, Category.class}, version = 7)

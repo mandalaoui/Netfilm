@@ -3,8 +3,6 @@ package com.example.androidapp.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
 @Entity
 public class User {
     @PrimaryKey
@@ -60,6 +58,12 @@ public class User {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
+    }
+    public User(String username, String password, String nickname, String photo) {
+        this.username = username;
+        this.password = password;
+        this.nickname = nickname;
+        this.photo = photo;
     }
     public User(String username, String password) {
         this.username = username;

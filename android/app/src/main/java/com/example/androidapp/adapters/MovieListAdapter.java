@@ -1,6 +1,9 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
+import com.example.androidapp.entities.Movie;
+
+import android.content.Context;
 import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.activities.MovieActivity;
 import com.example.androidapp.entities.Movie;
@@ -47,7 +50,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             final Movie current = movies.get(position);
             Log.d("MovieListAtapter", current.getImage());
             Glide.with(holder.itemView.getContext())
-                    .load("http://10.0.2.2:12345/" + current.getImage())
+                    .load("http://10.0.2.2:12345/api/" + current.getImage())
                     .into(holder.movieImage);
 
             holder.movieImage.setTag(current);
@@ -56,7 +59,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             holder.movieImage.setOnClickListener(v -> {
                 if (context instanceof HomeActivity) {
                     Intent intent = new Intent(v.getContext(), MovieActivity.class);
-                    intent.putExtra("id", current.getId());
+                    intent.putExtra("id", current.get_id());
                     intent.putExtra("name", current.getName());
 //                intent.putExtra("categories", current.getCategories());
                     intent.putExtra("movie_time", current.getMovie_time());

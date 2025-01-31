@@ -3,17 +3,48 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: <ID>
+userId: 679213ef1cebc10d8c2d7bc3
 
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: <ID>
+userId: 6793d58f1ef6aabb4a5638e1
 Content-Type: application/json
 
-{
-"name": "SpiderMan 3", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2012, "description": "good one", "age": 10
-}
+    {
+        "name": "movie_6",
+        "categories":["6798b26552ed132324ff9943", "6798b26b52ed132324ff9948","6798b25952ed132324ff993e", "677414bbcc263c85d0d0fa1a"],
+        "movie_time":"2:30",
+        "Publication_year":2024,
+        "description": "try.",
+        "image": "server\api\uploads\moviePic_1.jpg",
+        "video": "uploads/poo.mp4"
+    }
+
+# curl -X POST http://localhost:12345/api/movies/ \
+#     -H "userId: 6793d58f1ef6aabb4a5638e1" \
+#     -F "name=movie_10" \
+#     -F "categories=[\"6798b26552ed132324ff9943\", \"6798b26b52ed132324ff9948\", \"6798b25952ed132324ff993e\", \"677414bbcc263c85d0d0fa1a\"]" \
+#     -F "movie_time=2:30" \
+#     -F "Publication_year=2024" \
+#     -F "description=try." \
+#     -F "image=@/path/uploads/moviePic_1.jpg" \
+#     -F "video=@/path/uploads/poo.mp4"
+
+# POST http://localhost:12345/api/movies/
+# userId: 6793d58f1ef6aabb4a5638e1
+# Content-Type: multipart/form-data
+
+# {
+#     "name": "movie_6",
+#     "categories":["6798b26552ed132324ff9943", "6798b26b52ed132324ff9948","6798b25952ed132324ff993e", "677414bbcc263c85d0d0fa1a"],
+#     "movie_time":"2:30",
+#     "Publication_year":2024,
+#     "description": "try.",
+#     "image": "uploads/1737996620418.jpg",
+#     "video": "uploads/poo.mp4"
+# }
+
 
 ### Return movie according to user search
 
@@ -22,17 +53,28 @@ userId: <ID>
 
 ### Get a specific movie by ID
 
-GET http://localhost:12345/api/movies/:id 
-userId: <ID>
+GET http://localhost:12345/api/movies/6794d57dc3b3353fd3a318ac
+userId: 6793d58f1ef6aabb4a5638e1
+
+### Get all movie
+
+GET http://localhost:12345/api/movies/allmovies
+userId: 679178e884e6da9a833f5452
 
 ### Update a movie
 
 PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
 Content-Type: application/json 
-userId: <ID>
+userId: 6793d58f1ef6aabb4a5638e1
 
 {
-"name": "after change", "categories":[], "movie_time":"2:30", "image":"", "Publication_year":2024, "description": "try.", "age":18
+"name": "after change",
+"movie_time":"2:30",
+"Publication_year":2024,
+"description": "try.",
+ "categories":["6798b26552ed132324ff9943"],
+"image": "uploads/moviePic_1.jpg",
+"videoUrl": "uploads/poo.mp4"
 }
 
 ### Delete a movie
@@ -42,30 +84,30 @@ userId: <ID>
 
 ### Get recommendation
 
-GET http://localhost:12345/api/movies/:id/recommend/ 
-userId: <ID>
+GET http://localhost:12345/api/movies/679629522d6eaf038e9e1768/recommend/ 
+userId: 67963d5d483e59c7cb61231b
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/ 
+POST http://localhost:12345/api/movies/679629522d6eaf038e9e1768/recommend/ 
 Content-Type: application/json 
-userId: <ID>
+userId: 67963d5d483e59c7cb61231b
 
 # CATEGORY
 
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: <ID>
+userId: 679178e884e6da9a833f5452
 
 ### Create a new category
 
 POST http://localhost:12345/api/categories/ 
-userId: <ID> 
+userId: 679178e884e6da9a833f5452
 Content-Type: application/json
 
 {
-"name": "Family", "isPromoted": false, "movies": []
+"name": "Child", "isPromoted": true, "movies": []
 }
 
 ### Get a specific category by ID
@@ -75,13 +117,13 @@ userId: <ID>
 
 ### Update a category
 
-PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+PATCH http://localhost:12345/api/categories/677414bbcc263c85d0d0fa1a 
 userId: <ID> 
 Content-Type: application/json
 
-{ "name": "Action & Adventure", "isPromoted": false, "movies": [] }
+{ "name": "Romantic", "true": false, "movies": [] }
 
-### Delete a category
+### Delete a category   
 
 DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e 
 userId: <ID>
@@ -94,7 +136,10 @@ POST http://localhost:12345/api/users/
 Content-Type: application/json
 
 {
-"username": "sg", "password": "12", "nickname": "liori"
+ "username": "kimmmm",
+ "password": "1212221",
+ "photo": "uploads/moviePic_1.jpg",
+ "nickname": "kim"
 }
 
 ### Connect to system

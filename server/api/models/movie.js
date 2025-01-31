@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -11,6 +12,7 @@ const Movie = new Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
+        required: false
     }],
     movie_time: {
         type: String,
@@ -18,7 +20,7 @@ const Movie = new Schema({
     },
     image: {
         type: String,
-        required: false
+        required: true
     },
     Publication_year: {
         type: Number,
@@ -28,10 +30,18 @@ const Movie = new Schema({
         type: String,
         default: ''
     },
-    age: {
-        type: Number,
+    video: {
+        type: String,
         required: false
     }
+    // trailer: {
+    //     type: String,
+    //     required: false
+    // },
+    // age: {
+    //     type: Number,
+    //     required: false
+    // }
 });
 
 // Export the Movie model using the schema defined above

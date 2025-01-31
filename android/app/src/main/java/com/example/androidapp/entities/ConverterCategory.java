@@ -27,4 +27,3 @@ public class ConverterCategory {
         return gson.fromJson(data, new TypeToken<List<Movie>>() {}.getType());
     }
 }
-
