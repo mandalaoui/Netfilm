@@ -65,35 +65,4 @@ public class MovieApi {
                 }
             });
     }
-
-//    public Movie getMovie(String movieId) {
-//        Call<Movie> call = apiService.getMovie(userId, movieId);
-//        call.enqueue(new Callback<Movie>() {
-//            @Override
-//            public void onResponse(Call<Movie> call, Response<Movie> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    Log.d("MovieApi", "Received movie: " + response.body());
-////                    if (response.body() != null && !response.body().isEmpty()) {
-////                        for (PromotedCategory promotedCategory : response.body()) {
-////                            Log.d("CategoryApi", "Category: " + promotedCategory.getCategoryName() + "," + promotedCategory.getMovies());
-////                        }
-////                    }
-//                    new Thread(() -> {
-//                        Log.d("MovieApi", "Thread started");
-////                        dao.clear();
-////                        dao.insertList(response.body());
-////                        Log.d("CategoryApi", "Inserted categories into DB: " + response.body());
-////                        movieListData.postValue(dao.index());
-//                    }).start();
-//                }
-//                else {
-//                    Log.d("MovieApi", "Failed to get movie: " + response.message());
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<Movie> call, Throwable t) {
-//                Log.e("MovieApi", "Error fetching movie: " + t.getMessage());
-//            }
-//        });
-//    }
 }

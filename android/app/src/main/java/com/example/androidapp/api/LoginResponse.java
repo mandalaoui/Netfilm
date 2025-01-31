@@ -2,7 +2,7 @@ package com.example.androidapp.api;
 
 import java.util.List;
 
-public class ApiResponse {
+public class LoginResponse {
     private String userId;
     private List<String> errors;
 
@@ -21,13 +21,13 @@ public class ApiResponse {
         this.errors = errors;
     }
 
-    public ApiResponse(List<String> errors) {
+    public LoginResponse(List<String> errors) {
         this.errors = errors;
     }
 
-    public ApiResponse() {
+    public LoginResponse() {
     }
-    public ApiResponse(String userId) {
+    public LoginResponse(String userId) {
         this.userId = userId;
     }
 

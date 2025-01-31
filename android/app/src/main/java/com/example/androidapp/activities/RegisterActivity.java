@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.R;
-import com.example.androidapp.api.RequestApi;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 import com.example.androidapp.entities.User;
 
@@ -64,10 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
                 // Create a User object with the data
                 User user = new User(username, password, nickname);
 
-                RequestApi requestApi = new RequestApi(this);
+                UserApi userApi = new UserApi(this);
 //                userApi.registerUser(user);
                 Log.d("Register", "Starting registration request for user: " + user.getUsername());
-                requestApi.registerUser(user, new Callback<User>() {
+                userApi.registerUser(user, new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
 

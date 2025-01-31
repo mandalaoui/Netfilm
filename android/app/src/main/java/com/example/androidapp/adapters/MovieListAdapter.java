@@ -1,6 +1,7 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
+import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.activities.MovieActivity;
 import com.example.androidapp.entities.Movie;
 
@@ -51,19 +52,24 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
             holder.movieImage.setTag(current);
 
+            Context context = holder.itemView.getContext();
             holder.movieImage.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), MovieActivity.class);
-                intent.putExtra("id", current.getId());
-                intent.putExtra("name", current.getName());
+                if (context instanceof HomeActivity) {
+                    Intent intent = new Intent(v.getContext(), MovieActivity.class);
+                    intent.putExtra("id", current.getId());
+                    intent.putExtra("name", current.getName());
 //                intent.putExtra("categories", current.getCategories());
-                intent.putExtra("movie_time", current.getMovie_time());
-                intent.putExtra("image", current.getImage());
-                intent.putExtra("Publication_year", current.getPublication_year());
-                intent.putExtra("description", current.getDescription());
-                intent.putExtra("age", current.getAge());
-                intent.putExtra("video", current.getVideo());
+                    intent.putExtra("movie_time", current.getMovie_time());
+                    intent.putExtra("image", current.getImage());
+                    intent.putExtra("Publication_year", current.getPublication_year());
+                    intent.putExtra("description", current.getDescription());
+                    intent.putExtra("age", current.getAge());
+                    intent.putExtra("video", current.getVideo());
 
-                v.getContext().startActivity(intent);
+                    v.getContext().startActivity(intent);
+                } else {
+                    Log.d("MovieListAdapter", "did not work");
+                }
             });
         }
     }

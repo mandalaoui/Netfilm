@@ -3,25 +3,18 @@ package com.example.androidapp.api;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
-import com.example.androidapp.entities.Movie;
-import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.User;
 
-import java.util.List;
-
 import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RequestApi {
+public class UserApi {
 //    private Retrofit retrofit;
 //    private ApiService apiService;
 //
@@ -56,14 +49,7 @@ public class RequestApi {
     private Retrofit retrofit;
     private ApiService apiService;
     private Context context;
-    private RequestBody categoriesRequestBody;
-    private MovieDao movieDao;
-    private MutableLiveData<List<Movie>> movieListData;
-//    private MovieDatabase MovieDatabase;
-//    private List<Movie> allMoviesList = new ArrayList<>();
-//    private List<Category> categories = new ArrayList<>();
-
-    public RequestApi(Context context) {
+    public UserApi(Context context) {
         this.context = context;
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
@@ -76,6 +62,7 @@ public class RequestApi {
 
         apiService = retrofit.create(ApiService.class);
     }
+
 //    public void registerUser(User user, File imageFile) {
 //        RequestBody username = RequestBody.create(user.getUsername(), MediaType.parse("text/plain"));
 //        RequestBody password = RequestBody.create(user.getPassword(), MediaType.parse("text/plain"));
@@ -141,31 +128,11 @@ public class RequestApi {
         call.enqueue(callback);
     }
 
-    public void loginUser(User user, final Callback<ApiResponse> callback) {
+    public void loginUser(User user, final Callback<LoginResponse> callback) {
         Log.d("API_REQUEST", "Sending registration request for user: 1" + user.getUsername());
-        Call<ApiResponse> call = apiService.login(user);
+        Call<LoginResponse> call = apiService.login(user);
         call.enqueue(callback);
     }
-
-//    public void getCategories() {
-//        String userid = "679178e884e6da9a833f5452";
-//        Call<List<Category>> call = apiService.getAllCategories(userid);
-//
-//        call.enqueue(new Callback<List<Category>>() {
-//            @Override
-//            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-//                if (response.isSuccessful() && response.body() != null) {
-//                    callback.onResponse(call, Response.success(response.body()));
-//                } else {
-//                    callback.onFailure(call, new Throwable("Failed to get categories"));
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<Category>> call, Throwable t) {
-//                callback.onFailure(call, t);
-//            }
-//        });
-//    }
 
 }
 

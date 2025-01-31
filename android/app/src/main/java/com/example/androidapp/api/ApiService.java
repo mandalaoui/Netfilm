@@ -12,7 +12,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -21,7 +20,7 @@ public interface ApiService {
     Call<User> post(@Body User user);
 
     @POST("tokens")
-    Call<ApiResponse> login(@Body User user);
+    Call<LoginResponse> login(@Body User user);
 
     @GET("movies")
     Call<List<PromotedCategory>> getCategories(@Header("userId") String userId);
@@ -34,5 +33,8 @@ public interface ApiService {
 
     @GET("movies/{id}")
     Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
+
+    @GET("movies/{id}/recommend")
+    Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);
 
 }
