@@ -6,27 +6,27 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
-import com.example.androidapp.api.PromotedCategoryApi;
-import com.example.androidapp.entities.PromotedCategory;
-import com.example.androidapp.dao.PromotedCategoryDao;
+import com.example.androidapp.api.CategoryApi;
+import com.example.androidapp.entities.Category;
+import com.example.androidapp.dao.CategoryDao;
 import com.example.androidapp.entities.LocalDatabase;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class PromotedCategoriesRepository {
-    private PromotedCategoryDao dao;
-    private CategoryListData categoryListData;
-    private PromotedCategoryApi api;
+public class CategoriesRepository {
+    private CategoryDao dao;
+    private CategoriesRepository.CategoryListData categoryListData;
+    private CategoryApi api;
 
-    public PromotedCategoriesRepository() {
+    public CategoriesRepository() {
         LocalDatabase db = LocalDatabase.getInstance(AppContext.getContext());
-        dao = db.promotedCategoryDao();
-        categoryListData = new CategoryListData();
-        api = new PromotedCategoryApi(categoryListData, dao);
+        dao = db.categoryDao();
+        categoryListData = new CategoriesRepository.CategoryListData();
+        api = new CategoryApi(categoryListData, dao);
     }
 
-    class CategoryListData extends MutableLiveData<List<PromotedCategory>> {
+    class CategoryListData extends MutableLiveData<List<Category>> {
         public CategoryListData () {
             super();
             setValue(new LinkedList<>());
@@ -37,14 +37,14 @@ public class PromotedCategoriesRepository {
             super.onActive();
 
             new Thread(() -> {
-                List<PromotedCategory> categories = dao.index();
-                Log.d("PromotedCategoryApi", "Categories loaded from DB: " + categories);
+                List<Category> categories = dao.index();
+                Log.d("CategoryApi", "Categories loaded from DB: " + categories);
                 postValue(categories);
             }).start();
         }
     }
 
-    public LiveData<List<PromotedCategory>> getAll() {
+    public LiveData<List<Category>> getAll() {
         return categoryListData;
     }
 

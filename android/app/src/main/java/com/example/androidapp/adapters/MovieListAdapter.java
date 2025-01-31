@@ -1,7 +1,7 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
-//import com.example.androidapp.MovieActivity;
+import com.example.androidapp.activities.MovieActivity;
 import com.example.androidapp.entities.Movie;
 
 import android.content.Context;
@@ -51,12 +51,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
             holder.movieImage.setTag(current);
 
-//            holder.movieImage.setOnClickListener(v -> {
-//                Movie movie = (Movie) v.getTag();
-//                Intent intent = new Intent(v.getContext(), MovieActivity.class);
-//                intent.putExtra("movie", movie.getId());
-//                v.getContext().startActivity(intent);
-//            });
+            holder.movieImage.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), MovieActivity.class);
+                intent.putExtra("id", current.getId());
+                intent.putExtra("name", current.getName());
+//                intent.putExtra("categories", current.getCategories());
+                intent.putExtra("movie_time", current.getMovie_time());
+                intent.putExtra("image", current.getImage());
+                intent.putExtra("Publication_year", current.getPublication_year());
+                intent.putExtra("description", current.getDescription());
+                intent.putExtra("age", current.getAge());
+                intent.putExtra("video", current.getVideo());
+
+                v.getContext().startActivity(intent);
+            });
         }
     }
 
@@ -67,7 +75,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     @Override
     public int getItemCount() {
-//        return movieList.size();
         if (movies != null)
             return movies.size();
         return 0;
@@ -76,6 +83,5 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     public List<Movie> getMovies() {
         return movies;
     }
-
 
 }

@@ -5,21 +5,23 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.PromotedCategory;
+import com.example.androidapp.repositories.CategoriesRepository;
 import com.example.androidapp.repositories.PromotedCategoriesRepository;
 
 import java.util.List;
 
-public class PromotedCategoriesViewModel extends ViewModel {
-    private PromotedCategoriesRepository repository;
-    private LiveData<List<PromotedCategory>> categories;
+public class CategoriesViewModel extends ViewModel  {
+    private CategoriesRepository repository;
+    private LiveData<List<Category>> categories;
 
-    public PromotedCategoriesViewModel() {
-        repository = new PromotedCategoriesRepository();
+    public CategoriesViewModel() {
+        repository = new CategoriesRepository();
         categories = repository.getAll();
     }
 
-    public LiveData<List<PromotedCategory>> get() {
+    public LiveData<List<Category>> get() {
         Log.d("CategoriesViewModel", "Categories list: " + categories.getValue());
         return categories;
     }
@@ -33,7 +35,8 @@ public class PromotedCategoriesViewModel extends ViewModel {
 //    }
 
     public void reload() {
-        Log.d("PromotedCategoriesViewModel", "Reloading categories...");
+        Log.d("CategoriesViewModel", "Reloading categories...");
         repository.reload();
     }
+
 }

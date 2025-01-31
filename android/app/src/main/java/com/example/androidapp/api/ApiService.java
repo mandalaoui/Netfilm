@@ -1,8 +1,10 @@
 package com.example.androidapp.api;
 
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.User;
+
 
 import java.util.List;
 
@@ -26,5 +28,11 @@ public interface ApiService {
 
     @GET("movies/search/{query}")
     Call<List<Movie>> getSearchedMovies(@Header("userId") String userId, @Path("query") String query);
+
+    @GET("categories")
+    Call<List<Category>> getAllCategories(@Header("userId") String userId);
+
+    @GET("movies/{id}")
+    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
 
 }

@@ -12,19 +12,22 @@
 //
 //public class MovieViewModel extends ViewModel {
 //    private MovieRepository repository;
-////    private LiveData<List<Movie>> movies;
-//    private Movie movie;
+//    private LiveData<List<Movie>> movies;
+////    private Movie movie;
 //
 //    public MovieViewModel() {
 //        repository = new MovieRepository();
 //        movies = repository.getAll();
-//        movie = repository.
 //    }
 //
 //    public LiveData<List<Movie>> getMovies() {
 //        Log.d("CategoriesViewModel", "Categories list: " + movies.getValue());
 //        return movies;
 //    }
+//
+////    public Movie getMovie() {
+////        return repository.
+////    }
 //
 ////    public void add(Category category) {
 ////        repository.add(category);
@@ -35,6 +38,6 @@
 ////    }
 //
 //    public void reload() {
-//        repository.reload();
+////        repository.reload();
 //    }
 //}

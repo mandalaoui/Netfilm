@@ -1,13 +1,12 @@
-package com.example.androidapp;
+package com.example.androidapp.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
@@ -25,10 +24,13 @@ import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.adapters.PromotedCategoryListAdapter;
 import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.databinding.ActivityHomeBinding;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.PromotedCategoriesViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,12 +42,20 @@ public class HomeActivity extends AppCompatActivity {
     private ActivityHomeBinding binding;
     private RecyclerView searchedMovies;
     private MovieListAdapter movieListAdapter;
+    private CategoriesViewModel categoriesViewModel;
+    private List<Category> allCategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        categoriesViewModel.get().observe(this, categories -> {
+            Log.d("HomeActivity", "Categories list: " + categories);
+            allCategories = categories;
+        });
 
         promotedCategoriesViewModel = new ViewModelProvider(this).get(PromotedCategoriesViewModel.class);
 
@@ -89,9 +99,30 @@ public class HomeActivity extends AppCompatActivity {
             menu.add(0, 6, 5, "Delete Category");
 
             popupMenu.setOnMenuItemClickListener(item -> {
+                Intent intent;
                 Log.d("HomeActivity", menu.getItem(item.getItemId() - 1).toString());
-                Intent intent = new Intent(HomeActivity.this, ManagementActivity.class);
-                intent.putExtra("option_id", item.getItemId());
+                switch (item.getItemId()) {
+                    case 1:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    case 2:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    case 4:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    case 5:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    case 6:
+                        intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                        break;
+                    default:
+                        intent = new Intent(HomeActivity.this, HomeActivity.class);
+                }
                 startActivity(intent);
                 return true;
             });
@@ -128,6 +159,36 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        Button btnCategories = binding.btnCategories;
+        btnCategories.setOnClickListener(v -> showCategoriesDialog());
+    }
+
+    private void showCategoriesDialog() {
+        categoriesViewModel.reload();
+
+        List<String> categoryNames = new ArrayList<>();
+        for (Category category : allCategories) {
+            Log.d("HomeActivity", "category name" + category.getName());
+            categoryNames.add(category.getName());
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose category")
+                .setItems(categoryNames.toArray(new String[0]), (dialog, which) -> {
+                    // ברגע שהמשתמש בחר קטגוריה
+//                    String selectedCategory = categoryNames.get(which);
+//                    openCategoryScreen(selectedCategory); // קרא לפונקציה שתפתח את המסך המתאים
+                    Category selectedCategory = allCategories.get(which);  // קח את האובייקט המתאים
+                    openCategoryScreen(selectedCategory);
+                })
+                .setNegativeButton("X", (dialog, which) -> dialog.dismiss()) // כפתור ביטול
+                .create()
+                .show();
+    }
+
+    private void openCategoryScreen(Category selectedCategory) {
+        Log.d("HomeActivity dialog", selectedCategory.getName());
     }
 
     private void searchMovie(String query) {

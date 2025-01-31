@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.AppContext;
 import com.example.androidapp.R;
-import com.example.androidapp.entities.PromotedCategory;
-import com.example.androidapp.dao.PromotedCategoryDao;
+import com.example.androidapp.entities.Category;
+import com.example.androidapp.dao.CategoryDao;
 
 import java.util.List;
 
@@ -17,15 +17,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PromotedCategoryApi {
-
-    private MutableLiveData<List<PromotedCategory>> categoryListData;
-    private PromotedCategoryDao dao;
+public class CategoryApi {
+    private MutableLiveData<List<Category>> categoryListData;
+    private CategoryDao dao;
 
     Retrofit retrofit;
     ApiService apiService;
 
-    public PromotedCategoryApi(MutableLiveData<List<PromotedCategory>> categoryListData, PromotedCategoryDao dao) {
+    public CategoryApi(MutableLiveData<List<Category>> categoryListData, CategoryDao dao) {
         this.categoryListData = categoryListData;
         this.dao = dao;
 
@@ -39,15 +38,15 @@ public class PromotedCategoryApi {
 
     String userId = "6792b52c10a40e0b80dd798d";
     public void getCategories() {
-        Call<List<PromotedCategory>> call = apiService.getCategories(userId);
-        call.enqueue(new Callback<List<PromotedCategory>>() {
+        Call<List<Category>> call = apiService.getAllCategories(userId);
+        call.enqueue(new Callback<List<Category>>() {
             @Override
-            public void onResponse(Call<List<PromotedCategory>> call, Response<List<PromotedCategory>> response) {
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("CategoryApi", "Received categories: " + response.body());
                     if (response.body() != null && !response.body().isEmpty()) {
-                        for (PromotedCategory promotedCategory : response.body()) {
-                            Log.d("CategoryApi", "Category: " + promotedCategory.getCategoryName() + "," + promotedCategory.getMovies());
+                        for (Category category : response.body()) {
+                            Log.d("CategoryApi", "Category: " + category.getName() + "," + category.getMovies());
                         }
                     }
                     new Thread(() -> {
@@ -63,10 +62,9 @@ public class PromotedCategoryApi {
                 }
             }
             @Override
-            public void onFailure(Call<List<PromotedCategory>> call, Throwable t) {
+            public void onFailure(Call<List<Category>> call, Throwable t) {
                 Log.e("CategoryApi", "Error fetching categories: " + t.getMessage());
             }
         });
     }
-
 }

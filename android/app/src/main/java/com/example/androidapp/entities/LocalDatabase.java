@@ -2,17 +2,21 @@ package com.example.androidapp.entities;
 
 import android.content.Context;
 
-import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-@Database(entities = {PromotedCategory.class, Movie.class}, version = 4)
+import com.example.androidapp.dao.CategoryDao;
+import com.example.androidapp.dao.MovieDao;
+import com.example.androidapp.dao.PromotedCategoryDao;
+
+@Database(entities = {PromotedCategory.class, Movie.class, Category.class}, version = 6)
 @TypeConverters(ConverterMovie.class)
 public abstract class LocalDatabase extends RoomDatabase {
     private static LocalDatabase instance;
-    public abstract PromotedCategoryDao categoryDao();
+    public abstract PromotedCategoryDao promotedCategoryDao();
+    public abstract CategoryDao categoryDao();
 
     public abstract MovieDao movieDao();
 

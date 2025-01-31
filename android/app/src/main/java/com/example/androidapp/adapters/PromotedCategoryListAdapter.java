@@ -28,8 +28,7 @@ public class PromotedCategoryListAdapter extends RecyclerView.Adapter<PromotedCa
             lstMovies = itemView.findViewById(R.id.lstMovies);
             movieListAdapter = new MovieListAdapter(context);
             lstMovies.setAdapter(movieListAdapter);
-//            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false);
             lstMovies.setLayoutManager(gridLayoutManager);
         }
         public void bindMovies(List<Movie> movies) {
@@ -61,7 +60,6 @@ public class PromotedCategoryListAdapter extends RecyclerView.Adapter<PromotedCa
             Log.d("CategoryListAdapter", "Binding category: " + (current != null ? current.getCategoryName() : "null"));
             Log.d("CategoryListAdapter", "Movies for category " + current.getCategoryName() + ": " + current.getMovies());
             holder.categoryTitle.setText(current.getCategoryName());
-//            holder.bindMovies(current.getMovies());
             if (current.getMovies() != null && !current.getMovies().isEmpty()) {
                 holder.bindMovies(current.getMovies());
             } else {

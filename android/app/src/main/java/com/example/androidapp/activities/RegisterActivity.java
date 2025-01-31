@@ -1,14 +1,10 @@
-package com.example.androidapp;
+package com.example.androidapp.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -16,11 +12,11 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androidapp.api.UserApi;
+import com.example.androidapp.R;
+import com.example.androidapp.api.RequestApi;
 import com.example.androidapp.databinding.ActivityRegisterBinding;
 import com.example.androidapp.entities.User;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import retrofit2.Call;
@@ -68,10 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
                 // Create a User object with the data
                 User user = new User(username, password, nickname);
 
-                UserApi userApi = new UserApi();
+                RequestApi requestApi = new RequestApi(this);
 //                userApi.registerUser(user);
                 Log.d("Register", "Starting registration request for user: " + user.getUsername());
-                userApi.registerUser(user, new Callback<User>() {
+                requestApi.registerUser(user, new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
 

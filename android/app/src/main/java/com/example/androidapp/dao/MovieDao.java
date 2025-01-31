@@ -1,10 +1,12 @@
-package com.example.androidapp.entities;
+package com.example.androidapp.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.androidapp.entities.Movie;
 
 import java.util.List;
 
@@ -13,8 +15,8 @@ public interface MovieDao {
     @Query("SELECT * FROM Movie")
     List<Movie> index();
 
-//    @Query("SELECT * FROM category WHERE id = :id")
-//    Category get(int id);
+    @Query("SELECT * FROM Movie WHERE id = :id")
+    Movie get(String id);
 
     @Insert
     void insert(Movie... movies);

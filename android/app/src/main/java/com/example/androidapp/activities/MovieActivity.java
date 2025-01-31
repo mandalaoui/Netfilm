@@ -1,67 +1,78 @@
-//package com.example.androidapp;
-//
-//import android.content.Intent;
-//import android.net.Uri;
-//import android.os.Bundle;
-//import android.os.Handler;
-//import android.util.Log;
-//import android.widget.Button;
-//import android.widget.TextView;
-//import android.widget.VideoView;
-//
-//import androidx.activity.EdgeToEdge;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.core.graphics.Insets;
-//import androidx.core.view.ViewCompat;
-//import androidx.core.view.WindowInsetsCompat;
-//import androidx.lifecycle.ViewModelProvider;
-//import androidx.media3.common.MediaItem;
-//import androidx.media3.exoplayer.ExoPlayer;
-//import androidx.media3.ui.PlayerView;
-//import androidx.recyclerview.widget.GridLayoutManager;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import com.example.androidapp.adapters.MovieListAdapter;
-//import com.example.androidapp.databinding.ActivityMovieBinding;
-//import com.example.androidapp.entities.Movie;
+package com.example.androidapp.activities;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.VideoView;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.media3.common.MediaItem;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.androidapp.adapters.MovieListAdapter;
+import com.example.androidapp.api.RequestApi;
+import com.example.androidapp.databinding.ActivityMovieBinding;
+import com.example.androidapp.entities.Movie;
 //import com.example.androidapp.viewmodels.MovieViewModel;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import retrofit2.Call;
-//import retrofit2.Response;
-//
-//public class MovieActivity extends AppCompatActivity {
-//    private ActivityMovieBinding binding;
-//    private TextView tvName, tvYear,tvTime, tvDescription;
-//    private VideoView videoView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+
+public class MovieActivity extends AppCompatActivity {
+    private ActivityMovieBinding binding;
+    private TextView tvName, tvYear,tvTime, tvDescription;
+    private VideoView videoView;
 //    private MovieViewModel movieViewModel;
-//    private PlayerView moviePlayer;
-//    private ExoPlayer exoPlayer;
-//    private Handler handler = new Handler();
-//    private Button btnPlay;
-//    private List<Movie> recommendedMoviesList = new ArrayList<>();
-//    MovieListAdapter movieListAdapter;
-//    String videoUrl;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        binding = ActivityMovieBinding.inflate(getLayoutInflater());
-//        setContentView(binding.getRoot());
-//
-//
-//        String movieId = getIntent().getStringExtra("movieId");
-//        String userId = "67963d5d483e59c7cb61231b";
-//
-//        tvName = binding.movieTitle;
-//        tvYear = binding.year;
-//        tvTime = binding.movieTime;
-//        tvDescription = binding.movieDescription;
-//        moviePlayer = binding.moviePlayer;
-//        btnPlay = binding.btnPlay;
-//
+    private PlayerView moviePlayer;
+    private ExoPlayer exoPlayer;
+    private Handler handler = new Handler();
+    private Button btnPlay;
+    private List<Movie> recommendedMoviesList = new ArrayList<>();
+    MovieListAdapter movieListAdapter;
+    String videoUrl;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityMovieBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+        String movieId = getIntent().getStringExtra("movieId");
+        String userId = "67963d5d483e59c7cb61231b";
+
+        tvName = binding.movieTitle;
+        tvYear = binding.year;
+        tvTime = binding.movieTime;
+        tvDescription = binding.movieDescription;
+        moviePlayer = binding.moviePlayer;
+        btnPlay = binding.btnPlay;
+
+        Intent intent = getIntent();
+        tvName.setText(intent.getStringExtra("name"));
+        Log.d("MovieActivity", "Movie name: " + intent.getStringExtra("name"));
+        tvName.setTextColor(Color.WHITE);
+        tvYear.setText(intent.getStringExtra("Publication_year"));
+        tvTime.setText(intent.getStringExtra("movie_time"));
+        tvDescription.setText(intent.getStringExtra("description"));
+//        moviePlayer.setText(intent.getStringExtra("video"));
+
 //        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 //        movieViewModel.get().observe(this, movie -> {
 //            if (movie != null) {
@@ -93,7 +104,7 @@
 //                }
 //            }
 //        });
-//
+
 //        btnPlay.setOnClickListener(view -> {
 //            Intent i = new Intent(this, VideoMovieActivity.class);
 //            i.putExtra("videoUrl",videoUrl);
@@ -104,7 +115,7 @@
 ////        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
 //        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
 //        recyclerView.setLayoutManager(gridLayoutManager);
-//
+
 //        RequestApi recommendMovie = new RequestApi(this);
 //        recommendMovie.getRecommendMovie(movieId,userId, new Callback<List<Movie>>() {
 //            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
@@ -136,6 +147,6 @@
 //    public void MovieOnClick(Movie movie) {
 //        movieViewModel.setSelectedMovie(movie);
 //    }
-//
-//
-//}
+    }
+
+}

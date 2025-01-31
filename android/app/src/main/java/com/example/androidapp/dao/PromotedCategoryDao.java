@@ -1,10 +1,12 @@
-package com.example.androidapp.entities;
+package com.example.androidapp.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
+import com.example.androidapp.entities.PromotedCategory;
 
 import java.util.List;
 

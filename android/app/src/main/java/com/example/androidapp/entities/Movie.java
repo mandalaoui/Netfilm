@@ -20,6 +20,15 @@ public class Movie {
     private Number Publication_year;
     private String description;
     private Number age;
+    private String video;
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
     public String getName() {
         return name;
@@ -68,7 +77,6 @@ public class Movie {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public Number getAge() {
         return age;
     }
@@ -98,5 +106,17 @@ public class Movie {
         this.Publication_year = publication_year;
         this.description = description;
         this.age = age;
+    }
+
+    public Movie(@NonNull String id, String name, List<String> categories, String movie_time, String image, Number publication_year, String description, Number age, String video) {
+        this.id = id;
+        this.name = name;
+        this.categories = categories;
+        this.movie_time = movie_time;
+        this.image = image;
+        Publication_year = publication_year;
+        this.description = description;
+        this.age = age;
+        this.video = video;
     }
 }
