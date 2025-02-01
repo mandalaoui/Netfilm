@@ -4,7 +4,8 @@ const getRecommendations = async (movieId) => {
     return fetch (`http://localhost:12345/api/movies/${movieId}/recommend/`, {
             method: "GET",
             headers: {
-                "userId": localStorage.getItem('userId'),
+                // "userId": localStorage.getItem('userId'),
+                "userId": "679cd02d76c2bda23f930777",
             },
         })
         .then((response) => {
@@ -24,7 +25,7 @@ const getRecommendations = async (movieId) => {
             }
         })
         .catch((error) => {
-            console.error("Error fetching recommendations:", error);
+            // console.error("Error fetching recommendations:", error);
             return []; 
         });
 };
@@ -53,7 +54,7 @@ const addMovieToWatchlist = async (movieId) => {
             return false;
         }
     } catch (error) {
-        console.error("Error adding movie to watchlist:", error);
+        // console.error("Error adding movie to watchlist:", error);
         return false;
     }
 };

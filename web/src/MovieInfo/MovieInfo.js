@@ -21,7 +21,7 @@ function MovieInfo() {
                     const movie = await getMovieById(id);
                     setMovie(movie);
                 } catch (error) {
-                    console.error("Error fetching movie:", error);
+                    // console.error("Error fetching movie:", error);
                 }
             }
         };

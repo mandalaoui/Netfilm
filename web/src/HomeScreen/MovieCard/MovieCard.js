@@ -5,26 +5,23 @@ import { showConfirmationModal } from '../../Admin/Verification/Verification.js'
 import { getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import { deleteMovie } from '../../Admin/AdminActions/Movie/MovieActions.js';
 import { useGlobalContext } from '../../GlobalContext.js';
+import { useNavigate } from 'react-router-dom';
 
 // MovieCard component receives a 'movie' object as a prop
 function MovieCard({ movie }) {
     const [categories, setCategories] = useState([]);
     const location = useLocation();
-    const { fileUrl } = useGlobalContext(); 
+    const { fileUrl } = useGlobalContext();
+    const navigate = useNavigate();
 
-
-    // Helper function to navigate to different pages
-    const navigateTo = (loc) => {
-        window.location.href = loc;
-    };
     // Function to handle play button click
     const handlePlayClick = () => {
-        navigateTo(`../watchMovie/${movie._id}`);
+        navigate(`../watchMovie/${movie._id}`);
     };
 
     // Function to handle the info button click
     const handleInfoClick = () => {
-        navigateTo(`../movie/${movie._id}`);
+        navigate(`../movie/${movie._id}`);
     };
 
 
@@ -35,16 +32,16 @@ function MovieCard({ movie }) {
             try {
                 const isDeleted = await deleteMovie(movie._id);
                 if (isDeleted) {
-                    navigateTo('/admin');
+                    navigate('/admin');
                 } else {
                     alert(`Failed to delete movie "${movie.name}".`);
                 }
             } catch (error) {
-                console.error(`Error deleting movie "${movie.name}":`, error);
+                // console.error(`Error deleting movie "${movie.name}":`, error);
                 alert(`An error occurred while deleting movie "${movie.name}".`);
             }
         } else {
-            console.log('Delete action was canceled.');
+            // console.log('Delete action was canceled.');
         }
     };
 
@@ -52,9 +49,9 @@ function MovieCard({ movie }) {
     const handleEditClick = async () => {
         const userConfirmed = await showConfirmationModal("movie", movie.name, 'edit');
         if (userConfirmed) {
-            navigateTo(`/admin/EditMovie?id=${movie._id}`);
+            navigate(`/admin/EditMovie?id=${movie._id}`);
         } else {
-            console.log('Edit action was canceled.');
+            // console.log('Edit action was canceled.');
         }
     };
 
@@ -62,18 +59,20 @@ function MovieCard({ movie }) {
 
     // Fetch categories associated with the movie on mount
     useEffect(() => {
-        const fetchCategories = async () => {
-            const fetchedCategories = await Promise.all(
-                movie.categories.map(async (categoryId) => {
-                    const category = await getCategoryById(categoryId);
-                    return category.name; // Extract only the name
-                })
-            );
-            setCategories(fetchedCategories);
-        };
+        if (movie) {
+            const fetchCategories = async () => {
+                const fetchedCategories = await Promise.all(
+                    movie.categories.map(async (categoryId) => {
+                        const category = await getCategoryById(categoryId);
+                        return category.name; // Extract only the name
+                    })
+                );
+                setCategories(fetchedCategories);
+            };
 
-        fetchCategories();
-    }, [movie.categories]);
+            fetchCategories();
+        }
+    }, [movie]);
 
     return (
         <div className="movie-card">

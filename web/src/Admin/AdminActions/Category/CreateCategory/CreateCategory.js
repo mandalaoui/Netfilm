@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { createCategory } from '../CategoryActions.js';
 import { updateCategory, getAllCategories, getCategoryById } from '../CategoryActions.js';
 import { getMovieById } from '../../Movie/MovieActions.js';
+import { useNavigate } from 'react-router-dom';
+
 
 function CreateCategory() {
     // State variables for category name and promotion status
@@ -11,6 +13,7 @@ function CreateCategory() {
     const [allCategories, setAllCategories] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -26,7 +29,7 @@ function CreateCategory() {
                 );
                 setAllCategories(allCategoryDetails);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         fetchAllCategories();
@@ -48,7 +51,7 @@ function CreateCategory() {
                 const uniqueMovies = Array.from(new Map(validMovies.map(movie => [movie._id, movie])).values());
                 setAllMovies(uniqueMovies);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         if (allCategories.length > 0) {
@@ -81,7 +84,7 @@ function CreateCategory() {
                 }
             }    
         } catch (error) {
-            console.error("Error during category update:", error);
+            // console.error("Error during category update:", error);
         }
 
         // Create new category with selected movies
@@ -91,7 +94,7 @@ function CreateCategory() {
         createCategory(name, isPromoted, movies)
             .then(isSuccess => {
                 if (isSuccess) {
-                    window.location.href = '/admin';
+                    navigate('/admin');
                 }
             });
 
@@ -102,9 +105,6 @@ function CreateCategory() {
     return (
         <div className="Create-Category-modal-container">
             <div className="Create-Category-modal-content">
-                {/* <button className="CC-close-btn" onClick={() => window.location.href = '/admin'}>
-                    <i className="bi bi-x-lg"></i>
-                </button> */}
                 <h2>Add Category</h2>
                 <div className="input-group-CC">
                     <input

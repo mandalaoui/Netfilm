@@ -6,6 +6,7 @@ import { showConfirmationModal } from '../../Admin/Verification/Verification.js'
 import { getCategoryById, getAllCategories, createCategory, deleteCategory, updateCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
 import { getMovieById } from '../../Admin/AdminActions/Movie/MovieActions.js';
+import { useNavigate } from 'react-router-dom';
 
 function MovieRow({ category }) {
     const rowRef = useRef(null);
@@ -16,6 +17,7 @@ function MovieRow({ category }) {
     const [showModal, setShowModal] = useState(false);
     const [moviesByCategory, setMoviesByCategory] = useState([]);
     const [isUnAttached, setIsUnAttached] = useState(false);
+    const navigate = useNavigate();
 
     // Effect to check if the category is "unAttached" and set the state accordingly
     useEffect(() => {
@@ -38,7 +40,7 @@ function MovieRow({ category }) {
                     setMoviesByCategory([]); // במידה ואין סרטים, מנקה את המצב
                 }
             } catch (error) {
-                console.error("Error fetching movies by category:", error);
+                // console.error("Error fetching movies by category:", error);
             }
         };
         if (category.movies && category.movies.length > 0) {
@@ -86,7 +88,7 @@ function MovieRow({ category }) {
     const handleDeleteCategory = async () => {
         const userConfirmed = await showConfirmationModal("category", category.name, 'delete');
         if (!userConfirmed) {
-            console.log('Delete action was canceled.');
+            // console.log('Delete action was canceled.');
             return;
         }
 
@@ -138,19 +140,19 @@ function MovieRow({ category }) {
                 }
                 const isDeleted = await deleteCategory(category.id);
                 if (isDeleted) {
-                    window.location.href = "/admin";
+                    navigate("/admin");
                 } else {
                     alert(`Failed to delete category: ${category.name}`);
                 }
             }
         } catch (error) {
-            console.error("Error during category deletion process:", error);
+            // console.error("Error during category deletion process:", error);
         }
     };
 
     // Handler for adding a movie to the current category
     const handleAddMovie = () => {
-        window.location.href = `/admin/CreateMovie?specificCategory=${category.id}`;
+        navigate(`/admin/CreateMovie?specificCategory=${category.id}`);
     };
 
 
@@ -208,9 +210,9 @@ function MovieRow({ category }) {
                         <p className="no-movies-text">Haven't seen any movie yet</p>
                     ) : (
                         moviesByCategory.map((movie) => (
-                            <>
+                            // <>
                                 <MovieCard key={movie._id} movie={movie} />
-                            </>
+                            // </>
                         ))
                     )}
                 </div>

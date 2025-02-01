@@ -2,6 +2,7 @@ import './EditCategory.css';
 import React, { useState, useEffect } from 'react';
 import { getMovieById } from '../../Movie/MovieActions.js';
 import { updateCategory, getAllCategories, getCategoryById } from '../CategoryActions.js';
+import { useNavigate } from 'react-router-dom';
 
 
 function EditCategory({ category }) {
@@ -12,7 +13,8 @@ function EditCategory({ category }) {
     const [allCategories, setAllCategories] = useState([]);
     const [allMovies, setAllMovies] = useState([]);
     const [selectedMovies, setSelectedMovies] = useState([]);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
         // Fetch all categories for selection
         const fetchAllCategories = async () => {
@@ -24,11 +26,11 @@ function EditCategory({ category }) {
                         return fullCategory;
                     })
                 );
-                console.log('Fetched all categories:', allCategoryDetails);
+                // console.log('Fetched all categories:', allCategoryDetails);
 
                 setAllCategories(allCategoryDetails);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         fetchAllCategories();
@@ -50,7 +52,7 @@ function EditCategory({ category }) {
                 const uniqueMovies = Array.from(new Map(validMovies.map(movie => [movie._id, movie])).values());
                 setAllMovies(uniqueMovies);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         if (allCategories.length > 0) {
@@ -70,7 +72,7 @@ function EditCategory({ category }) {
                 );
                 setMovieNames(names);
             } catch (error) {
-                console.error('Error fetching movie names:', error);
+                // console.error('Error fetching movie names:', error);
             }
         };
 
@@ -87,7 +89,7 @@ function EditCategory({ category }) {
         updateCategory(category.id, categoryData)
             .then(isSuECess => {
                 if (isSuECess) {
-                    window.location.href = '/admin';
+                    navigate('/admin');
                 }
             });
     };
@@ -105,7 +107,7 @@ function EditCategory({ category }) {
         <div className="Edit-Category-modal-container">
             <div className="Edit-Category-modal-content">
                 <h2>Edit Category</h2>
-                <button className="EC-close-btn" onClick={() => window.location.href = '/admin'}>
+                <button className="EC-close-btn" onClick={() => navigate('/admin')}>
                     <i className="bi bi-x-lg"></i>
                 </button>
                 <div className="category-layout">

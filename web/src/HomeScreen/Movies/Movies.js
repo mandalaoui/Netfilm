@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import CreateCategory from '../../Admin/AdminActions/Category/CreateCategory/CreateCategory.js';
 import { deleteCategory, getAllCategories, getCategoryById } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import { getUserById } from '../../Admin/AdminActions/User/UserActions.js';
+import { useNavigate } from 'react-router-dom';
 
 function Movies() {
     const location = useLocation();
@@ -13,6 +14,7 @@ function Movies() {
     const [categories, setCategories] = useState([]);
     const [watchList, setwatchList] = useState([]);
     const [showAllCategories, setShowAllCategories] = useState(true);
+    const navigate = useNavigate();
 
     // Fetch categories from the server when the component mounts
     useEffect(() => {
@@ -35,17 +37,17 @@ function Movies() {
                     // If "unAttached" category is empty, delete it
                     const isDeleted = await deleteCategory(unAttachedCategory.id);
                     if (isDeleted) {
-                        window.location.href = "/admin";
+                        navigate("/admin");
                     } else {
-                        console.log('Failed to delete "unAttached" category.');
+                        // console.log('Failed to delete "unAttached" category.');
                     }
                 }
             } catch (error) {
-                console.error("Error fetching categories:", error);
+                // console.error("Error fetching categories:", error);
             }
         };
         fetchCategories();
-    }, []);
+    }, [navigate]);
     
     // Fetch user data (specifically watched movies) when the component mounts
     useEffect(() => {
@@ -53,7 +55,7 @@ function Movies() {
             const userId = localStorage.getItem('userId');
             if (userId) {
                 const user = await getUserById(userId);
-                console.log("user :", user, " user.watchedMovies: ", user.watchedMovies)
+                // console.log("user :", user, " user.watchedMovies: ", user.watchedMovies)
                 if (user && user.watchedMovies) {
                     const uniqueMovies = [...new Set(user.watchedMovies)];
                     setwatchList(uniqueMovies);
@@ -66,8 +68,8 @@ function Movies() {
     useEffect(() => {
         const toShowAll = async () => {
             const showAll = localStorage.getItem('showAllCategories') === 'true';
-            console.log("showAll: ", showAll);
-            console.log("showAllCategories: ", localStorage.getItem('showAllCategories'));
+            // console.log("showAll: ", showAll);
+            // console.log("showAllCategories: ", localStorage.getItem('showAllCategories'));
             setShowAllCategories(showAll);
         }
         toShowAll();
@@ -80,7 +82,7 @@ function Movies() {
 
     // Handler to navigate to the "CreateMovie" page
     const handleAddMovie = () => {
-        window.location.href = "/admin/CreateMovie";
+        navigate("/admin/CreateMovie");
     };
 
     return (

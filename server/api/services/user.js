@@ -33,7 +33,7 @@ const addToWatchList = async (userId, movieId) => {
         return await Movie.findById(movieId);;
     } catch (error) {
         // Log an error message if something goes wrong
-        console.error('Error adding movie to watchlist:', error);
+        // console.error('Error adding movie to watchlist:', error);
         return null;
     }
 };

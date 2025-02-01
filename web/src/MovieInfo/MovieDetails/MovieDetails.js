@@ -24,7 +24,7 @@ function MovieDetails({ movie }) {
                     );
                     setMovieCategories(categories);
                 } catch (error) {
-                    console.error("Error fetching categories:", error);
+                    // console.error("Error fetching categories:", error);
                 }
             };
             fetchCategories();

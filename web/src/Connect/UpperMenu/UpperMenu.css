@@ -35,21 +35,11 @@
     gap: 10px; /* Adds spacing between buttons */
 }
 
-/* Styling for the secondary button (e.g., language selector) */
-.btn-secondary {
-    background-color: #6c757d;
-    border: none;
-}
 
 /* Styling for the primary button (e.g., Login button) */
 .btn-danger {
     background-color: #FF0000;
     border: none;
-}
-
-/* Hover effect for the secondary button */
-.btn-secondary:hover {
-    filter: brightness(80%); /* Darkens the button slightly on hover */
 }
 
 /* Hover effect for the primary button */

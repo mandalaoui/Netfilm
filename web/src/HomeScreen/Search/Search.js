@@ -34,7 +34,7 @@ function Search({ query }) {
                     throw new Error(`Error: ${response.status} - ${response.statusText}`);
                 }
             } catch (err) {
-                console.error("Error fetching movies by query:", err);
+                // console.error("Error fetching movies by query:", err);
                 setError("Failed to fetch movies. Please try again.");
             } finally {
                 setIsLoading(false);

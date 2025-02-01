@@ -15,7 +15,7 @@ function WatchMovie() {
                 setMovie(movieData); // Update the movie state when the data is fetched
             })
             .catch((error) => {
-                console.error("Error fetching movie:", error);
+                // console.error("Error fetching movie:", error);
             });
     }, [id]);
 

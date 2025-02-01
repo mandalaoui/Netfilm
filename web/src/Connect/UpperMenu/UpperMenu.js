@@ -1,12 +1,15 @@
 import './UpperMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
+import { useNavigate } from 'react-router-dom';
 
 function UpperMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
+    const navigate = useNavigate();
+
     // Function to navigate to the login page
     const navigateToLogin = () => {
-        window.location.href = "/login";
+        navigate("/login");
     };
 
     return (
@@ -16,7 +19,6 @@ function UpperMenu() {
 
                 {loc === "/" && (
                     <div className="d-flex me-2">
-                        <button className="btn btn-secondary me-2" type="button">Language</button>
                         <button className="btn btn-danger" type="button" onClick={navigateToLogin}>
                             Login
                         </button>

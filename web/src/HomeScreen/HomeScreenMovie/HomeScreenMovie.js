@@ -2,6 +2,7 @@ import './HomeScreenMovie.css';
 import { useState, useEffect, useRef } from 'react';
 import { AllMovies } from '../../Admin/AdminActions/Movie/AllMovies/AllMovies';
 import { useGlobalContext } from '../../GlobalContext';
+import { useNavigate } from 'react-router-dom';
 
 function HomeScreenMovie() {
     const { allMovies } = AllMovies();
@@ -9,6 +10,7 @@ function HomeScreenMovie() {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const videoRef = useRef(null);
     const { fileUrl } = useGlobalContext(); 
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -29,32 +31,29 @@ function HomeScreenMovie() {
         if (videoRef.current && videoSrc) {
             videoRef.current.load();
             videoRef.current.play().catch((error) => {
-                console.log("Error playing video:", error);
+                // console.log("Error playing video:", error);
             });
-            console.log("Attempting to play video...");
+            // console.log("Attempting to play video...");
         }
     }, [videoSrc]);
 
     const handleVideoLoad = () => {
-        console.log("Video has loaded successfully!");
+        // console.log("Video has loaded successfully!");
         if (videoRef.current) {
             videoRef.current.muted = false; 
         }
     };
 
     const handleVideoError = (e) => {
-        console.log("Error loading video:", e);
+        // alert("Error loading video:", e);
     };
 
-    const navigateTo = (loc) => {
-        window.location.href = loc;
-    };
     const handleWatchClick = () => {
-        navigateTo(`../watchMovie/${selectedMovie._id}`);
+        navigate(`../watchMovie/${selectedMovie._id}`);
     };
 
     const handleInfoClick = () => {
-        navigateTo(`../movie/${selectedMovie._id}`);
+        navigate(`../movie/${selectedMovie._id}`);
     };
 
     return (

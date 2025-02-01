@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { createMovie } from '../MovieActions.js';
 import { useLocation } from 'react-router-dom';
 import { getCategoryById, getAllCategories } from '../../Category/CategoryActions.js';
+import { useNavigate } from 'react-router-dom';
 
 function CreateMovie() {
     const location = useLocation();
@@ -12,6 +13,7 @@ function CreateMovie() {
     const [currentCategory, setCurrentCategory] = useState(null);
     const [allCategories, setAllCategories] = useState([]);
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch all categories for selection
@@ -24,11 +26,11 @@ function CreateMovie() {
                         return fullCategory; 
                     })
                 );
-                console.log('Fetched all categories:', allCategoryDetails);  // Check fetched categories
+                // console.log('Fetched all categories:', allCategoryDetails);  // Check fetched categories
 
                 setAllCategories(allCategoryDetails);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
 
@@ -42,7 +44,7 @@ function CreateMovie() {
                     setCurrentCategory(category); // Update state when the category is fetched
                 })
                 .catch((error) => {
-                    console.error("Error fetching category:", error);
+                    // console.error("Error fetching category:", error);
                 });
         }
     }, [specificCategory]);
@@ -151,7 +153,7 @@ function CreateMovie() {
     };
 
     const handleReturn = () => {
-        window.location.href = '/admin';
+        navigate('/admin');
     };
 
     const handleCategoryChange = (e, categoryId) => {
@@ -166,7 +168,7 @@ function CreateMovie() {
         <div className="Create-Movie-body">
             <UpperMenu />
             <div className="Create-Movie-modal-content">
-                <button className="close-btn-c-m" onClick={() => window.location.href = '/admin'}>
+                <button className="close-btn-c-m" onClick={() => navigate('/admin')}>
                     <i className="bi bi-x-lg"></i>
                 </button>
                 <h2>Create New Movie</h2>

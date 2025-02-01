@@ -1,5 +1,6 @@
 // This function creates a new movie by sending form data to the server.
 const createMovie = (formData) => {
+    if (!formData || formData === '') return null;
     return fetch("http://localhost:12345/api/movies/", {
         method: "POST",
         headers: {
@@ -43,14 +44,14 @@ const getAllMovies = () => {
         }
     })
     .catch(error => {
-        console.error("Error fetching movies:", error);
+        // console.error("Error fetching movies:", error);
         return null;
     });
 };
 
 // This function fetches a single movie by its ID.
 const getMovieById = (movieId) => {
-    if(!movieId) return null;
+    if(!movieId || movieId === '') return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "GET",
         headers: {
@@ -69,14 +70,14 @@ const getMovieById = (movieId) => {
         }
     })
     .catch(error => {
-        console.error("Error fetching movie:", error);
+        // console.error("Error fetching movie:", error);
         return null;
     });
 };
 
 // This function updates an existing movie by its ID with the provided form data.
 const updateMovie = (movieId, formData) => {
-    if(!movieId) return null;
+    if(!movieId || movieId === '') return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "PUT",
         headers: {
@@ -97,14 +98,14 @@ const updateMovie = (movieId, formData) => {
         }
     })
     .catch(error => {
-        console.error("Error updating movie:", error);
+        // console.error("Error updating movie:", error);
         return null;
     });
 };
 
 // This function deletes a movie by its ID.
 const deleteMovie = (movieId) => {
-    if(!movieId) return null;
+    if(!movieId | movieId === '') return null;
     return fetch(`http://localhost:12345/api/movies/${movieId}`, {
         method: "DELETE",
         headers: {
@@ -113,7 +114,7 @@ const deleteMovie = (movieId) => {
     })
     .then(response => {
         if (response.status === 204) {
-            alert("Movie deleted successfully!");
+            // alert("Movie deleted successfully!");
             return true; 
         } else {
             return response.json().then(errorData => {
@@ -124,7 +125,7 @@ const deleteMovie = (movieId) => {
         }
     })
     .catch(error => {
-        console.error("Error deleting movie:", error);
+        // console.error("Error deleting movie:", error);
         return false;
     });
 };

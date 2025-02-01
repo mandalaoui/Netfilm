@@ -1,5 +1,6 @@
 // This function fetches a user by their ID from the server and handles the response, returning user data or an error.
 const getUserById = (userId) => {
+    if (!userId || userId === '') return null;
     return fetch(`http://localhost:12345/api/users/${userId}`, {
         method: "GET",
         headers: {
@@ -18,7 +19,7 @@ const getUserById = (userId) => {
         }
     })
     .catch(error => {
-        console.error("Error fetching user:", error);
+        // console.error("Error fetching user:", error);
         return null;
     });
 };

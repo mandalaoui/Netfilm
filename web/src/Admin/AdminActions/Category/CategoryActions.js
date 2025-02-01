@@ -17,7 +17,6 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
     .then(response => {
         if (response.status === 201) {
             alert("Category created successfully!");
-            console.log("Category created successfully");
             return true;    
         } else {
             alert("Name is not available, try another one");
@@ -25,7 +24,7 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
         }
     })
     .catch(error => {
-        console.error("Error during category creation:", error);
+        // console.error("Error during category creation:", error);
         return false;
     }); 
 };
@@ -43,14 +42,14 @@ const getAllCategories = () => {
         return data.map((category) => category._id);
     })
     .catch(error => {
-        console.error("Error fetching categories:", error);
+        // console.error("Error fetching categories:", error);
         return [];
     });
 };
 
 // Function to get a category by its ID
 const getCategoryById = (categoryId) => {
-    if(!categoryId) return null;
+    if(!categoryId || categoryId === '') return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "GET",
         headers: {
@@ -67,7 +66,7 @@ const getCategoryById = (categoryId) => {
     })
     .then((data) => {
         if (!data) {
-            console.error("No data received for category:", categoryId);
+            // console.error("No data received for category:", categoryId);
             return null;
         }
         const category = {
@@ -79,14 +78,14 @@ const getCategoryById = (categoryId) => {
         return category;
     })
     .catch((error) => {
-        console.error("Error fetching category:", error);
+        // console.error("Error fetching category:", error);
         return null;
     });
 };
 
 // Function to update an existing category
 const updateCategory = (categoryId, categoryData) => {
-    if(!categoryId) return null;
+    if(!categoryId || !categoryData) return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "PATCH",
         headers: {
@@ -97,21 +96,21 @@ const updateCategory = (categoryId, categoryData) => {
     })
     .then(response => {
         if (response.status === 204) {
-            console.log("Category updated successfully");
+            // alert("Category updated successfully");
             return true;
         } else {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
     })
     .catch(error => {
-        console.error("Error updating category:", error);
+        // console.error("Error updating category:", error);
         return false;
     });
 };
 
 // Function to delete a category by its ID
 const deleteCategory = (categoryId) => {
-    if(!categoryId) return null;
+    if(!categoryId || categoryId === '') return null;
     return fetch(`http://localhost:12345/api/categories/${categoryId}`, {
         method: "DELETE",
         headers: {
@@ -120,14 +119,14 @@ const deleteCategory = (categoryId) => {
     })
     .then(response => {
         if (response.status === 204) {
-            alert("Category deleted successfully");
+            // alert("Category deleted successfully");
             return true;
         } else {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
     })
     .catch(error => {
-        console.error("Error deleting category:", error);
+        // console.error("Error deleting category:", error);
         return false;
     });
 };

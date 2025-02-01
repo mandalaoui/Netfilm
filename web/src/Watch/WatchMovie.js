@@ -17,7 +17,7 @@ function WatchMovie() {
                 addMovieToWatchlist(id);
             })
             .catch((error) => {
-                console.error("Error fetching movie:", error);
+                // console.error("Error fetching movie:", error);
             });
     }, [id]);
 

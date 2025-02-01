@@ -1,6 +1,7 @@
 const Movie = require('../models/movie');
 const User = require('../models/user');
 const net = require('net');
+const mongoose = require('mongoose');
 
 // Function to send a command to the recommendation server via a socket connection
 const commandToServer = async (command) => {
@@ -27,7 +28,7 @@ const commandToServer = async (command) => {
 
         // Listen for socket errors
         client.on('error', (err) => {
-            console.error(`Socket error: ${err.message}`);
+            // console.error(`Socket error: ${err.message}`);
             reject(err);
             client.destroy();
         });
@@ -50,13 +51,14 @@ const getRecommendedMovies = async (userId, movieId) => {
                 .split("\n\n")[1] // Get the part after "200 Ok\n\n"
                 .trim() // Remove extra spaces or newlines
                 .split(" "); // Split movie IDs into an array
-            // Fetch movie details from the database
+            const validMovieIds = movieIds.filter(id => mongoose.Types.ObjectId.isValid(id));
+            if (validMovieIds.length === 0) return [];            // Fetch movie details from the database
             const movies = await Movie.find({ _id: { $in: movieIds } });
             return movies;
         }
         return serverResponse;
     } catch (err) {
-        console.error('Error in getting recommended movies:', err);
+        // console.error('Error in getting recommended movies:', err);
         throw err;
     }
 }
@@ -80,7 +82,7 @@ const deleteMovieFromUser = async (userId, movieId) => {
         // Call the commandToServer function with the 'GET' command
         return serverResponse = await commandToServer(`DELETE ${userId} ${movieId}`);
     } catch (err) {
-        console.error('Error in getting recommended movies:', err);
+        // console.error('Error in getting recommended movies:', err);
         throw err;
     }
 }

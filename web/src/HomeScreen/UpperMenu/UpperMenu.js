@@ -3,21 +3,16 @@ import userIcon from '../../icons/user.png';
 import netfilmIcon from '../../icons/NETFILM.png';
 import searchIcon from '../../icons/search.png';
 import React, { useContext, useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getUserById } from '../../Admin/AdminActions/User/UserActions';
 import UserInfo from '../UserInfo/UserInfo.js';
 import { ThemeContext } from "../../ThemeContext";
 import { useGlobalContext } from '../../GlobalContext.js';
+import { useNavigate } from 'react-router-dom';
 
 // Main component function for the upper menu
 function UpperMenu({ searchQuery, onSearchChange }) {
-    const navigate = useNavigate();
-    const { fileUrl } = useGlobalContext(); 
-
-    // Function to handle navigation
-    const navigateTo = (loc) => {
-        window.location.href = loc;
-    };
+    const { fileUrl } = useGlobalContext();
 
     // State hooks for different features
     const [showUserOptions, setShowUserOptions] = useState(false);
@@ -29,6 +24,7 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     const [showInfoModal, setShowInfoModal] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const { isLightMode, setIsLightMode } = useContext(ThemeContext);
+    const navigate = useNavigate();
 
     // Check if the user is an admin based on localStorage
     useEffect(() => {
@@ -75,7 +71,17 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     // Navigate to the home page
     const handleHome = () => {
         localStorage.setItem("showAllCategories", "false");
-        window.location.href = '/home';
+        navigate('/home');
+    };
+
+    // Navigate to the admin screen
+    const handleAdminScreen = () => {
+        navigate('/admin');
+    };
+
+    // Navigate to the user screen
+    const handleUserScreen = () => {
+        navigate('/home');
     };
 
     // Log out the user
@@ -83,7 +89,7 @@ function UpperMenu({ searchQuery, onSearchChange }) {
         localStorage.removeItem('authToken');
         localStorage.removeItem('isAdmin');
         localStorage.removeItem('userId');
-        navigateTo('../');
+        navigate('../');
     };
 
     // Open the search input field
@@ -109,13 +115,13 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     // Toggle light/dark mode
     const handleLightMode = () => {
         setIsLightMode(prev => !prev);
-      };
+    };
 
     const handleMoviesBy = () => {
         localStorage.setItem('showAllCategories', 'true');
-        window.location.href = '/home';
+        navigate('/home');
     }
-      
+
 
     return (
         <nav className="navbar border-body fixed-top full-width">
@@ -163,20 +169,20 @@ function UpperMenu({ searchQuery, onSearchChange }) {
                                         Info
                                     </span>
                                     <span className="dropdown-item" onClick={handleLightMode} role="button" tabIndex="0">
-                                    {isLightMode ? 'Dark Mode' : 'Light Mode'}
+                                        {isLightMode ? 'Dark Mode' : 'Light Mode'}
                                     </span>
                                 </li>
                                 {showInfoModal && (
                                     <UserInfo user={currentUser} onClose={handleCloseInfo} />
                                 )}
                                 {isAdmin && !isAdminScreen && (
-                                    <li><a className="dropdown-item" href="/admin" >Admin Screen</a></li>
-                                )}
+                                <li><span className="dropdown-item" onClick={handleAdminScreen}>Admin Screen</span></li>
+                            )}
                                 {isAdmin && isAdminScreen && (
-                                    <li><a className="dropdown-item" href="/home" >User Screen</a></li>
+                                    <li><span className="dropdown-item" onClick={handleUserScreen}>User Screen</span></li>
                                 )}
-                                <li><a className="dropdown-item" href='/' onClick={handleLogOut}>Log Out</a></li>
-                            </ul>
+                                <li><span className="dropdown-item" onClick={handleLogOut}>Log Out</span></li>
+                                </ul>
                         )}
                     </div>
                 </div>

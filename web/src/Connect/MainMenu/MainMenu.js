@@ -2,15 +2,14 @@ import './MainMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
 import { useEffect } from 'react';
 import { useGlobalContext } from '../../GlobalContext.js';
+import { useNavigate } from 'react-router-dom';
 
 function MainMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
     const { fileUrl } = useGlobalContext(); 
-    // Function to navigate between pages
-    const navigateToPage = (page) => {
-        window.location.href = page; // Navigate to the given page
-    };
+    const navigate = useNavigate();
+    console.log("MainMenu loaded");
 
     useEffect(() => {
         function validateInput(input) {
@@ -108,10 +107,10 @@ function MainMenu() {
             });
 
             if (response.ok) {
-                const location = response.headers.get('Location');
+                // const location = response.headers.get('Location');
                 alert("Registration successful!");
-                console.log("User created at:", location);
-                window.location.href = "/login";
+                // console.log("User created at:", location);
+                navigate("/login");
             } else {
                 const errorResponse = await response.json();
                 if (response.status === 400) {
@@ -123,7 +122,7 @@ function MainMenu() {
                 }
             }
         } catch (error) {
-            console.error("Error during registration:", error);
+            // console.error("Error during registration:", error);
             alert("Network error: Please try again later.");
         }
     };
@@ -158,7 +157,7 @@ function MainMenu() {
                 localStorage.setItem('userId', userId);
                 localStorage.setItem('isAdmin', isAdmin);
 
-                navigateToPage('../home');
+                navigate('../home');
             } else if (response.status === 400 || response.status === 404) {
                 errorElement.textContent = "Username and/or password are incorrect.";
                 errorElement.style.display = "block";
@@ -167,7 +166,7 @@ function MainMenu() {
                 errorElement.style.display = "block";
             }
         } catch (error) {
-            console.error("Error during login:", error);
+            // console.error("Error during login:", error);
             errorElement.textContent = "Network error. Please check your connection.";
             errorElement.style.display = "block";
         }
@@ -179,7 +178,7 @@ function MainMenu() {
                     <h1>Movies, TV Shows, and more without limits</h1>
                     <h3>Want to start watching? Let's go!</h3>
                     <div className="intro-actions">
-                        <button onClick={() => navigateToPage("/register")}>Create Account</button> {/* Button to navigate to register page */}
+                        <button onClick={() => navigate("/register")}>Create Account</button> {/* Button to navigate to register page */}
                     </div>
                 </div>
             )}
@@ -210,7 +209,7 @@ function MainMenu() {
                                 <button onClick={handleRegister}>Register</button> {/* Button to register user */}
                                 <button
                                     className="secondary"
-                                    onClick={() => navigateToPage("../login")}
+                                    onClick={() => navigate("../login")}
                                 >
                                     Login with existing user
                                 </button> {/* Button to navigate to login page */}
@@ -223,7 +222,7 @@ function MainMenu() {
                                 <button onClick={handleLogin}>Login</button> {/* Button to handle login */}
                                 <button
                                     className="secondary"
-                                    onClick={() => navigateToPage("../register")}
+                                    onClick={() => navigate("../register")}
                                 >
                                     Create new user
                                 </button> {/* Button to navigate to register page */}

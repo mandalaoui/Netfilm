@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { updateMovie } from '../MovieActions.js';
 import { getCategoryById, getAllCategories } from '../../Category/CategoryActions.js';
 import { getMovieById } from '../MovieActions.js';
-
+import { useNavigate } from 'react-router-dom';
+import SmallView from '../../../../Watch/SmallView/SmallView.js';
 
 function EditMovie() {
     const [currentMovie, setCurrentMovie] = useState(''); // State to store the current movie
@@ -13,6 +14,9 @@ function EditMovie() {
     const urlParams = new URLSearchParams(window.location.search);
     const movieId = urlParams.get('id');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState({});
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -28,7 +32,7 @@ function EditMovie() {
                 );
                 setAllCategories(allCategoryDetails);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
 
@@ -43,7 +47,7 @@ function EditMovie() {
                     const movie = await getMovieById(movieId);
                     setCurrentMovie(movie);
                 } catch (error) {
-                    console.error("Error fetching movie:", error);
+                    // console.error("Error fetching movie:", error);
                 }
             }
         };
@@ -61,7 +65,7 @@ function EditMovie() {
                     );
                     setMovieCategories(categories);
                 } catch (error) {
-                    console.error("Error fetching categories:", error);
+                    // console.error("Error fetching categories:", error);
                 }
             };
 
@@ -124,7 +128,7 @@ function EditMovie() {
 
     // Handles returning to the admin page
     const handleReturn = () => {
-        window.location.href = '/admin';
+        navigate('/admin');
     };
 
     // Handles form submission for updating a movie
@@ -165,7 +169,7 @@ function EditMovie() {
             if (isSuccess) {
                 handleReturn();
             } else {
-                console.error('Failed to update movie');
+                // console.error('Failed to update movie');
             }
         });
     };
@@ -177,6 +181,17 @@ function EditMovie() {
             : selectedCategories.filter((id) => id !== categoryId);
 
         setSelectedCategories(updatedCategories);
+    };
+
+    // Function to open the modal with the appropriate content
+    const openModal = (type, video, trailer, image) => {
+        setModalContent({ type, video, trailer, image });
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setModalContent({});
     };
 
     return (
@@ -218,77 +233,73 @@ function EditMovie() {
                                     : "No categories"
                                 } </span>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-link">
                             <label>Video:</label>
-                            <span>{currentMovie.video ? <a href={currentMovie.video} target="_blank" rel="noopener noreferrer">Watch Video</a> : "No video available"}</span>
+                            <span onClick={() => openModal('video', currentMovie.video, currentMovie.trailer, currentMovie.image)}>Watch Video</span>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-link">
                             <label>Trailer:</label>
-                            <span>{currentMovie.trailer ? <a href={currentMovie.trailer} target="_blank" rel="noopener noreferrer">Watch Trailer</a> : "No trailer available"}</span>
+                            <span onClick={() => openModal('trailer', currentMovie.video, currentMovie.trailer, currentMovie.image)}>Watch Trailer</span>
                         </div>
-                        <div className="input-group">
+                        <div className="input-group-link">
                             <label>Image:</label>
-                            <span>{currentMovie.image ? <a href={currentMovie.image} target="_blank" rel="noopener noreferrer">Watch Image</a> : "No image available"}</span>
+                            <span onClick={() => openModal('image', currentMovie.video, currentMovie.trailer, currentMovie.image)}>Watch Image</span>
                         </div>
                     </div>
 
                     <div className="modal-movie-form">
                         <h3>New Movie</h3>
-                        <div className="modal-movie-left">
-                            <div className="input-group">
-                                <input type="text" id="movieName" placeholder="Movie Name" />
-                                <p className="error-message-movie" id="movieName-error">Movie name must be at least 2 characters long.</p>
-                            </div>
-                            <div className="input-group">
-                                <input type="number" id="publicationYear" placeholder="Publication Year" />
-                                <p className="error-message-movie" id="publicationYear-error">Year must be between 0 and the current year.</p>
-                            </div>
-                            <div className="input-group">
-                                <input type="text" id="movieTime" placeholder="Duration (e.g., 1:30)" />
-                                <p className="error-message-movie" id="movieTime-error">Duration must be in the format "1:30".</p>
-                            </div>
-                            <div className="input-group">
-                                <input type="number" id="age" placeholder="Age Rating" />
-                                <p className="error-message-movie" id="age-error">Age must be even and greater than 0.</p>
-                            </div>
-                            <div className="input-group">
-                                <textarea placeholder="Description" id="description"></textarea>
-                            </div>
-                            <div className="input-group">
-                                <h6>Categories</h6>
-                                <div className="category-list">
-                                    {allCategories.map((category) => (
-                                        <div key={category.id} className="category-item">
-                                            <input
-                                                type="checkbox"
-                                                id={`category-${category.id}`}
-                                                checked={selectedCategories.includes(category.id)}
-                                                onChange={(e) => handleCategoryChange(e, category.id)}
-                                            />
-                                            <label htmlFor={`category-${category.id}`} className="category-label">
-                                                {category.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
+                        <div className="input-group">
+                            <input type="text" id="movieName" placeholder="Movie Name" />
+                            <p className="error-message-movie" id="movieName-error">Movie name must be at least 2 characters long.</p>
+                        </div>
+                        <div className="input-group">
+                            <input type="number" id="publicationYear" placeholder="Publication Year" />
+                            <p className="error-message-movie" id="publicationYear-error">Year must be between 0 and the current year.</p>
+                        </div>
+                        <div className="input-group">
+                            <input type="text" id="movieTime" placeholder="Duration (e.g., 1:30)" />
+                            <p className="error-message-movie" id="movieTime-error">Duration must be in the format "1:30".</p>
+                        </div>
+                        <div className="input-group">
+                            <input type="number" id="age" placeholder="Age Rating" />
+                            <p className="error-message-movie" id="age-error">Age must be even and greater than 0.</p>
+                        </div>
+                        <div className="input-group">
+                            <textarea placeholder="Description" id="description"></textarea>
+                        </div>
+                        <div className="input-group">
+                            <h6>Categories</h6>
+                            <div className="category-list">
+                                {allCategories.map((category) => (
+                                    <div key={category.id} className="category-item">
+                                        <input
+                                            type="checkbox"
+                                            id={`category-${category.id}`}
+                                            checked={selectedCategories.includes(category.id)}
+                                            onChange={(e) => handleCategoryChange(e, category.id)}
+                                        />
+                                        <label htmlFor={`category-${category.id}`} className="category-label">
+                                            {category.name}
+                                        </label>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="modal-movie-right">
-                            <div className="input-group">
-                                <h6>Movie</h6>
-                                <input type="file" id="video" accept="video/*" />
-                                <p className="error-message-movie" id="video-error">Please upload a movie file.</p>
-                            </div>
-                            <div className="input-group">
-                                <h6>Movie Picture</h6>
-                                <input type="file" id="image" accept="image/*" />
-                                <p className="error-message-movie" id="image-error">Please upload a movie picture.</p>
-                            </div>
-                            <div className="input-group">
-                                <h6>Trailer</h6>
-                                <input type="file" id="trailer" accept="video/*" />
-                                <p className="error-message-movie" id="trailer-error">Please upload a trailer file.</p>
-                            </div>
+                        <div className="input-group">
+                            <h6>Movie</h6>
+                            <input type="file" id="video" accept="video/*" />
+                            <p className="error-message-movie" id="video-error">Please upload a movie file.</p>
+                        </div>
+                        <div className="input-group">
+                            <h6>Movie Picture</h6>
+                            <input type="file" id="image" accept="image/*" />
+                            <p className="error-message-movie" id="image-error">Please upload a movie picture.</p>
+                        </div>
+                        <div className="input-group">
+                            <h6>Trailer</h6>
+                            <input type="file" id="trailer" accept="video/*" />
+                            <p className="error-message-movie" id="trailer-error">Please upload a trailer file.</p>
                         </div>
                     </div>
                 </div>
@@ -297,6 +308,7 @@ function EditMovie() {
                 </div>
                 <p className="text-decoration-underline" onClick={handleReturn}>Return</p>
             </div >
+            <SmallView show={showModal} onClose={closeModal} content={modalContent} />
         </div>
     );
 }

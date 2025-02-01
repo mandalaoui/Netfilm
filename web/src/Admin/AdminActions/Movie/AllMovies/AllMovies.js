@@ -13,7 +13,7 @@ export const AllMovies = () => {
             try {
                 const categories = await getAllCategories();
                 if (categories.length === 0) {
-                    console.error("No categories found.");
+                    // console.error("No categories found.");
                     return;
                 }
                 const allCategoryDetails = await Promise.all(
@@ -24,7 +24,7 @@ export const AllMovies = () => {
                 );
                 setAllCategories(allCategoryDetails);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         fetchAllCategories();
@@ -36,7 +36,7 @@ export const AllMovies = () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
                 if (allMoviesId.length === 0) {
-                    console.error("No movies found in categories.");
+                    // console.error("No movies found in categories.");
                     return;
                 }
 
@@ -50,7 +50,7 @@ export const AllMovies = () => {
                 const validMovies = allMoviesDetails.filter((movie) => movie !== null);
                 setAllMovies(validMovies);
             } catch (error) {
-                console.error("Error fetching all categories:", error);
+                // console.error("Error fetching all categories:", error);
             }
         };
         if (allCategories.length > 0) {
