@@ -1,5 +1,6 @@
 package com.example.androidapp.api;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -7,7 +8,9 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+
+//import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.Movie;
@@ -35,31 +38,31 @@ public class MovieApi {
     private MutableLiveData<List<Movie>> movieListData;
     private MovieDao dao;
 
+//    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 
     public MovieApi() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         apiService = retrofit.create(ApiService.class);
     }
 
     public MovieApi(MutableLiveData<List<Movie>> movieListData, MovieDao dao) {
         this.movieListData = movieListData;
         this.dao = dao;
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         apiService = retrofit.create(ApiService.class);
     }
+    MyApplication myApplication = MyApplication.getInstance();
 
-    String userId = "6792b52c10a40e0b80dd798d";
+    String userId = myApplication.getGlobalUserId();
 
     public void getSearchedMovies(final Callback<List<Movie>> callback, String query) {
         Call<List<Movie>> call = apiService.getSearchedMovies(userId, query);
@@ -80,7 +83,7 @@ public class MovieApi {
         });
     }
     public void getListOfMovies() {
-        String userId = "6792b52c10a40e0b80dd798d";
+
         Call<List<Movie>> call = apiService.getMovies(userId);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
@@ -90,17 +93,17 @@ public class MovieApi {
                         Log.d("MovieApi", "Thread started");
                         dao.clear();
                         dao.insertList(response.body());
-                        Log.d("CategoryApi", "Inserted categories into DB: " + response.body());
+                        Log.d("MovieApi", "Inserted categories into DB: " + response.body());
                         movieListData.postValue(dao.index());
                     }).start();
 
                 } else {
-                    Log.e("Movie", "Error: " + response.code());
+                    Log.e("MovieApi", "Error: " + response.code());
                 }
             }
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Log.e("CategoryApi", "Error fetching categories: " + t.getMessage());
+                Log.e("MovieApi", "Error fetching categories: " + t.getMessage());
             }
         });
     }
@@ -126,7 +129,6 @@ public class MovieApi {
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
-        String userId= "6792b52c10a40e0b80dd798d";
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -136,10 +138,10 @@ public class MovieApi {
                         dao.insertMovie(response.body());
                     }).start();
 
-                    Toast.makeText(AppContext.getContext(), "Movie created successfully", Toast.LENGTH_SHORT).show();
-                    Log.d("RequestApi", "Movie created successfully");
+                    Toast.makeText(MyApplication.getAppContext(), "Movie created successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("MovieApi", "Movie created successfully");
                 } else {
-                    Log.e("RequestApi", "Failed to create movie: " + response.message());
+                    Log.e("MovieApi", "Failed to create movie: " + response.message());
                     try {
                         String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
                         Log.e("Error Response", errorResponse);
@@ -151,14 +153,14 @@ public class MovieApi {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                Log.e("RequestApi", "Error: " + t.getMessage());
-                Toast.makeText(AppContext.getContext(), "Network request failed", Toast.LENGTH_SHORT).show();
+                Log.e("MovieApi", "Error: " + t.getMessage());
+                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void deleteMovie(String movieId) {
-        String userId = "6792b52c10a40e0b80dd798d";
+
         Call<Movie> call = apiService.deleteMovie(movieId,userId);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -166,7 +168,7 @@ public class MovieApi {
                 if (response.isSuccessful()) {
                     Log.d("MovieApi", "Movie delete successfully");
                 } else {
-                    Log.e("Movie", "Error: " + response.code());
+                    Log.e("MovieApi", "Error: " + response.code());
                 }
             }
             @Override
@@ -176,4 +178,56 @@ public class MovieApi {
         });
 
     }
+
+    public void recommend(String movieId, final Callback<List<Movie>> callback) {
+        Call<List<Movie>> call = apiService.getRecommendation(userId, movieId);
+        call.enqueue(new Callback<List<Movie>>() {
+            @Override
+            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                if (response.isSuccessful()) {
+                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    if (response.code() == 404) {
+                        callback.onFailure(call, new Throwable("Failed to get searched movies"));
+                    } else {
+                        callback.onFailure(call, new Throwable("Failed to get searched movies"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Movie>> call, Throwable t) {
+                callback.onFailure(call,t);
+            }
+        });
+    }
+
+
+//    public void recommend(String movieId) {
+//        String userId = "679178e884e6da9a833f5452";
+//        Call<List<Movie>> call = apiService.getRecommendation(userId,movieId);
+//        call.enqueue(new Callback<List<Movie>>() {
+//            @Override
+//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+//                if (response.isSuccessful()) {
+//                    new Thread(() -> {
+//                        movieListData.postValue(response.body());
+//                    }).start();
+//                    Log.d("MovieApi", "Movie recommend successfully");
+//                } else {
+//                    if (response.code() == 404) {
+//                        new Thread(() -> {
+//                            movieListData.postValue(null); // במקרה של 404, נתון יהיה null
+//                        }).start();
+//                        Log.e("MovieApi", "Error 404: Resource not found");
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onFailure(Call<List<Movie>> call, Throwable t) {
+//                Log.e("MovieApi", "Error recommend movie: " + t.getMessage());
+//            }
+//        });
+//    }
 }

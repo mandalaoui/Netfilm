@@ -4,7 +4,7 @@ const categoryService = require('../services/category');
 const createCategory = async (req, res, next) => {
     const newCategory = await categoryService.createCategory(req.body.name, req.body.isPromoted, req.body.movies);
     const location = `/api/categories/${newCategory._id}`;
-    res.status(201).location(location).json();
+    res.status(201).location(location).json(newCategory);
     
     next();
 };

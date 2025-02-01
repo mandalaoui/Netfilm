@@ -36,51 +36,17 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.editPassword.getText().toString();
             if (!username.isEmpty() && !password.isEmpty()) {
                 User user = new User(username, password);
-                UserApi userApi = new UserApi(this);
-                userApi.loginUser(user, new Callback<LoginResponse>() {
-                    @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                        Log.d("Register", "Response raw body: " + response.raw().body());
-                        if (response.isSuccessful() && response.body() != null) {
-                            LoginResponse loginResponse = response.body();
-                            if (loginResponse.getToken() != null) {
-                                String userId = loginResponse.getToken();
-
-                                Log.d("Register", "User successfully logged i ");
-
-                                Toast.makeText(LoginActivity.this, "User successfully logged in!", Toast.LENGTH_SHORT).show();
-
-                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                i.putExtra("movieId", "6792b52c10a40e0b80dd798d");
-                                startActivity(i);
-                            }
-                        } else if (response.code() == 404) {
-                            Log.d("Register", "The user is not in the system ");
-
-                            Toast.makeText(LoginActivity.this, "The user is not in the system, please check the login information", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("Register", "Login error");
-
-                            Toast.makeText(LoginActivity.this, "Login error, please try again", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        Log.e("LoginActivity", "Error connecting to the server", t);
-
-                        Toast.makeText(LoginActivity.this, "Error connecting to the server, please try again", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                } else {
-                    Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-                }
-
+                UserApi userApi = new UserApi();
+                userApi.loginUser(user);
+            }
+            else {
+                Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            }
         });
 
         binding.btnSignUp.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         });
-
     }
 }

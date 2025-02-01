@@ -16,6 +16,7 @@ import com.example.androidapp.R;
 import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityCreateCategoryBinding;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.MovieViewModel;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -31,6 +32,7 @@ public class CreateCategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerViewMovies;
     private MovieViewModel movieViewModel;
     private MovieAdapter movieAdapter;
+    private CategoriesViewModel categoriesViewModel;
     private List<Movie> selectedMovies = new ArrayList<>(); // הרשימה של הסרטים שנבחרו
 
 
@@ -81,7 +83,7 @@ public class CreateCategoryActivity extends AppCompatActivity {
             }
 
             Category category = new Category(categoryName, isPromoted, selectedIds);
-
+            categoriesViewModel.add(category);
             Toast.makeText(this, "Category created", Toast.LENGTH_SHORT).show();
         });
 

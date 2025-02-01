@@ -1,5 +1,7 @@
 package com.example.androidapp.api;
 
+import androidx.media3.common.C;
+
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.entities.User;
@@ -51,11 +53,11 @@ public interface ApiService {
     @POST("tokens")
     Call<LoginResponse> login(@Body User user);
 
-//    @POST("categories/")
-//    Call<Void> createCategory(
-//            @Header("userId") String userId,       // שולחים את ה- userId כ- header
-//            @Body Category categoryRequest  // שולחים את הנתונים כ- body
-//    );
+    @POST("categories")
+    Call<Category> createCategory(
+            @Header("userId") String userId,       // שולחים את ה- userId כ- header
+            @Body Category categoryRequest  // שולחים את הנתונים כ- body
+    );
 //    @GET("movies")
 //    Call<List<Category>> getCategories(@Header("userId") String userId);
 
@@ -72,7 +74,8 @@ public interface ApiService {
     @GET("movies")
     Call<List<PromotedCategory>> getCategories(@Header("userId") String userId);
 
-
+    @POST("movies/{id}/recommend")
+    Call<User> addToWatchList(@Header("userId") String userId, @Path("id") String movieId);
 //    @GET("movies/{id}")
 //    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
 

@@ -29,6 +29,7 @@ import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityCreateMovieBinding;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.io.File;
@@ -48,11 +49,12 @@ public class CreateMovieActivity extends AppCompatActivity {
     private Button btnCreateMovie;
     private EditText create_movieNameInput;
     private MovieViewModel movieViewModel;
-
+    private CategoriesViewModel categoriesViewModel;
+    private CategoryAdapter categoryAdapter;
     private String selectedImageUri;
     private String selectedVideoUri;
     private Movie movie;
-
+    private List<Category> categoryList;
     private List<String> selectedCategories;
     private MovieAdapter moviesAdapter;
     private List<Movie> allMovies;
@@ -90,7 +92,10 @@ public class CreateMovieActivity extends AppCompatActivity {
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
         });
-        UserApi apiRequest = new UserApi(this);
+//        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+//        categoriesViewModel.reload();
+//        onCategoriesReceived();
+        UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -110,6 +115,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     }
 
     public void onCategoriesReceived(List<Category> categories) {
+//        public void onCategoriesReceived() {
         if (categories == null || categories.isEmpty()) {
             Log.e("Categories", "No categories received.");
             return;
@@ -117,6 +123,11 @@ public class CreateMovieActivity extends AppCompatActivity {
         for (Category category : categories) {
             Log.d("Category", "Category: " + category.getName() + ", ID: " + category.getId());
         }
+
+
+//        categoriesViewModel.get().observe(this,categories -> {
+//            categoryList = categories;
+//        });
 
         // יצירת ה-Adapter והגדרת ה-ListView
         CategoryAdapter adapter = new CategoryAdapter(this, categories);

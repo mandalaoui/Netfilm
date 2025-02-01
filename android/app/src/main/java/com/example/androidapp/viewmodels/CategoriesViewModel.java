@@ -1,5 +1,6 @@
 package com.example.androidapp.viewmodels;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -26,9 +27,9 @@ public class CategoriesViewModel extends ViewModel  {
         return categories;
     }
 
-//    public void add(Category category) {
-//        repository.add(category);
-//    }
+    public void add(Category category) {
+        repository.add(category);
+    }
 //
 //    public void delete(Category category) {
 //        repository.delete(category);

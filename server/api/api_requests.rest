@@ -89,9 +89,9 @@ userId: 67963d5d483e59c7cb61231b
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/679629522d6eaf038e9e1768/recommend/ 
+POST http://localhost:12345/api/movies/679b48e4967c981b66773dc3/recommend/ 
 Content-Type: application/json 
-userId: 67963d5d483e59c7cb61231b
+userId: 679213ef1cebc10d8c2d7bc3
 
 # CATEGORY
 
