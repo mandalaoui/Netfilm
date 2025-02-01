@@ -18,7 +18,6 @@ public class MovieViewModel extends ViewModel {
 
     private MovieRepository repository;
     private LiveData<List<Movie>> movies;
-
     public MovieViewModel() {
         repository = new MovieRepository();
         movies = repository.getAll();

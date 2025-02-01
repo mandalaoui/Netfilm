@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = binding.editPassword.getText().toString();
             if (!username.isEmpty() && !password.isEmpty()) {
                 User user = new User(username, password);
-                UserApi userApi = new UserApi(this);
+                UserApi userApi = new UserApi();
                 userApi.loginUser(user);
             }
             else {

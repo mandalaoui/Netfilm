@@ -1,11 +1,13 @@
 package com.example.androidapp.repositories;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+//import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.PromotedCategoryApi;
 import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.dao.PromotedCategoryDao;
@@ -20,7 +22,7 @@ public class PromotedCategoriesRepository {
     private PromotedCategoryApi api;
 
     public PromotedCategoriesRepository() {
-        LocalDatabase db = LocalDatabase.getInstance(AppContext.getContext());
+        LocalDatabase db = LocalDatabase.getInstance(MyApplication.getAppContext());
         dao = db.promotedCategoryDao();
         categoryListData = new CategoryListData();
         api = new PromotedCategoryApi(categoryListData, dao);

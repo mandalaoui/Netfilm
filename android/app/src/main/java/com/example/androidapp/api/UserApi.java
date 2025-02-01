@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.activities.LoginActivity;
@@ -40,24 +40,26 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserApi {
     private Retrofit retrofit;
     private ApiService apiService;
-    private Context context;
     private RequestBody categoriesRequestBody;
     private MovieDao movieDao;
     private MutableLiveData<List<Movie>> movieListData;
 //    private MyApplication myApplication;
-    public UserApi(Context context) {
-        this.context = context;
+    public UserApi() {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         apiService = retrofit.create(ApiService.class);
     }
+
+    MyApplication myApplication = MyApplication.getInstance();
+
+    String userId = myApplication.getGlobalUserId();
     public void registerUser(User user,File imageFile) {
         RequestBody username = RequestBody.create(user.getUsername(), MediaType.parse("text/plain"));
         RequestBody password = RequestBody.create(user.getPassword(), MediaType.parse("text/plain"));
@@ -68,27 +70,28 @@ public class UserApi {
         RequestBody requestFile = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("photo", imageFile.getName(), requestFile);
 
-        Log.d("API_REQUEST", "Sending registration request for user: " + user.getUsername());
+        Log.d("UserApi", "Sending registration request for user: " + user.getUsername());
 
         Call<User> call = apiService.post(username, password, nickname, imagePart);
-        Log.d("Register", "Starting registration request for user: " + user.getUsername());
+        Log.d("UserApi", "Starting registration request for user: " + user.getUsername());
         call.enqueue(new Callback<User>() {
 
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                Log.d("Register", "Response raw body: " + response.raw().body());
+                Log.d("UserApi", "Response raw body: " + response.raw().body());
 
                 if (response.isSuccessful()) {
                     if (response.code() == 201) {
-                        Log.d("API_RESPONSE", "User successfully created!");
-                        Toast.makeText(context, "User created successfully!", Toast.LENGTH_LONG).show();
-//                        Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
-//                        startActivity(i);
+                        Log.d("UserApi", "User successfully created!");
+                        Toast.makeText(MyApplication.getAppContext(), "User created successfully!", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(MyApplication.getAppContext(), LoginActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(i);
                     } else {
                         if (response.body() != null) {
-                            Log.d("API_RESPONSE", "User created: " + response.body());
-                            Toast.makeText(context, "User created: " + response.body().getUsername(), Toast.LENGTH_LONG).show();
+                            Log.d("UserApi", "User created: " + response.body());
+                            Toast.makeText(MyApplication.getAppContext(), "User created: " + response.body().getUsername(), Toast.LENGTH_LONG).show();
                         }
                     }
                 } else {
@@ -96,59 +99,61 @@ public class UserApi {
                     try {
                         if (response.errorBody() != null) {
                             String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
-                            Log.e("Register", "Error: " + errorMessage);
+                            Log.e("UserApi", "Error: " + errorMessage);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("Register", "An error occurred");
+                        Log.e("UserApi", "An error occurred");
                     }
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Log.e("Register", "Registration failed with error: " + t.getMessage());
+                Log.e("UserApi", "Registration failed with error: " + t.getMessage());
                 // Logging the error
                 t.printStackTrace();
-                Toast.makeText(context, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getAppContext(), "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
 //                            Toast.makeText(RegisterActivity.this, "Registration failed: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
     public void loginUser(User user) {
-        Log.d("API_REQUEST", "Sending registration request for user: 1" + user.getUsername());
+        Log.d("UserApi", "Sending registration request for user: 1" + user.getUsername());
         Call<LoginResponse> call = apiService.login(user);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d("Register", "Response raw body: " + response.raw().body());
+                Log.d("UserApi", "Response raw body: " + response.raw().body());
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.getToken() != null) {
 //                        String userId = loginResponse.getUserId();
 //                        token.setGlobalToken(userId);
                         extractDataFromToken(loginResponse.getToken());
-                        Log.d("Register", "User successfully logged i ");
+                        Log.d("UserApi", "User successfully logged i ");
 
-                        Toast.makeText(context, "User successfully logged in!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), "User successfully logged in!", Toast.LENGTH_SHORT).show();
 
-                        Intent i = new Intent(context, HomeActivity.class);
-                        startActivity(context,i,null);
+                        Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        MyApplication.getAppContext().startActivity(i);
+//                        startActivity(MyApplication.getAppContext(),i,null);
                     }
                 } else if (response.code() == 404) {
-                    Log.d("Register", "The user is not in the system ");
+                    Log.d("UserApi", "The user is not in the system ");
 
-                    Toast.makeText(context, "The user is not in the system, please check the login information", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getAppContext(), "The user is not in the system, please check the login information", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.d("Register", "Login error");
+                    Log.d("UserApi", "Login error");
 
-                    Toast.makeText(context, "Login error, please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getAppContext(), "Login error, please try again", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.e("LoginActivity", "Error connecting to the server", t);
 
-                Toast.makeText(context, "Error connecting to the server, please try again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getAppContext(), "Error connecting to the server, please try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -177,6 +182,28 @@ public class UserApi {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    public void addToWatchList(String movieId) {
+        Log.d("API_REQUEST", "userId" + movieId + "userElse");
+        Call<User> call = apiService.addToWatchList(userId,movieId);
+        call.enqueue(new Callback<User>() {
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                Log.d("UserApi", "Response raw body: " + response.raw().body());
+
+                if (response.isSuccessful()) {
+                    Log.d("UserApi", "add movie to watchList: " + response.body());
+                }  else {
+                    Log.d("UserApi", "Failed add movie to watchList" + response.body());
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.d("UserApi", "Failed add movie to watchList 1" + t);
+            }
+        });
+
     }
 
     public void extractDataFromToken(String token) {

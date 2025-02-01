@@ -12,6 +12,7 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.AspectRatioFrameLayout;
 import androidx.media3.ui.PlayerView;
 import androidx.media3.exoplayer.ExoPlayer;
 import androidx.media3.ui.PlayerView;
@@ -20,9 +21,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 //import com.google.android.exoplayer2.MediaItem;
 
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.api.MovieApi;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityMovieBinding;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
@@ -40,7 +43,6 @@ import retrofit2.Response;
 public class MovieActivity extends AppCompatActivity {
     private ActivityMovieBinding binding;
     private TextView tvName, tvYear,tvTime, tvDescription;
-    private VideoView videoView;
 //    private MovieViewModel movieViewModel;
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
@@ -49,7 +51,6 @@ public class MovieActivity extends AppCompatActivity {
     private List<Movie> recommendedMoviesList = new ArrayList<>();
     MovieListAdapter movieListAdapter;
     private RecyclerView recyclerView;
-    String videoUrl;
     private MovieAdapter movieAdapter;
 
     private MovieViewModel movieViewModel;
@@ -61,8 +62,9 @@ public class MovieActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        String movieId = getIntent().getStringExtra("movieId");
-        String userId = "67963d5d483e59c7cb61231b";
+        String movieId = getIntent().getStringExtra("id");
+        MyApplication myApplication = MyApplication.getInstance();
+        String userId = myApplication.getGlobalUserId();
 
         tvName = binding.movieTitle;
         tvYear = binding.year;
@@ -82,7 +84,7 @@ public class MovieActivity extends AppCompatActivity {
 
         exoPlayer = new ExoPlayer.Builder(this).build();
         moviePlayer.setPlayer(exoPlayer);
-
+//        moviePlayer.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
         String videoUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("video");
         if (videoUrl != null) {
             MediaItem mediaItem = MediaItem.fromUri(videoUrl);
@@ -101,6 +103,18 @@ public class MovieActivity extends AppCompatActivity {
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
 //        movieViewModel.recommend(intent.getStringExtra("id"));
+
+//        movieViewModel.get().observe(this,movies -> {
+//            movieAdapter.setMovies(movies);
+//        });
+        btnPlay.setOnClickListener(v -> {
+            UserApi userApi = new UserApi();
+            userApi.addToWatchList(movieId);
+            Intent i = new Intent(this, VideoMovieActivity.class);
+            i.putExtra("videoUrl", videoUrl);
+            startActivity(i);
+        });
+
         MovieApi movieApi = new MovieApi();
         movieApi.recommend(movieId , new Callback<List<Movie>>() {
             @Override
@@ -108,7 +122,7 @@ public class MovieActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     movieListAdapter.setMovies(response.body());
                 }
-                 else {
+                else {
                     Log.e("API Response", "Response error: " + response.message());
                 }
             }
@@ -118,9 +132,6 @@ public class MovieActivity extends AppCompatActivity {
             }
 
         });
-//        movieViewModel.get().observe(this,movies -> {
-//            movieAdapter.setMovies(movies);
-//        });
 
     }
 }

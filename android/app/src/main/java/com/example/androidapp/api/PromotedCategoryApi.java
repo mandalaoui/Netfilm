@@ -1,10 +1,11 @@
 package com.example.androidapp.api;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.PromotedCategory;
@@ -23,16 +24,14 @@ public class PromotedCategoryApi {
     private MutableLiveData<List<PromotedCategory>> categoryListData;
     private PromotedCategoryDao dao;
 //    private MyApplication token;
-
     Retrofit retrofit;
     ApiService apiService;
 
     public PromotedCategoryApi(MutableLiveData<List<PromotedCategory>> categoryListData, PromotedCategoryDao dao) {
         this.categoryListData = categoryListData;
         this.dao = dao;
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

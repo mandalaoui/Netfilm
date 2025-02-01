@@ -1,11 +1,13 @@
 package com.example.androidapp.repositories;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+//import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.LocalDatabase;
@@ -19,9 +21,8 @@ public class MovieRepository {
     private MovieDao dao;
     private MovieListData movieiListData;
     private MovieApi api;
-
     public MovieRepository() {
-        LocalDatabase db = LocalDatabase.getInstance(AppContext.getContext());
+        LocalDatabase db = LocalDatabase.getInstance(MyApplication.getAppContext());
         dao = db.movieDao();
         movieiListData = new MovieListData();
         api = new MovieApi(movieiListData, dao);

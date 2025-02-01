@@ -51,7 +51,7 @@ const addToWatchList = async (req, res, next) => {
     }
     
     // Return the movie added to the watchlist as a JSON response
-    res.status(204).json();
+    res.status(204).json({});
     next();
 }
 

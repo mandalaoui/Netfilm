@@ -1,11 +1,13 @@
 package com.example.androidapp.repositories;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+//import com.example.androidapp.AppContext;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.CategoryApi;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.dao.CategoryDao;
@@ -20,7 +22,7 @@ public class CategoriesRepository {
     private CategoryApi api;
 
     public CategoriesRepository() {
-        LocalDatabase db = LocalDatabase.getInstance(AppContext.getContext());
+        LocalDatabase db = LocalDatabase.getInstance(MyApplication.getAppContext());
         dao = db.categoryDao();
         categoryListData = new CategoriesRepository.CategoryListData();
         api = new CategoryApi(categoryListData, dao);
@@ -48,9 +50,9 @@ public class CategoriesRepository {
         return categoryListData;
     }
 
-//    public void add (final Category category) {
-//        api.add(category);
-//    }
+    public void add (final Category category) {
+        api.add(category);
+    }
 //
 //    public void delete (final Category category) {
 //        api.delete(category);

@@ -1,5 +1,6 @@
 package com.example.androidapp.api;
 
+import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -7,7 +8,8 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.androidapp.AppContext;
+
+//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.dao.MovieDao;
@@ -42,19 +44,17 @@ public class MovieApi {
 
     public MovieApi() {
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         apiService = retrofit.create(ApiService.class);
     }
 
     public MovieApi(MutableLiveData<List<Movie>> movieListData, MovieDao dao) {
         this.movieListData = movieListData;
         this.dao = dao;
-
         retrofit = new Retrofit.Builder()
-                .baseUrl(AppContext.getContext().getString(R.string.BaseUrl))
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -93,17 +93,17 @@ public class MovieApi {
                         Log.d("MovieApi", "Thread started");
                         dao.clear();
                         dao.insertList(response.body());
-                        Log.d("CategoryApi", "Inserted categories into DB: " + response.body());
+                        Log.d("MovieApi", "Inserted categories into DB: " + response.body());
                         movieListData.postValue(dao.index());
                     }).start();
 
                 } else {
-                    Log.e("Movie", "Error: " + response.code());
+                    Log.e("MovieApi", "Error: " + response.code());
                 }
             }
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Log.e("CategoryApi", "Error fetching categories: " + t.getMessage());
+                Log.e("MovieApi", "Error fetching categories: " + t.getMessage());
             }
         });
     }
@@ -138,10 +138,10 @@ public class MovieApi {
                         dao.insertMovie(response.body());
                     }).start();
 
-                    Toast.makeText(AppContext.getContext(), "Movie created successfully", Toast.LENGTH_SHORT).show();
-                    Log.d("RequestApi", "Movie created successfully");
+                    Toast.makeText(MyApplication.getAppContext(), "Movie created successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("MovieApi", "Movie created successfully");
                 } else {
-                    Log.e("RequestApi", "Failed to create movie: " + response.message());
+                    Log.e("MovieApi", "Failed to create movie: " + response.message());
                     try {
                         String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
                         Log.e("Error Response", errorResponse);
@@ -153,8 +153,8 @@ public class MovieApi {
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                Log.e("RequestApi", "Error: " + t.getMessage());
-                Toast.makeText(AppContext.getContext(), "Network request failed", Toast.LENGTH_SHORT).show();
+                Log.e("MovieApi", "Error: " + t.getMessage());
+                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -167,7 +167,7 @@ public class MovieApi {
                 if (response.isSuccessful()) {
                     Log.d("MovieApi", "Movie delete successfully");
                 } else {
-                    Log.e("Movie", "Error: " + response.code());
+                    Log.e("MovieApi", "Error: " + response.code());
                 }
             }
             @Override

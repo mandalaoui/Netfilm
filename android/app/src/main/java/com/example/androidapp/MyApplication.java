@@ -1,16 +1,22 @@
 package com.example.androidapp;
 
 import android.app.Application;
+import android.content.Context;
 
 public class MyApplication extends Application {
     private static MyApplication instance;
     private String globalUserId;
     private boolean isAdmin;
 
+    private static Context context;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        context = getApplicationContext();
+
     }
 
     public static MyApplication getInstance() {
@@ -31,5 +37,8 @@ public class MyApplication extends Application {
 
     public void setGlobalUserId(String value) {
         this.globalUserId = value;
+    }
+    public static Context getAppContext() {
+        return context;
     }
 }

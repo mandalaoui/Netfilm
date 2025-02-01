@@ -84,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 User user = new User(username, password, nickname);
 
-                UserApi userApi = new UserApi(this);
+                UserApi userApi = new UserApi();
                 userApi.registerUser(user,imageFile);
                 }
         });
