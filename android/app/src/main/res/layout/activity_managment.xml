@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
+    android:background="@color/colorBackground"
     tools:context=".activities.ManagmentActivity">
 
 
@@ -30,9 +30,9 @@
                 android:id="@+id/showCreateMovieViewButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#A91616"
+                android:backgroundTint="@color/colorSubmitDarkButton"
                 android:text="Create Movie View"
-                android:textColor="#FBF8F8"
+                android:textColor="@color/colorText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Delete Movie View"
-                android:backgroundTint="#A91616"
-                android:textColor="#FBF8F8"
+                android:backgroundTint="@color/colorSubmitDarkButton"
+                android:textColor="@color/colorText"
                 app:layout_constraintTop_toBottomOf="@id/showCreateMovieViewButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
@@ -52,8 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Create category"
-                android:backgroundTint="#A91616"
-                android:textColor="#FBF8F8"
+                android:backgroundTint="@color/colorSubmitDarkButton"
+                android:textColor="@color/colorText"
                 app:layout_constraintTop_toBottomOf="@id/showDeleteMovieViewButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

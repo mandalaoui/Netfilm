@@ -29,7 +29,7 @@
             android:hint="@string/Register_username"
             android:inputType="textPersonName"
             android:padding="16dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="#B0B0B0" />
 
 
@@ -43,7 +43,7 @@
             android:hint="@string/login_etPassword"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="#B0B0B0"
             tools:layout_editor_absoluteX="57dp"
             tools:layout_editor_absoluteY="281dp" />
@@ -59,7 +59,7 @@
             android:hint="@string/Register_password_verification"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="#B0B0B0"
             tools:layout_editor_absoluteX="57dp"
             tools:layout_editor_absoluteY="281dp" />
@@ -75,7 +75,7 @@
             android:hint="@string/Register_display_name"
             android:inputType="textPersonName"
             android:padding="16dp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textColorHint="#B0B0B0"
             tools:layout_editor_absoluteX="57dp"
             tools:layout_editor_absoluteY="281dp" />
@@ -96,7 +96,7 @@
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:text="Choose Picture"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:padding="0dp"
             android:focusable="false"
@@ -137,9 +137,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#A91616"
+        android:backgroundTint="@color/colorSubmitDarkButton"
         android:text="@string/btn_sign_in"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
     android:orientation="vertical"
-    android:background="#000000">
+    android:background="@color/colorBackground">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -17,7 +17,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="vertical"
-            android:background="#000000"
+            android:background="@color/colorBackground"
             android:padding="16dp">
 
                 <!-- Category title -->
@@ -25,11 +25,11 @@
                     android:id="@+id/categoryTitle"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/colorText"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:background="#000000"
-                    android:backgroundTint="#000000"
+                    android:background="@color/colorBackground"
+                    android:backgroundTint="@color/colorBackground"
                     android:paddingBottom="8dp"/>
 
         <!--         RecyclerView to show the movies horizontally -->
@@ -39,7 +39,7 @@
                     android:layout_height="150dp"
                     android:layout_marginTop="50dp"
                     app:layout_constraintTop_toBottomOf="@id/categoryTitle"
-                    android:background="#000000"
+                    android:background="@color/colorBackground"
                     android:orientation="horizontal"/>
 
         </androidx.cardview.widget.CardView>

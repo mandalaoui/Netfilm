@@ -220,7 +220,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#000000"
+    android:background="@color/colorBackground"
     android:orientation="vertical"
     tools:context=".activities.HomeActivity">
 
@@ -229,16 +229,17 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
-        android:background="#000000"
+        android:background="@color/colorBackground"
         android:elevation="4dp">
 
         <ImageButton
             android:id="@+id/home"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/colorBackground"
             android:padding="10dp"
             android:layout_marginLeft="0dp"
+            app:tint="@color/colorText"
             android:src="@drawable/ic_home"/>
 
         <SearchView
@@ -249,24 +250,36 @@
             android:iconifiedByDefault="true"
             android:ems="10"
             android:queryHint="Search here"
-            android:textColorHint="@android:color/white"
-            android:textColor="#FFFFFF"/>
+            android:textColorHint="@color/colorText"
+            android:textColor="@color/colorText"/>
+
+        <ImageButton
+            android:id="@+id/action_theme"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            app:srcCompat="@drawable/highlights"
+            app:tint="@color/colorText"
+            android:background="@color/colorBackground" />
 
         <ImageButton
             android:id="@+id/admin"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/colorBackground"
             android:padding="10dp"
             android:layout_marginLeft="190dp"
+            app:tint="@color/colorText"
             android:src="@drawable/ic_admin"/>
 
         <ImageButton
             android:id="@+id/exit"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:backgroundTint="#000000"
+            android:backgroundTint="@color/colorBackground"
             android:padding="10dp"
+            app:tint="@color/colorText"
             android:src="@drawable/ic_exit"/>
 
     </Toolbar>
@@ -277,7 +290,7 @@
         android:layout_height="250dp"
         android:layout_marginTop="48dp"
         android:fitsSystemWindows="true"
-        android:background="#6B6868">
+        android:background="@color/colorInput">
 
         <Button
             android:id="@+id/btnCategories"
@@ -285,9 +298,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="Categories↓"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#6B6868"
-            android:strokeColor="#000000"
+            android:textColor="@color/colorText"
+            android:backgroundTint="@color/colorInput"
+            android:strokeColor="@color/colorBackground"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
         <androidx.media3.ui.PlayerView
@@ -310,7 +323,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="48dp"
-        android:background="#000000"/>
+        android:background="@color/colorBackground"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

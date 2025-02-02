@@ -8,12 +8,14 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.androidapp.R;
 import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.adapters.PromotedCategoryListAdapter;
 import com.example.androidapp.api.MovieApi;
@@ -53,6 +56,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        boolean isDarkMode = getSharedPreferences("settings", MODE_PRIVATE)
+                .getBoolean("dark_mode", false);
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         super.onCreate(savedInstanceState);
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -190,6 +201,28 @@ public class HomeActivity extends AppCompatActivity {
 
         Button btnCategories = binding.btnCategories;
         btnCategories.setOnClickListener(v -> showCategoriesDialog());
+
+
+        // Get the button to toggle the theme mode
+        ImageButton themeToggleBtn = binding.actionTheme;
+        themeToggleBtn.setOnClickListener(v -> {
+            // No need to redefine `isDarkMode` here
+            boolean currentMode = getSharedPreferences("settings", MODE_PRIVATE)
+                    .getBoolean("dark_mode", false);
+
+            // Switch between Dark and Light Mode
+            if (currentMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+
+            // Save the new mode to SharedPreferences
+            getSharedPreferences("settings", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("dark_mode", !currentMode)
+                    .apply();
+        });
     }
 
     private void showCategoriesDialog() {
@@ -278,4 +311,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onResume();
         promotedCategoriesViewModel.reload();
     }
+
+
 }
