@@ -14,11 +14,15 @@ const User = new Schema({
     },
     photo : {
         type: String,
-        required: false
+        required: true
     },
     nickname : {
         type: String,
         required: true
+    },
+    isAdmin : {
+        type: Boolean,
+        required: false
     },
     watchedMovies : [{
         type: mongoose.Schema.Types.ObjectId,

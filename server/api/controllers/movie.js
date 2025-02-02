@@ -1,5 +1,5 @@
 const movieService = require('../services/movie');
-
+const mongoose = require('mongoose');
 // Function to create a new movie
 const createMovie = async (req, res) => {
     const image = req.files && req.files.image ? req.files.image[0].path : null;
@@ -59,7 +59,7 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json();
+    res.status(204).json({});
 };
 
 // Function to search for movies using a query parameter.

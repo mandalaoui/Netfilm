@@ -33,5 +33,6 @@ router.route('/:id')
 router.route('/search/:query')
     .get(userValidation.validateUserIdHeader, movieController.getMovieIncludeQuery);
 
+
 // Export the router to be used in the main application.
 module.exports = router;

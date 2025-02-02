@@ -4,6 +4,7 @@ const userController = require('../controllers/user');
 const userValidation = require('../validation/user')
 const upload = require('../middleware/fileUpload.js');
 
+module.exports = upload;
 // Route for creating a new user. Validates input before calling the controller's createUser function.
 router.route('/')
     .post(upload.single('photo'), userValidation.validateUserInput, userController.createUser)

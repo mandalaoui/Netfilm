@@ -31,6 +31,7 @@ app.use('/api/movies', movies);
 app.use('/api/users', users);
 app.use('/api/movies', recommendations);
 app.use('/api/tokens', tokens);
+app.use('/api/uploads', express.static('uploads'));
 
 app.use('/api/uploads', express.static('uploads'));
 
