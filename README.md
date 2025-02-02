@@ -140,7 +140,7 @@ Usage steps:
 - Click Send Request on the desired API operation.
 - Replace placeholders (e.g., user IDs) as needed.
 
-> This README reflects all changes introduced in Phase 4 of the project>
+> This README reflects all changes introduced in Phase 4 of the project
 
 ## Running Examples
 ### 
