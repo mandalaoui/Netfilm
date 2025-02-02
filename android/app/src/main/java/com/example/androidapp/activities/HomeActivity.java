@@ -10,12 +10,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import androidx.media3.common.MediaItem;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,12 +30,14 @@ import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.databinding.ActivityHomeBinding;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.PromotedCategoriesViewModel;
 import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,9 +57,12 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+//        androidx.appcompat.widget.Toolbar toolbar = binding.toolbar;
+//        setSupportActionBar(toolbar);
+
         categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
         categoriesViewModel.get().observe(this, categories -> {
-            Log.d("HomeActivity", "Categories list: " + categories);
+            Log.d("HomeActivity", "1Categories list: " + categories);
             allCategories = categories;
         });
 
@@ -70,9 +79,29 @@ public class HomeActivity extends AppCompatActivity {
         params.setBehavior(new AppBarLayout.ScrollingViewBehavior());
         lstCategories.setLayoutParams(params);
 
+
+
+        PlayerView random_movie = binding.randomMovie;
         promotedCategoriesViewModel.get().observe(this, categories -> {
-            Log.d("HomeActivity", "Categories list: " + categories);
+            Log.d("HomeActivity", "2Categories list: " + categories);
             promotedCategoryListAdapter.setCategories(categories);
+
+            if (!categories.isEmpty()) {
+                Movie randMovie = getRandMovie(categories);
+                ExoPlayer exoPlayer = new ExoPlayer.Builder(this).build();
+                random_movie.setPlayer(exoPlayer);
+                String videoUrl = "http://10.0.2.2:12345/api/" + randMovie.getVideo();
+                if (videoUrl != null) {
+                    MediaItem mediaItem = MediaItem.fromUri(videoUrl);
+
+                    exoPlayer.setMediaItem(mediaItem);
+                    exoPlayer.prepare();
+                    exoPlayer.play();
+                } else {
+                    Log.e("HomeActivity", "Video URL is null or empty");
+                }
+            }
+
         });
 
         ImageButton exitBtn = binding.exit;
@@ -148,7 +177,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 searchView.setVisibility(View.VISIBLE);
-                // עדכון בזמן שהמשתמש מקליד
                 Log.d("Search", "Query changed: " + newText);
                 if (newText.isEmpty()) {
                     searchedMovies.setVisibility(View.GONE);
@@ -177,8 +205,6 @@ public class HomeActivity extends AppCompatActivity {
         builder.setTitle("Choose category")
                 .setItems(categoryNames.toArray(new String[0]), (dialog, which) -> {
                     // ברגע שהמשתמש בחר קטגוריה
-//                    String selectedCategory = categoryNames.get(which);
-//                    openCategoryScreen(selectedCategory); // קרא לפונקציה שתפתח את המסך המתאים
                     Category selectedCategory = allCategories.get(which);  // קח את האובייקט המתאים
                     openCategoryScreen(selectedCategory);
                 })
@@ -189,6 +215,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void openCategoryScreen(Category selectedCategory) {
         Log.d("HomeActivity dialog", selectedCategory.getName());
+        ArrayList<String> moviesArrayList = new ArrayList<>(selectedCategory.getMovies());
+        Intent intent = new Intent(HomeActivity.this, SelectedCategoryActivity.class);
+        intent.putStringArrayListExtra("movies", moviesArrayList);
+        intent.putExtra("name", selectedCategory.getName());
+        startActivity(intent);
     }
 
     private void searchMovie(String query) {
@@ -209,6 +240,21 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("API Failure", "Failed to load searched movies: " + t.getMessage());
             }
         }, query);
+    }
+
+    private Movie getRandMovie (List<PromotedCategory> categories) {
+        Random rand = new Random();
+        Log.d("HomeActivity", "categories size: " + categories.size());
+        int randomIndex;
+        PromotedCategory randCategory;
+        do {
+            randomIndex = rand.nextInt(categories.size());
+            randCategory = categories.get(randomIndex);
+            Log.d("HomeActivity", "rand category: " + randCategory.getCategoryName());
+        } while (randCategory.getMovies().isEmpty());
+        Log.d("HomeActivity", "movies size: " + randCategory.getMovies().size());
+        randomIndex = rand.nextInt(randCategory.getMovies().size());
+        return randCategory.getMovies().get(randomIndex);
     }
 
     private void showExitDialog() {

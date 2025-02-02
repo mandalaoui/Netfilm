@@ -1,6 +1,7 @@
 package com.example.androidapp.adapters;
 
 import com.bumptech.glide.Glide;
+import com.example.androidapp.activities.SelectedCategoryActivity;
 import com.example.androidapp.entities.Movie;
 
 import android.content.Context;
@@ -57,7 +58,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
             Context context = holder.itemView.getContext();
             holder.movieImage.setOnClickListener(v -> {
-                if (context instanceof HomeActivity) {
+                if (context instanceof HomeActivity || context instanceof SelectedCategoryActivity) {
                     Intent intent = new Intent(v.getContext(), MovieActivity.class);
                     intent.putExtra("id", current.get_id());
                     intent.putExtra("name", current.getName());

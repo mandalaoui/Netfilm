@@ -81,4 +81,7 @@ public interface ApiService {
 
     @GET("movies/{id}/recommend")
     Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);
+
+    @GET("movies/{id}")
+    Call<Movie> getMovieById (@Header("userId") String userId, @Path("id") String movieId);
 }

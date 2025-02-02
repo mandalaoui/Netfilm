@@ -36,17 +36,13 @@ public class MovieViewModel extends ViewModel {
         repository.add(movie, imageFile, videoFile);
     }
 
-//    public void recommend(String id) {
-//        repository.recommend(id);
-//    }
-//
-//    public void delete(Category category) {
-//        repository.delete(category);
-//    }
-
     public void reload() {
-        Log.d("CategoriesViewModel", "Reloading categories...");
+        Log.d("MovieViewModel", "Reloading movies...");
         repository.reload();
+    }
+
+    public LiveData<Movie> getMovieById (String id) {
+        return repository.getMovieById(id);
     }
 
 }

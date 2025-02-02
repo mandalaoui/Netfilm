@@ -6,11 +6,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.androidapp.databinding.ActivityLoginBinding;
 import com.example.androidapp.entities.User;
 
 import com.example.androidapp.api.LoginResponse;
 import com.example.androidapp.api.UserApi;
-import com.example.androidapp.databinding.ActivityLoginBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         binding.btnBack.setOnClickListener(v -> {

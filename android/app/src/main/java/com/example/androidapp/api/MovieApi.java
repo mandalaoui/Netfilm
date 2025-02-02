@@ -38,7 +38,7 @@ public class MovieApi {
     private MutableLiveData<List<Movie>> movieListData;
     private MovieDao dao;
 
-//    private MyApplication token;
+    //    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 
@@ -60,6 +60,7 @@ public class MovieApi {
 
         apiService = retrofit.create(ApiService.class);
     }
+
     MyApplication myApplication = MyApplication.getInstance();
 
     String userId = myApplication.getGlobalUserId();
@@ -76,12 +77,14 @@ public class MovieApi {
                     callback.onFailure(call, new Throwable("Failed to get searched movies"));
                 }
             }
+
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 callback.onFailure(call, t);
             }
         });
     }
+
     public void getListOfMovies() {
 
         Call<List<Movie>> call = apiService.getMovies(userId);
@@ -101,6 +104,7 @@ public class MovieApi {
                     Log.e("MovieApi", "Error: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 Log.e("MovieApi", "Error fetching categories: " + t.getMessage());
@@ -118,18 +122,18 @@ public class MovieApi {
                 TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
         );
 
-        RequestBody name = RequestBody.create(movieCreate.getName(),MediaType.parse("text/plain"));
-        RequestBody year = RequestBody.create(String.valueOf(movieCreate.getPublication_year()),MediaType.parse("text/plain"));
-        RequestBody time = RequestBody.create(movieCreate.getMovie_time(),MediaType.parse("text/plain") );
-        RequestBody description = RequestBody.create(movieCreate.getDescription(),MediaType.parse("text/plain"));
+        RequestBody name = RequestBody.create(movieCreate.getName(), MediaType.parse("text/plain"));
+        RequestBody year = RequestBody.create(String.valueOf(movieCreate.getPublication_year()), MediaType.parse("text/plain"));
+        RequestBody time = RequestBody.create(movieCreate.getMovie_time(), MediaType.parse("text/plain"));
+        RequestBody description = RequestBody.create(movieCreate.getDescription(), MediaType.parse("text/plain"));
 
-        RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
+        RequestBody requestFileImage = RequestBody.create(imageFile, MediaType.parse("image/*"));
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
 
-        RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
+        RequestBody requestFileMovie = RequestBody.create(videoFile, MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
-        Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
+        Call<Movie> call = apiService.createMovie(userId, name, year, time, description, categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
@@ -161,7 +165,7 @@ public class MovieApi {
 
     public void deleteMovie(String movieId) {
 
-        Call<Movie> call = apiService.deleteMovie(movieId,userId);
+        Call<Movie> call = apiService.deleteMovie(movieId, userId);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -171,6 +175,7 @@ public class MovieApi {
                     Log.e("MovieApi", "Error: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
                 Log.e("MovieApi", "Error delete movie: " + t.getMessage());
@@ -198,36 +203,32 @@ public class MovieApi {
 
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                callback.onFailure(call,t);
+                callback.onFailure(call, t);
             }
         });
     }
 
+    public void getMovieById(String id, final Callback<Movie> callback) {
+        Call<Movie> call = apiService.getMovieById(userId, id);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                if (response.isSuccessful()) {
+                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    if (response.code() == 404) {
+                        callback.onFailure(call, new Throwable("Failed to get movies"));
+                    } else {
+                        callback.onFailure(call, new Throwable("Failed to get movies"));
+                    }
+                }
+            }
 
-//    public void recommend(String movieId) {
-//        String userId = "679178e884e6da9a833f5452";
-//        Call<List<Movie>> call = apiService.getRecommendation(userId,movieId);
-//        call.enqueue(new Callback<List<Movie>>() {
-//            @Override
-//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-//                if (response.isSuccessful()) {
-//                    new Thread(() -> {
-//                        movieListData.postValue(response.body());
-//                    }).start();
-//                    Log.d("MovieApi", "Movie recommend successfully");
-//                } else {
-//                    if (response.code() == 404) {
-//                        new Thread(() -> {
-//                            movieListData.postValue(null); // במקרה של 404, נתון יהיה null
-//                        }).start();
-//                        Log.e("MovieApi", "Error 404: Resource not found");
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<Movie>> call, Throwable t) {
-//                Log.e("MovieApi", "Error recommend movie: " + t.getMessage());
-//            }
-//        });
-//    }
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

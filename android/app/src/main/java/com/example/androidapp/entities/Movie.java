@@ -15,12 +15,10 @@ public class Movie {
     @NonNull
     private String _id;
     private String name;
-
     private List<String> categories;
     private String movie_time;
     private String image;
     private int Publication_year;
-
     private String description;
     private int age;
     private String video;

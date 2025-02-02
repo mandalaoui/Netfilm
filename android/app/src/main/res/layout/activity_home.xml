@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="match_parent"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
 <!--    android:background="#000000"-->
 <!--    android:orientation="vertical"-->
-<!--    tools:context=".HomeActivity">-->
+<!--    tools:context=".activities.HomeActivity">-->
 
-<!--    <Toolbar-->
-<!--        android:id="@+id/toolBar"-->
+<!--&lt;!&ndash;    <Toolbar&ndash;&gt;-->
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="48dp"-->
-<!--        android:background="#000000"-->
 <!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/menu"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        android:background="#000000"-->
+<!--        android:elevation="4dp"-->
+<!--        android:layout_alignParentTop="true">-->
 
 <!--        <ImageButton-->
 <!--            android:id="@+id/home"-->
@@ -25,7 +25,19 @@
 <!--            android:layout_height="match_parent"-->
 <!--            android:backgroundTint="#000000"-->
 <!--            android:padding="10dp"-->
+<!--            android:layout_marginLeft="0dp"-->
 <!--            android:src="@drawable/ic_home"/>-->
+
+<!--        <SearchView-->
+<!--            android:id="@+id/search"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="10dp"-->
+<!--            android:iconifiedByDefault="true"-->
+<!--            android:ems="10"-->
+<!--            android:queryHint="Search here"-->
+<!--            android:textColorHint="@android:color/white"-->
+<!--            android:textColor="#FFFFFF"/>-->
 
 <!--        <ImageButton-->
 <!--            android:id="@+id/admin"-->
@@ -33,16 +45,8 @@
 <!--            android:layout_height="match_parent"-->
 <!--            android:backgroundTint="#000000"-->
 <!--            android:padding="10dp"-->
+<!--            android:layout_marginLeft="190dp"-->
 <!--            android:src="@drawable/ic_admin"/>-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/search"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:backgroundTint="#000000"-->
-<!--            android:padding="10dp"-->
-<!--            android:src="@drawable/ic_admin"-->
-<!--            android:layout_marginLeft="200dp"/>-->
 
 <!--        <ImageButton-->
 <!--            android:id="@+id/exit"-->
@@ -52,47 +56,164 @@
 <!--            android:padding="10dp"-->
 <!--            android:src="@drawable/ic_exit"/>-->
 
-<!--    </Toolbar>-->
+<!--&lt;!&ndash;    </Toolbar>&ndash;&gt;-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
 
 <!--    <com.google.android.material.appbar.AppBarLayout-->
 <!--        android:id="@+id/menu"-->
 <!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="130dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/lstCategories"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/toolBar">-->
+<!--        android:layout_height="210dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        android:background="#000000">-->
 
-<!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--            android:id="@+id/collapsingToolbarLayout"-->
-<!--            android:layout_width="match_parent"-->
+<!--        <Button-->
+<!--            android:id="@+id/btnCategories"-->
+<!--            android:layout_width="wrap_content"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:text="Categories↓"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:backgroundTint="#6B6868"-->
+<!--            android:strokeColor="#000000"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
 
-<!--            <androidx.appcompat.widget.Toolbar-->
-<!--                android:id="@+id/toolbar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:title="My Collapsing Toolbar"-->
-<!--                android:titleTextColor="#FFFFFF"-->
-<!--                app:layout_collapseMode="pin"-->
-<!--                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"/>-->
-
-<!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
+<!--        <androidx.media3.ui.PlayerView-->
+<!--            android:id="@+id/random_movie"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="180dp"-->
+<!--            app:resize_mode="fit"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
 
 <!--    </com.google.android.material.appbar.AppBarLayout>-->
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/lstCategories"-->
-<!--        android:layout_width="411dp"-->
-<!--        android:layout_height="516dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/menu"-->
-<!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>/>-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="530dp"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/searchedMovies"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:background="#000000"/>-->
+
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+
+
+<!--<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:background="#000000"-->
+<!--    tools:context=".activities.HomeActivity">-->
+
+<!--    &lt;!&ndash; ה-Toolbar בתוך ה-AppBarLayout &ndash;&gt;-->
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentTop="true">-->
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:background="#000000"-->
+<!--            android:elevation="4dp"-->
+<!--            android:layout_alignParentTop="true">-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/home"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:backgroundTint="#000000"-->
+<!--                android:padding="10dp"-->
+<!--                android:src="@drawable/ic_home"/>-->
+
+<!--            <SearchView-->
+<!--                android:id="@+id/search"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:padding="10dp"-->
+<!--                android:iconifiedByDefault="true"-->
+<!--                android:ems="10"-->
+<!--                android:queryHint="Search here"-->
+<!--                android:textColorHint="@android:color/white"-->
+<!--                android:textColor="#FFFFFF"/>-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/admin"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:backgroundTint="#000000"-->
+<!--                android:padding="10dp"-->
+<!--                android:layout_marginLeft="190dp"-->
+<!--                android:src="@drawable/ic_admin"/>-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/exit"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:backgroundTint="#000000"-->
+<!--                android:padding="10dp"-->
+<!--                android:src="@drawable/ic_exit"/>-->
+
+<!--        </androidx.appcompat.widget.Toolbar>-->
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    &lt;!&ndash; ה-AppBarLayout מכיל גם את הוידאו והכפתור &ndash;&gt;-->
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/menu"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="210dp"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:fitsSystemWindows="true"-->
+<!--        android:background="#000000">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnCategories"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:text="Categories↓"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:backgroundTint="#6B6868"-->
+<!--            android:strokeColor="#000000"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
+
+<!--        <androidx.media3.ui.PlayerView-->
+<!--            android:id="@+id/random_movie"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="180dp"-->
+<!--            app:resize_mode="fit"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+<!--    &lt;!&ndash; ה-RecyclerView עבור הקטגוריות &ndash;&gt;-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/lstCategories"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="530dp"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+<!--    &lt;!&ndash; ה-RecyclerView השני עבור סרטים חיפוש (אם באמת צריך) &ndash;&gt;-->
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/searchedMovies"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_marginTop="48dp"-->
+<!--        android:background="#000000"/>-->
+
+<!--</androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -150,17 +271,10 @@
 
     </Toolbar>
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/searchedMovies"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="660dp"-->
-<!--        android:layout_marginTop="0dp"-->
-<!--        android:background="#000000"/>-->
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="250dp"
         android:layout_marginTop="48dp"
         android:fitsSystemWindows="true"
         android:background="#6B6868">
@@ -176,13 +290,11 @@
             android:strokeColor="#000000"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <TextView
+        <androidx.media3.ui.PlayerView
             android:id="@+id/random_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="movie"
-            android:textColor="#FFFFFF"
-            android:background="#6B6868"
+            app:resize_mode="fit"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -201,13 +313,4 @@
         android:background="#000000"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <!--&lt;!&ndash;    <androidx.recyclerview.widget.RecyclerView&ndash;&gt;-->
-    <!--&lt;!&ndash;        android:id="@+id/lstCategories"&ndash;&gt;-->
-    <!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;        android:layout_height="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;        app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;        app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
 

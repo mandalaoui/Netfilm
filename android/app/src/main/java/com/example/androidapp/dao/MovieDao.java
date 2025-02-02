@@ -50,4 +50,7 @@ public interface MovieDao {
     @Insert
     void insertList(List<Movie> movies);
 
+    @Query("SELECT * FROM Movie WHERE _id = :movieId")
+    Movie getMovieById(String movieId);
+
 }

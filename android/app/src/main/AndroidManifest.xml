@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.SelectedCategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DeleteCategory"
             android:exported="false" />
         <activity
