@@ -6,13 +6,25 @@ const mongoose = require('mongoose');
 const validateMovieInput = async (req, res, next) => {
     const { name, categories, movie_time, Publication_year, age, imageUrl} = req.body;
 
+    let categoriesChange = [];
+
+    if (categories) {
+        if (typeof categories === 'string') {
+            categoriesChange = categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+        } else if (Array.isArray(categories)) {
+            // categoriesChange = categories.map(categoryId => new mongoose.Types.ObjectId(categoryId));
+            categoriesChange = categories;
+        }
+    }
+
+
     // Check if the 'name' field is provided and is a string
     if (!name || typeof name !== 'string') {
         return res.status(400).json({ error: 'Invalid or missing name' });
     }
 
     // Check if 'categories' is an array
-    if (!Array.isArray(categories)) {
+    if (!Array.isArray(categoriesChange)) {
         return res.status(400).json({ error: 'Invalid or missing categories' });
     }
 
@@ -64,7 +76,7 @@ const validateMovieInput = async (req, res, next) => {
     }
 
     // Validate each category ID in the 'categories' array
-    for (const categoryId of categories) {
+    for (const categoryId of categoriesChange) {
         if (!mongoose.Types.ObjectId.isValid(categoryId)) {
             return res.status(400).json({ error: `Invalid category ID: ${categoryId}` });
         }
@@ -73,7 +85,7 @@ const validateMovieInput = async (req, res, next) => {
     // Check if a movie with the exact same fields already exists.
     const existingMovie = await Movie.findOne({
         name,
-        ...(categories.length > 0 && { categories: { $all: categories.sort(), $size: categories.length } }),
+        ...(categoriesChange.length > 0 && { categoriesChange: { $all: categoriesChange.sort(), $size: categories.length } }),
         movie_time,
         Publication_year,
     });
@@ -85,8 +97,8 @@ const validateMovieInput = async (req, res, next) => {
     }
 
     // Check if the provided categories exist in the database
-    const categoryCheck = await Category.find({ '_id': { $in: categories } });
-    if (categoryCheck.length !== categories.length) {
+    const categoryCheck = await Category.find({ '_id': { $in: categoriesChange } });
+    if (categoryCheck.length !== categoriesChange.length) {
         return res.status(404).json({ error: 'One or more categories do not exist' });
     }
 
