@@ -24,7 +24,6 @@ const createCategory = (C_name, C_isPromoted, C_movies) => {
         }
     })
     .catch(error => {
-        // console.error("Error during category creation:", error);
         return false;
     }); 
 };
@@ -42,7 +41,6 @@ const getAllCategories = () => {
         return data.map((category) => category._id);
     })
     .catch(error => {
-        // console.error("Error fetching categories:", error);
         return [];
     });
 };
@@ -66,7 +64,6 @@ const getCategoryById = (categoryId) => {
     })
     .then((data) => {
         if (!data) {
-            // console.error("No data received for category:", categoryId);
             return null;
         }
         const category = {
@@ -78,7 +75,6 @@ const getCategoryById = (categoryId) => {
         return category;
     })
     .catch((error) => {
-        // console.error("Error fetching category:", error);
         return null;
     });
 };
@@ -103,7 +99,6 @@ const updateCategory = (categoryId, categoryData) => {
         }
     })
     .catch(error => {
-        // console.error("Error updating category:", error);
         return false;
     });
 };
@@ -126,7 +121,6 @@ const deleteCategory = (categoryId) => {
         }
     })
     .catch(error => {
-        // console.error("Error deleting category:", error);
         return false;
     });
 };

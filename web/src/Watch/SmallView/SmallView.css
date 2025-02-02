@@ -11,7 +11,7 @@
     animation: fadeIn 0.3s ease-out;
 }
 
-.modal-content {
+.small-view-modal-content {
     background-color: var(--background-color);
     padding: 20px;
     border-radius: 10px;

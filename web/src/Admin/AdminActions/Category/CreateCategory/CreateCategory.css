@@ -1,37 +1,11 @@
-/* .Create-Category-modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-    opacity: 1;
-} */
-
-/* .Create-Category-modal-content {
+.Create-Category-modal-content {
     background-color: var(--top-menu-background);
     padding: 20px;
-    width: 400px;
+    width: 100%;
+    height: 90%;
+    max-width: 500px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-    z-index: 20;
-    opacity: 1;
-} */
-/* 
-.CC-close-btn {
-    color: var(--text-color);
-    position: absolute;
-    top: -5px;
-    padding-left: 80%;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-} */
+}
 
 .Create-Category-modal-content h2 {
     text-align: center;
@@ -60,7 +34,8 @@
 }
 
 .CC-movie-list {
-    max-height: 200px;
+    height: 20%;
+    max-height: 300px;
     overflow-y: auto;
 }
 
@@ -94,7 +69,7 @@
     margin-bottom: 30px;
     color: var(--text-color);
     width: 100%;
-    max-height: 100px;
+    max-height: 200px;
     border-radius: 4px;
 }
 
@@ -102,12 +77,11 @@
     padding-left: 10px;
     display: flex;
     flex-direction: column;
-    max-height: 100px;  /* גובה מקסימלי עבור הרשימה */
-    overflow-y: auto;   /* מאפשר גלילה אנכית */
+    max-height: 100px; 
+    overflow-y: auto;
     overflow-x: hidden;
-    /* padding-right: 10px; מרווח לפס הגלילה */
-    border: 1px solid var(--admin-box);;  /* גבול סביב הרשימה */
-    border-radius: 5px;  /* קצוות מעוגלות */
+    border: 1px solid var(--admin-box);;  
+    border-radius: 5px; 
     background-color: var(--background-color);
 }
 

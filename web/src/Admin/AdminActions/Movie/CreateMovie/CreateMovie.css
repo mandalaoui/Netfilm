@@ -127,6 +127,7 @@
 }
 
 .Create-Movie-btn button {
+    margin-top: 20px;
     width: 40%;
     padding: 8px;
     background-color: red;

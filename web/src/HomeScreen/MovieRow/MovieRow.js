@@ -1,12 +1,11 @@
 import './MovieRow.css';
 import React, { useRef, useState, useEffect } from 'react';
 import MovieCard from '../MovieCard/MovieCard.js';
-import { useLocation } from 'react-router-dom';
 import { showConfirmationModal } from '../../Admin/Verification/Verification.js';
 import { getCategoryById, getAllCategories, createCategory, deleteCategory, updateCategory } from '../../Admin/AdminActions/Category/CategoryActions.js';
 import EditCategory from '../../Admin/AdminActions/Category/EditCategory/EditCategory.js'
 import { getMovieById } from '../../Admin/AdminActions/Movie/MovieActions.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function MovieRow({ category }) {
     const rowRef = useRef(null);
@@ -88,7 +87,6 @@ function MovieRow({ category }) {
     const handleDeleteCategory = async () => {
         const userConfirmed = await showConfirmationModal("category", category.name, 'delete');
         if (!userConfirmed) {
-            // console.log('Delete action was canceled.');
             return;
         }
 
@@ -140,7 +138,11 @@ function MovieRow({ category }) {
                 }
                 const isDeleted = await deleteCategory(category.id);
                 if (isDeleted) {
-                    navigate("/admin");
+                    if (location.pathname === '/admin') {
+                        navigate('/admin', { replace: true });
+                    } else {
+                        navigate('/admin');
+                    }
                 } else {
                     alert(`Failed to delete category: ${category.name}`);
                 }
@@ -178,7 +180,12 @@ function MovieRow({ category }) {
                                     <button className="edit-category-button" onClick={handleEditCategory}>
                                         <i className="bi bi-pencil-square"></i>
                                     </button>
-                                    {showModal && <EditCategory category={category} />}
+                                    {showModal && 
+                                        <div className="modal-edit-category">
+                                            <button className="modal-edit-close-button" onClick={() => setShowModal(false)}>X</button>
+                                            <EditCategory category={category} />
+                                        </div>
+                                    }
                                     <button className="delete-category-button" onClick={handleDeleteCategory}>
                                         <i className="bi bi-trash"></i>
                                     </button>
@@ -210,9 +217,7 @@ function MovieRow({ category }) {
                         <p className="no-movies-text">Haven't seen any movie yet</p>
                     ) : (
                         moviesByCategory.map((movie) => (
-                            // <>
-                                <MovieCard key={movie._id} movie={movie} />
-                            // </>
+                            <MovieCard key={movie._id} movie={movie} />
                         ))
                     )}
                 </div>

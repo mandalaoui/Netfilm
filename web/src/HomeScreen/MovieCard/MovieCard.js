@@ -37,7 +37,6 @@ function MovieCard({ movie }) {
                     alert(`Failed to delete movie "${movie.name}".`);
                 }
             } catch (error) {
-                // console.error(`Error deleting movie "${movie.name}":`, error);
                 alert(`An error occurred while deleting movie "${movie.name}".`);
             }
         } else {

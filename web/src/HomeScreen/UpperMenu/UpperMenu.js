@@ -70,7 +70,6 @@ function UpperMenu({ searchQuery, onSearchChange }) {
 
     // Navigate to the home page
     const handleHome = () => {
-        localStorage.setItem("showAllCategories", "false");
         navigate('/home');
     };
 
@@ -118,8 +117,7 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     };
 
     const handleMoviesBy = () => {
-        localStorage.setItem('showAllCategories', 'true');
-        navigate('/home');
+        navigate('/moviesByCategories');
     }
 
 
@@ -176,13 +174,13 @@ function UpperMenu({ searchQuery, onSearchChange }) {
                                     <UserInfo user={currentUser} onClose={handleCloseInfo} />
                                 )}
                                 {isAdmin && !isAdminScreen && (
-                                <li><span className="dropdown-item" onClick={handleAdminScreen}>Admin Screen</span></li>
-                            )}
+                                    <li><span className="dropdown-item" onClick={handleAdminScreen}>Admin Screen</span></li>
+                                )}
                                 {isAdmin && isAdminScreen && (
                                     <li><span className="dropdown-item" onClick={handleUserScreen}>User Screen</span></li>
                                 )}
                                 <li><span className="dropdown-item" onClick={handleLogOut}>Log Out</span></li>
-                                </ul>
+                            </ul>
                         )}
                     </div>
                 </div>

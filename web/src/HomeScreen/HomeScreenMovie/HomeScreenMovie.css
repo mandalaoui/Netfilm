@@ -24,7 +24,7 @@
     left: 0;
     flex-direction: column;
     overflow: hidden;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     white-space: normal;
     word-wrap: break-word;
 }
@@ -45,6 +45,7 @@
     white-space: normal; 
     word-wrap: break-word;
     overflow-wrap: break-word;
+    transform: translateY(-50%);
 }
 
 .random-movie-buttons {

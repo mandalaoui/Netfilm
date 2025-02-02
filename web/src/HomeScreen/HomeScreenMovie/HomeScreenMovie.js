@@ -31,14 +31,11 @@ function HomeScreenMovie() {
         if (videoRef.current && videoSrc) {
             videoRef.current.load();
             videoRef.current.play().catch((error) => {
-                // console.log("Error playing video:", error);
             });
-            // console.log("Attempting to play video...");
         }
     }, [videoSrc]);
 
     const handleVideoLoad = () => {
-        // console.log("Video has loaded successfully!");
         if (videoRef.current) {
             videoRef.current.muted = false; 
         }

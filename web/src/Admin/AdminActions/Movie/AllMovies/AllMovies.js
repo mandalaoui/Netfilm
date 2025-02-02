@@ -13,7 +13,6 @@ export const AllMovies = () => {
             try {
                 const categories = await getAllCategories();
                 if (categories.length === 0) {
-                    // console.error("No categories found.");
                     return;
                 }
                 const allCategoryDetails = await Promise.all(
@@ -36,7 +35,6 @@ export const AllMovies = () => {
             try {
                 const allMoviesId = allCategories.flatMap((category) => category.movies || []);
                 if (allMoviesId.length === 0) {
-                    // console.error("No movies found in categories.");
                     return;
                 }
 

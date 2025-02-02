@@ -25,7 +25,6 @@ const getRecommendations = async (movieId) => {
             }
         })
         .catch((error) => {
-            // console.error("Error fetching recommendations:", error);
             return []; 
         });
 };
@@ -54,7 +53,6 @@ const addMovieToWatchlist = async (movieId) => {
             return false;
         }
     } catch (error) {
-        // console.error("Error adding movie to watchlist:", error);
         return false;
     }
 };

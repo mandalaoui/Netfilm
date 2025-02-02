@@ -8,7 +8,7 @@ function SmallView({ show, onClose, content }) {
 
     return (
         <div className="modal-overlay">
-            <div className="modal-content">
+            <div className="small-view-modal-content">
                 <button className="modal-close-btn" onClick={onClose}>
                     <i className="bi bi-x-lg"></i>
                 </button>

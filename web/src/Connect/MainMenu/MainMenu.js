@@ -9,7 +9,6 @@ function MainMenu() {
     let loc = location.pathname;
     const { fileUrl } = useGlobalContext(); 
     const navigate = useNavigate();
-    console.log("MainMenu loaded");
 
     useEffect(() => {
         function validateInput(input) {
@@ -107,9 +106,7 @@ function MainMenu() {
             });
 
             if (response.ok) {
-                // const location = response.headers.get('Location');
                 alert("Registration successful!");
-                // console.log("User created at:", location);
                 navigate("/login");
             } else {
                 const errorResponse = await response.json();
@@ -122,7 +119,6 @@ function MainMenu() {
                 }
             }
         } catch (error) {
-            // console.error("Error during registration:", error);
             alert("Network error: Please try again later.");
         }
     };
@@ -166,7 +162,6 @@ function MainMenu() {
                 errorElement.style.display = "block";
             }
         } catch (error) {
-            // console.error("Error during login:", error);
             errorElement.textContent = "Network error. Please check your connection.";
             errorElement.style.display = "block";
         }

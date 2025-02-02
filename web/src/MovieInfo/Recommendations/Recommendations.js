@@ -14,15 +14,12 @@ function Recommendations({ movie }) {
         setError(null);
         const fetchRecommendations = async () => {
             try {
-                // console.log("lets go movie: ", movie);
-                // console.log("trying to grt recommendauins for: ", movie._id);
                 // Check if movie ID is valid
                 if (!movie._id || movie._id === "") {
                     throw new Error("Invalid movie ID.");
                 }
                 // Fetch recommended movies based on current movie's ID
                 const recommendations = await getRecommendations(movie._id);
-                // console.log("fetching recommendations now: ", recommendations)
    
                 // If recommendations are found, update state, otherwise show error message
                 if (recommendations && recommendations.length > 0) {

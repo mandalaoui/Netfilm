@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import { LocationProvider } from '../LocationContext.js';
 
 function Connect() {
-    // console.log("Home component rendered");
     const location = useLocation();
     
     return (

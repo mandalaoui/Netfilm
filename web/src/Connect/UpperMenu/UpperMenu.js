@@ -1,6 +1,7 @@
 import './UpperMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
 import { useNavigate } from 'react-router-dom';
+import netfilmIcon from '../../icons/NETFILM.png';
 
 function UpperMenu() {
     const location = useLocationContext(); // Retrieve the current location from the context
@@ -15,7 +16,7 @@ function UpperMenu() {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark transparent-bg fixed-top full-width">
             <div className="container-fluid d-flex justify-content-between align-items-center">
-                <div className="header ms-2">NETFILM</div>
+            <img src={netfilmIcon} className="netfilm-logo" alt="Netfilm Logo"></img>
 
                 {loc === "/" && (
                     <div className="d-flex me-2">

@@ -98,83 +98,78 @@ function EditCategory({ category }) {
     const handleMovieChange = (e, moviesId) => {
         const updatedMovies = e.target.checked
             ? [...selectedMovies, moviesId]
-            : selectedMovies.filter((id) => id !== moviesId); 
+            : selectedMovies.filter((id) => id !== moviesId);
 
         setSelectedMovies(updatedMovies);
     };
 
     return (
-        <div className="Edit-Category-modal-container">
-            <div className="Edit-Category-modal-content">
-                <h2>Edit Category</h2>
-                <button className="EC-close-btn" onClick={() => navigate('/admin')}>
-                    <i className="bi bi-x-lg"></i>
-                </button>
-                <div className="category-layout">
-                    <div className="current-category">
-                        <h3>Current Category</h3>
-                        <div className="input-group-ec">
-                            <label>Name:</label>
-                            <span>{category.name}</span>
-                        </div>
-                        <div className="input-group-ec">
-                            <label>Promotion:</label>
-                            <span>{category.isPromoted ? "Promoted" : "Not Promoted"}</span>
-                        </div>
-                        <div className="input-group-ec">
-                            <label>Movies:</label>
-                            <span>
-                                {movieNames.length > 0 
-                                    ? movieNames.join(", ") 
-                                    : "Empty"}
-                            </span>                        
-                        </div>
+        <div className="Edit-Category-modal-content">
+            <h2>Edit Category</h2>
+            <div className="category-layout">
+                <div className="current-category">
+                    <h3>Current Category</h3>
+                    <div className="input-group-ec">
+                        <label>Name:</label>
+                        <span>{category.name}</span>
                     </div>
-                    <div className="new-category">
-                        <h3>New Category</h3>
-                        <div className="input-group-ec">
-                            <label>Name:</label>
+                    <div className="input-group-ec">
+                        <label>Promotion:</label>
+                        <span>{category.isPromoted ? "Promoted" : "Not Promoted"}</span>
+                    </div>
+                    <div className="input-group-ec">
+                        <label>Movies:</label>
+                        <span>
+                            {movieNames.length > 0
+                                ? movieNames.join(", ")
+                                : "Empty"}
+                        </span>
+                    </div>
+                </div>
+                <div className="new-category">
+                    <h3>New Category</h3>
+                    <div className="input-group-ec">
+                        <label>Name:</label>
+                        <input
+                            type="text"
+                            placeholder="Category Name"
+                            value={categoryName}
+                            onChange={(e) => setCategoryName(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-group-ec">
+                        <label>Promotion:</label>
+                        <div className="EC-checkbox">
                             <input
-                                type="text"
-                                placeholder="Category Name"
-                                value={categoryName}
-                                onChange={(e) => setCategoryName(e.target.value)}
+                                type="checkbox"
+                                checked={isPromotedValue}
+                                onChange={(e) => setIsPromoted(e.target.checked)}
                             />
                         </div>
-                        <div className="input-group-ec">
-                            <label>Promotion:</label>
-                            <div className="EC-checkbox">
-                                <input
-                                    type="checkbox"
-                                    checked={isPromotedValue}
-                                    onChange={(e) => setIsPromoted(e.target.checked)}
-                                />
-                            </div>
-                        </div>
-                        <div className="input-group-ec-update-movie">
-                            <label>Movies:</label>
-                            <div className="movie-update-category-list">
-                                {allMovies.map((movie) => (
-                                    <div key={movie._id} className="movie-update-category-item">
-                                        <input
-                                            type="checkbox"
-                                            id={`movie-update-category-${movie._id}`}
-                                            checked={selectedMovies.includes(movie._id)}
-                                            onChange={(e) => handleMovieChange(e, movie._id)}
-                                        />
-                                        <label htmlFor={`movie-update-category-${movie._id}`} className="movies-update-category-label">
-                                            <span className="movie-update-category-name">{movie.name}</span>
-                                            <span className="movie-update-category-year">{movie.Publication_year}</span>
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
+                    </div>
+                    <div className="input-group-ec-update-movie">
+                        <label>Movies:</label>
+                        <div className="movie-update-category-list">
+                            {allMovies.map((movie) => (
+                                <div key={movie._id} className="movie-update-category-item">
+                                    <input
+                                        type="checkbox"
+                                        id={`movie-update-category-${movie._id}`}
+                                        checked={selectedMovies.includes(movie._id)}
+                                        onChange={(e) => handleMovieChange(e, movie._id)}
+                                    />
+                                    <label htmlFor={`movie-update-category-${movie._id}`} className="movies-update-category-label">
+                                        <span className="movie-update-category-name">{movie.name}</span>
+                                        <span className="movie-update-category-year">{movie.Publication_year}</span>
+                                    </label>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
-                <div className="edit-Category-btn">
-                    <button onClick={handleSubmit}>Edit Category</button>
-                </div>
+            </div>
+            <div className="edit-Category-btn">
+                <button onClick={handleSubmit}>Edit Category</button>
             </div>
         </div>
     );

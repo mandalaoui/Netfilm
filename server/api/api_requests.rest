@@ -3,12 +3,12 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: 679cd02d76c2bda23f930777
+userId: <ID>
 
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: 679cd02d76c2bda23f930777
+userId: <ID>
 Content-Type: application/json
 
 {
@@ -33,9 +33,9 @@ userId: <ID>
 
 ### Update a movie
 
-PUT http://localhost:12345/api/movies/6797f5b69a55cc86adcf5455
+PUT http://localhost:12345/api/movies/:id
 Content-Type: application/json 
-userId: 67964782c8b5942c5f45547f
+userId: <ID>
 
 {
 "name": "after change", 
@@ -49,16 +49,16 @@ userId: 67964782c8b5942c5f45547f
 
 ### Delete a movie
 
-DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588 
-userId: 6798e8adcdbc5797a1978c48
+DELETE http://localhost:12345/api/movies/:id 
+userId: <ID>
 
 ### Get recommendation
-GET http://localhost:12345/api/movies/679cd87e76c2bda23f930f82/recommend/ 
-userId: 679cd02d76c2bda23f930777
+GET http://localhost:12345/api/movies/:id/recommend/ 
+userId: <ID>
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/ 
+POST http://localhost:12345/api/movies/:id/recommend/ 
 Content-Type: application/json 
 userId: <ID>
 
@@ -67,7 +67,7 @@ userId: <ID>
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: 67964782c8b5942c5f45547f
+userId: <ID>
 
 ### Create a new category
 
@@ -81,12 +81,12 @@ Content-Type: application/json
 
 ### Get a specific category by ID
 
-GET http://localhost:12345/api/categories/67956f7405674a481f9f6fde 
-userId: 6793f41b8221f4dda02b7e63
+GET http://localhost:12345/api/categories/:id 
+userId: <ID>
 
 ### Update a category
 
-PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+PATCH http://localhost:12345/api/categories/:id 
 userId: <ID> 
 Content-Type: application/json
 
@@ -98,7 +98,7 @@ Content-Type: application/json
 
 ### Delete a category
 
-DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e 
+DELETE http://localhost:12345/api/categories/:id 
 userId: <ID>
 
 #USER

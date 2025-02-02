@@ -19,7 +19,6 @@ const getUserById = (userId) => {
         }
     })
     .catch(error => {
-        // console.error("Error fetching user:", error);
         return null;
     });
 };

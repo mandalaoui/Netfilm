@@ -44,7 +44,6 @@ const getAllMovies = () => {
         }
     })
     .catch(error => {
-        // console.error("Error fetching movies:", error);
         return null;
     });
 };
@@ -70,7 +69,6 @@ const getMovieById = (movieId) => {
         }
     })
     .catch(error => {
-        // console.error("Error fetching movie:", error);
         return null;
     });
 };
@@ -98,7 +96,6 @@ const updateMovie = (movieId, formData) => {
         }
     })
     .catch(error => {
-        // console.error("Error updating movie:", error);
         return null;
     });
 };
@@ -125,7 +122,6 @@ const deleteMovie = (movieId) => {
         }
     })
     .catch(error => {
-        // console.error("Error deleting movie:", error);
         return false;
     });
 };

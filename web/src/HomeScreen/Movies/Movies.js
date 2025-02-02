@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom';
 function Movies() {
     const location = useLocation();
     const isAdminPage = location.pathname === "/admin";
+    const isHomePage = location.pathname === "/home";
+    const isMoviesByPage = location.pathname === "/moviesByCategories";
     const [showCategoryModal, setshowCategoryModal] = useState(false);
     const [categories, setCategories] = useState([]);
     const [watchList, setwatchList] = useState([]);
-    const [showAllCategories, setShowAllCategories] = useState(true);
     const navigate = useNavigate();
 
     // Fetch categories from the server when the component mounts
@@ -47,7 +48,7 @@ function Movies() {
             }
         };
         fetchCategories();
-    }, [navigate]);
+    }, [categories, navigate]);
     
     // Fetch user data (specifically watched movies) when the component mounts
     useEffect(() => {
@@ -55,7 +56,6 @@ function Movies() {
             const userId = localStorage.getItem('userId');
             if (userId) {
                 const user = await getUserById(userId);
-                // console.log("user :", user, " user.watchedMovies: ", user.watchedMovies)
                 if (user && user.watchedMovies) {
                     const uniqueMovies = [...new Set(user.watchedMovies)];
                     setwatchList(uniqueMovies);
@@ -63,16 +63,6 @@ function Movies() {
             }
         };
         fetchUserData();
-    }, []);
-
-    useEffect(() => {
-        const toShowAll = async () => {
-            const showAll = localStorage.getItem('showAllCategories') === 'true';
-            // console.log("showAll: ", showAll);
-            // console.log("showAllCategories: ", localStorage.getItem('showAllCategories'));
-            setShowAllCategories(showAll);
-        }
-        toShowAll();
     }, []);
 
     // Handler to show the category modal
@@ -94,12 +84,10 @@ function Movies() {
                             <i className="bi bi-plus-square"></i>
                         </button>
                         {showCategoryModal && (
-                            <div className="modal-background">
                                 <div className="modal-content">
                                     <button className="modal-close-button" onClick={() => setshowCategoryModal(false)}>X</button>
                                     <CreateCategory />
                                 </div>
-                            </div>
                         )}
                         <span className="add-category-text">Add Category</span>
                     </div>
@@ -114,9 +102,14 @@ function Movies() {
             
             <MovieRow key={1} category={{ name: "Watched", movies: watchList, isPromoted: true }} />
             {categories.map((category) => {
-                if (isAdminPage || showAllCategories || category.isPromoted) {
-                return <MovieRow key={category.id} category={category} />;
+                if (isAdminPage){
+                    if(category.name === "unAttached" && category.movies.length === 0) return null;
+                    return <MovieRow key={category.id} category={category} />;
                 }
+                if (isMoviesByPage && category.name !== "unAttached")
+                    return <MovieRow key={category.id} category={category} />;
+                if (isHomePage && category.isPromoted && category.name !== "unAttached")
+                    return <MovieRow key={category.id} category={category} />;
                 return null;
             })}            
         </div>

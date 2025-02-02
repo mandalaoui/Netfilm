@@ -62,8 +62,8 @@ function CreateCategory() {
     // Handle movie selection changes
     const handleMovieChange = (e, moviesId) => {
         const updatedMovies = e.target.checked
-            ? [...selectedMovies, moviesId] 
-            : selectedMovies.filter((id) => id !== moviesId); 
+            ? [...selectedMovies, moviesId]
+            : selectedMovies.filter((id) => id !== moviesId);
 
         setSelectedMovies(updatedMovies);
     };
@@ -82,7 +82,7 @@ function CreateCategory() {
                         movies: updatedMovies,
                     });
                 }
-            }    
+            }
         } catch (error) {
             // console.error("Error during category update:", error);
         }
@@ -100,52 +100,50 @@ function CreateCategory() {
 
     };
 
-    
+
 
     return (
-        <div className="Create-Category-modal-container">
-            <div className="Create-Category-modal-content">
-                <h2>Add Category</h2>
-                <div className="input-group-CC">
+        <div className="Create-Category-modal-content">
+            <h2>Add Category</h2>
+            <div className="input-group-CC">
+                <input
+                    type="text"
+                    placeholder="Category Name"
+                    value={categoryName}
+                    onChange={(e) => setCategoryName(e.target.value)}
+                />
+            </div>
+            <div className="input-group-CC">
+                <h7>Promotion</h7>
+                <div className="CC-checkbox">
                     <input
-                        type="text"
-                        placeholder="Category Name"
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
+                        type="checkbox"
+                        checked={isPromotedValue}
+                        onChange={(e) => setIsPromoted(e.target.checked)}
                     />
                 </div>
-                <div className="input-group-CC">
-                    <h7>Promotion</h7>
-                    <div className="CC-checkbox">
-                        <input
-                            type="checkbox"
-                            checked={isPromotedValue}
-                            onChange={(e) => setIsPromoted(e.target.checked)}
-                        />
-                    </div>
+            </div>
+            <div className="input-group-CC-add-movie">
+                <h7>Movies</h7>
+                <div className="movies-in-category-list">
+                    {allMovies.map((movie) => (
+                        <div key={movie._id} className="movies-in-category-item">
+                            <input
+                                type="checkbox"
+                                id={`movies-in-category-${movie._id}`}
+                                checked={selectedMovies.includes(movie._id)}
+                                onChange={(e) => handleMovieChange(e, movie._id)}
+                            />
+                            <label htmlFor={`movies-in-category-${movie._id}`} className="movies-in-category-label">
+                                <span className="movie-from-category-name">{movie.name}</span>
+                                <span className="movie-from-category-year">{movie.Publication_year}</span>
+                            </label>
+                        </div>
+                    ))}
                 </div>
-                <div className="input-group-CC-add-movie">
-                    <h7>Movies</h7>
-                    <div className="movies-in-category-list">
-                        {allMovies.map((movie) => (
-                            <div key={movie._id} className="movies-in-category-item">
-                                <input
-                                    type="checkbox"
-                                    id={`movies-in-category-${movie._id}`}
-                                    checked={selectedMovies.includes(movie._id)}
-                                    onChange={(e) => handleMovieChange(e, movie._id)}
-                                />
-                                <label htmlFor={`movies-in-category-${movie._id}`} className="movies-in-category-label">
-                                    <span className="movie-from-category-name">{movie.name}</span>
-                                    <span className="movie-from-category-year">{movie.Publication_year}</span>
-                                </label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="Create-Category-btn">
-                    <button onClick={handleSubmit}>Create Category</button>
-                </div>
+            </div>
+            <div className="Create-Category-btn">
+                <button onClick={handleSubmit}>Create Category</button>
             </div>
         </div>
     );

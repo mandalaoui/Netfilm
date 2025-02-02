@@ -59,6 +59,7 @@
 }
 
 .close-btn-new-movie {
+    color: var(--text-color);
     position: absolute;
     top: -5px;
     right: 10px;
