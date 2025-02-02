@@ -25,6 +25,9 @@ import okhttp3.RequestBody;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.PromotedCategory;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -128,7 +131,6 @@ public class MovieApi {
 
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
-
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -184,7 +186,6 @@ public class MovieApi {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful()) {
-                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
                     callback.onResponse(call, Response.success(response.body()));
                 } else {
                     if (response.code() == 404) {
@@ -198,6 +199,56 @@ public class MovieApi {
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 callback.onFailure(call,t);
+            }
+        });
+    }
+
+    public void edit(String movieId, Movie movieEdit, File imageFile, File videoFile) {
+        RequestBody categoriesRequestBody;
+        List<String> categories = movieEdit.getCategories();
+        Log.d("Categories", categories.toString());
+
+        categoriesRequestBody = RequestBody.create(
+                TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
+        );
+
+        RequestBody name = RequestBody.create(movieEdit.getName(),MediaType.parse("text/plain"));
+        RequestBody year = RequestBody.create(String.valueOf(movieEdit.getPublication_year()),MediaType.parse("text/plain"));
+        RequestBody time = RequestBody.create(movieEdit.getMovie_time(),MediaType.parse("text/plain") );
+        RequestBody description = RequestBody.create(movieEdit.getDescription(),MediaType.parse("text/plain"));
+
+        RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
+        MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
+
+        RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
+        MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
+
+        Log.d("TAG", "edit: " + userId);
+        Call<Movie> call = apiService.editMovie(userId,movieId,name, year, time, description,categoriesRequestBody, image, video);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
+                if (response.isSuccessful()) {
+                    Log.d("MovieApi", "Movie updated successfully " + response.body().toString());
+                    new Thread(() -> {
+                        dao.update(response.body());
+                    }).start();
+                    Toast.makeText(MyApplication.getAppContext(), "Movie update successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("MovieApi", "Movie updated successfully" + response.body().toString());
+                } else {
+                    try {
+                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
+                        Log.e("Error Response", errorResponse);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                Log.e("MovieApi", "Error: " + t.getMessage());
+                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

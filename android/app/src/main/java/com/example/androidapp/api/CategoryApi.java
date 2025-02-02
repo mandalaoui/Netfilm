@@ -105,9 +105,50 @@ public class CategoryApi {
 
         });
 
+    }
 
+    public void delete (Category category) {
+        String categoryId = category.getId();
+        Call<Category> call = apiService.deleteCategory(categoryId,userId);
+        call.enqueue(new Callback<Category>() {
+            @Override
+            public void onResponse(Call<Category> call, Response<Category> response) {
+                if (response.isSuccessful()) {
+                    Log.d("CategoryApi", "Category delete successfully");
+                } else {
+                    Log.e("CategoryApi", "Error: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                Log.e("CategoryApi", "Error delete Category: " + t.getMessage());
+            }
+        });
+    }
 
+    public void edit(Category category) {
+        Call<Category> call = apiService.editCategory(userId, category.getId(), category);
+        call.enqueue(new Callback<Category>() {
+            public void onResponse(Call<Category> call, retrofit2.Response<Category> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MyApplication.getAppContext(), "Category update successfully", Toast.LENGTH_SHORT).show();
+                    Log.d("CategoryApi", "Category update successfully");
+                } else {
+                    Log.e("CategoryApi", "Failed to update category: " + response.message());
+                    try {
+                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
+                        Log.e("Error Response", errorResponse);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<Category> call, Throwable t) {
+                Log.e("CategoryApi", "Error: " + t.getMessage());
+                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
+            }
 
-
+        });
     }
 }

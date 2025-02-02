@@ -54,6 +54,10 @@ public class MovieRepository {
     public void add (final Movie movie, File imageFile, File videoFile) {
         api.add(movie,imageFile, videoFile);
     }
+
+    public void edit(String movieId,Movie movie, File imageFile, File videoFile) {
+        api.edit(movieId, movie, imageFile, videoFile);
+    }
 //
 //    public void delete (final Category category) {
 //        api.delete(category);

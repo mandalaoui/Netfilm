@@ -47,14 +47,22 @@ const getMovie = async (req, res) => {
 
 // Function to update an existing movie's details.
 const updateMovie = async (req, res) => {
-    const movie = await movieService.updateMovie(req.params.id, req.body.name, req.body.categories, req.body.movie_time,
-        req.body.image, req.body.Publication_year, req.body.description,req.body.videoUrl, req.body.age);
+    const image = req.files && req.files.image ? req.files.image[0].path : null;
+    const video = req.files && req.files.video ? req.files.video[0].path : null;
+
+    let categories = [];
+    if (req.body.categories) {
+        categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+    }
+
+    const movie = await movieService.updateMovie(req.params.id, req.body.name, categories, req.body.movie_time,
+        image, req.body.Publication_year, req.body.description,video, req.body.age);
 
     // If no movie is found to update, responds with a 404 error
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json();
+    res.status(204).json(movie);
 };
 
 // Function to delete a movie by its ID
@@ -65,7 +73,7 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json({});
+    res.status(204).json(movie);
 };
 
 // Function to search for movies using a query parameter.

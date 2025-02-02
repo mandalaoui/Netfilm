@@ -30,10 +30,13 @@ public class CategoriesViewModel extends ViewModel  {
     public void add(Category category) {
         repository.add(category);
     }
+    public void edit(Category category) {
+        repository.edit(category);
+    }
 //
-//    public void delete(Category category) {
-//        repository.delete(category);
-//    }
+    public void delete(Category category) {
+        repository.delete(category);
+    }
 
     public void reload() {
         Log.d("CategoriesViewModel", "Reloading categories...");

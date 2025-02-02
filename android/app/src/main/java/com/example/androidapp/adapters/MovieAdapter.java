@@ -24,12 +24,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 //    private OnMovieSelectListener listener;
     private List<String> selectedMovieIds = new ArrayList<>();
 
+    private  Movie choiceMovie;
     private Context context;
+    private boolean isSingleChoice;
 
-    public MovieAdapter(Context context,List<Movie> movies) {
+    public MovieAdapter(Context context,List<Movie> movies, boolean isSingleChoice) {
         this.movies = movies;
 //        this.listener = listener;
         this.context = context;
+        this.isSingleChoice = isSingleChoice;
     }
 
     @Override
@@ -58,14 +61,29 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         holder.moviePoster.setOnClickListener(v -> {
             String movieId = movie.get_id();
-            Log.d("MovieAdapter", "movie ID: " + movieId);
-            if (selectedMovieIds.contains(movieId)) {
-                selectedMovieIds.remove(movieId);
-                Log.d("MovieAdapter", "Deselected movie ID: " + movieId);
-            } else {
+
+            if (isSingleChoice) {
+                selectedMovieIds.clear();
                 selectedMovieIds.add(movieId);
                 Log.d("MovieAdapter", "Selected movie ID: " + movieId);
+            } else {
+                if (selectedMovieIds.contains(movieId)) {
+                    selectedMovieIds.remove(movieId);
+                    choiceMovie = movie;
+                    Log.d("MovieAdapter", "Deselected movie ID: " + movieId);
+                } else {
+                    selectedMovieIds.add(movieId);
+                    Log.d("MovieAdapter", "Selected movie ID: " + movieId);
+                }
             }
+//            Log.d("MovieAdapter", "movie ID: " + movieId);
+//            if (selectedMovieIds.contains(movieId)) {
+//                selectedMovieIds.remove(movieId);
+//                Log.d("MovieAdapter", "Deselected movie ID: " + movieId);
+//            } else {
+//                selectedMovieIds.add(movieId);
+//                Log.d("MovieAdapter", "Selected movie ID: " + movieId);
+//            }
 
 //            listener.onMovieSelect(movie, selectedMovieIds.contains(movieId));
         });
@@ -76,6 +94,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
     public List<String> getSelectedMovieIds() {
         return selectedMovieIds;
+    }
+
+    public Movie getChoiceMovie(){
+        return choiceMovie;
     }
 
     public void setMovies(List<Movie> movies) {

@@ -8,28 +8,39 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidapp.entities.Category;
+import com.bumptech.glide.Glide;
+import com.example.androidapp.MovieEditFragment;
 import com.example.androidapp.R;
 import com.example.androidapp.adapters.CategoryAdapter;
 import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.api.UserApi;
-import com.example.androidapp.databinding.ActivityCreateMovieBinding;
+import com.example.androidapp.databinding.ActivityDeleteMovieBinding;
+import com.example.androidapp.databinding.ActivityEditMovieBinding;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
-import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.io.File;
@@ -40,51 +51,55 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateMovieActivity extends AppCompatActivity {
-    private ActivityCreateMovieBinding binding;
-    private EditText create_movieYearInput;
-    private EditText create_movieTimeInput;
-    private EditText create_movieDescriptionInput;
-    private EditText movieIdInput;
-    private Button btnCreateMovie;
-    private EditText create_movieNameInput;
+public class EditMovieActivity extends AppCompatActivity {
+    private ActivityEditMovieBinding binding;
+    private Button editMovie;
+    private RecyclerView recyclerViewMovies;
+
+    private MovieAdapter movieAdapter;
+
     private MovieViewModel movieViewModel;
-    private CategoriesViewModel categoriesViewModel;
-    private CategoryAdapter categoryAdapter;
+    private EditText movieNameInput, movieTimeInput, movieYearInput, movieDescriptionInput;
+    private ListView categoryListView;
+    private ImageView imageViewProfilePic;
+    private VideoView videoView;
+
     private String selectedImageUri;
     private String selectedVideoUri;
-    private Movie movie;
-    private List<Category> categoryList;
+    private Button btnChooseImage, btnChooseVideo, editMovieButton, btnChooseMovie;
+    private Movie movieChoose;
+    private Uri imageUri, videoUri;
+    private CreateMovieActivity createMovieActivity;
+
+    private String selectedMovieId;
+    private Movie selectedMovie;
     private List<String> selectedCategories;
-    private MovieAdapter moviesAdapter;
-    private List<Movie> allMovies;
-    private ListView categoryListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCreateMovieBinding.inflate(getLayoutInflater());
+        binding = ActivityEditMovieBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NestedScrollView scrollView = findViewById(R.id.createMovie);
-        scrollView.post(() -> {
-            scrollView.scrollTo(0, 0);
-        });
-
-        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-
-        create_movieNameInput = binding.movieNameInput;
-        create_movieYearInput = binding.movieYearInput;
-        create_movieTimeInput = binding.movieTimeInput;
-        create_movieDescriptionInput = binding.movieDescriptionInput;
-//        movieIdInput = binding.movieIdInput;
-        btnCreateMovie = binding.createMovieButton;
+        movieNameInput = binding.movieNameInput;
+        movieTimeInput = binding.movieTimeInput;
+        movieYearInput = binding.movieYearInput;
+        movieDescriptionInput = binding.movieDescriptionInput;
         categoryListView = binding.categoryListView;
+        imageViewProfilePic = binding.imageViewProfilePic;
+        videoView = binding.videoView;
+        btnChooseImage = binding.btnChooseImage;
+        btnChooseVideo = binding.btnChooseVideo;
+        editMovieButton = binding.editMovieButton;
+        btnChooseMovie = binding.chooseMovieButton;
 
-
-        btnCreateMovie.setOnClickListener(v -> {
-            createMovie();
+        editMovieButton.setOnClickListener(v -> {
+            editMovieFunc();
         });
 
+        btnChooseMovie.setOnClickListener(v -> {
+            showMovieSelectionDialog();
+        });
 
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
@@ -92,17 +107,15 @@ public class CreateMovieActivity extends AppCompatActivity {
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
         });
-//        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
-//        categoriesViewModel.reload();
-//        onCategoriesReceived();
+
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> categories = response.body();
-                    onCategoriesReceived(categories);
                     Log.d("API Response", "Categories received: " + categories.toString());  // לוג לעזרה
+                    onCategoriesReceived(categories);
                 } else {
                     Log.e("API Response", "Response error: " + response.message());  // לוג במקרה של בעיה בתשובה
                 }
@@ -114,6 +127,101 @@ public class CreateMovieActivity extends AppCompatActivity {
         });
     }
 
+    private void showMovieSelectionDialog() {
+        selectedMovie = new Movie();
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
+        movieViewModel.reload();
+        movieViewModel.get().observe(this, movies -> {
+            List<String> movieTitles = new ArrayList<>();
+            List<String> movieIds = new ArrayList<>();
+            for (Movie movie : movies) {
+                movieTitles.add(movie.getName());
+                movieIds.add(movie.get_id());
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Choose movie")
+                    .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
+                        // כאשר נבחר סרט
+                        String selectedMovieName = movieTitles.get(which);
+                        selectedMovieId = movieIds.get(which);
+
+                        for (Movie movie : movies) {
+                            if (movie.get_id().equals(selectedMovieId)) {
+                                selectedMovie = movie;
+                                break;
+                            }
+                        }
+                        if (selectedMovie != null) {
+                            movieNameInput.setText(selectedMovie.getName());
+                            movieYearInput.setText(String.valueOf(selectedMovie.getPublication_year()));
+                            movieTimeInput.setText(selectedMovie.getMovie_time());
+                            movieDescriptionInput.setText(selectedMovie.getDescription());
+//                            Uri imageUri = Uri.parse(selectedMovie.getImage()); // המרת ה-String ל-Uri
+//                            imageViewProfilePic.setImageURI(imageUri);
+//                            Glide.with(this)
+//                                    .load(Uri.parse("http://10.0.2.2:12345/api/" + selectedMovie.getImage()))
+//                                    .into(imageViewProfilePic);
+//                            Uri videoUri = Uri.parse("http://10.0.2.2:12345/api/" + selectedMovie.getVideo());
+//                            videoView.setVisibility(View.VISIBLE);
+//                            videoView.setVideoURI(videoUri);
+//                            videoView.start();
+
+//                            if (selectedMovie.getCategories() != null) {
+//                                selectedCategories = selectedMovie.getCategories();
+//                            }
+                        }
+
+                        Log.d("EditMovieActivity", "Selected movie ID: " + selectedMovieId);
+                        dialog.dismiss();
+
+                    })
+                    .setCancelable(true)
+                    .show();
+        });
+    }
+    public void editMovieFunc() {
+        File imageFile = null;
+        File videoFile = null;
+
+//        if ( movieNameInput.getText().toString() != null) {
+//            selectedMovie.setName(movieNameInput.getText().toString());
+//        }
+//        if ( movieYearInput.getText().toString() != null) {
+//            int movieYear = Integer.parseInt(movieYearInput.getText().toString());
+//            selectedMovie.setPublication_year(movieYear);
+//        }
+//        if ( movieTimeInput.getText().toString() != null) {
+//            selectedMovie.setMovie_time(movieTimeInput.getText().toString());
+//        }
+//        if ( movieDescriptionInput.getText().toString() != null) {
+//            selectedMovie.setDescription(movieDescriptionInput.getText().toString());
+//        }
+
+//        if (selectedCategories != null) {
+//            selectedMovie.setCategories(selectedCategories);
+//        }
+
+//
+        String movieName = movieNameInput.getText().toString();
+        String movieYearText = movieYearInput.getText().toString();
+        String movieTime = movieTimeInput.getText().toString();
+        String movieDescription = movieDescriptionInput.getText().toString();
+        int movieYear = Integer.parseInt(movieYearText);
+        Movie movie = new Movie(movieName, movieYear , movieTime, movieDescription, selectedCategories);
+
+        if (selectedImageUri == null || selectedImageUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        imageFile = getFileFromUri(Uri.parse(selectedImageUri));
+        if (selectedVideoUri == null || selectedVideoUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
+        movieViewModel.edit(selectedMovieId,movie, imageFile, videoFile);
+    }
     public void onCategoriesReceived(List<Category> categories) {
 //        public void onCategoriesReceived() {
         if (categories == null || categories.isEmpty()) {
@@ -129,13 +237,11 @@ public class CreateMovieActivity extends AppCompatActivity {
 //            categoryList = categories;
 //        });
 
-        // יצירת ה-Adapter והגדרת ה-ListView
         CategoryAdapter adapter = new CategoryAdapter(this, categories, false);
         ListView categoryListView = findViewById(R.id.categoryListView);
         categoryListView.setAdapter(adapter);
         categoryListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        // יצירת רשימה עבור ה-IDs שנבחרו
         selectedCategories = new ArrayList<>();
 
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
@@ -154,48 +260,6 @@ public class CreateMovieActivity extends AppCompatActivity {
 
             Log.d("Selected Categories", "Selected IDs: " + selectedCategories);
         });
-    }
-
-    private void createMovie() {
-        File imageFile = null;
-        File videoFile = null;
-
-        String movieName = create_movieNameInput.getText().toString();
-        String movieYearText = create_movieYearInput.getText().toString();
-        String movieTime = create_movieTimeInput.getText().toString();
-        String movieDescription = create_movieDescriptionInput.getText().toString();
-
-
-        if (movieName.isEmpty() || movieYearText.isEmpty()|| movieTime.isEmpty() || movieDescription.isEmpty()) {
-            Toast.makeText(CreateMovieActivity.this, "All fields are required", Toast.LENGTH_LONG).show();
-        } else if (selectedImageUri == null || selectedImageUri.isEmpty()) {  // אם לא נבחרה תמונה
-            Toast.makeText(CreateMovieActivity.this, "Please select an image for the movie", Toast.LENGTH_LONG).show();
-        }
-        else {
-            try {
-                int movieYear = Integer.parseInt(movieYearText);
-                movie = new Movie(movieName,movieYear,movieTime , movieDescription, selectedCategories);
-
-            } catch (NumberFormatException e) {
-                Toast.makeText(CreateMovieActivity.this, "Please enter a valid year", Toast.LENGTH_SHORT).show();
-            }
-
-            if (selectedImageUri == null || selectedImageUri.isEmpty()) {
-                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            imageFile = getFileFromUri(Uri.parse(selectedImageUri));
-            if (selectedVideoUri == null || selectedVideoUri.isEmpty()) {
-                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
-            movieViewModel.add(movie, imageFile, videoFile);
-//            RequestApi requestApi = new RequestApi(this);
-//            requestApi.createMovie(movie, imageFile, videoFile);
-
-        }
-
     }
 
     private void openVideoChooser() {
@@ -291,5 +355,4 @@ public class CreateMovieActivity extends AppCompatActivity {
 
         return null;
     }
-
 }

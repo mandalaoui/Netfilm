@@ -97,7 +97,7 @@ public class MovieActivity extends AppCompatActivity {
         }
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>());
+        movieAdapter = new MovieAdapter(this, new ArrayList<>(), true);
         recyclerView.setAdapter(movieAdapter);
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);

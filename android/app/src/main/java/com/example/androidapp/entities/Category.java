@@ -60,6 +60,9 @@ public class Category {
         this.isPromoted = isPromoted;
         this.movies = movies;
     }
+    public Category() {
+
+    }
 
     // Setter
     public void setMovies(List<String> movies) {

@@ -48,9 +48,11 @@ public class CreateCategoryActivity extends AppCompatActivity {
         create_nameCategory = binding.categoryNameInput;
         create_isPromotedSwitch = binding.isPromotedSwitch;
 
+        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>());
+        movieAdapter = new MovieAdapter(this, new ArrayList<>(), false);
         recyclerViewMovies.setAdapter(movieAdapter);
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);

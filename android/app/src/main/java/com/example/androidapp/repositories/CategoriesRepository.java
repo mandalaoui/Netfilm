@@ -53,10 +53,18 @@ public class CategoriesRepository {
     public void add (final Category category) {
         api.add(category);
     }
+    public void edit (final Category category) {
+        new Thread(() -> {
+            dao.update(category);
+        }).start();
+
+        api.edit(category);
+    }
 //
-//    public void delete (final Category category) {
-//        api.delete(category);
-//    }
+    public void delete (final Category category) {
+        new Thread(() -> dao.delete(category)).start();
+        api.delete(category);
+    }
 
     public void reload () {
 //        api.reload();

@@ -29,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(this, NetflixActivity.class);
             startActivity(i);
         });
-        Toast.makeText(this, "tost", Toast.LENGTH_LONG).show();
 
         binding.btnSignIn.setOnClickListener(v -> {
             String username = binding.editMailOrName.getText().toString();

@@ -30,8 +30,6 @@ public class DeleteMovieActivity extends AppCompatActivity {
     private MovieViewModel movieViewModel;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,7 +41,7 @@ public class DeleteMovieActivity extends AppCompatActivity {
         recyclerViewMovies = binding.recyclerViewMovies;
 
         recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>());
+        movieAdapter = new MovieAdapter(this, new ArrayList<>(), true);
         recyclerViewMovies.setAdapter(movieAdapter);
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
@@ -76,10 +74,5 @@ public class DeleteMovieActivity extends AppCompatActivity {
                     .show();
         });
 
-    }
-
-    private void onMovieSelected(Movie movie, boolean isSelected) {
-        // כאן תוכל להוסיף אם יש צורך בפעולות נוספות כשהסרט נבחר או לא נבחר
-        // לדוגמה, תוכל להדפיס לוג או לעדכן את רשימת הסרטים שנבחרו
     }
 }

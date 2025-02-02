@@ -36,6 +36,10 @@ public class MovieViewModel extends ViewModel {
         repository.add(movie, imageFile, videoFile);
     }
 
+    public void edit(String movieId,Movie movie, File imageFile, File videoFile) {
+        repository.edit(movieId,movie, imageFile, videoFile);
+    }
+
 //    public void recommend(String id) {
 //        repository.recommend(id);
 //    }

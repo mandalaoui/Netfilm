@@ -176,14 +176,20 @@
             android:strokeColor="#000000"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <TextView
+        <androidx.media3.ui.PlayerView
             android:id="@+id/random_movie"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="movie"
-            android:textColor="#FFFFFF"
-            android:background="#6B6868"
+            app:resize_mode="fit"
             app:layout_scrollFlags="scroll|enterAlways"/>
+<!--        <TextView-->
+<!--            android:id="@+id/random_movie"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="movie"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:background="#6B6868"-->
+<!--            app:layout_scrollFlags="scroll|enterAlways"/>-->
 
     </com.google.android.material.appbar.AppBarLayout>
 

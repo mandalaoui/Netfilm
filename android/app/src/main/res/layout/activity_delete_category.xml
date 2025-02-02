@@ -26,14 +26,53 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.045" />
 
-    <Spinner
-        android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <!--    <Spinner-->
+<!--        android:id="@+id/categorySpinner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.182" />-->
+
+<!--    <ScrollView-->
+<!--        android:id="@+id/scrollView"-->
+<!--        android:layout_width="403dp"-->
+<!--        android:layout_height="471dp"-->
+<!--        android:fillViewport="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.388"-->
+<!--        tools:layout_editor_absoluteX="4dp">-->
+<!--        &lt;!&ndash;        <CheckBox&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/categoryCheckBox"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_marginEnd="16dp" />&ndash;&gt;-->
+<!--        <ListView-->
+<!--            android:id="@+id/categoryListView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="155dp"-->
+<!--            android:layout_marginEnd="0dp"-->
+<!--            android:choiceMode="multipleChoice"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            app:layout_constraintEnd_toEndOf="parent" />-->
+<!--    </ScrollView>-->
+
+    <Button
+        android:id="@+id/chooseCategoryButton"
+        android:layout_width="376dp"
+        android:layout_height="49dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Choose Category"
+        android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.162" />
 
     <Button
         android:id="@+id/deleteCategoryButton"
@@ -44,7 +83,8 @@
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.958" />
+        app:layout_constraintVertical_bias="0.948" />
 </androidx.constraintlayout.widget.ConstraintLayout>

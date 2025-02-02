@@ -18,7 +18,9 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -44,6 +46,7 @@ public interface ApiService {
             @Part MultipartBody.Part image,
             @Part MultipartBody.Part video
     );
+
     @GET("movies/{movieId}")
     Call<Movie> getMovie(@Path("movieId") String movieId, @Header("userId") String userId);
 
@@ -55,8 +58,15 @@ public interface ApiService {
 
     @POST("categories")
     Call<Category> createCategory(
-            @Header("userId") String userId,       // שולחים את ה- userId כ- header
-            @Body Category categoryRequest  // שולחים את הנתונים כ- body
+            @Header("userId") String userId,
+            @Body Category categoryRequest
+    );
+
+    @PATCH("categories/{categoryId}")
+    Call<Category> editCategory(
+            @Header("userId") String userId,
+            @Path("categoryId") String categoryId,
+            @Body Category categoryRequest
     );
 //    @GET("movies")
 //    Call<List<Category>> getCategories(@Header("userId") String userId);
@@ -82,5 +92,21 @@ public interface ApiService {
     @GET("movies/{id}/recommend")
     Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);
 
+    @Multipart
+    @PUT("movies/{movieId}")
+    Call<Movie> editMovie(
+            @Header("userId") String userId,
+            @Path("movieId") String movieId,
+            @Part("name") RequestBody name,
+            @Part("Publication_year") RequestBody Publication_year,
+            @Part("movie_time") RequestBody movie_time,
+            @Part("description") RequestBody description,
+            @Part("categories") RequestBody categories,
+            @Part MultipartBody.Part image,
+            @Part MultipartBody.Part video
+    );
+
+    @DELETE("categories/{categoryId}")
+    Call<Category> deleteCategory(@Path("categoryId") String categoryId, @Header("userId") String userId);
 
 }

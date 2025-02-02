@@ -6,11 +6,12 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity (tableName = "Movie")
 @TypeConverters(ConverterMovie.class)
-public class Movie {
+public class Movie implements Serializable {
     @PrimaryKey
     @NonNull
     private String _id;
