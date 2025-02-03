@@ -42,7 +42,7 @@ import retrofit2.Response;
 
 public class MovieActivity extends AppCompatActivity {
     private ActivityMovieBinding binding;
-    private TextView tvName, tvYear,tvTime, tvDescription;
+    private TextView tvName, tvYear,tvTime, tvDescription, tvAge;
 //    private MovieViewModel movieViewModel;
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
@@ -73,14 +73,31 @@ public class MovieActivity extends AppCompatActivity {
         moviePlayer = binding.moviePlayer;
         btnPlay = binding.btnPlay;
         recyclerView = binding.recyclerViewRecommended;
+        tvAge = binding.age;
 
         Intent intent = getIntent();
         tvName.setText(intent.getStringExtra("name"));
         Log.d("MovieActivity", "Movie name: " + intent.getStringExtra("name"));
         tvName.setTextColor(Color.WHITE);
         tvYear.setText(intent.getStringExtra("Publication_year"));
-        tvTime.setText(intent.getStringExtra("movie_time"));
+
+        String movieTime = intent.getStringExtra("movie_time");
+        String[] timeParts = movieTime.split(":");
+        int hours = 0;
+        int minutes = 0;
+        if (timeParts.length == 2) {
+            hours = Integer.parseInt(timeParts[0]);
+            minutes = Integer.parseInt(timeParts[1]);
+        }
+        String formattedTime = hours + "h " + minutes + "m";
+        tvTime.setText(formattedTime);
+//        tvTime.setText(intent.getStringExtra("movie_time"));
+
         tvDescription.setText(intent.getStringExtra("description"));
+        String age = intent.getStringExtra("age") + "+";
+        tvAge.setText(age);
+        Log.d("MovieActivity", "Movie year: " + intent.getStringExtra("Publication_year"));
+        Log.d("MovieActivity", "Movie age: " + intent.getStringExtra("age"));
 
         exoPlayer = new ExoPlayer.Builder(this).build();
         moviePlayer.setPlayer(exoPlayer);
@@ -96,7 +113,7 @@ public class MovieActivity extends AppCompatActivity {
             Log.e("MovieActivity", "Video URL is null or empty");
         }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         movieAdapter = new MovieAdapter(this, new ArrayList<>());
         recyclerView.setAdapter(movieAdapter);
 
