@@ -76,22 +76,26 @@ public class CreateMovieActivity extends AppCompatActivity {
         videoCheck = binding.checkVideo;
         trailerCheck = binding.checkTrailer;
 
+        // Set up button click listeners for image, video, and trailer selection
         btnCreateMovie.setOnClickListener(v -> {
             createMovie();
         });
+
+        // Check and request permission for image selection
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
             if(selectedImageUri != null) {
                 imageCheck.setVisibility(View.VISIBLE);
             }
         });
+        // Request permission for video selection
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
             if(selectedVideoUri != null) {
                 videoCheck.setVisibility(View.VISIBLE);
             }
         });
-
+        // Request permission for trailer selection
         binding.btnChooseTrailer.setOnClickListener(v-> {
             requestPermissionsForTrailer();
             if(selectTrailerUri != null) {
@@ -99,6 +103,7 @@ public class CreateMovieActivity extends AppCompatActivity {
             }
         });
 
+        // API request to fetch movie categories
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
@@ -123,13 +128,12 @@ public class CreateMovieActivity extends AppCompatActivity {
             return;
         }
 
-        // יצירת ה-Adapter והגדרת ה-ListView
+        // Set up the adapter and ListView for displaying categories
         CategoryAdapter adapter = new CategoryAdapter(this, categories, false);
         ListView categoryListView = findViewById(R.id.categoryListView);
         categoryListView.setAdapter(adapter);
         categoryListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        // יצירת רשימה עבור ה-IDs שנבחרו
         selectedCategories = new ArrayList<>();
 
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
@@ -144,7 +148,7 @@ public class CreateMovieActivity extends AppCompatActivity {
                     Log.e("Error", "Category ID is null for category: " + selectedCategory.getName());
                 }
             } else {
-                selectedCategories.remove(selectedCategory.getId());  // אם בוטלה הבחירה, הסר את ה-ID
+                selectedCategories.remove(selectedCategory.getId());
             }
 
         });
@@ -191,29 +195,34 @@ public class CreateMovieActivity extends AppCompatActivity {
                 return;
             }
             trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
+            // Add the movie through ViewModel
             movieViewModel.add(movie, imageFile, videoFile, trailerFile);
         }
 
     }
 
     private void openVideoChooser() {
+        // Open the video chooser to select a video file
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         intent.setType("video/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickVideoLauncher.launch(intent);
     }
     private void openTrailerChooser() {
+        // Open the trailer chooser to select a trailer file
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         intent.setType("video/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickTrailerLauncher.launch(intent);
     }
     private void openImageChooser() {
+        // Open the image chooser to select an image file
         Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");  // Filter only image files
         pickImageLauncher.launch(intent); // Waiting for a response from the action
     }
     private void requestPermissionsForVideo() {
+        // Request permission to read external storage for video selection
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
         } else {
@@ -221,6 +230,7 @@ public class CreateMovieActivity extends AppCompatActivity {
         }
     }
     private void requestPermissionsForTrailer() {
+        // Request permission to read external storage for trailer selection
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
         } else {
@@ -231,7 +241,7 @@ public class CreateMovieActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
-                    selectedVideoUri = videoUri.toString();
+                    selectedVideoUri = videoUri.toString(); // Save the selected video URI
                 }
             });
 
@@ -239,7 +249,7 @@ public class CreateMovieActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
-                    selectTrailerUri = videoUri.toString();
+                    selectTrailerUri = videoUri.toString(); // Save the selected trailer URI
                 }
             });
 
@@ -254,6 +264,7 @@ public class CreateMovieActivity extends AppCompatActivity {
             });
 
     private void requestPermissions() {
+        // Request permission to read and write external storage for image selection
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -268,6 +279,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Handle permission result
         if (requestCode == 100) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -280,6 +292,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     }
 
     private File getFileFromUri(Uri uri) {
+        // Convert URI to File using the content resolver
         try {
             String path = null;
 

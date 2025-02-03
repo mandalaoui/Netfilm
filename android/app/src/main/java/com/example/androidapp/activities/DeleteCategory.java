@@ -36,6 +36,8 @@ public class DeleteCategory extends AppCompatActivity {
         deleteCategory = binding.deleteCategoryButton;
         categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
         categoriesViewModel.reload();
+
+        // Observe changes in the category list from the ViewModel
         categoriesViewModel.get().observe(this, categories -> {
                     categoryTitles = new ArrayList<>();
                     categoryIds = new ArrayList<>();
@@ -46,11 +48,12 @@ public class DeleteCategory extends AppCompatActivity {
                     allcategories = categories;
                 });
 
-
-            chooseCategory.setOnClickListener(v-> {
+        // Set up the listener for the "Choose Category" button
+        chooseCategory.setOnClickListener(v-> {
             showCategorySelectionDialog();
         });
 
+        // Set up the listener for the "Delete Category" button
         deleteCategory.setOnClickListener(v-> {
             categoriesViewModel.delete(selectCategory);
             finish();
@@ -58,15 +61,18 @@ public class DeleteCategory extends AppCompatActivity {
 
     }
 
+    // Method to show the category selection dialog
     private void showCategorySelectionDialog() {
         selectCategory = new Category();
 
+        // Build the AlertDialog to choose a category
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose category")
                 .setSingleChoiceItems(categoryTitles.toArray(new String[0]), -1, (dialog, which) -> {
                         String selectedCategoryName = categoryTitles.get(which);
                         selectCategoryId = categoryIds.get(which);
 
+                        // Find the corresponding category object using the ID
                         for (Category category : allcategories) {
                             if (category.getId().equals(selectCategoryId)) {
                                 selectCategory = category;

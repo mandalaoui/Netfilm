@@ -33,6 +33,7 @@ public class MovieApi {
     Retrofit retrofit;
     ApiService apiService;
 
+    // Constructor to initialize Retrofit and ApiService
     public MovieApi() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
@@ -40,7 +41,7 @@ public class MovieApi {
                 .build();
         apiService = retrofit.create(ApiService.class);
     }
-
+    // Constructor with additional parameters for handling movie data and database
     public MovieApi(MutableLiveData<List<Movie>> movieListData, MovieDao dao) {
         this.movieListData = movieListData;
         this.dao = dao;
@@ -56,6 +57,7 @@ public class MovieApi {
 
     String userId = myApplication.getGlobalUserId();
 
+    // Method to search for movies based on a query string
     public void getSearchedMovies(final Callback<List<Movie>> callback, String query) {
         Call<List<Movie>> call = apiService.getSearchedMovies(userId, query);
 
@@ -76,6 +78,7 @@ public class MovieApi {
         });
     }
 
+    // Method to get a list of all movies
     public void getListOfMovies() {
 
         Call<List<Movie>> call = apiService.getMovies(userId);
@@ -103,7 +106,7 @@ public class MovieApi {
         });
     }
 
-
+    // Method to add a new movie along with its image, video, and trailer
     public void add(Movie movieCreate, File imageFile, File videoFile, File trailerFile) {
         RequestBody categoriesRequestBody;
         List<String> categories = movieCreate.getCategories();
@@ -111,7 +114,7 @@ public class MovieApi {
         categoriesRequestBody = RequestBody.create(
                 TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
         );
-
+        // Prepare other fields for the movie as request bodies
         RequestBody name = RequestBody.create(movieCreate.getName(),MediaType.parse("text/plain"));
         RequestBody year = RequestBody.create(String.valueOf(movieCreate.getPublication_year()),MediaType.parse("text/plain"));
         RequestBody time = RequestBody.create(movieCreate.getMovie_time(),MediaType.parse("text/plain") );
@@ -128,6 +131,7 @@ public class MovieApi {
         RequestBody requestFileTrailer = RequestBody.create(trailerFile,MediaType.parse("video/*"));
         MultipartBody.Part trailer = MultipartBody.Part.createFormData("trailer", trailerFile.getName(), requestFileTrailer);
 
+        // Make the API call to create a movie
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, age, image, video, trailer);
 
         call.enqueue(new Callback<Movie>() {
@@ -156,6 +160,7 @@ public class MovieApi {
         });
     }
 
+    // Method to delete a movie by its ID
     public void deleteMovie(String movieId) {
 
         Call<Movie> call = apiService.deleteMovie(movieId, userId);
@@ -176,7 +181,7 @@ public class MovieApi {
         });
 
     }
-
+    // Method to recommend a movie based on a given movie ID
     public void recommend(String movieId, final Callback<List<Movie>> callback) {
         Call<List<Movie>> call = apiService.getRecommendation(userId, movieId);
         call.enqueue(new Callback<List<Movie>>() {
@@ -199,7 +204,7 @@ public class MovieApi {
             }
         });
     }
-
+    // Method to edit an existing movie
     public void edit(String movieId, Movie movieEdit, File imageFile, File videoFile, File trailerFile) {
         RequestBody categoriesRequestBody;
         List<String> categories = movieEdit.getCategories();
@@ -207,7 +212,7 @@ public class MovieApi {
         categoriesRequestBody = RequestBody.create(
                 TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
         );
-
+        // Prepare other fields for the movie as request bodies
         RequestBody name = RequestBody.create(movieEdit.getName(),MediaType.parse("text/plain"));
         RequestBody year = RequestBody.create(String.valueOf(movieEdit.getPublication_year()),MediaType.parse("text/plain"));
         RequestBody time = RequestBody.create(movieEdit.getMovie_time(),MediaType.parse("text/plain") );
@@ -223,6 +228,7 @@ public class MovieApi {
         RequestBody requestFileTrailer = RequestBody.create(trailerFile,MediaType.parse("video/*"));
         MultipartBody.Part trailer = MultipartBody.Part.createFormData("trailer", trailerFile.getName(), requestFileTrailer);
 
+        // Making the network request to edit the movie
         Call<Movie> call = apiService.editMovie(userId,movieId,name, year, time, description,categoriesRequestBody,age, image, video, trailer);
         call.enqueue(new Callback<Movie>() {
             @Override
@@ -248,7 +254,7 @@ public class MovieApi {
             }
         });
     }
-
+    // Function to get a movie by its ID
     public void getMovieById(String id, final Callback<Movie> callback) {
         Call<Movie> call = apiService.getMovieById(userId, id);
         call.enqueue(new Callback<Movie>() {

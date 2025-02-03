@@ -16,6 +16,7 @@ public class NetflixActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set an OnClickListener for the Start button to navigate to LoginActivity
         binding.btnStart.setOnClickListener(v -> {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);

@@ -33,16 +33,16 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             int layoutResource = isSingleChoice ? android.R.layout.simple_list_item_single_choice : android.R.layout.simple_list_item_multiple_choice;
             convertView = LayoutInflater.from(context).inflate(layoutResource, parent, false);
         }
-
+        // Get the current category item
         Category category = categories.get(position);
         TextView categoryNameTextView = convertView.findViewById(android.R.id.text1);
         categoryNameTextView.setTextColor(Color.WHITE);
         categoryNameTextView.setText(category.getName());
 
+        // If it's single-choice, hide the checkbox
         if (isSingleChoice) {
             CheckBox checkBox = convertView.findViewById(android.R.id.checkbox);
 
-            // אם מצב של בחירה אחת, לא צריך להציג את ה-CheckBox
             checkBox.setVisibility(View.GONE);
         }
         return convertView;

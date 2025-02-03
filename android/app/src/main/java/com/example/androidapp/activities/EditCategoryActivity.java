@@ -77,9 +77,8 @@ public class EditCategoryActivity extends AppCompatActivity {
         movieViewModel.get().observe(this,movies -> {
             movieAdapter.setMovies(movies);
         });
-
+        // Set up the edit button for updating the category
         editCategory.setOnClickListener(v-> {
-
             selectCategory.setName(create_nameCategory.getText().toString());
             selectCategory.setIsPromoted(create_isPromotedSwitch.isChecked());
             selectCategory.setMovies(movieAdapter.getSelectedMovieIds());
@@ -94,7 +93,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
     private void showCategorySelectionDialog() {
         selectCategory = new Category();
-
+        // Create and show an AlertDialog for category selection
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Choose category")
                     .setSingleChoiceItems(categoryTitles.toArray(new String[0]), -1, (dialog, which) -> {
@@ -102,6 +101,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                         String selectedCategoryName = categoryTitles.get(which);
                         selectCategoryId = categoryIds.get(which);
 
+                        // Find the category that matches the selected ID
                         for (Category category : allCategories) {
                             if (category.getId().equals(selectCategoryId)) {
                                 selectCategory = category;

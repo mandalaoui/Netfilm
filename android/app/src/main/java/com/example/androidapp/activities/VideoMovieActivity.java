@@ -26,15 +26,25 @@ public class VideoMovieActivity extends AppCompatActivity {
         exoPlayer = new ExoPlayer.Builder(this).build();
         videoMovie.setPlayer(exoPlayer);
 
+        // Get the video URL from the intent's extras
         String videoUrl = getIntent().getStringExtra("videoUrl");
         if (videoUrl != null) {
             Uri videoUri = Uri.parse(videoUrl);
 
             MediaItem mediaItem = MediaItem.fromUri(videoUri);
-
+            // Set the media item to ExoPlayer, prepare it, and start playback
             exoPlayer.setMediaItem(mediaItem);
             exoPlayer.prepare();
             exoPlayer.play();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Release the player when the activity is stopped to prevent memory leaks
+        if (exoPlayer != null) {
+            exoPlayer.release();
         }
     }
 

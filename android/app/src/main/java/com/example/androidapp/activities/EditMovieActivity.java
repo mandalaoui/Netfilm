@@ -86,7 +86,7 @@ public class EditMovieActivity extends AppCompatActivity {
                     }
                     allMovies = movies;
                 });
-
+        // Set up event listener for editing the movie details
         editMovieButton.setOnClickListener(v -> {
             editMovieFunc();
             finish();
@@ -115,6 +115,8 @@ public class EditMovieActivity extends AppCompatActivity {
                 imageCheck.setVisibility(View.VISIBLE);
             }
         });
+
+        // Fetch categories from an external API and display them in a ListView
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
@@ -132,7 +134,7 @@ public class EditMovieActivity extends AppCompatActivity {
             }
         });
     }
-
+    // Show a dialog to select a movie for editing
     private void showMovieSelectionDialog() {
         selectedMovie = new Movie();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -153,6 +155,7 @@ public class EditMovieActivity extends AppCompatActivity {
                 .setCancelable(true)
                 .show();
     }
+    // Handle movie editing functionality
     public void editMovieFunc() {
         File imageFile = null;
         File videoFile = null;
@@ -185,6 +188,7 @@ public class EditMovieActivity extends AppCompatActivity {
         trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
         movieViewModel.edit(selectedMovie.get_id(),movie, imageFile, videoFile, trailerFile);
     }
+    // Handle category data received from API and populate ListView
     public void onCategoriesReceived(List<Category> categories) {
         if (categories == null || categories.isEmpty()) {
             Log.e("Categories", "No categories received.");
@@ -299,6 +303,7 @@ public class EditMovieActivity extends AppCompatActivity {
         }
     }
 
+    // Convert URI to File for uploading
     private File getFileFromUri(Uri uri) {
         try {
             String path = null;

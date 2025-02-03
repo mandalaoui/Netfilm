@@ -34,16 +34,18 @@ public class RegisterActivity extends AppCompatActivity {
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Set up a listener for the back button, navigating to LoginActivity
         binding.btnBack.setOnClickListener(v -> {
             Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(i);
         });
 
+        // Set up a listener for choosing profile picture
         ImageView imageViewProfilePic = findViewById(R.id.imageViewProfilePic);
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
         });
-
+        // Set up a listener for Sign In button
         binding.btnSignIn.setOnClickListener(v -> {
             String username = binding.UserName.getText().toString();
             String password = binding.editPassword.getText().toString();
@@ -55,16 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!password.equals(Verifypassword)) {
                 Toast.makeText(RegisterActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
             } else {
-
+                // If validation passes, create a user object
                 File imageFile = null;
                 if (selectedImageUri != null && !selectedImageUri.isEmpty()) {
                     imageFile = getFileFromUri(Uri.parse(selectedImageUri));
                 }
-
+                // Create User object
                 User user = new User(username, password, nickname);
-
                 UserApi userApi = new UserApi();
-                userApi.registerUser(user,imageFile);
+                userApi.registerUser(user,imageFile);// Register the user via API
                 }
         });
 
@@ -110,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
-
+    // Convert Uri to File object
     private File getFileFromUri(Uri uri) {
         try {
             String path = null;

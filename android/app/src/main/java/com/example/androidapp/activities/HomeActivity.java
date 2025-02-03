@@ -115,11 +115,11 @@ public class HomeActivity extends AppCompatActivity {
         ImageButton adminBtn = binding.admin;
 
         MyApplication myApplication = MyApplication.getInstance();
-        if (myApplication.isAdmin()) {
+//        if (myApplication.isAdmin()) {
             adminBtn.setOnClickListener(v -> showAdminMenu(adminBtn));
-        } else {
-            adminBtn.setVisibility(View.GONE);
-        }
+//        } else {
+//            adminBtn.setVisibility(View.GONE);
+//        }
 
         // Set up the RecyclerView for searched movies
         searchedMovies = binding.searchedMovies;

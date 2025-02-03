@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.adapters.MovieAdapter;
+import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityMovieBinding;
@@ -37,7 +38,6 @@ public class MovieActivity extends AppCompatActivity {
     private TextView tvName, tvYear,tvTime, tvDescription, tvAge;
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
-    private Handler handler = new Handler();
     private Button btnPlay, btnTrailer;
     private List<Movie> recommendedMoviesList = new ArrayList<>();
     MovieListAdapter movieListAdapter;

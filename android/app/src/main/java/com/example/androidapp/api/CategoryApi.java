@@ -40,18 +40,13 @@ public class CategoryApi {
 
     String userId = myApplication.getGlobalUserId();
 
+    // Method to fetch categories from the server and update the local database
     public void getCategories() {
         Call<List<Category>> call = apiService.getAllCategories(userId);
         call.enqueue(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-//                    Log.d("CategoryApi", "Received categories: " + response.body());
-//                    if (response.body() != null && !response.body().isEmpty()) {
-//                        for (Category category : response.body()) {
-//                            Log.d("CategoryApi", "Category: " + category.getName() + "," + category.getMovies());
-//                        }
-//                    }
                     new Thread(() -> {
                         Log.d("CategoryApi", "Thread started");
                         dao.clear();
@@ -70,7 +65,7 @@ public class CategoryApi {
             }
         });
     }
-
+    // Method to add a new category
     public void add(Category category) {
         Call<Category> call = apiService.createCategory(userId, category);
         call.enqueue(new Callback<Category>() {
@@ -95,7 +90,7 @@ public class CategoryApi {
         });
 
     }
-
+    // Method to delete a category
     public void delete (Category category) {
         String categoryId = category.getId();
         Call<Category> call = apiService.deleteCategory(categoryId,userId);
@@ -115,6 +110,7 @@ public class CategoryApi {
         });
     }
 
+    // Method to edit a category
     public void edit(Category category) {
         Call<Category> call = apiService.editCategory(userId, category.getId(), category);
         call.enqueue(new Callback<Category>() {
