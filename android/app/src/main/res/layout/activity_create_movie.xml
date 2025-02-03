@@ -71,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="age"
-                    android:hint="age"
+                    android:hint="@string/age"
                     android:inputType="textMultiLine"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#B0B0B0" />
@@ -91,7 +91,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:fillViewport="true">
-
 
                     <ListView
                         android:id="@+id/categoryListView"
@@ -127,42 +126,24 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:padding="0dp"
-                        android:text="Choose Picture"
+                        android:text="@string/choose_pic"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp" />
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
-
-
-<<<<<<< HEAD
-                <Button
-                    android:id="@+id/btnChooseVideo"
-                    android:layout_width="124dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:padding="0dp"
-                    android:text="Choose video"
-                    android:textColor="@color/colorText"
-                    android:textSize="16sp" />
-=======
                     <ImageView
                         android:id="@+id/checkProfilePic"
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
                         android:layout_marginTop="0dp"
+                        android:layout_marginLeft="5dp"
                         android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
+                        android:visibility="invisible"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center">
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
-
                     <Button
                         android:id="@+id/btnChooseVideo"
                         android:layout_width="106dp"
@@ -171,7 +152,7 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:padding="0dp"
-                        android:text="Choose video"
+                        android:text="@string/choose_video"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp" />
                     <ImageView
@@ -179,11 +160,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginTop="0dp"
+                        android:layout_marginLeft="5dp"
                         android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-
-
+                        android:visibility="invisible"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,7 +178,7 @@
                         android:clickable="true"
                         android:focusable="false"
                         android:padding="0dp"
-                        android:text="Choose trailer"
+                        android:text="@string/choose_trailer"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         app:layout_constraintTop_toBottomOf = "@+id/videoView"/>
@@ -206,9 +187,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="34dp"
                         android:layout_marginTop="0dp"
+                        android:layout_marginLeft="5dp"
                         android:src="@drawable/ic_check"
-                        android:visibility="gone"/>
-
+                        android:visibility="invisible"/>
                 </LinearLayout>
 
                 <Button

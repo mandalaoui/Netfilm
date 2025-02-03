@@ -35,11 +35,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserApi {
     private Retrofit retrofit;
     private ApiService apiService;
-    public UserApi() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                .build();
 
+    // Constructor to initialize Retrofit client with logging interceptor
+    public UserApi() {
+        // Set up Retrofit with Gson converter and base URL from resources
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -51,20 +50,25 @@ public class UserApi {
     MyApplication myApplication = MyApplication.getInstance();
 
     String userId = myApplication.getGlobalUserId();
+
+    // Register a new user with username, password, nickname, and profile image
     public void registerUser(User user,File imageFile) {
+        // Create RequestBody for the user's data and the image
         RequestBody username = RequestBody.create(user.getUsername(), MediaType.parse("text/plain"));
         RequestBody password = RequestBody.create(user.getPassword(), MediaType.parse("text/plain"));
         RequestBody nickname = RequestBody.create(user.getNickname(), MediaType.parse("text/plain"));
 
+        // Handle the image file as MultipartBody
         RequestBody requestFile = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("photo", imageFile.getName(), requestFile);
 
+        // Make the API call to register the user
         Call<User> call = apiService.post(username, password, nickname, imagePart);
         call.enqueue(new Callback<User>() {
 
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
+                // On successful registration, navigate to the LoginActivity
                 if (response.isSuccessful()) {
                     if (response.code() == 201) {
                         Intent i = new Intent(MyApplication.getAppContext(), LoginActivity.class);
@@ -76,27 +80,27 @@ public class UserApi {
                         }
                     }
                 } else {
-
+                    // Handle errors during registration
                     try {
                         if (response.errorBody() != null) {
                             String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
-                            Log.e("UserApi", "Error: " + errorMessage);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("UserApi", "An error occurred");
                     }
                 }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e("UserApi", "Registration failed with error: " + t.getMessage());
-                // Logging the error
                 t.printStackTrace();
             }
         });
     }
+
+    // Log in the user with provided credentials
     public void loginUser(User user) {
+        // Make the API call to log in the user
         Call<LoginResponse> call = apiService.login(user);
         call.enqueue(new Callback<LoginResponse>() {
             @Override
@@ -106,17 +110,16 @@ public class UserApi {
                     if (loginResponse.getToken() != null) {
                         extractDataFromToken(loginResponse.getToken());
 
-                        Toast.makeText(MyApplication.getAppContext(), "User successfully logged in!", Toast.LENGTH_SHORT).show();
-
+                        // Notify the user of successful login and navigate to HomeActivity
                         Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         MyApplication.getAppContext().startActivity(i);
                     }
                 } else if (response.code() == 404) {
-                    Log.d("UserApi", "The user is not in the system ");
+                    // Handle the case where the user is not found
                     Toast.makeText(MyApplication.getAppContext(), "The user is not in the system, please check the login information", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.d("UserApi", "Login error");
+                    // Handle general login error
                     Toast.makeText(MyApplication.getAppContext(), "Login error, please try again", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -127,32 +130,11 @@ public class UserApi {
         });
     }
 
-    public void getCategories(final Callback<List<Category>> callback) {
-        String userid = "6792b52c10a40e0b80dd798d";
-        Call<List<Category>> call = apiService.getAllCategories(userid);
-
-        call.enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onResponse(call, Response.success(response.body()));
-                } else {
-                    callback.onFailure(call, new Throwable("Failed to get categories"));
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                callback.onFailure(call, t);
-            }
-        });
-    }
-
+    // Add a movie to the user's watchlist
     public void addToWatchList(String movieId) {
-        Log.d("API_REQUEST", "userId" + movieId + "userElse");
         Call<User> call = apiService.addToWatchList(userId,movieId);
         call.enqueue(new Callback<User>() {
             public void onResponse(Call<User> call, Response<User> response) {
-
                 if (response.isSuccessful()) {
                     Log.d("UserApi", "add movie to watchList: " + response.body());
                 }  else {
@@ -167,32 +149,24 @@ public class UserApi {
 
     }
 
+    // Extract user-specific data (like user ID and admin status) from JWT token
     public void extractDataFromToken(String token) {
         try {
-            // 1. JWT מבנה: header.payload.signature
+            // Decode the JWT token (header, payload, signature)
             String[] parts = token.split("\\.");
-
-            // 2. הפונקציה מפענחת את ה-payload (החלק השני בטוקן)
             String payload = parts[1];
 
-            // 3. דה-קידוד של ה-payload מ-Base64
+            // Decode the payload from Base64
             String decodedPayload = new String(Base64.decode(payload, Base64.URL_SAFE));
 
-            // 4. המרת ה-payload ל-JSONObject
+            // Convert the payload into a JSON object
             JSONObject jsonPayload = new JSONObject(decodedPayload);
 
-            // 5. חילוץ ה-id וה-isAdmin
+            // Extract user ID and admin status
             MyApplication myApplication = MyApplication.getInstance();
             myApplication.setGlobalUserId(jsonPayload.getString("id"));
             myApplication.setAdmin(jsonPayload.getBoolean("isAdmin"));
-            String userId = jsonPayload.getString("id");
-            boolean isAdmin = jsonPayload.getBoolean("isAdmin");
 
-            // הדפסת הערכים
-            System.out.println("User ID: " + userId);
-            System.out.println("isAdmin: " + isAdmin);
-
-            // כאן אתה יכול להחזיר את המידע או לשמור אותו לשימוש מאוחר יותר
         } catch (Exception e) {
             e.printStackTrace();
         }

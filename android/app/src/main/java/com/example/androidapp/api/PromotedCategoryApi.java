@@ -25,9 +25,12 @@ public class PromotedCategoryApi {
     Retrofit retrofit;
     ApiService apiService;
 
+    // Constructor that initializes the LiveData, DAO, Retrofit, and ApiService
     public PromotedCategoryApi(MutableLiveData<List<PromotedCategory>> categoryListData, PromotedCategoryDao dao) {
         this.categoryListData = categoryListData;
         this.dao = dao;
+
+        // Create a Retrofit instance with the base URL and Gson converter
         retrofit = new Retrofit.Builder()
                 .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,23 +40,18 @@ public class PromotedCategoryApi {
     }
     MyApplication myApplication = MyApplication.getInstance();
     String userId = myApplication.getGlobalUserId();
+
+    // Method to fetch the list of promoted categories from the API
     public void getCategories() {
         Call<List<PromotedCategory>> call = apiService.getCategories(userId);
         call.enqueue(new Callback<List<PromotedCategory>>() {
             @Override
             public void onResponse(Call<List<PromotedCategory>> call, Response<List<PromotedCategory>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("CategoryApi", "Received categories: " + response.body());
-                    if (response.body() != null && !response.body().isEmpty()) {
-                        for (PromotedCategory promotedCategory : response.body()) {
-                            Log.d("CategoryApi", "Category: " + promotedCategory.getCategoryName() + "," + promotedCategory.getMovies());
-                        }
-                    }
+                    // Run this block on a separate thread to avoid blocking the UI thread
                     new Thread(() -> {
-                        Log.d("CategoryApi", "Thread started");
                         dao.clear();
                         dao.insertList(response.body());
-                        Log.d("CategoryApi", "Inserted categories into DB: " + response.body());
                         categoryListData.postValue(dao.index());
                     }).start();
                 }

@@ -86,17 +86,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="48dp"
-<<<<<<< HEAD
-            android:text="Categories↓"
+            android:text="@string/categories"
             android:textColor="@color/colorText"
             android:backgroundTint="@color/colorInput"
             android:strokeColor="@color/colorBackground"
-=======
-            android:text="@string/categories"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#6B6868"
-            android:strokeColor="#000000"
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
             app:layout_scrollFlags="scroll|enterAlways"/>
 
         <androidx.media3.ui.PlayerView
@@ -114,7 +107,6 @@
         android:layout_height="430dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!-- RecyclerView for searched movies -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchedMovies"
         android:layout_width="match_parent"

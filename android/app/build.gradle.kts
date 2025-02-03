@@ -8,7 +8,6 @@ android {
 
     defaultConfig {
         applicationId = "com.example.androidapp"
-//        minSdk = 21
         minSdk = 23
         targetSdk = 35
         versionCode = 1
@@ -34,7 +33,6 @@ android {
     }
     configurations.all {
         resolutionStrategy {
-//            force ("androidx.room:room-compiler:2.5.0")
             force ("com.google.android.material:material:1.9.0")
             force ("androidx.appcompat:appcompat:1.6.0")
         }
@@ -69,6 +67,4 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.6.0")
     implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
-
-
 }

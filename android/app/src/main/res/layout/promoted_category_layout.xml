@@ -20,7 +20,6 @@
             android:background="@color/colorBackground"
             android:padding="16dp">
 
-                <!-- Category title -->
                 <TextView
                     android:id="@+id/categoryTitle"
                     android:layout_width="match_parent"
@@ -32,7 +31,6 @@
                     android:backgroundTint="@color/colorBackground"
                     android:paddingBottom="8dp"/>
 
-        <!--         RecyclerView to show the movies horizontally -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/lstMovies"
                     android:layout_width="match_parent"

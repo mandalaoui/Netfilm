@@ -1,11 +1,4 @@
 services:
-  # tests:
-  #   build:
-  #     context: ./src
-  #     dockerfile: Dockerfile.tests
-  #   stdin_open: true
-  #   tty: true
-  
   server:
     build:
       context: ./server/src
@@ -15,16 +8,6 @@ services:
     stdin_open: true
     tty: true
     command: ["sh", "-c", "./runProject"]
-  
-  # client:
-  #   build:
-  #     context: ./server/src
-  #     dockerfile: Dockerfile.client
-  #   tty: true
-  #   stdin_open: true
-  #   init: true
-  #   container_name: netflix-project
-  #   working_dir: /usr/src/client/myclient
 
   api:
     build:

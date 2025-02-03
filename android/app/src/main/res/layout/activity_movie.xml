@@ -95,9 +95,6 @@
 
             </LinearLayout>
 
-
-            <!--            android:backgroundTint="#6B6868"-->
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPlay"
                 android:layout_width="411dp"
