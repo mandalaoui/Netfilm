@@ -6,27 +6,25 @@ const createMovie = async (req, res) => {
     const image = req.files && req.files.image ? req.files.image[0].path : null;
     const video = req.files && req.files.video ? req.files.video[0].path : null;
     const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
-    const categories = req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId));
-    
-    // let categories = [];
+
+    if(!image || !video || !trailer) {  
+        return res.status(400).json({ error: 'Invalid or missing image, video or trailer' });
+    }
+
+    let categories = [];
+
     if (req.body.categories) {
-        categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+        if (typeof req.body.categories === 'string') {
+            categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+        } else if (Array.isArray(categories)) {
+            categories = req.body.categories;
+        }
     }
     const newMovie = await movieService.createMovie(req.body.name, categories, req.body.movie_time,
         image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
     const location = `/api/movies/${newMovie._id}`;
     res.status(201).location(location).json(newMovie);
 };
-// const createMovie = async (req, res) => {
-//     const image = req.files && req.files.image ? req.files.image[0].path : null;
-//     const video = req.files && req.files.movie ? req.files.movie[0].path : null;
-//     const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
-
-//     const newMovie = await movieService.createMovie(req.body.name, req.body.categories, req.body.movie_time,
-//         image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
-//     const location = `/api/movies/${newMovie._id}`;
-//     res.status(201).location(location).json(newMovie);
-// };
 
 // Function to get movies based on categories for a user.
 const getMovies = async (req, res) => {
@@ -57,10 +55,18 @@ const updateMovie = async (req, res) => {
     const video = req.files && req.files.video ? req.files.video[0].path : null;
     const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
 
+    if(!image || !video || !trailer) {  
+        return res.status(400).json({ error: 'Invalid or missing image, video or trailer' });
+    }
+    
     let categories = [];
     if (req.body.categories) {
-        categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
-    }
+            if (typeof req.body.categories === 'string') {
+                categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
+            } else if (Array.isArray(categories)) {
+                categories = req.body.categories;
+            }
+        }
 
     const movie = await movieService.updateMovie(req.params.id, req.body.name, categories, req.body.movie_time,
         image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
@@ -71,20 +77,6 @@ const updateMovie = async (req, res) => {
     }
     res.status(204).json(movie);
 };
-// const updateMovie = async (req, res) => {
-//     const image = req.files && req.files.image ? req.files.image[0].path : null;
-//     const video = req.files && req.files.movie ? req.files.movie[0].path : null;
-//     const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
-
-//     const movie = await movieService.updateMovie(req.params.id, req.body.name, req.body.categories, req.body.movie_time,
-//         image, req.body.Publication_year, req.body.description, req.body.age, video, trailer);
-
-//     // If no movie is found to update, responds with a 404 error
-//     if (!movie) {
-//         return res.status(404).json({ errors: ['Movie Not Found'] });
-//     }
-//     res.status(204).json();
-// };
 
 // Function to delete a movie by its ID
 const deleteMovie = async (req, res) => {

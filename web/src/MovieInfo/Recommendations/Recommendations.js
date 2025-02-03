@@ -20,7 +20,6 @@ function Recommendations({ movie }) {
                 }
                 // Fetch recommended movies based on current movie's ID
                 const recommendations = await getRecommendations(movie._id);
-   
                 // If recommendations are found, update state, otherwise show error message
                 if (recommendations && recommendations.length > 0) {
                     setRecommendedMovies(recommendations); 

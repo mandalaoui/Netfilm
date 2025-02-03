@@ -4,8 +4,7 @@ const getRecommendations = async (movieId) => {
     return fetch (`http://localhost:12345/api/movies/${movieId}/recommend/`, {
             method: "GET",
             headers: {
-                // "userId": localStorage.getItem('userId'),
-                "userId": "679cd02d76c2bda23f930777",
+                "userId": localStorage.getItem('userId'),
             },
         })
         .then((response) => {

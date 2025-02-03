@@ -18,7 +18,7 @@ function View({ movie }) {
         const handlePlay = () => {
                 const video = document.querySelector('video');
                 if (video) {
-                        video.muted = false;  // Unmute the video
+                        // video.muted = false;  // Unmute the video
                         video.play(); // Start playing the video
                         setIsPlaying(true); // Update state to reflect the video is playing
                 }

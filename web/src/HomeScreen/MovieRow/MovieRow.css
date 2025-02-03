@@ -164,7 +164,8 @@
   position: absolute;
   background-color: var(--top-menu-background);
   top: -50%;
-  width: 60%;
+  width: 80%;
+  max-width: 800px;
   left: 50%;
   transform: translate(-50%, -50%); 
   justify-content: center;

@@ -16,6 +16,9 @@ function EditMovie() {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState({});
+    const [image, setImage] = useState(null);
+    const [video, setVideo] = useState(null);
+    const [trailer, setTrailer] = useState(null);
     const navigate = useNavigate();
 
 
@@ -131,6 +134,45 @@ function EditMovie() {
         navigate('/admin');
     };
 
+    const handleFileChange = (event, setFile) => {
+        const file = event.target.files[0];
+        setFile(file);
+    };
+
+    const validateFiles = () => {
+        const allowedImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        const allowedVideoTypes = ['video/mp4', 'video/avi', 'video/mov', 'video/webm'];
+
+        if (!image) {
+            alert('Please upload an image.');
+            return false;
+        }
+        if (!allowedImageTypes.includes(image.type)) {
+            alert('Invalid image type. Allowed types are JPEG, JPG, PNG.');
+            return false;
+        }
+
+        if (!video) {
+            alert('Please upload a video.');
+            return false;
+        }
+        if (!allowedVideoTypes.includes(video.type)) {
+            alert('Invalid video type. Allowed types are MP4, AVI, MOV, WebM.');
+            return false;
+        }
+
+        if (!trailer) {
+            alert('Please upload a trailer.');
+            return false;
+        }
+        if (!allowedVideoTypes.includes(trailer.type)) {
+            alert('Invalid trailer type. Allowed types are MP4, AVI, MOV, WebM.');
+            return false;
+        }
+
+        return true;
+    };
+
     // Handles form submission for updating a movie
     const handleSubmit = () => {
         const renameFilePath = (filePath, newName) => {
@@ -140,6 +182,10 @@ function EditMovie() {
         const videoFile = document.querySelector('input[id="video"]').files[0];
         const trailerFile = document.querySelector('input[id="trailer"]').files[0];
         const imageFile = document.querySelector('input[id="image"]').files[0];
+
+        if (!validateFiles()) {
+            return;
+        }
 
         const renamedVideo = videoFile ? renameFilePath(videoFile.name, 'video') : null;
         const renamedTrailer = trailerFile ? renameFilePath(trailerFile.name, 'trailer') : null;
@@ -157,7 +203,7 @@ function EditMovie() {
             formData.append("image", imageFile);
         }
         if (renamedVideo) {
-            formData.append("movie", videoFile);
+            formData.append("video", videoFile);
         }
         if (renamedTrailer) {
             formData.append("trailer", trailerFile);
@@ -207,15 +253,15 @@ function EditMovie() {
                         <h3>Current Movie</h3>
                         <div className="input-group">
                             <label>Name:</label>
-                            <span>{currentMovie.name}</span>
+                            <span>{currentMovie ? currentMovie.name : "Loading..."}</span>
                         </div>
                         <div className="input-group">
                             <label>Publication Year:</label>
-                            <span>{currentMovie.Publication_year}</span>
+                            <span>{currentMovie ? currentMovie.Publication_year : "Loading..."}</span>
                         </div>
                         <div className="input-group">
                             <label>Duration:</label>
-                            <span>{currentMovie.movie_time}</span>
+                            <span>{currentMovie ? currentMovie.movie_time  : "Loading..."}</span>
                         </div>
                         <div className="input-group">
                             <label>Age Restriction:</label>
@@ -288,17 +334,32 @@ function EditMovie() {
                         </div>
                         <div className="input-group">
                             <h6>Movie</h6>
-                            <input type="file" id="video" accept="video/*" />
+                            <input 
+                                type="file" 
+                                id="video" 
+                                accept="video/mp4,video/avi,video/mov,video/webm"
+                                onChange={(e) => handleFileChange(e, setVideo)} 
+                            />
                             <p className="error-message-movie" id="video-error">Please upload a movie file.</p>
                         </div>
                         <div className="input-group">
                             <h6>Movie Picture</h6>
-                            <input type="file" id="image" accept="image/*" />
+                            <input 
+                                type="file" 
+                                id="image" 
+                                accept="image/jpeg,image/jpg,image/png" 
+                                onChange={(e) => handleFileChange(e, setImage)}
+                            />
                             <p className="error-message-movie" id="image-error">Please upload a movie picture.</p>
                         </div>
                         <div className="input-group">
                             <h6>Trailer</h6>
-                            <input type="file" id="trailer" accept="video/*" />
+                            <input 
+                                type="file" 
+                                id="trailer" 
+                                accept="video/mp4,video/avi,video/mov,video/webm"
+                                onChange={(e) => handleFileChange(e, setTrailer)}
+                            />
                             <p className="error-message-movie" id="trailer-error">Please upload a trailer file.</p>
                         </div>
                     </div>

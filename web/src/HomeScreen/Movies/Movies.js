@@ -48,7 +48,7 @@ function Movies() {
             }
         };
         fetchCategories();
-    }, [categories, navigate]);
+    }, [categories, categories.Movies, navigate]);
     
     // Fetch user data (specifically watched movies) when the component mounts
     useEffect(() => {

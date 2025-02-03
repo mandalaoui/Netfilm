@@ -63,14 +63,3 @@
         opacity: 1;
     }
 }
-
-.video-player {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    border-radius: 10px;
-}
-
-.video-player::-webkit-media-controls {
-    display: none;
-}

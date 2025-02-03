@@ -42,6 +42,9 @@ export const AllMovies = () => {
                 const allMoviesDetails = await Promise.all(
                     uniqueMovieIds.map(async (movieId) => {
                         const fullMovie = await getMovieById(movieId);
+                        if(!fullMovie) {
+                            return [];
+                        }
                         return fullMovie;
                     })
                 );

@@ -104,7 +104,7 @@ function CreateCategory() {
 
     return (
         <div className="Create-Category-modal-content">
-            <h2>Add Category</h2>
+            <h3>Add Category</h3>
             <div className="input-group-CC">
                 <input
                     type="text"
@@ -114,7 +114,7 @@ function CreateCategory() {
                 />
             </div>
             <div className="input-group-CC">
-                <h7>Promotion</h7>
+                <h2>Promotion</h2>
                 <div className="CC-checkbox">
                     <input
                         type="checkbox"
@@ -124,7 +124,7 @@ function CreateCategory() {
                 </div>
             </div>
             <div className="input-group-CC-add-movie">
-                <h7>Movies</h7>
+                <h2>Movies</h2>
                 <div className="movies-in-category-list">
                     {allMovies.map((movie) => (
                         <div key={movie._id} className="movies-in-category-item">

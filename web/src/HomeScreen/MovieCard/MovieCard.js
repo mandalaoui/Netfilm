@@ -63,7 +63,10 @@ function MovieCard({ movie }) {
                 const fetchedCategories = await Promise.all(
                     movie.categories.map(async (categoryId) => {
                         const category = await getCategoryById(categoryId);
-                        return category.name; // Extract only the name
+                        if (category)
+                            return category.name; // Extract only the name
+                        else
+                            return null;
                     })
                 );
                 setCategories(fetchedCategories);
@@ -71,7 +74,7 @@ function MovieCard({ movie }) {
 
             fetchCategories();
         }
-    }, [movie]);
+    }, [categories, movie]);
 
     return (
         <div className="movie-card">

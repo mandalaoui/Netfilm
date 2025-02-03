@@ -111,7 +111,7 @@ const deleteMovie = (movieId) => {
     })
     .then(response => {
         if (response.status === 204) {
-            // alert("Movie deleted successfully!");
+            alert("Movie deleted successfully!");
             return true; 
         } else {
             return response.json().then(errorData => {

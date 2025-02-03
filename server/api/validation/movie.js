@@ -39,11 +39,6 @@ const validateMovieInput = async (req, res, next) => {
         return res.status(400).json({ error: 'Invalid movie_time format. Must be in HH:MM format (e.g., 13:45)' });
     }
 
-    // Check if 'Publication_year' is provided and is a number
-    // if (!Publication_year || typeof Publication_year !== 'number') {
-    //     return res.status(400).json({ error: 'Invalid or missing Publication_year' });
-    // }
-
     // check Validate 'Publication_year' ,must not be greater than the current year.
     const currentYear = new Date().getFullYear();
     if (Publication_year > currentYear) {
@@ -52,9 +47,6 @@ const validateMovieInput = async (req, res, next) => {
 
     // Check if 'age' is a number if provided
     if (age !== undefined) {
-        // if (typeof age !== 'number') {
-        //     return res.status(400).json({ error: 'Age must be a number' });
-        // }
         if (age > 18) {
             return res.status(400).json({ error: 'Age cannot be greater than 18' });
         }
@@ -85,7 +77,7 @@ const validateMovieInput = async (req, res, next) => {
     // Check if a movie with the exact same fields already exists.
     const existingMovie = await Movie.findOne({
         name,
-        ...(categoriesChange.length > 0 && { categoriesChange: { $all: categoriesChange.sort(), $size: categories.length } }),
+        ...(categoriesChange.length > 0 && { categoriesChange: { $all: categoriesChange.sort(), $size: categoriesChange.length } }),
         movie_time,
         Publication_year,
     });

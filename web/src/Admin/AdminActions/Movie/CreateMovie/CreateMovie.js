@@ -172,7 +172,7 @@ function CreateMovie() {
             formData.append("image", imageFile);
         }
         if (renamedVideo) {
-            formData.append("movie", videoFile);
+            formData.append("video", videoFile);
         }
         if (renamedTrailer) {
             formData.append("trailer", trailerFile);

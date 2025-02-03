@@ -58,8 +58,8 @@ const getCategoryById = (categoryId) => {
         if (response.status === 200) {
             return response.json(); 
         } else {
-            alert(`ID is not available, try another one - ${response.status}`);
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            // alert(`ID is not available, try another one - ${response.status}`);
+            // throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
     })
     .then((data) => {
@@ -114,7 +114,7 @@ const deleteCategory = (categoryId) => {
     })
     .then(response => {
         if (response.status === 204) {
-            // alert("Category deleted successfully");
+            alert("Category deleted successfully");
             return true;
         } else {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);

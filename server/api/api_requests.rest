@@ -58,8 +58,8 @@ DELETE http://localhost:12345/api/movies/:id
 userId: <ID>
 
 ### Get recommendation
-GET http://localhost:12345/api/movies/:id/recommend/ 
-userId: <ID>
+GET http://localhost:12345/api/movies/679cd74d76c2bda23f930c57/recommend/ 
+userId: 679d3e2e76c2bda23f94b6bf
 
 ### Add movie to user's watchlist
 
@@ -130,7 +130,7 @@ Content-Type: application/json
 "password": "123456"
 }
 
-### Get a specific user by ID
+  ### Get a specific user by ID
 
 GET http://localhost:12345/api/users/:id 
 userId: <ID>
