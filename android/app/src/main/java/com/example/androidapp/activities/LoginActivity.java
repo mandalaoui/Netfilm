@@ -2,19 +2,13 @@ package com.example.androidapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.androidapp.entities.User;
 
-import com.example.androidapp.api.LoginResponse;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityLoginBinding;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;

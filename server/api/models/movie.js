@@ -20,7 +20,7 @@ const Movie = new Schema({
     },
     image: {
         type: String,
-        required: true
+        required: false
     },
     Publication_year: {
         type: Number,

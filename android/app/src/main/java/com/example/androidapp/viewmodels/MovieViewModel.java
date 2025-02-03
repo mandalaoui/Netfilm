@@ -1,10 +1,7 @@
 package com.example.androidapp.viewmodels;
 
-import android.app.Application;
-import android.content.Context;
 import android.util.Log;
 
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -28,25 +25,18 @@ public class MovieViewModel extends ViewModel {
         return movies;
     }
 
-    public void deleteMovieById(String movieId) {
-        repository.deleteMovieById(movieId); // קורא למחיקה מתוך ה-Repository
+    public void deleteMovieById(Movie movie) {
+        repository.deleteMovieById(movie);
     }
 
     public void add(Movie movie, File imageFile, File videoFile, File trailerFile) {
         repository.add(movie, imageFile, videoFile, trailerFile);
     }
 
-    public void edit(String movieId,Movie movie, File imageFile, File videoFile) {
-        repository.edit(movieId,movie, imageFile, videoFile);
+    public void edit(String movieId,Movie movie, File imageFile, File videoFile,File trailerFile) {
+        repository.edit(movieId,movie, imageFile, videoFile, trailerFile);
     }
 
-//    public void recommend(String id) {
-//        repository.recommend(id);
-//    }
-//
-//    public void delete(Category category) {
-//        repository.delete(category);
-//    }
 
     public void reload() {
         Log.d("CategoriesViewModel", "Reloading categories...");

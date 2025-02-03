@@ -6,9 +6,7 @@ import com.example.androidapp.entities.Movie;
 import android.content.Context;
 import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.activities.MovieActivity;
-import com.example.androidapp.entities.Movie;
 
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;

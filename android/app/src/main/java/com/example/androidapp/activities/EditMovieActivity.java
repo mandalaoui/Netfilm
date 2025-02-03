@@ -8,36 +8,24 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.androidapp.MovieEditFragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.androidapp.R;
 import com.example.androidapp.adapters.CategoryAdapter;
-import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.api.UserApi;
-import com.example.androidapp.databinding.ActivityDeleteMovieBinding;
 import com.example.androidapp.databinding.ActivityEditMovieBinding;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
@@ -53,27 +41,19 @@ import retrofit2.Response;
 
 public class EditMovieActivity extends AppCompatActivity {
     private ActivityEditMovieBinding binding;
-    private Button editMovie;
-    private RecyclerView recyclerViewMovies;
-
-    private MovieAdapter movieAdapter;
-
     private MovieViewModel movieViewModel;
-    private EditText movieNameInput, movieTimeInput, movieYearInput, movieDescriptionInput;
+    private EditText movieNameInput, movieTimeInput, movieYearInput, movieDescriptionInput, create_age;
     private ListView categoryListView;
-    private ImageView imageViewProfilePic;
-    private VideoView videoView;
-
     private String selectedImageUri;
-    private String selectedVideoUri;
+    private String selectedVideoUri, selectTrailerUri;
     private Button btnChooseImage, btnChooseVideo, editMovieButton, btnChooseMovie;
-    private Movie movieChoose;
     private Uri imageUri, videoUri;
-    private CreateMovieActivity createMovieActivity;
-
+    private ImageView imageCheck, videoCheck, trailerCheck;
     private String selectedMovieId;
     private Movie selectedMovie;
     private List<String> selectedCategories;
+    private List<String> movieTitles, movieIds;
+    private List<Movie> allMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +66,30 @@ public class EditMovieActivity extends AppCompatActivity {
         movieYearInput = binding.movieYearInput;
         movieDescriptionInput = binding.movieDescriptionInput;
         categoryListView = binding.categoryListView;
-        imageViewProfilePic = binding.imageViewProfilePic;
-        videoView = binding.videoView;
         btnChooseImage = binding.btnChooseImage;
         btnChooseVideo = binding.btnChooseVideo;
         editMovieButton = binding.editMovieButton;
         btnChooseMovie = binding.chooseMovieButton;
+        imageCheck = binding.checkProfilePic;
+        videoCheck = binding.checkVideo;
+        trailerCheck = binding.checkTrailer;
+        create_age = binding.movieAgeInput;
+
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
+        movieViewModel.reload();
+        movieViewModel.get().observe(this, movies -> {
+                    movieTitles = new ArrayList<>();
+                    movieIds = new ArrayList<>();
+                    for (Movie movie : movies) {
+                        movieTitles.add(movie.getName());
+                        movieIds.add(movie.get_id());
+                    }
+                    allMovies = movies;
+                });
 
         editMovieButton.setOnClickListener(v -> {
             editMovieFunc();
+            finish();
         });
 
         btnChooseMovie.setOnClickListener(v -> {
@@ -103,18 +98,29 @@ public class EditMovieActivity extends AppCompatActivity {
 
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
+            if(selectedImageUri != null) {
+                videoCheck.setVisibility(View.VISIBLE);
+            }
         });
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
+            if(selectedVideoUri != null) {
+                trailerCheck.setVisibility(View.VISIBLE);
+            }
         });
 
+        binding.btnChooseTrailer.setOnClickListener(v-> {
+            requestPermissionsForTrailer();
+            if(selectTrailerUri != null) {
+                imageCheck.setVisibility(View.VISIBLE);
+            }
+        });
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> categories = response.body();
-                    Log.d("API Response", "Categories received: " + categories.toString());  // לוג לעזרה
                     onCategoriesReceived(categories);
                 } else {
                     Log.e("API Response", "Response error: " + response.message());  // לוג במקרה של בעיה בתשובה
@@ -129,86 +135,38 @@ public class EditMovieActivity extends AppCompatActivity {
 
     private void showMovieSelectionDialog() {
         selectedMovie = new Movie();
-        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-        movieViewModel.reload();
-        movieViewModel.get().observe(this, movies -> {
-            List<String> movieTitles = new ArrayList<>();
-            List<String> movieIds = new ArrayList<>();
-            for (Movie movie : movies) {
-                movieTitles.add(movie.getName());
-                movieIds.add(movie.get_id());
-            }
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Choose movie")
-                    .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
-                        // כאשר נבחר סרט
-                        String selectedMovieName = movieTitles.get(which);
-                        selectedMovieId = movieIds.get(which);
-
-                        for (Movie movie : movies) {
-                            if (movie.get_id().equals(selectedMovieId)) {
-                                selectedMovie = movie;
-                                break;
-                            }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose movie")
+                .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
+                    // כאשר נבחר סרט
+                    String selectedMovieName = movieTitles.get(which);
+                    selectedMovieId = movieIds.get(which);
+                    for (Movie movie : allMovies) {
+                        if (movie.get_id().equals(selectedMovieId)) {
+                            selectedMovie = movie;
+                            break;
                         }
-                        if (selectedMovie != null) {
-                            movieNameInput.setText(selectedMovie.getName());
-                            movieYearInput.setText(String.valueOf(selectedMovie.getPublication_year()));
-                            movieTimeInput.setText(selectedMovie.getMovie_time());
-                            movieDescriptionInput.setText(selectedMovie.getDescription());
-//                            Uri imageUri = Uri.parse(selectedMovie.getImage()); // המרת ה-String ל-Uri
-//                            imageViewProfilePic.setImageURI(imageUri);
-//                            Glide.with(this)
-//                                    .load(Uri.parse("http://10.0.2.2:12345/api/" + selectedMovie.getImage()))
-//                                    .into(imageViewProfilePic);
-//                            Uri videoUri = Uri.parse("http://10.0.2.2:12345/api/" + selectedMovie.getVideo());
-//                            videoView.setVisibility(View.VISIBLE);
-//                            videoView.setVideoURI(videoUri);
-//                            videoView.start();
+                    }
+                    dialog.dismiss();
 
-//                            if (selectedMovie.getCategories() != null) {
-//                                selectedCategories = selectedMovie.getCategories();
-//                            }
-                        }
-
-                        Log.d("EditMovieActivity", "Selected movie ID: " + selectedMovieId);
-                        dialog.dismiss();
-
-                    })
-                    .setCancelable(true)
-                    .show();
-        });
+                })
+                .setCancelable(true)
+                .show();
     }
     public void editMovieFunc() {
         File imageFile = null;
         File videoFile = null;
+        File trailerFile = null;
 
-//        if ( movieNameInput.getText().toString() != null) {
-//            selectedMovie.setName(movieNameInput.getText().toString());
-//        }
-//        if ( movieYearInput.getText().toString() != null) {
-//            int movieYear = Integer.parseInt(movieYearInput.getText().toString());
-//            selectedMovie.setPublication_year(movieYear);
-//        }
-//        if ( movieTimeInput.getText().toString() != null) {
-//            selectedMovie.setMovie_time(movieTimeInput.getText().toString());
-//        }
-//        if ( movieDescriptionInput.getText().toString() != null) {
-//            selectedMovie.setDescription(movieDescriptionInput.getText().toString());
-//        }
-
-//        if (selectedCategories != null) {
-//            selectedMovie.setCategories(selectedCategories);
-//        }
-
-//
         String movieName = movieNameInput.getText().toString();
         String movieYearText = movieYearInput.getText().toString();
+        String age = create_age.getText().toString();
         String movieTime = movieTimeInput.getText().toString();
         String movieDescription = movieDescriptionInput.getText().toString();
         int movieYear = Integer.parseInt(movieYearText);
-        Movie movie = new Movie(movieName, movieYear , movieTime, movieDescription, selectedCategories);
+        int agemovie = Integer.parseInt(age);
+
+        Movie movie = new Movie(movieName, movieYear , movieTime, movieDescription, selectedCategories, agemovie);
 
         if (selectedImageUri == null || selectedImageUri.isEmpty()) {
             Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
@@ -220,22 +178,18 @@ public class EditMovieActivity extends AppCompatActivity {
             return;
         }
         videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
-        movieViewModel.edit(selectedMovieId,movie, imageFile, videoFile);
+        if (selectTrailerUri == null || selectTrailerUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
+        movieViewModel.edit(selectedMovie.get_id(),movie, imageFile, videoFile, trailerFile);
     }
     public void onCategoriesReceived(List<Category> categories) {
-//        public void onCategoriesReceived() {
         if (categories == null || categories.isEmpty()) {
             Log.e("Categories", "No categories received.");
             return;
         }
-        for (Category category : categories) {
-            Log.d("Category", "Category: " + category.getName() + ", ID: " + category.getId());
-        }
-
-
-//        categoriesViewModel.get().observe(this,categories -> {
-//            categoryList = categories;
-//        });
 
         CategoryAdapter adapter = new CategoryAdapter(this, categories, false);
         ListView categoryListView = findViewById(R.id.categoryListView);
@@ -247,18 +201,17 @@ public class EditMovieActivity extends AppCompatActivity {
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
             Category selectedCategory = categories.get(position);
             boolean isChecked = categoryListView.isItemChecked(position);
-            Log.d("Category Clicked", "Category: " + selectedCategory.getName() + ", Checked: " + isChecked);
 
             if (isChecked) {
                 if (selectedCategory.getId() != null) {
                     selectedCategories.add(selectedCategory.getId());
                 } else {
                     Log.e("Error", "Category ID is null for category: " + selectedCategory.getName());
-                }            } else {
+                }
+            } else {
                 selectedCategories.remove(selectedCategory.getId());  // אם בוטלה הבחירה, הסר את ה-ID
             }
 
-            Log.d("Selected Categories", "Selected IDs: " + selectedCategories);
         });
     }
 
@@ -267,6 +220,28 @@ public class EditMovieActivity extends AppCompatActivity {
         intent.setType("video/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickVideoLauncher.launch(intent);
+    }
+    private void openTrailerChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("video/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
+        pickTrailerLauncher.launch(intent);
+    }
+
+    private ActivityResultLauncher<Intent> pickTrailerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri videoUri = result.getData().getData();
+                    selectTrailerUri = videoUri.toString();
+                }
+            });
+
+    private void requestPermissionsForTrailer() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        } else {
+            openTrailerChooser();
+        }
     }
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -285,10 +260,6 @@ public class EditMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectedVideoUri = videoUri.toString();
-                    VideoView videoView = findViewById(R.id.videoView);
-                    videoView.setVisibility(View.VISIBLE);
-                    videoView.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
-                    videoView.start();// Save video URI
                 }
             });
 
@@ -298,7 +269,6 @@ public class EditMovieActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData(); // Get the URI of the selected image
-                    binding.imageViewProfilePic.setImageURI(imageUri);  // Display the image in the ImageView
                     selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
                 }
             });

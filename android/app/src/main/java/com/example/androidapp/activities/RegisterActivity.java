@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,16 +23,6 @@ import com.example.androidapp.databinding.ActivityRegisterBinding;
 
 import java.io.File;
 
-import com.example.androidapp.R;
-import com.example.androidapp.databinding.ActivityRegisterBinding;
-import com.example.androidapp.entities.User;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class RegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityRegisterBinding binding;
@@ -51,10 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
             Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(i);
         });
-        // Initialize AppContext with activity context
-//        AppContext.initialize(this);
 
-        // Image selection for profile picture
         ImageView imageViewProfilePic = findViewById(R.id.imageViewProfilePic);
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
@@ -75,10 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                 File imageFile = null;
                 if (selectedImageUri != null && !selectedImageUri.isEmpty()) {
                     imageFile = getFileFromUri(Uri.parse(selectedImageUri));
-                }
-
-                if (imageFile == null) {
-                    imageFile = getFileFromUri(getDefaultProfilePictureUrl());
                 }
 
                 User user = new User(username, password, nickname);
@@ -156,8 +136,5 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return null;
-    }
-    private Uri getDefaultProfilePictureUrl() {
-        return Uri.parse("android.resource://" + getPackageName() + "/drawable/userdefult");
     }
 }

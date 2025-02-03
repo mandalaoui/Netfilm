@@ -5,15 +5,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
-import androidx.media3.common.C;
 
-//import com.example.androidapp.AppContext;
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.dao.CategoryDao;
-import com.example.androidapp.entities.Movie;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CategoryApi {
     private MutableLiveData<List<Category>> categoryListData;
     private CategoryDao dao;
-//    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 
@@ -50,12 +45,12 @@ public class CategoryApi {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("CategoryApi", "Received categories: " + response.body());
-                    if (response.body() != null && !response.body().isEmpty()) {
-                        for (Category category : response.body()) {
-                            Log.d("CategoryApi", "Category: " + category.getName() + "," + category.getMovies());
-                        }
-                    }
+//                    Log.d("CategoryApi", "Received categories: " + response.body());
+//                    if (response.body() != null && !response.body().isEmpty()) {
+//                        for (Category category : response.body()) {
+//                            Log.d("CategoryApi", "Category: " + category.getName() + "," + category.getMovies());
+//                        }
+//                    }
                     new Thread(() -> {
                         Log.d("CategoryApi", "Thread started");
                         dao.clear();
@@ -65,7 +60,7 @@ public class CategoryApi {
                     }).start();
                 }
                 else {
-                    Log.d("CategoryApi", "Failed to get categories: " + response.message());
+                    Toast.makeText(MyApplication.getAppContext(), "Failed to get categories: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -84,14 +79,10 @@ public class CategoryApi {
                     new Thread(() -> {
                         dao.insert(response.body());
                     }).start();
-
-                    Toast.makeText(MyApplication.getAppContext(), "Category created successfully", Toast.LENGTH_SHORT).show();
-                    Log.d("CategoryApi", "Category created successfully");
                 } else {
-                    Log.e("CategoryApi", "Failed to create category: " + response.message());
+                    Toast.makeText(MyApplication.getAppContext(), "Failed to create category:" + response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
-                        Log.e("Error Response", errorResponse);
+                        Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.errorBody().string(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -99,10 +90,8 @@ public class CategoryApi {
             }
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                Log.e("CategoryApi", "Error: " + t.getMessage());
                 Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
-
         });
 
     }
@@ -116,7 +105,7 @@ public class CategoryApi {
                 if (response.isSuccessful()) {
                     Log.d("CategoryApi", "Category delete successfully");
                 } else {
-                    Log.e("CategoryApi", "Error: " + response.code());
+                    Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -131,13 +120,11 @@ public class CategoryApi {
         call.enqueue(new Callback<Category>() {
             public void onResponse(Call<Category> call, retrofit2.Response<Category> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MyApplication.getAppContext(), "Category update successfully", Toast.LENGTH_SHORT).show();
                     Log.d("CategoryApi", "Category update successfully");
                 } else {
-                    Log.e("CategoryApi", "Failed to update category: " + response.message());
+                    Toast.makeText(MyApplication.getAppContext(), "Failed to update category:" + response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
-                        Log.e("Error Response", errorResponse);
+                        Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.errorBody().string(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

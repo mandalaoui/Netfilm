@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -42,22 +43,14 @@ import retrofit2.Response;
 
 public class CreateMovieActivity extends AppCompatActivity {
     private ActivityCreateMovieBinding binding;
-    private EditText create_movieYearInput;
-    private EditText create_movieTimeInput;
-    private EditText create_movieDescriptionInput, create_age;
-    private EditText movieIdInput;
+    private EditText create_movieYearInput,create_movieDescriptionInput, create_age;
+    private EditText create_movieNameInput, create_movieTimeInput;
     private Button btnCreateMovie;
-    private EditText create_movieNameInput;
     private MovieViewModel movieViewModel;
-    private CategoriesViewModel categoriesViewModel;
-    private CategoryAdapter categoryAdapter;
-    private String selectedImageUri;
-    private String selectedVideoUri, selectTrailerUri, selectMovieUri;
+    private String selectedVideoUri, selectTrailerUri, selectedImageUri;
     private Movie movie;
-    private List<Category> categoryList;
+    private ImageView imageCheck, videoCheck, trailerCheck;
     private List<String> selectedCategories;
-    private MovieAdapter moviesAdapter;
-    private List<Movie> allMovies;
     private ListView categoryListView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,27 +70,35 @@ public class CreateMovieActivity extends AppCompatActivity {
         create_movieTimeInput = binding.movieTimeInput;
         create_movieDescriptionInput = binding.movieDescriptionInput;
         create_age = binding.movieAgeInput;
-//        movieIdInput = binding.movieIdInput;
         btnCreateMovie = binding.createMovieButton;
         categoryListView = binding.categoryListView;
-
+        imageCheck = binding.checkProfilePic;
+        videoCheck = binding.checkVideo;
+        trailerCheck = binding.checkTrailer;
 
         btnCreateMovie.setOnClickListener(v -> {
             createMovie();
         });
         binding.btnChooseImage.setOnClickListener(v -> {
-                requestPermissions();
+            requestPermissions();
+            if(selectedImageUri != null) {
+                imageCheck.setVisibility(View.VISIBLE);
+            }
         });
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
+            if(selectedVideoUri != null) {
+                videoCheck.setVisibility(View.VISIBLE);
+            }
         });
 
         binding.btnChooseTrailer.setOnClickListener(v-> {
             requestPermissionsForTrailer();
+            if(selectTrailerUri != null) {
+                trailerCheck.setVisibility(View.VISIBLE);
+            }
         });
-//        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
-//        categoriesViewModel.reload();
-//        onCategoriesReceived();
+
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
@@ -105,7 +106,6 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Category> categories = response.body();
                     onCategoriesReceived(categories);
-                    Log.d("API Response", "Categories received: " + categories.toString());  // לוג לעזרה
                 } else {
                     Log.e("API Response", "Response error: " + response.message());  // לוג במקרה של בעיה בתשובה
                 }
@@ -118,19 +118,10 @@ public class CreateMovieActivity extends AppCompatActivity {
     }
 
     public void onCategoriesReceived(List<Category> categories) {
-//        public void onCategoriesReceived() {
         if (categories == null || categories.isEmpty()) {
             Log.e("Categories", "No categories received.");
             return;
         }
-        for (Category category : categories) {
-            Log.d("Category", "Category: " + category.getName() + ", ID: " + category.getId());
-        }
-
-
-//        categoriesViewModel.get().observe(this,categories -> {
-//            categoryList = categories;
-//        });
 
         // יצירת ה-Adapter והגדרת ה-ListView
         CategoryAdapter adapter = new CategoryAdapter(this, categories, false);
@@ -151,11 +142,11 @@ public class CreateMovieActivity extends AppCompatActivity {
                     selectedCategories.add(selectedCategory.getId());
                 } else {
                     Log.e("Error", "Category ID is null for category: " + selectedCategory.getName());
-                }            } else {
+                }
+            } else {
                 selectedCategories.remove(selectedCategory.getId());  // אם בוטלה הבחירה, הסר את ה-ID
             }
 
-            Log.d("Selected Categories", "Selected IDs: " + selectedCategories);
         });
     }
 
@@ -201,9 +192,6 @@ public class CreateMovieActivity extends AppCompatActivity {
             }
             trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
             movieViewModel.add(movie, imageFile, videoFile, trailerFile);
-//            RequestApi requestApi = new RequestApi(this);
-//            requestApi.createMovie(movie, imageFile, videoFile);
-
         }
 
     }
@@ -244,10 +232,6 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectedVideoUri = videoUri.toString();
-                    VideoView videoView = findViewById(R.id.videoView);
-                    videoView.setVisibility(View.VISIBLE);
-                    videoView.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
-                    videoView.start();// Save video URI
                 }
             });
 
@@ -256,10 +240,6 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectTrailerUri = videoUri.toString();
-                    VideoView videoViewTrailer = findViewById(R.id.videoViewTrailer);
-                    videoViewTrailer.setVisibility(View.VISIBLE);
-                    videoViewTrailer.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
-                    videoViewTrailer.start();// Save video URI
                 }
             });
 
@@ -269,7 +249,6 @@ public class CreateMovieActivity extends AppCompatActivity {
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData(); // Get the URI of the selected image
-                    binding.imageViewProfilePic.setImageURI(imageUri);  // Display the image in the ImageView
                     selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
                 }
             });

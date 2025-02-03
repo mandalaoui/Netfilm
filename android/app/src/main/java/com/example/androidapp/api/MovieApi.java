@@ -1,15 +1,12 @@
 package com.example.androidapp.api;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
 
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.dao.MovieDao;
@@ -22,14 +19,6 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import com.example.androidapp.entities.Movie;
-import com.example.androidapp.dao.MovieDao;
-import com.example.androidapp.entities.PromotedCategory;
-import com.google.gson.Gson;
-
-import org.json.JSONArray;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,7 +30,6 @@ public class MovieApi {
     private MutableLiveData<List<Movie>> movieListData;
     private MovieDao dao;
 
-//    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 
@@ -101,7 +89,7 @@ public class MovieApi {
                     }).start();
 
                 } else {
-                    Log.e("MovieApi", "Error: " + response.code());
+                    Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -115,7 +103,6 @@ public class MovieApi {
     public void add(Movie movieCreate, File imageFile, File videoFile, File trailerFile) {
         RequestBody categoriesRequestBody;
         List<String> categories = movieCreate.getCategories();
-        Log.d("Categories", categories.toString());
 
         categoriesRequestBody = RequestBody.create(
                 TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
@@ -144,11 +131,9 @@ public class MovieApi {
                     new Thread(() -> {
                         dao.insertMovie(response.body());
                     }).start();
-
-                    Toast.makeText(MyApplication.getAppContext(), "Movie created successfully", Toast.LENGTH_SHORT).show();
                     Log.d("MovieApi", "Movie created successfully");
                 } else {
-                    Log.e("MovieApi", "Failed to create movie: " + response.message());
+                    Toast.makeText(MyApplication.getAppContext(), response.message(), Toast.LENGTH_SHORT).show();
                     try {
                         String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
                         Log.e("Error Response", errorResponse);
@@ -161,7 +146,6 @@ public class MovieApi {
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
                 Log.e("MovieApi", "Error: " + t.getMessage());
-                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -174,7 +158,7 @@ public class MovieApi {
                 if (response.isSuccessful()) {
                     Log.d("MovieApi", "Movie delete successfully");
                 } else {
-                    Log.e("MovieApi", "Error: " + response.code());
+                    Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -191,7 +175,6 @@ public class MovieApi {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("TAG", "onResponse: " + response.body().toString());
                     callback.onResponse(call, Response.success(response.body()));
                 } else {
                     if (response.code() == 404) {
@@ -209,10 +192,9 @@ public class MovieApi {
         });
     }
 
-    public void edit(String movieId, Movie movieEdit, File imageFile, File videoFile) {
+    public void edit(String movieId, Movie movieEdit, File imageFile, File videoFile, File trailerFile) {
         RequestBody categoriesRequestBody;
         List<String> categories = movieEdit.getCategories();
-        Log.d("Categories", categories.toString());
 
         categoriesRequestBody = RequestBody.create(
                 TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
@@ -222,6 +204,7 @@ public class MovieApi {
         RequestBody year = RequestBody.create(String.valueOf(movieEdit.getPublication_year()),MediaType.parse("text/plain"));
         RequestBody time = RequestBody.create(movieEdit.getMovie_time(),MediaType.parse("text/plain") );
         RequestBody description = RequestBody.create(movieEdit.getDescription(),MediaType.parse("text/plain"));
+        RequestBody age = RequestBody.create(String.valueOf(movieEdit.getAge()),MediaType.parse("text/plain"));
 
         RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
@@ -229,19 +212,19 @@ public class MovieApi {
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
-        Log.d("TAG", "edit: " + userId);
-        Call<Movie> call = apiService.editMovie(userId,movieId,name, year, time, description,categoriesRequestBody, image, video);
+        RequestBody requestFileTrailer = RequestBody.create(trailerFile,MediaType.parse("video/*"));
+        MultipartBody.Part trailer = MultipartBody.Part.createFormData("trailer", trailerFile.getName(), requestFileTrailer);
+
+        Call<Movie> call = apiService.editMovie(userId,movieId,name, year, time, description,categoriesRequestBody,age, image, video, trailer);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
                 if (response.isSuccessful()) {
-                    Log.d("MovieApi", "Movie updated successfully " + response.body().toString());
                     new Thread(() -> {
                         dao.update(response.body());
                     }).start();
-                    Toast.makeText(MyApplication.getAppContext(), "Movie update successfully", Toast.LENGTH_SHORT).show();
-                    Log.d("MovieApi", "Movie updated successfully" + response.body().toString());
                 } else {
+                    Toast.makeText(MyApplication.getAppContext(), response.message(), Toast.LENGTH_SHORT).show();
                     try {
                         String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
                         Log.e("Error Response", errorResponse);
@@ -254,36 +237,8 @@ public class MovieApi {
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
                 Log.e("MovieApi", "Error: " + t.getMessage());
-                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
-//    public void recommend(String movieId) {
-//        String userId = "679178e884e6da9a833f5452";
-//        Call<List<Movie>> call = apiService.getRecommendation(userId,movieId);
-//        call.enqueue(new Callback<List<Movie>>() {
-//            @Override
-//            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
-//                if (response.isSuccessful()) {
-//                    new Thread(() -> {
-//                        movieListData.postValue(response.body());
-//                    }).start();
-//                    Log.d("MovieApi", "Movie recommend successfully");
-//                } else {
-//                    if (response.code() == 404) {
-//                        new Thread(() -> {
-//                            movieListData.postValue(null); // במקרה של 404, נתון יהיה null
-//                        }).start();
-//                        Log.e("MovieApi", "Error 404: Resource not found");
-//                    }
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<Movie>> call, Throwable t) {
-//                Log.e("MovieApi", "Error recommend movie: " + t.getMessage());
-//            }
-//        });
-//    }
 }

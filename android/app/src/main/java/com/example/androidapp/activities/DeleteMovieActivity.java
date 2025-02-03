@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityDeleteMovieBinding;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
@@ -28,6 +29,8 @@ public class DeleteMovieActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
 
     private MovieViewModel movieViewModel;
+    private List<Movie> allMovies;
+    private Movie selectedMovie;
 
 
     @Override
@@ -50,6 +53,7 @@ public class DeleteMovieActivity extends AppCompatActivity {
 
         movieViewModel.get().observe(this,movies -> {
             movieAdapter.setMovies(movies);
+            allMovies = movies;
         });
 
         deleteMovie.setOnClickListener(v -> {
@@ -60,19 +64,26 @@ public class DeleteMovieActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             List<String> selectedMovieIds = movieAdapter.getSelectedMovieIds();
+
                             Log.d("DeleteMovie","delete movie" + selectedMovieIds.toString());
                             if (selectedMovieIds.isEmpty()) {
                                 Toast.makeText(DeleteMovieActivity.this, "No movies selected", Toast.LENGTH_SHORT).show();
                             } else {
                                 for (String movieId : selectedMovieIds) {
-                                    movieViewModel.deleteMovieById(movieId); // נמחק סרט לפי ה-ID
+                                    for (Movie movie : allMovies) {
+                                        if (movie.get_id().equals(movieId)) {
+                                            selectedMovie = movie;
+                                            break;
+                                        }
+                                    }
+                                    movieViewModel.deleteMovieById(selectedMovie);
                                 }
                             }
+                            dialog.dismiss();
                         }
                     })
                     .setNegativeButton("No", null)
                     .show();
         });
-
     }
 }

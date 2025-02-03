@@ -30,7 +30,6 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         if (convertView == null) {
             int layoutResource = isSingleChoice ? android.R.layout.simple_list_item_single_choice : android.R.layout.simple_list_item_multiple_choice;
             convertView = LayoutInflater.from(context).inflate(layoutResource, parent, false);
-//            convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
         }
 
         Category category = categories.get(position);

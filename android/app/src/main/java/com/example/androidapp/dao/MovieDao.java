@@ -42,8 +42,8 @@ public interface MovieDao {
     @Update
     void update(Movie... movies);
 //
-//    @Delete
-//    void delete(Movie... movies);
+    @Delete
+    void delete(Movie... movies);
 
     @Query("DELETE FROM Movie")
     void clear();

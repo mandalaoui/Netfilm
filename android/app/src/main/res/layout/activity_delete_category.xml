@@ -8,9 +8,6 @@
     android:background="@color/black"
     tools:context=".activities.DeleteCategory">
 
-    <!-- Spinner להצגת רשימת קטגוריות -->
-
-    <!-- כפתור מחיקה -->
 
     <TextView
         android:id="@+id/deleteCategory"

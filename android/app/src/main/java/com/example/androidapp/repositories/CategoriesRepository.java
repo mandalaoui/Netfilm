@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.CategoryApi;
 import com.example.androidapp.entities.Category;

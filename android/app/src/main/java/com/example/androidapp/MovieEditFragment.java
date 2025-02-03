@@ -1,12 +1,10 @@
 package com.example.androidapp;
 
-import static android.app.Activity.RESULT_OK;
 
 
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,15 +20,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.example.androidapp.activities.CreateMovieActivity;
-import com.example.androidapp.activities.EditMovieActivity;
+
 import com.example.androidapp.adapters.CategoryAdapter;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.entities.Category;
@@ -50,8 +43,7 @@ public class MovieEditFragment extends Fragment {
     private ImageView imageViewProfilePic;
     private VideoView videoView;
 
-    private String selectedImageUri;
-    private String selectedVideoUri;
+    private String selectedImageUri, selectedVideoUri;
     private Button btnChooseImage, btnChooseVideo, createMovieButton;
     private Movie movie;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -152,9 +144,6 @@ public class MovieEditFragment extends Fragment {
             Log.e("Categories", "No categories received.");
             return;
         }
-        for (Category category : categories) {
-            Log.d("Category", "Category: " + category.getName() + ", ID: " + category.getId());
-        }
 
         // יצירת ה-Adapter והגדרת ה-ListView
         CategoryAdapter adapter = new CategoryAdapter(MyApplication.getAppContext(), categories, false);
@@ -167,7 +156,6 @@ public class MovieEditFragment extends Fragment {
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
             Category selectedCategory = categories.get(position);
             boolean isChecked = categoryListView.isItemChecked(position);
-            Log.d("Category Clicked", "Category: " + selectedCategory.getName() + ", Checked: " + isChecked);
 
             if (isChecked) {
                 if (selectedCategory.getId() != null) {
@@ -178,7 +166,6 @@ public class MovieEditFragment extends Fragment {
                 selectedCategories.remove(selectedCategory.getId());  // אם בוטלה הבחירה, הסר את ה-ID
             }
 
-            Log.d("Selected Categories", "Selected IDs: " + selectedCategories);
         });
     }
 
@@ -242,69 +229,3 @@ public class MovieEditFragment extends Fragment {
         return null;
     }
 }
-
-//    private void openVideoChooser() {
-//        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("video/*");
-//        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
-//        pickVideoLauncher.launch(intent);
-//    }
-//    private void openImageChooser() {
-//        Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("image/*");  // Filter only image files
-//        pickImageLauncher.launch(intent); // Waiting for a response from the action
-//    }
-//    private void requestPermissionsForVideo() {
-//        if (ContextCompat.checkSelfPermission(MyApplication.getAppContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(MyApplication.getAppContext(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
-//        } else {
-//            openVideoChooser();
-//        }
-//    }
-//    private ActivityResultLauncher<Intent> pickVideoLauncher =
-//            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-//                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-//                    Uri videoUri = result.getData().getData();
-//                    selectedVideoUri = videoUri.toString();
-//                    videoView.setVisibility(View.VISIBLE);
-//                    videoView.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
-//                    videoView.start();// Save video URI
-//                }
-//            });
-//
-//
-//
-//    private ActivityResultLauncher<Intent> pickImageLauncher =
-//            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-//                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-//                    Uri imageUri = result.getData().getData(); // Get the URI of the selected image
-//                    imageViewProfilePic.setImageURI(imageUri);  // Display the image in the ImageView
-//                    selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
-//                }
-//            });
-//
-//    private void requestPermissions() {
-//        if (ContextCompat.checkSelfPermission(MyApplication.getAppContext(), android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
-//                || ContextCompat.checkSelfPermission(MyApplication.getAppContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, new String[]{
-//                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-//            }, 100);
-//        } else {
-//            openImageChooser();
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == 100) {
-//            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-//                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-//                Toast.makeText(MyApplication.getAppContext(), "Permissions granted!", Toast.LENGTH_SHORT).show();
-//                openImageChooser();
-//            } else {
-//                Toast.makeText(MyApplication.getAppContext(), "Permissions denied!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }

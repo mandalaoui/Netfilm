@@ -12,8 +12,8 @@ router.route('/')
     .post(
         upload.fields([
             { name: 'image', maxCount: 1 }, 
-            { name: 'video', maxCount: 1 }
-            // { name: 'trailer', maxCount: 1 } 
+            { name: 'video', maxCount: 1 },
+            { name: 'trailer', maxCount: 1 } 
         ]), userValidation.validateUserIdHeader, movieValidation.validateMovieInput ,movieController.createMovie)
         // userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 

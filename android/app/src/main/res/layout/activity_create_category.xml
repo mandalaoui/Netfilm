@@ -9,17 +9,6 @@
     tools:context=".activities.CreateCategoryActivity">
 
 
-
-    <!-- RecyclerView -->
-
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:padding="16dp"-->
-<!--        tools:layout_editor_absoluteX="16dp"-->
-<!--        tools:layout_editor_absoluteY="-16dp">-->
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -133,6 +122,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <!--    </RelativeLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

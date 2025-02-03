@@ -70,8 +70,6 @@ public interface ApiService {
             @Path("categoryId") String categoryId,
             @Body Category categoryRequest
     );
-//    @GET("movies")
-//    Call<List<Category>> getCategories(@Header("userId") String userId);
 
     @GET("categories")
     Call<List<Category>> getAllCategories(@Header("userId") String userId);
@@ -88,8 +86,6 @@ public interface ApiService {
 
     @POST("movies/{id}/recommend")
     Call<User> addToWatchList(@Header("userId") String userId, @Path("id") String movieId);
-//    @GET("movies/{id}")
-//    Call<Movie> getMovie (@Header("userId") String userId, @Path("id") String movieId);
 
     @GET("movies/{id}/recommend")
     Call<List<Movie>> getRecommendation (@Header("userId") String userId, @Path("id") String movieId);
@@ -104,8 +100,10 @@ public interface ApiService {
             @Part("movie_time") RequestBody movie_time,
             @Part("description") RequestBody description,
             @Part("categories") RequestBody categories,
+            @Part("age") RequestBody age,
             @Part MultipartBody.Part image,
-            @Part MultipartBody.Part video
+            @Part MultipartBody.Part video,
+            @Part MultipartBody.Part trailer
     );
 
     @DELETE("categories/{categoryId}")

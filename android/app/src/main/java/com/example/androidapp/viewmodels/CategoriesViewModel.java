@@ -1,15 +1,12 @@
 package com.example.androidapp.viewmodels;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.androidapp.entities.Category;
-import com.example.androidapp.entities.PromotedCategory;
 import com.example.androidapp.repositories.CategoriesRepository;
-import com.example.androidapp.repositories.PromotedCategoriesRepository;
 
 import java.util.List;
 
