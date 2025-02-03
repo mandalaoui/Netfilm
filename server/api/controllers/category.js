@@ -31,7 +31,7 @@ const updateCategory = async (req, res, next) => {
     if (!category) {
         return res.status(404).json({ errors: ['Category not found'] });
     }
-    res.status(204).json();
+    res.status(204).json(category);
     next();
 };
 
@@ -41,7 +41,7 @@ const deleteCategory = async (req, res, next) => {
     if (!category) {
         return res.status(404).json({ errors: ['Category not found'] });
     }
-    res.status(204).json();
+    res.status(204).json({});
     next();
 };
 

@@ -13,24 +13,22 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
+
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
 import com.example.androidapp.adapters.CategoryAdapter;
-import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.api.UserApi;
-import com.example.androidapp.databinding.ActivityCreateMovieBinding;
+import com.example.androidapp.databinding.ActivityEditMovieBinding;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
-import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.io.File;
@@ -41,64 +39,82 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CreateMovieActivity extends AppCompatActivity {
-    private ActivityCreateMovieBinding binding;
-    private EditText create_movieYearInput,create_movieDescriptionInput, create_age;
-    private EditText create_movieNameInput, create_movieTimeInput;
-    private Button btnCreateMovie;
+public class EditMovieActivity extends AppCompatActivity {
+    private ActivityEditMovieBinding binding;
     private MovieViewModel movieViewModel;
-    private String selectedVideoUri, selectTrailerUri, selectedImageUri;
-    private Movie movie;
-    private ImageView imageCheck, videoCheck, trailerCheck;
-    private List<String> selectedCategories;
+    private EditText movieNameInput, movieTimeInput, movieYearInput, movieDescriptionInput, create_age;
     private ListView categoryListView;
+    private String selectedImageUri;
+    private String selectedVideoUri, selectTrailerUri;
+    private Button btnChooseImage, btnChooseVideo, editMovieButton, btnChooseMovie;
+    private Uri imageUri, videoUri;
+    private ImageView imageCheck, videoCheck, trailerCheck;
+    private String selectedMovieId;
+    private Movie selectedMovie;
+    private List<String> selectedCategories;
+    private List<String> movieTitles, movieIds;
+    private List<Movie> allMovies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityCreateMovieBinding.inflate(getLayoutInflater());
+        binding = ActivityEditMovieBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        NestedScrollView scrollView = findViewById(R.id.createMovie);
-        scrollView.post(() -> {
-            scrollView.scrollTo(0, 0);
-        });
-
-        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-
-        create_movieNameInput = binding.movieNameInput;
-        create_movieYearInput = binding.movieYearInput;
-        create_movieTimeInput = binding.movieTimeInput;
-        create_movieDescriptionInput = binding.movieDescriptionInput;
-        create_age = binding.movieAgeInput;
-        btnCreateMovie = binding.createMovieButton;
+        movieNameInput = binding.movieNameInput;
+        movieTimeInput = binding.movieTimeInput;
+        movieYearInput = binding.movieYearInput;
+        movieDescriptionInput = binding.movieDescriptionInput;
         categoryListView = binding.categoryListView;
+        btnChooseImage = binding.btnChooseImage;
+        btnChooseVideo = binding.btnChooseVideo;
+        editMovieButton = binding.editMovieButton;
+        btnChooseMovie = binding.chooseMovieButton;
         imageCheck = binding.checkProfilePic;
         videoCheck = binding.checkVideo;
         trailerCheck = binding.checkTrailer;
+        create_age = binding.movieAgeInput;
 
-        btnCreateMovie.setOnClickListener(v -> {
-            createMovie();
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
+        movieViewModel.reload();
+        movieViewModel.get().observe(this, movies -> {
+                    movieTitles = new ArrayList<>();
+                    movieIds = new ArrayList<>();
+                    for (Movie movie : movies) {
+                        movieTitles.add(movie.getName());
+                        movieIds.add(movie.get_id());
+                    }
+                    allMovies = movies;
+                });
+
+        editMovieButton.setOnClickListener(v -> {
+            editMovieFunc();
+            finish();
         });
+
+        btnChooseMovie.setOnClickListener(v -> {
+            showMovieSelectionDialog();
+        });
+
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
             if(selectedImageUri != null) {
-                imageCheck.setVisibility(View.VISIBLE);
+                videoCheck.setVisibility(View.VISIBLE);
             }
         });
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
             if(selectedVideoUri != null) {
-                videoCheck.setVisibility(View.VISIBLE);
+                trailerCheck.setVisibility(View.VISIBLE);
             }
         });
 
         binding.btnChooseTrailer.setOnClickListener(v-> {
             requestPermissionsForTrailer();
             if(selectTrailerUri != null) {
-                trailerCheck.setVisibility(View.VISIBLE);
+                imageCheck.setVisibility(View.VISIBLE);
             }
         });
-
         UserApi apiRequest = new UserApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
@@ -117,25 +133,74 @@ public class CreateMovieActivity extends AppCompatActivity {
         });
     }
 
+    private void showMovieSelectionDialog() {
+        selectedMovie = new Movie();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose movie")
+                .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
+                    // כאשר נבחר סרט
+                    String selectedMovieName = movieTitles.get(which);
+                    selectedMovieId = movieIds.get(which);
+                    for (Movie movie : allMovies) {
+                        if (movie.get_id().equals(selectedMovieId)) {
+                            selectedMovie = movie;
+                            break;
+                        }
+                    }
+                    dialog.dismiss();
+
+                })
+                .setCancelable(true)
+                .show();
+    }
+    public void editMovieFunc() {
+        File imageFile = null;
+        File videoFile = null;
+        File trailerFile = null;
+
+        String movieName = movieNameInput.getText().toString();
+        String movieYearText = movieYearInput.getText().toString();
+        String age = create_age.getText().toString();
+        String movieTime = movieTimeInput.getText().toString();
+        String movieDescription = movieDescriptionInput.getText().toString();
+        int movieYear = Integer.parseInt(movieYearText);
+        int agemovie = Integer.parseInt(age);
+
+        Movie movie = new Movie(movieName, movieYear , movieTime, movieDescription, selectedCategories, agemovie);
+
+        if (selectedImageUri == null || selectedImageUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        imageFile = getFileFromUri(Uri.parse(selectedImageUri));
+        if (selectedVideoUri == null || selectedVideoUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
+        if (selectTrailerUri == null || selectTrailerUri.isEmpty()) {
+            Toast.makeText(EditMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
+        movieViewModel.edit(selectedMovie.get_id(),movie, imageFile, videoFile, trailerFile);
+    }
     public void onCategoriesReceived(List<Category> categories) {
         if (categories == null || categories.isEmpty()) {
             Log.e("Categories", "No categories received.");
             return;
         }
 
-        // יצירת ה-Adapter והגדרת ה-ListView
         CategoryAdapter adapter = new CategoryAdapter(this, categories, false);
         ListView categoryListView = findViewById(R.id.categoryListView);
         categoryListView.setAdapter(adapter);
         categoryListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        // יצירת רשימה עבור ה-IDs שנבחרו
         selectedCategories = new ArrayList<>();
 
         categoryListView.setOnItemClickListener((parent, view, position, id) -> {
             Category selectedCategory = categories.get(position);
             boolean isChecked = categoryListView.isItemChecked(position);
-            Log.d("Category Clicked", "Category: " + selectedCategory.getName() + ", Checked: " + isChecked);
 
             if (isChecked) {
                 if (selectedCategory.getId() != null) {
@@ -150,52 +215,6 @@ public class CreateMovieActivity extends AppCompatActivity {
         });
     }
 
-    private void createMovie() {
-        File imageFile = null;
-        File videoFile = null;
-        File trailerFile = null;
-
-        String movieName = create_movieNameInput.getText().toString();
-        String movieYearText = create_movieYearInput.getText().toString();
-        String movieTime = create_movieTimeInput.getText().toString();
-        String movieDescription = create_movieDescriptionInput.getText().toString();
-        String age = create_age.getText().toString();
-
-        if (movieName.isEmpty() || movieYearText.isEmpty()|| movieTime.isEmpty() || movieDescription.isEmpty()) {
-            Toast.makeText(CreateMovieActivity.this, "All fields are required", Toast.LENGTH_LONG).show();
-        } else if (selectedImageUri == null || selectedImageUri.isEmpty()) {  // אם לא נבחרה תמונה
-            Toast.makeText(CreateMovieActivity.this, "Please select an image for the movie", Toast.LENGTH_LONG).show();
-        }
-        else {
-            try {
-                int agemovie = Integer.parseInt(age);
-                int movieYear = Integer.parseInt(movieYearText);
-                movie = new Movie(movieName,movieYear,movieTime , movieDescription, selectedCategories,agemovie);
-
-            } catch (NumberFormatException e) {
-                Toast.makeText(CreateMovieActivity.this, "Please enter a valid year", Toast.LENGTH_SHORT).show();
-            }
-
-            if (selectedImageUri == null || selectedImageUri.isEmpty()) {
-                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            imageFile = getFileFromUri(Uri.parse(selectedImageUri));
-            if (selectedVideoUri == null || selectedVideoUri.isEmpty()) {
-                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
-            if (selectTrailerUri == null || selectTrailerUri.isEmpty()) {
-                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
-                return;
-            }
-            trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
-            movieViewModel.add(movie, imageFile, videoFile, trailerFile);
-        }
-
-    }
-
     private void openVideoChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         intent.setType("video/*");
@@ -207,6 +226,22 @@ public class CreateMovieActivity extends AppCompatActivity {
         intent.setType("video/*");
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickTrailerLauncher.launch(intent);
+    }
+
+    private ActivityResultLauncher<Intent> pickTrailerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri videoUri = result.getData().getData();
+                    selectTrailerUri = videoUri.toString();
+                }
+            });
+
+    private void requestPermissionsForTrailer() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        } else {
+            openTrailerChooser();
+        }
     }
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -220,26 +255,11 @@ public class CreateMovieActivity extends AppCompatActivity {
             openVideoChooser();
         }
     }
-    private void requestPermissionsForTrailer() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
-        } else {
-            openTrailerChooser();
-        }
-    }
     private ActivityResultLauncher<Intent> pickVideoLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectedVideoUri = videoUri.toString();
-                }
-            });
-
-    private ActivityResultLauncher<Intent> pickTrailerLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                    Uri videoUri = result.getData().getData();
-                    selectTrailerUri = videoUri.toString();
                 }
             });
 
@@ -305,5 +325,4 @@ public class CreateMovieActivity extends AppCompatActivity {
 
         return null;
     }
-
 }

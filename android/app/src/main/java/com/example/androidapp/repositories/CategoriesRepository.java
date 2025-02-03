@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.CategoryApi;
 import com.example.androidapp.entities.Category;
@@ -53,13 +52,20 @@ public class CategoriesRepository {
     public void add (final Category category) {
         api.add(category);
     }
-//
-//    public void delete (final Category category) {
-//        api.delete(category);
-//    }
+    public void edit (final Category category) {
+        new Thread(() -> {
+            dao.update(category);
+        }).start();
+
+        api.edit(category);
+    }
+
+    public void delete (final Category category) {
+        new Thread(() -> dao.delete(category)).start();
+        api.delete(category);
+    }
 
     public void reload () {
-//        api.reload();
         api.getCategories();
     }
 }

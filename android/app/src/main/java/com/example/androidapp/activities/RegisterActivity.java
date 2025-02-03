@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
+
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,20 +23,9 @@ import com.example.androidapp.databinding.ActivityRegisterBinding;
 
 import java.io.File;
 
-import com.example.androidapp.R;
-import com.example.androidapp.databinding.ActivityRegisterBinding;
-import com.example.androidapp.entities.User;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class RegisterActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityRegisterBinding binding;
-
     private String selectedImageUri;
 
     @Override
@@ -49,13 +35,10 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnBack.setOnClickListener(v -> {
-            Intent i = new Intent(RegisterActivity.this, HomeActivity.class);
+            Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(i);
         });
-        // Initialize AppContext with activity context
-//        AppContext.initialize(this);
 
-        // Image selection for profile picture
         ImageView imageViewProfilePic = findViewById(R.id.imageViewProfilePic);
         binding.btnChooseImage.setOnClickListener(v -> {
             requestPermissions();
@@ -76,10 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                 File imageFile = null;
                 if (selectedImageUri != null && !selectedImageUri.isEmpty()) {
                     imageFile = getFileFromUri(Uri.parse(selectedImageUri));
-                }
-
-                if (imageFile == null) {
-                    imageFile = new File(getDefaultProfilePictureUrl());
                 }
 
                 User user = new User(username, password, nickname);
@@ -158,31 +137,4 @@ public class RegisterActivity extends AppCompatActivity {
 
         return null;
     }
-    private String getDefaultProfilePictureUrl() {
-//        try {
-//            // מיקום התמונה בתיקיית res/drawable
-//            InputStream inputStream = context.getResources().openRawResource(R.drawable.userdefault); // תמונה ברירת מחדל
-//            File tempFile = File.createTempFile("defaultProfile", ".jpg", context.getCacheDir());
-//
-//            // כתיבת התמונה לקובץ
-//            FileOutputStream outputStream = new FileOutputStream(tempFile);
-//            byte[] buffer = new byte[1024];
-//            int length;
-//            while ((length = inputStream.read(buffer)) != -1) {
-//                outputStream.write(buffer, 0, length);
-//            }
-//
-//            // סגירת הזרמים
-//            outputStream.flush();
-//            outputStream.close();
-//            inputStream.close();
-//
-//            return tempFile;
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-        return "app/src/main/res/drawable/userdefult.jpg";
-    }
-
 }

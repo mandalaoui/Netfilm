@@ -9,7 +9,6 @@ import androidx.room.TypeConverters;
 
 import java.util.List;
 
-import java.util.List;
 @Entity
 @TypeConverters(ConverterCategory.class)
 public class Category {
@@ -59,6 +58,9 @@ public class Category {
         this.name = name;
         this.isPromoted = isPromoted;
         this.movies = movies;
+    }
+    public Category() {
+
     }
 
     // Setter

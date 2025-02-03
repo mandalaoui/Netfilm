@@ -1,12 +1,10 @@
 package com.example.androidapp.repositories;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.api.MovieApi;
 import com.example.androidapp.dao.MovieDao;
@@ -43,7 +41,6 @@ public class MovieRepository {
             super.onActive();
 
             new Thread(() -> {
-//                categoryListData.postValue(dao.index());
                 List<Movie> movies = dao.index();
                 Log.d("CategoryApi", "Categories loaded from DB: " + movies);
                 postValue(movies);
@@ -55,53 +52,22 @@ public class MovieRepository {
         return movieiListData;
     }
 
-    public void add (final Movie movie, File imageFile, File videoFile) {
-        api.add(movie,imageFile, videoFile);
+    public void add (final Movie movie, File imageFile, File videoFile, File trailerFile) {
+        api.add(movie,imageFile, videoFile, trailerFile);
     }
-//
-//    public void delete (final Category category) {
-//        api.delete(category);
-//    }
+
+    public void edit(String movieId,Movie movie, File imageFile, File videoFile, File trailerFile) {
+        api.edit(movieId, movie, imageFile, videoFile, trailerFile);
+    }
 
     public void reload () {
-//        api.reload();
         api.getListOfMovies();
     }
 
-    public void deleteMovieById(String movieId) {
-//        LocalDatabase.databaseWriteExecutor.execute(() -> {
-        new Thread(() -> dao.deleteMovieById(movieId)).start();
-//        });
-        api.deleteMovie(movieId);
+    public void deleteMovieById(Movie movie) {
+        new Thread(() -> dao.delete(movie)).start();
+        api.deleteMovie(movie.get_id());
     }
-
-
-//    public LiveData<Movie> getMovieById(String id) {
-//        MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
-//        Movie movie = dao.getMovieById(id);
-//        if (movie != null)
-//            movieLiveData.setValue(movie);
-//        else {
-//            api.getMovieById(id, new Callback<Movie>() {
-//                @Override
-//                public void onResponse(Call<Movie> call, Response<Movie> response) {
-//                    if (response.isSuccessful()) {
-//                        movieLiveData.setValue(response.body());
-//                    } else {
-//                        Log.d("MovieRepository", "fail");
-//                        movieLiveData.setValue(null); // או תוכל לשים ערך שגיאה פה
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Movie> call, Throwable t) {
-//                    Log.d("MovieRepository", "failure");
-//                    movieLiveData.setValue(null); // או תוכל לשים ערך שגיאה פה
-//                }
-//            });
-//        }
-//        return movieLiveData;
-//    }
 
     public LiveData<Movie> getMovieById(String id) {
         MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();

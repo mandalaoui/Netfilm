@@ -28,6 +28,7 @@
     <string name="managerCreate_description">description</string>
     <string name="managar_choose_video">Choose Video</string>
     <string name="manager_choose_picture">Choose Picture</string>
+    <string name="managercreate_age">managerCreate_age</string>
     <string name="create_category">Create Category</string>
     <string name="category_name_hint">Enter category name</string>
     <string name="is_promoted">Is Promoted?</string>

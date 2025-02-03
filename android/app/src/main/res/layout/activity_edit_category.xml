@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,42 +7,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".activities.CreateCategoryActivity">
+    tools:context=".activities.EditCategoryActivity">
+
+
+    <Button
+        android:id="@+id/chooseCategoryButton"
+        android:layout_width="235dp"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#FBFAFA"
+        android:text="choose Category"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/categoryNameInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.509" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
+        android:layout_width="135dp"
+        android:layout_height="31dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
-        android:text="@string/create_category"
+        android:text="Edit category"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/categoryNameInput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintVertical_bias="0.039" />
 
     <EditText
         android:id="@+id/categoryNameInput"
-        android:layout_width="394dp"
-        android:layout_height="56dp"
+        android:layout_width="398dp"
+        android:layout_height="46dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="108dp"
-        android:hint="@string/category_name_hint"
+        android:layout_marginTop="156dp"
+        android:hint="Enter category name"
         android:inputType="text"
         android:textColor="#FFFFFF"
         android:textColorHint="#B0B0B0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintHorizontal_bias="0.941"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,59 +71,62 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="112dp"
         android:layout_marginEnd="144dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
-        android:text="@string/is_promoted"
+        android:text="Is Promoted?"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/isPromotedSwitch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.875"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/movieListLabel"
-        android:layout_width="128dp"
-        android:layout_height="33dp"
+        android:layout_width="141dp"
+        android:layout_height="34dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="188dp"
-        android:text="@string/select_movies"
+        android:layout_marginTop="176dp"
+        android:text="Select Movies"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/categoryNameInput" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovies"
-        android:layout_width="391dp"
-        android:layout_height="312dp"
-        android:layout_alignBottom="@+id/createCategoryButton"
+        android:layout_width="392dp"
+        android:layout_height="198dp"
+        android:layout_alignBottom="@+id/editCategoryButton"
         android:layout_alignParentTop="true"
         android:layout_gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movieListLabel"
-        app:layout_constraintVertical_bias="0.173" />
+        app:layout_constraintVertical_bias="0.197" />
 
     <Button
-        android:id="@+id/createCategoryButton"
+        android:id="@+id/editCategoryButton"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:backgroundTint="#A91616"
-        android:text="@string/create_category"
+        android:text="Edit Category"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovies" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovies"
+        app:layout_constraintVertical_bias="0.318" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/isPromotedSwitch"
@@ -116,9 +136,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="end"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/movieListLabel"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

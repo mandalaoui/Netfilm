@@ -113,6 +113,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set up the admin button visibility and actions
         ImageButton adminBtn = binding.admin;
+
         MyApplication myApplication = MyApplication.getInstance();
         if (myApplication.isAdmin()) {
             adminBtn.setOnClickListener(v -> showAdminMenu(adminBtn));
@@ -181,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
                     intent = new Intent(HomeActivity.this, CreateMovieActivity.class);
                     break;
                 case 2:
-                    intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                    intent = new Intent(HomeActivity.this, EditMovieActivity.class);
                     break;
                 case 3:
                     intent = new Intent(HomeActivity.this, DeleteMovieActivity.class);
@@ -190,10 +191,10 @@ public class HomeActivity extends AppCompatActivity {
                     intent = new Intent(HomeActivity.this, CreateCategoryActivity.class);
                     break;
                 case 5:
-                    intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                    intent = new Intent(HomeActivity.this, EditCategoryActivity.class);
                     break;
                 case 6:
-                    intent = new Intent(HomeActivity.this, ManagementActivity.class);
+                    intent = new Intent(HomeActivity.this, DeleteCategory.class);
                     break;
                 default:
                     intent = new Intent(HomeActivity.this, HomeActivity.class);

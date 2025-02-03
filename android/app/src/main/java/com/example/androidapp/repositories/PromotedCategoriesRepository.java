@@ -50,16 +50,8 @@ public class PromotedCategoriesRepository {
         return categoryListData;
     }
 
-//    public void add (final Category category) {
-//        api.add(category);
-//    }
-//
-//    public void delete (final Category category) {
-//        api.delete(category);
-//    }
 
     public void reload () {
-//        api.reload();
         api.getCategories();
     }
 }
