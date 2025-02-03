@@ -39,6 +39,7 @@ public class CategoryApi {
     MyApplication myApplication = MyApplication.getInstance();
 
     String userId = myApplication.getGlobalUserId();
+
     public void getCategories() {
         Call<List<Category>> call = apiService.getAllCategories(userId);
         call.enqueue(new Callback<List<Category>>() {
@@ -71,7 +72,6 @@ public class CategoryApi {
     }
 
     public void add(Category category) {
-
         Call<Category> call = apiService.createCategory(userId, category);
         call.enqueue(new Callback<Category>() {
             public void onResponse(Call<Category> call, retrofit2.Response<Category> response) {

@@ -59,14 +59,13 @@ public class CategoriesRepository {
 
         api.edit(category);
     }
-//
+
     public void delete (final Category category) {
         new Thread(() -> dao.delete(category)).start();
         api.delete(category);
     }
 
     public void reload () {
-//        api.reload();
         api.getCategories();
     }
 }

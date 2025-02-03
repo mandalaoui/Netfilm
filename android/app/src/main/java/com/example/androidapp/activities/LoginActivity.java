@@ -5,10 +5,11 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.androidapp.databinding.ActivityLoginBinding;
 import com.example.androidapp.entities.User;
 
 import com.example.androidapp.api.UserApi;
-import com.example.androidapp.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -17,6 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
 
         binding.btnBack.setOnClickListener(v -> {
@@ -35,13 +37,11 @@ public class LoginActivity extends AppCompatActivity {
             else {
                 Toast.makeText(LoginActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
             }
-
         });
 
         binding.btnSignUp.setOnClickListener(v -> {
             Intent i = new Intent(this, RegisterActivity.class);
             startActivity(i);
         });
-
     }
 }

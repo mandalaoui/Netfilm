@@ -68,13 +68,16 @@ public class MovieApi {
                     callback.onFailure(call, new Throwable("Failed to get searched movies"));
                 }
             }
+
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 callback.onFailure(call, t);
             }
         });
     }
+
     public void getListOfMovies() {
+
         Call<List<Movie>> call = apiService.getMovies(userId);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
@@ -92,6 +95,7 @@ public class MovieApi {
                     Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
                 Log.e("MovieApi", "Error fetching categories: " + t.getMessage());
@@ -114,16 +118,18 @@ public class MovieApi {
         RequestBody description = RequestBody.create(movieCreate.getDescription(),MediaType.parse("text/plain"));
         RequestBody age = RequestBody.create(String.valueOf(movieCreate.getAge()),MediaType.parse("text/plain"));
 
-        RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
+
+        RequestBody requestFileImage = RequestBody.create(imageFile, MediaType.parse("image/*"));
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
 
-        RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
+        RequestBody requestFileMovie = RequestBody.create(videoFile, MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
 
         RequestBody requestFileTrailer = RequestBody.create(trailerFile,MediaType.parse("video/*"));
         MultipartBody.Part trailer = MultipartBody.Part.createFormData("trailer", trailerFile.getName(), requestFileTrailer);
 
         Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, age, image, video, trailer);
+
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
@@ -151,7 +157,8 @@ public class MovieApi {
     }
 
     public void deleteMovie(String movieId) {
-        Call<Movie> call = apiService.deleteMovie(movieId,userId);
+
+        Call<Movie> call = apiService.deleteMovie(movieId, userId);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
@@ -161,6 +168,7 @@ public class MovieApi {
                     Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
                 Log.e("MovieApi", "Error delete movie: " + t.getMessage());
@@ -187,7 +195,7 @@ public class MovieApi {
 
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                callback.onFailure(call,t);
+                callback.onFailure(call, t);
             }
         });
     }
@@ -241,4 +249,27 @@ public class MovieApi {
         });
     }
 
+    public void getMovieById(String id, final Callback<Movie> callback) {
+        Call<Movie> call = apiService.getMovieById(userId, id);
+        call.enqueue(new Callback<Movie>() {
+            @Override
+            public void onResponse(Call<Movie> call, Response<Movie> response) {
+                if (response.isSuccessful()) {
+                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    if (response.code() == 404) {
+                        callback.onFailure(call, new Throwable("Failed to get movies"));
+                    } else {
+                        callback.onFailure(call, new Throwable("Failed to get movies"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Movie> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
 }

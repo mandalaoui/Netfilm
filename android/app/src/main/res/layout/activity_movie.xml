@@ -53,84 +53,119 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/moviePlayer" />
 
-            <TextView
-                android:id="@+id/year"
-                android:layout_width="74dp"
-                android:layout_height="36dp"
-                android:gravity="center"
-                android:text="@string/movie_year"
-                android:textColor="#F8F3F3"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toStartOf="@+id/movieTime"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/movieTime"
-                android:layout_width="98dp"
-                android:layout_height="31dp"
-                android:layout_marginStart="74dp"
-                android:layout_marginTop="-35dp"
-                android:gravity="center"
-                android:textColor="#FFFAFA"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/year"
-                app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/movie_year"
+                    android:textColor="#F8F3F3"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toStartOf="@+id/movieTime" />
 
-            <Button
+                <TextView
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="#6B6868"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/movie_year"
+                    android:textColor="#F8F3F3"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toStartOf="@+id/movieTime" />
+
+                <TextView
+                    android:id="@+id/movieTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="@string/movie_time"
+                    android:textColor="#FFFAFA"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@+id/year"
+                    app:layout_constraintTop_toBottomOf="@id/movieTitle" />
+
+            </LinearLayout>
+
+
+            <!--            android:backgroundTint="#6B6868"-->
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPlay"
                 android:layout_width="411dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#FFFCFC"
-                android:drawableStart="@drawable/ic_play"
-                android:drawablePadding="16dp"
                 android:gravity="center"
                 android:text="@string/movie_play"
-                android:textColor="#0B0A0A"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:cornerRadius="9dp"
+                app:icon="@drawable/ic_play"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/movieDescription"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.85" />
+                app:layout_constraintTop_toBottomOf="@+id/movieTime"
+                app:layout_constraintVertical_bias="0.85"
+                app:rippleColor="?android:attr/colorControlHighlight"
+                android:layout_marginTop="10dp"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTrailer"
-                android:layout_width="match_parent"
+                android:layout_width="411dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="#E91A1A"
-                android:padding="0dp"
-                android:text="Trailer"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:backgroundTint="#A91616"
+                android:gravity="center"
+                android:text="@string/trailer"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="9dp"
+                app:icon="@drawable/ic_trailer"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:iconTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/movieDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movieTime"
+                app:layout_constraintVertical_bias="0.85"
+                app:rippleColor="?android:attr/colorControlHighlight" />
 
             <TextView
                 android:id="@+id/movieDescription"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="65dp"
                 android:padding="10dp"
                 android:textColor="#FAF5F5"
-                android:textSize="15sp"
+                android:textSize="17sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnPlay" />
+                app:layout_constraintTop_toBottomOf="@id/btnTrailer" />
 
             <TextView
                 android:id="@+id/recommendedTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="120dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:background="@android:color/black"
-                android:gravity="center_horizontal"
-                android:padding="0dp"
-                android:text="More Like This"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="@string/more_like_this"
                 android:textColor="#F8F3F3"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -141,8 +176,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewRecommended"
                 android:layout_width="match_parent"
-                android:layout_height="297dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="274dp"
+                android:layout_marginTop="4dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

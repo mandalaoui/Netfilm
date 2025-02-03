@@ -78,11 +78,6 @@
                 android:layout_height="267dp"
                 android:fillViewport="true">
 
-                <!--                    <CheckBox-->
-                <!--                        android:id="@+id/categoryCheckbox"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_marginEnd="16dp"/>-->
                 <ListView
                     android:id="@+id/categoryListView"
                     android:layout_width="wrap_content"

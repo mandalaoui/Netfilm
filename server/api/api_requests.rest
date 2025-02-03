@@ -101,11 +101,11 @@ userId: 679178e884e6da9a833f5452
 ### Create a new category
 
 POST http://localhost:12345/api/categories/ 
-userId: 679178e884e6da9a833f5452
+userId: 6792b52c10a40e0b80dd798d
 Content-Type: application/json
 
 {
-"name": "Child", "isPromoted": true, "movies": []
+"name": "Drama", "isPromoted": true, "movies": []
 }
 
 ### Get a specific category by ID

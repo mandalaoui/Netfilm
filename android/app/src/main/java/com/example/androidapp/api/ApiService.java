@@ -109,4 +109,6 @@ public interface ApiService {
     @DELETE("categories/{categoryId}")
     Call<Category> deleteCategory(@Path("categoryId") String categoryId, @Header("userId") String userId);
 
+    @GET("movies/{id}")
+    Call<Movie> getMovieById (@Header("userId") String userId, @Path("id") String movieId);
 }

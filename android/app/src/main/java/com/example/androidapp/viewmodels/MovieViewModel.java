@@ -37,10 +37,13 @@ public class MovieViewModel extends ViewModel {
         repository.edit(movieId,movie, imageFile, videoFile, trailerFile);
     }
 
-
     public void reload() {
-        Log.d("CategoriesViewModel", "Reloading categories...");
+        Log.d("MovieViewModel", "Reloading movies...");
         repository.reload();
+    }
+
+    public LiveData<Movie> getMovieById (String id) {
+        return repository.getMovieById(id);
     }
 
 }

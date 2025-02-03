@@ -20,7 +20,6 @@ public class Movie implements Serializable {
     private String movie_time;
     private String image;
     private int Publication_year;
-
     private String description;
     private int age;
     private String video;

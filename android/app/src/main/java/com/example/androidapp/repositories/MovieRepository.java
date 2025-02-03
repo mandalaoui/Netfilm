@@ -15,6 +15,10 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MovieRepository {
     private MovieDao dao;
     private MovieListData movieiListData;
@@ -64,6 +68,41 @@ public class MovieRepository {
         new Thread(() -> dao.delete(movie)).start();
         api.deleteMovie(movie.get_id());
     }
+
+    public LiveData<Movie> getMovieById(String id) {
+        MutableLiveData<Movie> movieLiveData = new MutableLiveData<>();
+
+        // נבצע את הקריאה למסד הנתונים על Thread נפרד
+        new Thread(() -> {
+            Movie movie = dao.getMovieById(id); // קריאה למסד הנתונים
+
+            if (movie != null) {
+                movieLiveData.postValue(movie); // אם נמצא, מעדכנים ב-LiveData
+            } else {
+                // אם הסרט לא נמצא במסד, נבצע קריאה ל-API
+                api.getMovieById(id, new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+                        if (response.isSuccessful()) {
+                            movieLiveData.postValue(response.body()); // עדכון עם הסרט שהתקבל
+                        } else {
+                            Log.d("MovieRepository", "API request failed");
+                            movieLiveData.postValue(null); // או לשים ערך שגיאה
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
+                        Log.d("MovieRepository", "API failure");
+                        movieLiveData.postValue(null); // או לשים ערך שגיאה
+                    }
+                });
+            }
+        }).start();
+
+        return movieLiveData;
+    }
+
 }
 
 

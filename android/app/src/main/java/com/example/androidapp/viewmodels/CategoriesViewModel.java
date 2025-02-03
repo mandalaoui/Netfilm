@@ -39,5 +39,4 @@ public class CategoriesViewModel extends ViewModel  {
         Log.d("CategoriesViewModel", "Reloading categories...");
         repository.reload();
     }
-
 }

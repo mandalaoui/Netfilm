@@ -128,7 +128,7 @@ public class UserApi {
     }
 
     public void getCategories(final Callback<List<Category>> callback) {
-        String userid = "679178e884e6da9a833f5452";
+        String userid = "6792b52c10a40e0b80dd798d";
         Call<List<Category>> call = apiService.getAllCategories(userid);
 
         call.enqueue(new Callback<List<Category>>() {

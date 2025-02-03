@@ -18,23 +18,11 @@ public interface MovieDao {
     @Insert
     void insertMovie(Movie movie);
 
-
-//    @Query("SELECT * FROM movies")
-//    LiveData<List<Movie>> getAllMovies();
-
     @Query("DELETE FROM Movie WHERE _id = :movieId")
     void deleteMovieById(String movieId);
 
-//    @Query("SELECT * FROM movies")
-//    List<Movie> index();
-//    @Query("SELECT * FROM movies WHERE _id = :movieId LIMIT 1")
-//    Movie getMovieById(String movieId);
-
     @Query("SELECT * FROM Movie")
     List<Movie> index();
-
-//    @Query("SELECT * FROM movies WHERE id = :id")
-//    Movie getMovieById(String id);
 
     @Insert
     void insert(Movie... movies);
@@ -50,5 +38,8 @@ public interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertList(List<Movie> movies);
+
+    @Query("SELECT * FROM Movie WHERE _id = :movieId")
+    Movie getMovieById(String movieId);
 
 }

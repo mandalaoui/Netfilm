@@ -8,12 +8,11 @@
     android:background="@color/black"
     tools:context=".activities.DeleteCategory">
 
-
     <TextView
         android:id="@+id/deleteCategory"
         android:layout_width="193dp"
         android:layout_height="33dp"
-        android:text="Delete Category"
+        android:text="@string/delete_category"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -23,38 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.045" />
 
-    <!--    <Spinner-->
-<!--        android:id="@+id/categorySpinner"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.182" />-->
-
-<!--    <ScrollView-->
-<!--        android:id="@+id/scrollView"-->
-<!--        android:layout_width="403dp"-->
-<!--        android:layout_height="471dp"-->
-<!--        android:fillViewport="true"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.388"-->
-<!--        tools:layout_editor_absoluteX="4dp">-->
-<!--        &lt;!&ndash;        <CheckBox&ndash;&gt;-->
-<!--        &lt;!&ndash;            android:id="@+id/categoryCheckBox"&ndash;&gt;-->
-<!--        &lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-<!--        &lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--        &lt;!&ndash;            android:layout_marginEnd="16dp" />&ndash;&gt;-->
-<!--        <ListView-->
-<!--            android:id="@+id/categoryListView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="155dp"-->
-<!--            android:layout_marginEnd="0dp"-->
-<!--            android:choiceMode="multipleChoice"-->
-<!--            android:textColor="#FFFFFF"-->
-<!--            app:layout_constraintEnd_toEndOf="parent" />-->
-<!--    </ScrollView>-->
 
     <Button
         android:id="@+id/chooseCategoryButton"
@@ -76,8 +43,8 @@
         android:layout_width="376dp"
         android:layout_height="49dp"
         android:backgroundTint="#FF0000"
-        android:text="Delete Category"
-        android:textSize="18dp"
+        android:text="@string/delete_category"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"

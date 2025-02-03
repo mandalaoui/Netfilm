@@ -13,7 +13,6 @@ import androidx.media3.common.MediaItem;
 public class VideoMovieActivity extends AppCompatActivity {
     private PlayerView videoMovie;
     private ExoPlayer exoPlayer;
-
     private ActivityVideoMovieBinding binding;
 
     @Override
@@ -31,12 +30,11 @@ public class VideoMovieActivity extends AppCompatActivity {
         if (videoUrl != null) {
             Uri videoUri = Uri.parse(videoUrl);
 
-            // שימוש ב- MediaItem מ- androidx.media3.common
-            MediaItem mediaItem = MediaItem.fromUri(videoUri);  // שימוש ב-MediaItem מ-Media3
+            MediaItem mediaItem = MediaItem.fromUri(videoUri);
 
-            exoPlayer.setMediaItem(mediaItem);  // הגדרת הסרטון עבור ExoPlayer
-            exoPlayer.prepare();  // הכנת ExoPlayer לניגון
-            exoPlayer.play();  // הפעלת הסרטון
+            exoPlayer.setMediaItem(mediaItem);
+            exoPlayer.prepare();
+            exoPlayer.play();
         }
     }
 

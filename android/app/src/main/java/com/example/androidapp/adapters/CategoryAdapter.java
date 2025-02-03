@@ -17,6 +17,8 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     private Context context;
     private List<Category> categories;
     private boolean isSingleChoice;
+
+    // Constructor to initialize the adapter with context and categories
     public CategoryAdapter(Context context, List<Category> categories, boolean isSingleChoice) {
         super(context, android.R.layout.simple_list_item_multiple_choice, categories);
         this.context = context;
@@ -24,9 +26,9 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         this.isSingleChoice = isSingleChoice;
     }
 
+    // Method to customize the view for each category item in the list
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // השתמש ב-layout ברירת המחדל עם CheckBox
         if (convertView == null) {
             int layoutResource = isSingleChoice ? android.R.layout.simple_list_item_single_choice : android.R.layout.simple_list_item_multiple_choice;
             convertView = LayoutInflater.from(context).inflate(layoutResource, parent, false);

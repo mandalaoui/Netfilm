@@ -33,10 +33,14 @@ import retrofit2.Response;
 
 public class MovieActivity extends AppCompatActivity {
     private ActivityMovieBinding binding;
-    private TextView tvName, tvYear,tvTime, tvDescription;
+
+    private TextView tvName, tvYear,tvTime, tvDescription, tvAge;
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
-    private Button btnPlay;
+    private Handler handler = new Handler();
+    private Button btnPlay, btnTrailer;
+    private List<Movie> recommendedMoviesList = new ArrayList<>();
+    MovieListAdapter movieListAdapter;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
 
@@ -60,13 +64,30 @@ public class MovieActivity extends AppCompatActivity {
         moviePlayer = binding.moviePlayer;
         btnPlay = binding.btnPlay;
         recyclerView = binding.recyclerViewRecommended;
+        tvAge = binding.age;
+        btnTrailer = binding.btnTrailer;
 
         Intent intent = getIntent();
         tvName.setText(intent.getStringExtra("name"));
         tvName.setTextColor(Color.WHITE);
         tvYear.setText(intent.getStringExtra("Publication_year"));
-        tvTime.setText(intent.getStringExtra("movie_time"));
+
+        String movieTime = intent.getStringExtra("movie_time");
+        String[] timeParts = movieTime.split(":");
+        int hours = 0;
+        int minutes = 0;
+        if (timeParts.length == 2) {
+            hours = Integer.parseInt(timeParts[0]);
+            minutes = Integer.parseInt(timeParts[1]);
+        }
+        String formattedTime = hours + "h " + minutes + "m";
+        tvTime.setText(formattedTime);
+
         tvDescription.setText(intent.getStringExtra("description"));
+        String age = intent.getStringExtra("age") + "+";
+        tvAge.setText(age);
+        Log.d("MovieActivity", "Movie year: " + intent.getStringExtra("Publication_year"));
+        Log.d("MovieActivity", "Movie age: " + intent.getStringExtra("age"));
 
         exoPlayer = new ExoPlayer.Builder(this).build();
         moviePlayer.setPlayer(exoPlayer);
@@ -80,6 +101,7 @@ public class MovieActivity extends AppCompatActivity {
         } else {
             Log.e("MovieActivity", "Video URL is null or empty");
         }
+        String trailerUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("trailer");
 
         btnPlay.setOnClickListener(v -> {
             UserApi userApi = new UserApi();
@@ -93,6 +115,12 @@ public class MovieActivity extends AppCompatActivity {
         recyclerView.setAdapter(movieAdapter);
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
+
+        btnTrailer.setOnClickListener(v -> {
+            Intent i = new Intent(this, VideoMovieActivity.class);
+            i.putExtra("trailerUrl", trailerUrl);
+            startActivity(i);
+        });
 
         MovieApi movieApi = new MovieApi();
         movieApi.recommend(movieId , new Callback<List<Movie>>() {
