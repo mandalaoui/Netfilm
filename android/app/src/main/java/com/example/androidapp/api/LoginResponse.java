@@ -3,7 +3,6 @@ package com.example.androidapp.api;
 import java.util.List;
 
 public class LoginResponse {
-//    private String userId;
     private String token;
     private List<String> errors;
 

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-//import com.example.androidapp.AppContext;
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.PromotedCategory;
@@ -23,7 +22,6 @@ public class PromotedCategoryApi {
 
     private MutableLiveData<List<PromotedCategory>> categoryListData;
     private PromotedCategoryDao dao;
-//    private MyApplication token;
     Retrofit retrofit;
     ApiService apiService;
 

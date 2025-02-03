@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
 import com.example.androidapp.entities.Movie;
 
@@ -21,31 +23,32 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movie> movies;
-//    private OnMovieSelectListener listener;
     private List<String> selectedMovieIds = new ArrayList<>();
 
+    private  Movie choiceMovie;
     private Context context;
+    private boolean isSingleChoice;
 
-    public MovieAdapter(Context context,List<Movie> movies) {
+    // Constructor to initialize the adapter with context and a list of movies
+    public MovieAdapter(Context context,List<Movie> movies, boolean isSingleChoice) {
+
         this.movies = movies;
-//        this.listener = listener;
         this.context = context;
+        this.isSingleChoice = isSingleChoice;
     }
 
+    // Create a new ViewHolder for the RecyclerView item (called when a new item view is needed)
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(this.context)
-                .inflate(R.layout.movie_layout, parent, false);  // אתה יכול לשנות את ה-XML של item_movie
+                .inflate(R.layout.movie_layout, parent, false);
         return new MovieViewHolder(itemView);
     }
 
+    // Bind the data (movie) to the corresponding ViewHolder
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        Log.d("MovieViewModel", "Movies: " + movie.getImage());
-        Log.d("MovieViewModel", "Movies: " + movies.toString());
-
-//        holder.movieTitle.setText(movie.getTitle());
         if (movies != null && !movies.isEmpty()) {
             Glide.with(holder.itemView.getContext())
                     .load("http://10.0.2.2:12345/api/" + movie.getImage())
@@ -53,43 +56,54 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                     .into(holder.moviePoster);
 
         } else {
-            Log.e("MovieViewModel", "No movies available or response is null");
+            Toast.makeText(MyApplication.getAppContext(), "No movies available or response is null", Toast.LENGTH_SHORT).show();
         }
 
+        // Set an OnClickListener for the movie poster to toggle selection state
         holder.moviePoster.setOnClickListener(v -> {
             String movieId = movie.get_id();
-            Log.d("MovieAdapter", "movie ID: " + movieId);
-            if (selectedMovieIds.contains(movieId)) {
-                selectedMovieIds.remove(movieId);
-                Log.d("MovieAdapter", "Deselected movie ID: " + movieId);
-            } else {
+            if (isSingleChoice) {
+                selectedMovieIds.clear();
                 selectedMovieIds.add(movieId);
-                Log.d("MovieAdapter", "Selected movie ID: " + movieId);
+            } else {
+                if (selectedMovieIds.contains(movieId)) {
+                    selectedMovieIds.remove(movieId);
+                    choiceMovie = movie;
+                } else {
+                    selectedMovieIds.add(movieId);
+                }
             }
-
-//            listener.onMovieSelect(movie, selectedMovieIds.contains(movieId));
         });
     }
 
+    // Get the total number of movies to display
     public int getItemCount() {
         return movies.size();
     }
+
+    // Get the list of selected movie IDs
     public List<String> getSelectedMovieIds() {
         return selectedMovieIds;
     }
 
+    public Movie getChoiceMovie(){
+        return choiceMovie;
+    }
+
+    // Update the list of movies and refresh the RecyclerView
     public void setMovies(List<Movie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }
-//    public interface OnMovieSelectListener {
-//        void onMovieSelect(Movie movie, boolean isSelected);
-//    }
+
+
+    // ViewHolder class to represent each movie item view
     static class MovieViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvYear,tvTime, tvDescription;
         ImageButton moviePoster;
         VideoView videoView;
 
+        // Constructor to initialize the views
         public MovieViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.movieTitle);

@@ -84,7 +84,7 @@ const updateMovie = (movieId, formData) => {
         body: formData,
     })
     .then(response => {
-        if (response.status === 204) {
+        if (response.status === 200) {
             alert("Movie updated successfully!");
             return true; 
         } else {

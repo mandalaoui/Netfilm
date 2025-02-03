@@ -25,6 +25,7 @@ const validateMovieInput = async (req, res, next) => {
 
     // Check if 'categories' is an array
     if (!Array.isArray(categoriesChange)) {
+    if (!Array.isArray(categoriesChange)) {
         return res.status(400).json({ error: 'Invalid or missing categories' });
     }
 
@@ -69,6 +70,7 @@ const validateMovieInput = async (req, res, next) => {
 
     // Validate each category ID in the 'categories' array
     for (const categoryId of categoriesChange) {
+    for (const categoryId of categoriesChange) {
         if (!mongoose.Types.ObjectId.isValid(categoryId)) {
             return res.status(400).json({ error: `Invalid category ID: ${categoryId}` });
         }
@@ -77,6 +79,7 @@ const validateMovieInput = async (req, res, next) => {
     // Check if a movie with the exact same fields already exists.
     const existingMovie = await Movie.findOne({
         name,
+        ...(categoriesChange.length > 0 && { categoriesChange: { $all: categoriesChange.sort(), $size: categoriesChange.length } }),
         ...(categoriesChange.length > 0 && { categoriesChange: { $all: categoriesChange.sort(), $size: categoriesChange.length } }),
         movie_time,
         Publication_year,
@@ -89,6 +92,8 @@ const validateMovieInput = async (req, res, next) => {
     }
 
     // Check if the provided categories exist in the database
+    const categoryCheck = await Category.find({ '_id': { $in: categoriesChange } });
+    if (categoryCheck.length !== categoriesChange.length) {
     const categoryCheck = await Category.find({ '_id': { $in: categoriesChange } });
     if (categoryCheck.length !== categoriesChange.length) {
         return res.status(404).json({ error: 'One or more categories do not exist' });

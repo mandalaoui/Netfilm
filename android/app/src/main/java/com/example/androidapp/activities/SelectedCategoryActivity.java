@@ -32,19 +32,24 @@ public class SelectedCategoryActivity extends AppCompatActivity {
         binding = ActivitySelectedCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Get the category name from the Intent and display it
         TextView categoryName = binding.categoryName;
         categoryName.setText(getIntent().getStringExtra("name"));
 
+        // Initialize the MovieViewModel to handle movie data
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
+        // Get the list of movie IDs from the Intent
         ArrayList<String> moviesId = getIntent().getStringArrayListExtra("movies");
 
+        // Set up the RecyclerView to display the movies in a grid layout
         categoryMovies = binding.categoryMovies;
         movieListAdapter = new MovieListAdapter(this);
         categoryMovies.setAdapter(movieListAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         categoryMovies.setLayoutManager(gridLayoutManager);
 
+        // If the list of movie IDs is not null, fetch movie details from the ViewModel
         if (moviesId != null) {
             List<Movie> movieList = new ArrayList<>();
             for (String movieId : moviesId) {
@@ -61,6 +66,7 @@ public class SelectedCategoryActivity extends AppCompatActivity {
             }
         }
 
+        // Set up the back button to navigate back to the home activity
         binding.btnBack.setOnClickListener(v -> {
             Intent i = new Intent(this, HomeActivity.class);
             startActivity(i);

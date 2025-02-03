@@ -3,12 +3,12 @@
 ### Get all movies
 
 GET http://localhost:12345/api/movies/
-userId: 679213ef1cebc10d8c2d7bc3
+userId: <ID>
 
 ### Create a new movie
 
 POST http://localhost:12345/api/movies/
-userId: 6793d58f1ef6aabb4a5638e1
+userId: <ID>
 Content-Type: application/json
 
 {
@@ -28,19 +28,19 @@ userId: <ID>
 
 ### Get a specific movie by ID
 
-GET http://localhost:12345/api/movies/6794d57dc3b3353fd3a318ac
-userId: 6793d58f1ef6aabb4a5638e1
+GET http://localhost:12345/api/movies/:id
+userId: <ID>
 
 ### Get all movie
 
 GET http://localhost:12345/api/movies/allmovies
-userId: 679178e884e6da9a833f5452
+userId: <ID>
 
 ### Update a movie
 
 PUT http://localhost:12345/api/movies/:id
 Content-Type: application/json 
-userId: 6793d58f1ef6aabb4a5638e1
+userId: <ID>
 
 {
 "name": "after change", 
@@ -58,26 +58,26 @@ DELETE http://localhost:12345/api/movies/:id
 userId: <ID>
 
 ### Get recommendation
-GET http://localhost:12345/api/movies/679cd74d76c2bda23f930c57/recommend/ 
-userId: 679d3e2e76c2bda23f94b6bf
+GET http://localhost:12345/api/movies/:id/recommend/ 
+userId: <ID>
 
 ### Add movie to user's watchlist
 
 POST http://localhost:12345/api/movies/:id/recommend/ 
 Content-Type: application/json 
-userId: 679213ef1cebc10d8c2d7bc3
+userId: <ID>
 
 # CATEGORY
 
 ### Get all categories
 
 GET http://localhost:12345/api/categories/ 
-userId: 679178e884e6da9a833f5452
+userId: <ID>
 
 ### Create a new category
 
 POST http://localhost:12345/api/categories/ 
-userId: 6792b52c10a40e0b80dd798d
+userId: <ID>
 Content-Type: application/json
 
 {

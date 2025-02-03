@@ -6,11 +6,12 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity (tableName = "Movie")
 @TypeConverters(ConverterMovie.class)
-public class Movie {
+public class Movie implements Serializable {
     @PrimaryKey
     @NonNull
     private String _id;
@@ -22,6 +23,15 @@ public class Movie {
     private String description;
     private int age;
     private String video;
+    private String trailer;
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
 
     public String getVideo() {
         return video;
@@ -95,35 +105,27 @@ public class Movie {
         return age;
     }
 
-//    public String getId() {
-//        return _id;
-//    }
-//
-//    public void setId(String id) {
-//        this._id = id;
-//    }
 
     @Ignore
     public Movie(String name) {
         this.name = name;
     }
 
-//    public Movie(String id, String name, String movie_time, String image, int publication_year, String description, int age) {
-//        this.id = id;
-//        this.name = name;
-////        this.categories = categories;
-//        this.movie_time = movie_time;
-//        this.image = image;
-//        this.Publication_year = publication_year;
-//        this.description = description;
-//        this.age = age;
-//    }
+
+    public Movie(String name, int publication_year, String movie_time, String description, List<String> categories, int age) {
+        this.name = name;
+        this.movie_time = movie_time;
+        this.description = description;
+        this.Publication_year = publication_year;
+        this.categories = categories;
+        this.age = age;
+    }
 
     public Movie(String name, int publication_year, String movie_time, String description, List<String> categories) {
         this.name = name;
         this.movie_time = movie_time;
         this.description = description;
-        Publication_year = publication_year;
+        this.Publication_year = publication_year;
         this.categories = categories;
     }
     public Movie() {

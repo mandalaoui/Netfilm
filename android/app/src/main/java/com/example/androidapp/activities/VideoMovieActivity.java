@@ -13,7 +13,6 @@ import androidx.media3.common.MediaItem;
 public class VideoMovieActivity extends AppCompatActivity {
     private PlayerView videoMovie;
     private ExoPlayer exoPlayer;
-
     private ActivityVideoMovieBinding binding;
 
     @Override
@@ -27,16 +26,25 @@ public class VideoMovieActivity extends AppCompatActivity {
         exoPlayer = new ExoPlayer.Builder(this).build();
         videoMovie.setPlayer(exoPlayer);
 
+        // Get the video URL from the intent's extras
         String videoUrl = getIntent().getStringExtra("videoUrl");
         if (videoUrl != null) {
             Uri videoUri = Uri.parse(videoUrl);
 
-            // שימוש ב- MediaItem מ- androidx.media3.common
-            MediaItem mediaItem = MediaItem.fromUri(videoUri);  // שימוש ב-MediaItem מ-Media3
+            MediaItem mediaItem = MediaItem.fromUri(videoUri);
+            // Set the media item to ExoPlayer, prepare it, and start playback
+            exoPlayer.setMediaItem(mediaItem);
+            exoPlayer.prepare();
+            exoPlayer.play();
+        }
+    }
 
-            exoPlayer.setMediaItem(mediaItem);  // הגדרת הסרטון עבור ExoPlayer
-            exoPlayer.prepare();  // הכנת ExoPlayer לניגון
-            exoPlayer.play();  // הפעלת הסרטון
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Release the player when the activity is stopped to prevent memory leaks
+        if (exoPlayer != null) {
+            exoPlayer.release();
         }
     }
 

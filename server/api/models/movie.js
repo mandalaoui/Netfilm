@@ -20,7 +20,7 @@ const Movie = new Schema({
     },
     image: {
         type: String,
-        required: true
+        required: false
     },
     Publication_year: {
         type: Number,
@@ -34,22 +34,14 @@ const Movie = new Schema({
         type: String,
         required: false
     },
-    video: {
-        type: String,
-        required: true
-    },
     trailer: {
         type: String,
         required: true
+    },
+    age: {
+        type: Number,
+        required: false
     }
-    // trailer: {
-    //     type: String,
-    //     required: false
-    // },
-    // age: {
-    //     type: Number,
-    //     required: false
-    // }
 });
 
 // Export the Movie model using the schema defined above

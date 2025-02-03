@@ -21,6 +21,7 @@ public class PromotedCategoriesRepository {
     private CategoryListData categoryListData;
     private PromotedCategoryApi api;
 
+    // Constructor initializes the repository by setting up the local database, API, and LiveData
     public PromotedCategoriesRepository() {
         LocalDatabase db = LocalDatabase.getInstance(MyApplication.getAppContext());
         dao = db.promotedCategoryDao();
@@ -28,16 +29,18 @@ public class PromotedCategoriesRepository {
         api = new PromotedCategoryApi(categoryListData, dao);
     }
 
+    // Inner class that extends MutableLiveData to hold the list of promoted categories
     class CategoryListData extends MutableLiveData<List<PromotedCategory>> {
         public CategoryListData () {
             super();
             setValue(new LinkedList<>());
         }
 
+        // This method is called when the LiveData becomes active (i.e., when observers are registered)
         @Override
         protected void onActive() {
             super.onActive();
-
+            // Perform background task to load promoted categories from the local database
             new Thread(() -> {
                 List<PromotedCategory> categories = dao.index();
                 Log.d("PromotedCategoryApi", "Categories loaded from DB: " + categories);
@@ -46,20 +49,13 @@ public class PromotedCategoriesRepository {
         }
     }
 
+    // Method to get the LiveData object that holds the list of promoted categories
     public LiveData<List<PromotedCategory>> getAll() {
         return categoryListData;
     }
 
-//    public void add (final Category category) {
-//        api.add(category);
-//    }
-//
-//    public void delete (final Category category) {
-//        api.delete(category);
-//    }
-
+    // Method to reload the promoted categories by fetching them from the remote API
     public void reload () {
-//        api.reload();
         api.getCategories();
     }
 }

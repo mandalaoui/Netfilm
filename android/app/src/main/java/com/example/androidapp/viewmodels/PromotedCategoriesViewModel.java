@@ -25,13 +25,6 @@ public class PromotedCategoriesViewModel extends ViewModel {
         return categories;
     }
 
-//    public void add(Category category) {
-//        repository.add(category);
-//    }
-//
-//    public void delete(Category category) {
-//        repository.delete(category);
-//    }
 
     public void reload() {
         Log.d("PromotedCategoriesViewModel", "Reloading categories...");

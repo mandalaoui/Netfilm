@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidapp.adapters.MovieAdapter;
 import com.example.androidapp.databinding.ActivityDeleteMovieBinding;
+import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
@@ -24,13 +25,13 @@ public class DeleteMovieActivity extends AppCompatActivity {
     private ActivityDeleteMovieBinding binding;
     private Button deleteMovie;
 
-    private RecyclerView recyclerViewMovies;
     private MovieAdapter movieAdapter;
-
     private MovieViewModel movieViewModel;
+    private List<Movie> allMovies;
+    private List<String> movieTitles, movieIds;
+    private Movie selectedMovie;
 
-
-
+    private String selectedMovieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +41,25 @@ public class DeleteMovieActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         deleteMovie = binding.deleteMovieButton;
-        recyclerViewMovies = binding.recyclerViewMovies;
 
-        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>());
-        recyclerViewMovies.setAdapter(movieAdapter);
-
+        // Setting up the ViewModel to observe the movies
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
         movieViewModel.reload();
-
-
-        movieViewModel.get().observe(this,movies -> {
-            movieAdapter.setMovies(movies);
+        movieViewModel.get().observe(this, movies -> {
+            movieTitles = new ArrayList<>();
+            movieIds = new ArrayList<>();
+            for (Movie movie : movies) {
+                movieTitles.add(movie.getName());
+                movieIds.add(movie.get_id());
+            }
+            allMovies = movies;
+        });
+        // Set up the click listener for the "Choose Movie" button to show the movie selection dialog
+        binding.chooseMovieButton.setOnClickListener(v -> {
+            showMovieSelectionDialog();
         });
 
+        // Set up the click listener for the "Delete Movie" button to confirm and delete the movie
         deleteMovie.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                     .setTitle("Delete")
@@ -61,25 +67,33 @@ public class DeleteMovieActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            List<String> selectedMovieIds = movieAdapter.getSelectedMovieIds();
-                            Log.d("DeleteMovie","delete movie" + selectedMovieIds.toString());
-                            if (selectedMovieIds.isEmpty()) {
-                                Toast.makeText(DeleteMovieActivity.this, "No movies selected", Toast.LENGTH_SHORT).show();
-                            } else {
-                                for (String movieId : selectedMovieIds) {
-                                    movieViewModel.deleteMovieById(movieId); // נמחק סרט לפי ה-ID
-                                }
-                            }
+                            // Call ViewModel to delete the selected movie by ID
+                            movieViewModel.deleteMovieById(selectedMovie);
+
+                            dialog.dismiss();
                         }
                     })
                     .setNegativeButton("No", null)
                     .show();
         });
-
     }
-
-    private void onMovieSelected(Movie movie, boolean isSelected) {
-        // כאן תוכל להוסיף אם יש צורך בפעולות נוספות כשהסרט נבחר או לא נבחר
-        // לדוגמה, תוכל להדפיס לוג או לעדכן את רשימת הסרטים שנבחרו
+    // Method to display the movie selection dialog
+    private void showMovieSelectionDialog() {
+        selectedMovie = new Movie();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose movie")
+                .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
+                    String selectedMovieName = movieTitles.get(which);
+                    selectedMovieId = movieIds.get(which);
+                    for (Movie movie : allMovies) {
+                        if (movie.get_id().equals(selectedMovieId)) {
+                            selectedMovie = movie;
+                            break;
+                        }
+                    }
+                    dialog.dismiss();
+                })
+                .setCancelable(true)
+                .show();
     }
 }

@@ -10,6 +10,7 @@ import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.dao.CategoryDao;
 import com.example.androidapp.dao.PromotedCategoryDao;
 
+
 @Database(entities = {PromotedCategory.class, Movie.class, Category.class}, version = 8)
 @TypeConverters(ConverterMovie.class)
 public abstract class LocalDatabase extends RoomDatabase {

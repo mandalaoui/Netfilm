@@ -75,7 +75,7 @@ const updateMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json(movie);
+    res.status(200).json(movie);
 };
 
 // Function to delete a movie by its ID
@@ -86,7 +86,7 @@ const deleteMovie = async (req, res) => {
     if (!movie) {
         return res.status(404).json({ errors: ['Movie Not Found'] });
     }
-    res.status(204).json({});
+    res.status(204).json(movie);
 };
 
 // Function to search for movies using a query parameter.

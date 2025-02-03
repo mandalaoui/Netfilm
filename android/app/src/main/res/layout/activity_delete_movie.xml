@@ -13,27 +13,36 @@
         android:layout_width="121dp"
         android:layout_height="37dp"
         android:layout_gravity="center_horizontal"
+<<<<<<< HEAD
         android:text="delete movie"
         android:textColor="@color/colorText"
+=======
+        android:layout_marginTop="16dp"
+        android:text="@string/delete_movie"
+        android:textColor="#FFFFFF"
+>>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerViewMovies"
+        app:layout_constraintBottom_toTopOf="@+id/chooseMovieButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.528" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewMovies"
-        android:layout_width="match_parent"
-        android:layout_height="527dp"
-        android:layout_alignBottom="@+id/deleteMovieButton"
+    <Button
+        android:id="@+id/chooseMovieButton"
+        android:layout_width="376dp"
+        android:layout_height="49dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Choose Movie"
+        android:textColor="@color/black"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="0.542"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.367" />
+        app:layout_constraintVertical_bias="0.102" />
 
     <Button
         android:id="@+id/deleteMovieButton"
@@ -42,8 +51,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
+<<<<<<< HEAD
         android:backgroundTint="@color/colorSubmitDarkButton"
         android:text="Delete Movie"
+=======
+        android:backgroundTint="#A91616"
+        android:text="@string/delete_movie"
+>>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"

@@ -17,7 +17,6 @@ public class PromotedCategory {
     @Ignore
     public PromotedCategory(String categoryName, List<Movie> movies) {
         this.categoryName = categoryName;
-//        this.movies = movies;
     }
 
     @Ignore
