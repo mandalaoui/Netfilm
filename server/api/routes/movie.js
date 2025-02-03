@@ -24,8 +24,8 @@ router.route('/:id')
     .get(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieController.getMovie)
     .put( upload.fields([
         { name: 'image', maxCount: 1 }, 
-        { name: 'video', maxCount: 1 }
-        // { name: 'trailer', maxCount: 1 } 
+        { name: 'video', maxCount: 1 },
+        { name: 'trailer', maxCount: 1 }
     ]),userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieValidation.validateMovieInput, recommendcontroller.deleteMovie, movieController.updateMovie)
     .delete(userValidation.validateUserIdHeader, movieValidation.validateMovieId, recommendcontroller.deleteMovie, movieController.deleteMovie);
 

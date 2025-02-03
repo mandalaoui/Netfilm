@@ -43,9 +43,11 @@ public interface ApiService {
             @Part("movie_time") RequestBody movie_time,
             @Part("description") RequestBody description,
             @Part("categories") RequestBody categories,
+            @Part("age") RequestBody age,
             @Part MultipartBody.Part image,
-            @Part MultipartBody.Part video
-    );
+            @Part MultipartBody.Part video,
+            @Part MultipartBody.Part trailer
+            );
 
     @GET("movies/{movieId}")
     Call<Movie> getMovie(@Path("movieId") String movieId, @Header("userId") String userId);

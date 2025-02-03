@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 
 
 // Function to create a new movie and add it to the relevant categories.
-const createMovie = async (name, categories, movie_time, image, Publication_year, description, video) => {
-    const movie = new Movie({ name, categories, movie_time, image, Publication_year, description, video });
+const createMovie = async (name, categories, movie_time, image, Publication_year, description, video, age,trailer) => {
+    const movie = new Movie({ name, categories, movie_time, image, Publication_year, description, video ,age,trailer});
 
     // Add the movie to each category's movie list
     for (const categoryId of categories) {
@@ -71,7 +71,7 @@ const getMoviesByCategories = async (userId) => {
  };
 
 // Function to update an existing movie's details
-const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description,videoUrl, age) => {
+const updateMovie = async (id, name, categories, movie_time, image, Publication_year, description,videoUrl, age, trailer) => {
     const movie = await getMovieById(id);
     if (!movie) return null;
 
@@ -102,6 +102,7 @@ const updateMovie = async (id, name, categories, movie_time, image, Publication_
     movie.description = description;
     movie.age = age;
     movie.videoUrl = videoUrl;
+    movie.trailer = trailer;
 
     // Add the movie to the new categories
     for (const categoryId of categories) {

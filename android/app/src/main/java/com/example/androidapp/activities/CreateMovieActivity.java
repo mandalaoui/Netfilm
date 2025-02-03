@@ -44,7 +44,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     private ActivityCreateMovieBinding binding;
     private EditText create_movieYearInput;
     private EditText create_movieTimeInput;
-    private EditText create_movieDescriptionInput;
+    private EditText create_movieDescriptionInput, create_age;
     private EditText movieIdInput;
     private Button btnCreateMovie;
     private EditText create_movieNameInput;
@@ -52,7 +52,7 @@ public class CreateMovieActivity extends AppCompatActivity {
     private CategoriesViewModel categoriesViewModel;
     private CategoryAdapter categoryAdapter;
     private String selectedImageUri;
-    private String selectedVideoUri;
+    private String selectedVideoUri, selectTrailerUri, selectMovieUri;
     private Movie movie;
     private List<Category> categoryList;
     private List<String> selectedCategories;
@@ -76,6 +76,7 @@ public class CreateMovieActivity extends AppCompatActivity {
         create_movieYearInput = binding.movieYearInput;
         create_movieTimeInput = binding.movieTimeInput;
         create_movieDescriptionInput = binding.movieDescriptionInput;
+        create_age = binding.movieAgeInput;
 //        movieIdInput = binding.movieIdInput;
         btnCreateMovie = binding.createMovieButton;
         categoryListView = binding.categoryListView;
@@ -84,13 +85,15 @@ public class CreateMovieActivity extends AppCompatActivity {
         btnCreateMovie.setOnClickListener(v -> {
             createMovie();
         });
-
-
         binding.btnChooseImage.setOnClickListener(v -> {
-            requestPermissions();
+                requestPermissions();
         });
         binding.btnChooseVideo.setOnClickListener(v -> {
             requestPermissionsForVideo();
+        });
+
+        binding.btnChooseTrailer.setOnClickListener(v-> {
+            requestPermissionsForTrailer();
         });
 //        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
 //        categoriesViewModel.reload();
@@ -159,12 +162,13 @@ public class CreateMovieActivity extends AppCompatActivity {
     private void createMovie() {
         File imageFile = null;
         File videoFile = null;
+        File trailerFile = null;
 
         String movieName = create_movieNameInput.getText().toString();
         String movieYearText = create_movieYearInput.getText().toString();
         String movieTime = create_movieTimeInput.getText().toString();
         String movieDescription = create_movieDescriptionInput.getText().toString();
-
+        String age = create_age.getText().toString();
 
         if (movieName.isEmpty() || movieYearText.isEmpty()|| movieTime.isEmpty() || movieDescription.isEmpty()) {
             Toast.makeText(CreateMovieActivity.this, "All fields are required", Toast.LENGTH_LONG).show();
@@ -173,8 +177,9 @@ public class CreateMovieActivity extends AppCompatActivity {
         }
         else {
             try {
+                int agemovie = Integer.parseInt(age);
                 int movieYear = Integer.parseInt(movieYearText);
-                movie = new Movie(movieName,movieYear,movieTime , movieDescription, selectedCategories);
+                movie = new Movie(movieName,movieYear,movieTime , movieDescription, selectedCategories,agemovie);
 
             } catch (NumberFormatException e) {
                 Toast.makeText(CreateMovieActivity.this, "Please enter a valid year", Toast.LENGTH_SHORT).show();
@@ -190,7 +195,12 @@ public class CreateMovieActivity extends AppCompatActivity {
                 return;
             }
             videoFile = getFileFromUri(Uri.parse(selectedVideoUri));
-            movieViewModel.add(movie, imageFile, videoFile);
+            if (selectTrailerUri == null || selectTrailerUri.isEmpty()) {
+                Toast.makeText(CreateMovieActivity.this, "You must select an image for the movie!", Toast.LENGTH_LONG).show();
+                return;
+            }
+            trailerFile = getFileFromUri(Uri.parse(selectTrailerUri));
+            movieViewModel.add(movie, imageFile, videoFile, trailerFile);
 //            RequestApi requestApi = new RequestApi(this);
 //            requestApi.createMovie(movie, imageFile, videoFile);
 
@@ -204,6 +214,12 @@ public class CreateMovieActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
         pickVideoLauncher.launch(intent);
     }
+    private void openTrailerChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("video/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"video/mp4", "video/avi", "video/mkv"});
+        pickTrailerLauncher.launch(intent);
+    }
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");  // Filter only image files
@@ -216,6 +232,13 @@ public class CreateMovieActivity extends AppCompatActivity {
             openVideoChooser();
         }
     }
+    private void requestPermissionsForTrailer() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 102);
+        } else {
+            openTrailerChooser();
+        }
+    }
     private ActivityResultLauncher<Intent> pickVideoLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -225,6 +248,18 @@ public class CreateMovieActivity extends AppCompatActivity {
                     videoView.setVisibility(View.VISIBLE);
                     videoView.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
                     videoView.start();// Save video URI
+                }
+            });
+
+    private ActivityResultLauncher<Intent> pickTrailerLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri videoUri = result.getData().getData();
+                    selectTrailerUri = videoUri.toString();
+                    VideoView videoViewTrailer = findViewById(R.id.videoViewTrailer);
+                    videoViewTrailer.setVisibility(View.VISIBLE);
+                    videoViewTrailer.setVideoURI(videoUri);  // הצגת הסרטון ב- VideoView
+                    videoViewTrailer.start();// Save video URI
                 }
             });
 

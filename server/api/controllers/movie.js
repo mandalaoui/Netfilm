@@ -5,14 +5,14 @@ const createMovie = async (req, res) => {
 
     const image = req.files && req.files.image ? req.files.image[0].path : null;
     const video = req.files && req.files.video ? req.files.video[0].path : null;
-    // const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
+    const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
     // const categories = req.body.categories.map(categoryId => mongoose.Types.ObjectId(categoryId));
     let categories = [];
     if (req.body.categories) {
         categories = req.body.categories.split(',').map(categoryId => new mongoose.Types.ObjectId(categoryId));
     }
     const newMovie = await movieService.createMovie(req.body.name, categories, req.body.movie_time,
-        image, req.body.Publication_year, req.body.description,video);
+        image, req.body.Publication_year, req.body.description, video, req.body.age, trailer);
     const location = `/api/movies/${newMovie._id}`;
     res.status(201).location(location).json(newMovie);
 };
@@ -49,6 +49,7 @@ const getMovie = async (req, res) => {
 const updateMovie = async (req, res) => {
     const image = req.files && req.files.image ? req.files.image[0].path : null;
     const video = req.files && req.files.video ? req.files.video[0].path : null;
+    const trailer = req.files && req.files.trailer ? req.files.trailer[0].path : null;
 
     let categories = [];
     if (req.body.categories) {
@@ -56,7 +57,7 @@ const updateMovie = async (req, res) => {
     }
 
     const movie = await movieService.updateMovie(req.params.id, req.body.name, categories, req.body.movie_time,
-        image, req.body.Publication_year, req.body.description,video, req.body.age);
+        image, req.body.Publication_year, req.body.description,video, req.body.age,trailer);
 
     // If no movie is found to update, responds with a 404 error
     if (!movie) {

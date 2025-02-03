@@ -32,8 +32,8 @@ public class MovieViewModel extends ViewModel {
         repository.deleteMovieById(movieId); // קורא למחיקה מתוך ה-Repository
     }
 
-    public void add(Movie movie, File imageFile, File videoFile) {
-        repository.add(movie, imageFile, videoFile);
+    public void add(Movie movie, File imageFile, File videoFile, File trailerFile) {
+        repository.add(movie, imageFile, videoFile, trailerFile);
     }
 
     public void edit(String movieId,Movie movie, File imageFile, File videoFile) {

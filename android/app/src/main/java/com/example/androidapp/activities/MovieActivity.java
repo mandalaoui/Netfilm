@@ -49,7 +49,6 @@ public class MovieActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Button btnPlay;
     private List<Movie> recommendedMoviesList = new ArrayList<>();
-    MovieListAdapter movieListAdapter;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
 
@@ -96,12 +95,6 @@ public class MovieActivity extends AppCompatActivity {
             Log.e("MovieActivity", "Video URL is null or empty");
         }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
-        movieAdapter = new MovieAdapter(this, new ArrayList<>(), true);
-        recyclerView.setAdapter(movieAdapter);
-
-        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
-
 //        movieViewModel.recommend(intent.getStringExtra("id"));
 
 //        movieViewModel.get().observe(this,movies -> {
@@ -114,13 +107,22 @@ public class MovieActivity extends AppCompatActivity {
             i.putExtra("videoUrl", videoUrl);
             startActivity(i);
         });
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
+        movieAdapter = new MovieAdapter(this, new ArrayList<>(), true);
+        recyclerView.setAdapter(movieAdapter);
+
+        movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
         MovieApi movieApi = new MovieApi();
         movieApi.recommend(movieId , new Callback<List<Movie>>() {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    movieListAdapter.setMovies(response.body());
+                    Log.d("MovieActivity", "onResponse: " + response.body().toString());
+                    for (Movie movie : response.body()) {
+                        Log.d("MovieActivity", "Movie: " + movie.toString());
+                    }
+                    movieAdapter.setMovies(response.body());
                 }
                 else {
                     Log.e("API Response", "Response error: " + response.message());

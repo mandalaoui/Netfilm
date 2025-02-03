@@ -112,7 +112,7 @@ public class MovieApi {
     }
 
 
-    public void add(Movie movieCreate, File imageFile, File videoFile) {
+    public void add(Movie movieCreate, File imageFile, File videoFile, File trailerFile) {
         RequestBody categoriesRequestBody;
         List<String> categories = movieCreate.getCategories();
         Log.d("Categories", categories.toString());
@@ -125,13 +125,18 @@ public class MovieApi {
         RequestBody year = RequestBody.create(String.valueOf(movieCreate.getPublication_year()),MediaType.parse("text/plain"));
         RequestBody time = RequestBody.create(movieCreate.getMovie_time(),MediaType.parse("text/plain") );
         RequestBody description = RequestBody.create(movieCreate.getDescription(),MediaType.parse("text/plain"));
+        RequestBody age = RequestBody.create(String.valueOf(movieCreate.getAge()),MediaType.parse("text/plain"));
 
         RequestBody requestFileImage = RequestBody.create(imageFile,MediaType.parse("image/*"));
         MultipartBody.Part image = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFileImage);
 
         RequestBody requestFileMovie = RequestBody.create(videoFile,MediaType.parse("video/*"));
         MultipartBody.Part video = MultipartBody.Part.createFormData("video", videoFile.getName(), requestFileMovie);
-        Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, image, video);
+
+        RequestBody requestFileTrailer = RequestBody.create(trailerFile,MediaType.parse("video/*"));
+        MultipartBody.Part trailer = MultipartBody.Part.createFormData("trailer", trailerFile.getName(), requestFileTrailer);
+
+        Call<Movie> call = apiService.createMovie(userId,name, year, time, description,categoriesRequestBody, age, image, video, trailer);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, retrofit2.Response<Movie> response) {
@@ -186,6 +191,7 @@ public class MovieApi {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful()) {
+                    Log.d("TAG", "onResponse: " + response.body().toString());
                     callback.onResponse(call, Response.success(response.body()));
                 } else {
                     if (response.code() == 404) {

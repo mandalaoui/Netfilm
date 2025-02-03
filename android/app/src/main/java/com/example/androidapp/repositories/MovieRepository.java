@@ -51,8 +51,8 @@ public class MovieRepository {
         return movieiListData;
     }
 
-    public void add (final Movie movie, File imageFile, File videoFile) {
-        api.add(movie,imageFile, videoFile);
+    public void add (final Movie movie, File imageFile, File videoFile, File trailerFile) {
+        api.add(movie,imageFile, videoFile, trailerFile);
     }
 
     public void edit(String movieId,Movie movie, File imageFile, File videoFile) {

@@ -78,18 +78,10 @@ public class EditCategoryActivity extends AppCompatActivity {
         });
 
         editCategory.setOnClickListener(v-> {
-//            String categoryName = create_nameCategory.getText().toString();
-//            boolean isPromoted = create_isPromotedSwitch.isChecked();
-//            List<String> selectedIds = movieAdapter.getSelectedMovieIds();
+
             selectCategory.setName(create_nameCategory.getText().toString());
             selectCategory.setIsPromoted(create_isPromotedSwitch.isChecked());
             selectCategory.setMovies(movieAdapter.getSelectedMovieIds());
-//            if (categoryName.isEmpty()) {
-//                Toast.makeText(this, "Category name is required", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-
-//            Category category = new Category(categoryName, isPromoted, selectedIds);
             categoriesViewModel.edit(selectCategory);
             Toast.makeText(this, "Category created", Toast.LENGTH_SHORT).show();
         });

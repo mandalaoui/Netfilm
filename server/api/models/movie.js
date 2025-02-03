@@ -33,15 +33,15 @@ const Movie = new Schema({
     video: {
         type: String,
         required: false
+    },
+    trailer: {
+        type: String,
+        required: false
+    },
+    age: {
+        type: Number,
+        required: false
     }
-    // trailer: {
-    //     type: String,
-    //     required: false
-    // },
-    // age: {
-    //     type: Number,
-    //     required: false
-    // }
 });
 
 // Export the Movie model using the schema defined above
