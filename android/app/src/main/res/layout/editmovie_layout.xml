@@ -28,7 +28,7 @@
                 android:layout_height="52dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
-                android:text="Edit movie"
+                android:text="@string/edit_movie"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp" />
 
@@ -97,7 +97,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:padding="0dp"
-                android:text="Choose Picture"
+                android:text="@string/choose_pic"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -118,7 +118,7 @@
                 android:clickable="true"
                 android:focusable="false"
                 android:padding="0dp"
-                android:text="Choose video"
+                android:text="@string/choose_video"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -136,7 +136,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#A91616"
-                android:text="save change"
+                android:text="@string/save_change"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>

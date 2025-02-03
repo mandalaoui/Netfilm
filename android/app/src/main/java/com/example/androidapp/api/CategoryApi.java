@@ -36,9 +36,37 @@ public class CategoryApi {
 
         apiService = retrofit.create(ApiService.class);
     }
+
+    public CategoryApi() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        apiService = retrofit.create(ApiService.class);
+    }
     MyApplication myApplication = MyApplication.getInstance();
 
     String userId = myApplication.getGlobalUserId();
+
+    public void getCategories(final Callback<List<Category>> callback) {
+        Call<List<Category>> call = apiService.getAllCategories(userId);
+
+        call.enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    callback.onFailure(call, new Throwable("Failed to get categories"));
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
 
     public void getCategories() {
         Call<List<Category>> call = apiService.getAllCategories(userId);

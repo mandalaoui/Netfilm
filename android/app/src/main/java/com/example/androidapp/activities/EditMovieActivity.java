@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.androidapp.R;
 import com.example.androidapp.adapters.CategoryAdapter;
+import com.example.androidapp.api.CategoryApi;
 import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityEditMovieBinding;
 import com.example.androidapp.entities.Category;
@@ -87,35 +88,13 @@ public class EditMovieActivity extends AppCompatActivity {
                     allMovies = movies;
                 });
 
-        editMovieButton.setOnClickListener(v -> {
-            editMovieFunc();
-            finish();
-        });
+        editMovieButton.setOnClickListener(v -> editMovieFunc());
+        btnChooseMovie.setOnClickListener(v -> showMovieSelectionDialog());
+        binding.btnChooseImage.setOnClickListener(v -> requestPermissions());
+        binding.btnChooseVideo.setOnClickListener(v -> requestPermissionsForVideo());
+        binding.btnChooseTrailer.setOnClickListener(v-> requestPermissionsForTrailer());
 
-        btnChooseMovie.setOnClickListener(v -> {
-            showMovieSelectionDialog();
-        });
-
-        binding.btnChooseImage.setOnClickListener(v -> {
-            requestPermissions();
-            if(selectedImageUri != null) {
-                videoCheck.setVisibility(View.VISIBLE);
-            }
-        });
-        binding.btnChooseVideo.setOnClickListener(v -> {
-            requestPermissionsForVideo();
-            if(selectedVideoUri != null) {
-                trailerCheck.setVisibility(View.VISIBLE);
-            }
-        });
-
-        binding.btnChooseTrailer.setOnClickListener(v-> {
-            requestPermissionsForTrailer();
-            if(selectTrailerUri != null) {
-                imageCheck.setVisibility(View.VISIBLE);
-            }
-        });
-        UserApi apiRequest = new UserApi();
+        CategoryApi apiRequest = new CategoryApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -233,6 +212,7 @@ public class EditMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectTrailerUri = videoUri.toString();
+                    imageCheck.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -260,6 +240,7 @@ public class EditMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectedVideoUri = videoUri.toString();
+                    trailerCheck.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -270,6 +251,7 @@ public class EditMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData(); // Get the URI of the selected image
                     selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
+                    videoCheck.setVisibility(View.VISIBLE);
                 }
             });
 

@@ -60,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         categoriesViewModel.get().observe(this, categories -> {
             allCategories = categories;
         });
+        categoriesViewModel.reload();
 
         // Initialize ViewModel for promoted categories
         promotedCategoriesViewModel = new ViewModelProvider(this).get(PromotedCategoriesViewModel.class);
@@ -113,7 +114,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Set up the admin button visibility and actions
         ImageButton adminBtn = binding.admin;
-
         MyApplication myApplication = MyApplication.getInstance();
         if (myApplication.isAdmin()) {
             adminBtn.setOnClickListener(v -> showAdminMenu(adminBtn));

@@ -15,19 +15,19 @@ public class PromotedCategoriesViewModel extends ViewModel {
     private PromotedCategoriesRepository repository;
     private LiveData<List<PromotedCategory>> categories;
 
+    // Constructor to initialize the repository and fetch the list of promoted categories
     public PromotedCategoriesViewModel() {
         repository = new PromotedCategoriesRepository();
         categories = repository.getAll();
     }
 
+    // Getter method to return the LiveData of promoted categories to be observed in UI
     public LiveData<List<PromotedCategory>> get() {
-        Log.d("CategoriesViewModel", "Categories list: " + categories.getValue());
         return categories;
     }
 
-
+    // Method to reload the promoted categories data, typically used for refreshing the list
     public void reload() {
-        Log.d("PromotedCategoriesViewModel", "Reloading categories...");
         repository.reload();
     }
 }

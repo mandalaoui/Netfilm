@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.androidapp.api.CategoryApi;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.R;
 import com.example.androidapp.adapters.CategoryAdapter;
@@ -76,30 +77,12 @@ public class CreateMovieActivity extends AppCompatActivity {
         videoCheck = binding.checkVideo;
         trailerCheck = binding.checkTrailer;
 
-        btnCreateMovie.setOnClickListener(v -> {
-            createMovie();
-        });
-        binding.btnChooseImage.setOnClickListener(v -> {
-            requestPermissions();
-            if(selectedImageUri != null) {
-                imageCheck.setVisibility(View.VISIBLE);
-            }
-        });
-        binding.btnChooseVideo.setOnClickListener(v -> {
-            requestPermissionsForVideo();
-            if(selectedVideoUri != null) {
-                videoCheck.setVisibility(View.VISIBLE);
-            }
-        });
+        btnCreateMovie.setOnClickListener(v -> createMovie());
+        binding.btnChooseImage.setOnClickListener(v -> requestPermissions());
+        binding.btnChooseVideo.setOnClickListener(v -> requestPermissionsForVideo());
+        binding.btnChooseTrailer.setOnClickListener(v-> requestPermissionsForTrailer());
 
-        binding.btnChooseTrailer.setOnClickListener(v-> {
-            requestPermissionsForTrailer();
-            if(selectTrailerUri != null) {
-                trailerCheck.setVisibility(View.VISIBLE);
-            }
-        });
-
-        UserApi apiRequest = new UserApi();
+        CategoryApi apiRequest = new CategoryApi();
         apiRequest.getCategories(new Callback<List<Category>>() {
             @Override
             public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
@@ -232,6 +215,7 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectedVideoUri = videoUri.toString();
+                    videoCheck.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -240,6 +224,7 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri videoUri = result.getData().getData();
                     selectTrailerUri = videoUri.toString();
+                    trailerCheck.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -250,6 +235,7 @@ public class CreateMovieActivity extends AppCompatActivity {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Uri imageUri = result.getData().getData(); // Get the URI of the selected image
                     selectedImageUri = imageUri.toString();// Update the selectedImageUri variable
+                    imageCheck.setVisibility(View.VISIBLE);
                 }
             });
 

@@ -28,7 +28,7 @@
         android:layout_width="376dp"
         android:layout_height="49dp"
         android:backgroundTint="#FFFFFF"
-        android:text="Choose Category"
+        android:text="@string/choose_category"
         android:textColor="@color/black"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"

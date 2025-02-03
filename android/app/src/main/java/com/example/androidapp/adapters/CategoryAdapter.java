@@ -42,7 +42,6 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         if (isSingleChoice) {
             CheckBox checkBox = convertView.findViewById(android.R.id.checkbox);
 
-            // אם מצב של בחירה אחת, לא צריך להציג את ה-CheckBox
             checkBox.setVisibility(View.GONE);
         }
         return convertView;

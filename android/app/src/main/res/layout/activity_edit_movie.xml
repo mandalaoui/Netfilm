@@ -28,7 +28,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
-                android:text="Edit movie"
+                android:text="@string/edit_movie"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp" />
 
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:backgroundTint="#E9E1E1"
-                android:text="choose movie"
+                android:text="@string/choose_movie"
                 android:textColor="#070606" />
 
             <EditText
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="age"
-                android:hint="age"
+                android:hint="@string/age"
                 android:inputType="textMultiLine"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#B0B0B0" />
@@ -119,7 +119,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:padding="0dp"
-                    android:text="Choose Picture"
+                    android:text="@string/choose_pic"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
@@ -128,8 +128,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
                     android:layout_marginTop="0dp"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_check"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -145,7 +146,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:padding="0dp"
-                    android:text="Choose video"
+                    android:text="@string/choose_video"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
                 <ImageView
@@ -153,8 +154,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginTop="0dp"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_check"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
 
             </LinearLayout>
             <LinearLayout
@@ -170,7 +172,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:padding="0dp"
-                    android:text="Choose trailer"
+                    android:text="@string/choose_trailer"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf = "@+id/videoView"/>
@@ -179,8 +181,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
                     android:layout_marginTop="0dp"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/ic_check"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -191,7 +194,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#A91616"
-                android:text="Edit movie"
+                android:text="@string/edit_movie"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>

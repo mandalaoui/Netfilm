@@ -1,9 +1,12 @@
 package com.example.androidapp.activities;
 
+import static android.view.View.GONE;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,10 +40,7 @@ public class MovieActivity extends AppCompatActivity {
     private TextView tvName, tvYear,tvTime, tvDescription, tvAge;
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
-    private Handler handler = new Handler();
     private Button btnPlay, btnTrailer;
-    private List<Movie> recommendedMoviesList = new ArrayList<>();
-    MovieListAdapter movieListAdapter;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
 
@@ -84,10 +84,14 @@ public class MovieActivity extends AppCompatActivity {
         tvTime.setText(formattedTime);
 
         tvDescription.setText(intent.getStringExtra("description"));
-        String age = intent.getStringExtra("age") + "+";
-        tvAge.setText(age);
-        Log.d("MovieActivity", "Movie year: " + intent.getStringExtra("Publication_year"));
-        Log.d("MovieActivity", "Movie age: " + intent.getStringExtra("age"));
+
+        if (intent.getStringExtra("age") != null) {
+            String age = intent.getStringExtra("age") + "+";
+            tvAge.setText(age);
+        } else {
+            tvAge.setVisibility(View.GONE);
+        }
+
 
         exoPlayer = new ExoPlayer.Builder(this).build();
         moviePlayer.setPlayer(exoPlayer);

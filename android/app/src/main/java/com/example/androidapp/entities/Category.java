@@ -48,8 +48,6 @@ public class Category {
         this.isPromoted = isPromoted;
     }
 
-
-    // Getter
     public List<String> getMovies() {
         return movies;
     }
@@ -63,7 +61,6 @@ public class Category {
 
     }
 
-    // Setter
     public void setMovies(List<String> movies) {
         this.movies = movies;
     }

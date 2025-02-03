@@ -9,6 +9,7 @@ import java.util.List;
 
 public class ConverterCategory {
 
+    // Converts a List<Movie> to a JSON string for storage in the database
     @TypeConverter
     public static String fromMoviesList(List<Movie> movies) {
         if (movies == null) {
@@ -18,6 +19,7 @@ public class ConverterCategory {
         return gson.toJson(movies);
     }
 
+    // Converts a JSON string to a List<Movie> when retrieving from the database
     @TypeConverter
     public static List<Movie> toMoviesList(String data) {
         if (data == null) {

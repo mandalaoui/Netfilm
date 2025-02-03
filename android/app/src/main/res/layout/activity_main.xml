@@ -51,7 +51,7 @@
         android:layout_height="76dp"
         android:layout_gravity="center"
         android:backgroundTint="#A91616"
-        android:text="Sign In>"
+        android:text="@string/get_started"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/netflixScreenshot"
