@@ -28,5 +28,19 @@
     <string name="managerCreate_description">description</string>
     <string name="managar_choose_video">Choose Video</string>
     <string name="manager_choose_picture">Choose Picture</string>
+    <string name="create_category">Create Category</string>
+    <string name="category_name_hint">Enter category name</string>
+    <string name="is_promoted">Is Promoted?</string>
+    <string name="select_movies">Select Movies</string>
+    <string name="create_movie">Create Movies</string>
+    <string name="choose_pic">Choose Picture</string>
+    <string name="choose_video">Choose video</string>
+    <string name="categories">Categories↓</string>
+    <string name="more_like_this">More Like This</string>
+    <string name="trailer">Trailer</string>
+    <string name="delete_movie">Delete Movie</string>
+    <string name="delete_category">Delete Category</string>
+
+
 
 </resources>

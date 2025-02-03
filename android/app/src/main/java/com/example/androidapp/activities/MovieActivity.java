@@ -47,7 +47,7 @@ public class MovieActivity extends AppCompatActivity {
     private PlayerView moviePlayer;
     private ExoPlayer exoPlayer;
     private Handler handler = new Handler();
-    private Button btnPlay;
+    private Button btnPlay, btnTrailer;
     private List<Movie> recommendedMoviesList = new ArrayList<>();
     MovieListAdapter movieListAdapter;
     private RecyclerView recyclerView;
@@ -74,6 +74,7 @@ public class MovieActivity extends AppCompatActivity {
         btnPlay = binding.btnPlay;
         recyclerView = binding.recyclerViewRecommended;
         tvAge = binding.age;
+        btnTrailer = binding.btnTrailer;
 
         Intent intent = getIntent();
         tvName.setText(intent.getStringExtra("name"));
@@ -91,7 +92,6 @@ public class MovieActivity extends AppCompatActivity {
         }
         String formattedTime = hours + "h " + minutes + "m";
         tvTime.setText(formattedTime);
-//        tvTime.setText(intent.getStringExtra("movie_time"));
 
         tvDescription.setText(intent.getStringExtra("description"));
         String age = intent.getStringExtra("age") + "+";
@@ -101,7 +101,6 @@ public class MovieActivity extends AppCompatActivity {
 
         exoPlayer = new ExoPlayer.Builder(this).build();
         moviePlayer.setPlayer(exoPlayer);
-//        moviePlayer.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIT);
         String videoUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("video");
         if (videoUrl != null) {
             MediaItem mediaItem = MediaItem.fromUri(videoUrl);
@@ -112,6 +111,7 @@ public class MovieActivity extends AppCompatActivity {
         } else {
             Log.e("MovieActivity", "Video URL is null or empty");
         }
+        String trailerUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("trailer");
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         movieAdapter = new MovieAdapter(this, new ArrayList<>());
@@ -119,16 +119,17 @@ public class MovieActivity extends AppCompatActivity {
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
-//        movieViewModel.recommend(intent.getStringExtra("id"));
-
-//        movieViewModel.get().observe(this,movies -> {
-//            movieAdapter.setMovies(movies);
-//        });
         btnPlay.setOnClickListener(v -> {
             UserApi userApi = new UserApi();
             userApi.addToWatchList(movieId);
             Intent i = new Intent(this, VideoMovieActivity.class);
             i.putExtra("videoUrl", videoUrl);
+            startActivity(i);
+        });
+
+        btnTrailer.setOnClickListener(v -> {
+            Intent i = new Intent(this, VideoMovieActivity.class);
+            i.putExtra("trailerUrl", trailerUrl);
             startActivity(i);
         });
 

@@ -22,6 +22,15 @@ public class Movie {
     private String description;
     private int age;
     private String video;
+    private String trailer;
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
+    }
 
     public String getVideo() {
         return video;

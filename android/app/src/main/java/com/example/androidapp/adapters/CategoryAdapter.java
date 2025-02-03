@@ -16,15 +16,16 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
     private Context context;
     private List<Category> categories;
 
+    // Constructor to initialize the adapter with context and categories
     public CategoryAdapter(Context context, List<Category> categories) {
         super(context, android.R.layout.simple_list_item_multiple_choice, categories);
         this.context = context;
         this.categories = categories;
     }
 
+    // Method to customize the view for each category item in the list
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // השתמש ב-layout ברירת המחדל עם CheckBox
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_multiple_choice, parent, false);
         }

@@ -8,15 +8,11 @@
     android:background="@color/black"
     tools:context=".activities.DeleteCategory">
 
-    <!-- Spinner להצגת רשימת קטגוריות -->
-
-    <!-- כפתור מחיקה -->
-
     <TextView
         android:id="@+id/deleteCategory"
         android:layout_width="193dp"
         android:layout_height="33dp"
-        android:text="Delete Category"
+        android:text="@string/delete_category"
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -40,8 +36,8 @@
         android:layout_width="376dp"
         android:layout_height="49dp"
         android:backgroundTint="#FF0000"
-        android:text="Delete Category"
-        android:textSize="18dp"
+        android:text="@string/delete_category"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

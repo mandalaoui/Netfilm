@@ -324,7 +324,6 @@
     android:background="#000000"
     tools:context=".activities.HomeActivity">
 
-    <!-- Toolbar that will always be visible -->
     <Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -373,7 +372,6 @@
             android:src="@drawable/ic_exit"/>
     </Toolbar>
 
-    <!-- AppBarLayout with PlayerView, limited height to prevent video hiding Toolbar -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
@@ -387,13 +385,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="Categories↓"
+            android:text="@string/categories"
             android:textColor="#FFFFFF"
             android:backgroundTint="#6B6868"
             android:strokeColor="#000000"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
-        <!-- PlayerView (video) with fixed size -->
         <androidx.media3.ui.PlayerView
             android:id="@+id/random_movie"
             android:layout_width="match_parent"
@@ -403,7 +400,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- RecyclerView for categories -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lstCategories"
         android:layout_width="match_parent"

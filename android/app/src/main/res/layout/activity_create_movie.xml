@@ -8,8 +8,6 @@
     android:id="@+id/scrollview"
     android:scrollbars="vertical">
 
-
-        <!-- LinearLayout שמכיל את כל התוכן, המיקומים של האייקונים אחד אחרי השני -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +27,7 @@
                     android:layout_height="52dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="16dp"
-                    android:text="create movie"
+                    android:text="@string/create_movie"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp" />
 
@@ -98,7 +96,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:padding="0dp"
-                    android:text="Choose Picture"
+                    android:text="@string/choose_pic"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 
@@ -119,7 +117,7 @@
                     android:clickable="true"
                     android:focusable="false"
                     android:padding="0dp"
-                    android:text="Choose video"
+                    android:text="@string/choose_video"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp" />
 

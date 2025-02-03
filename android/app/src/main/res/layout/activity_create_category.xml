@@ -9,10 +9,6 @@
     tools:context=".activities.CreateCategoryActivity">
 
 
-
-    <!-- RecyclerView -->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,9 +26,9 @@
             android:layout_marginStart="105dp"
             android:layout_marginEnd="130dp"
             android:layout_marginBottom="16dp"
-            android:text="create category"
+            android:text="@string/create_category"
             android:textColor="#FFFFFF"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -47,7 +43,7 @@
             android:layout_marginTop="63dp"
             android:layout_marginEnd="1dp"
             android:layout_marginBottom="596dp"
-            android:hint="Enter category name"
+            android:hint="@string/category_name_hint"
             android:inputType="text"
             android:textColor="#FFFFFF"
             android:textColorHint="#B0B0B0"
@@ -66,7 +62,7 @@
             android:layout_marginTop="137dp"
             android:layout_marginEnd="144dp"
             android:gravity="center_horizontal"
-            android:text="Is Promoted?"
+            android:text="@string/is_promoted"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/categoryNameInput"
@@ -84,7 +80,7 @@
             android:layout_marginStart="125dp"
             android:layout_marginTop="245dp"
             android:layout_marginEnd="142dp"
-            android:text="Select Movies"
+            android:text="@string/select_movies"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -109,7 +105,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="24dp"
             android:backgroundTint="#A91616"
-            android:text="Create Category" />
+            android:text="@string/create_category" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/isPromotedSwitch"
