@@ -11,7 +11,7 @@ import { useGlobalContext } from '../../GlobalContext.js';
 import { useNavigate } from 'react-router-dom';
 
 // Main component function for the upper menu
-function UpperMenu({ searchQuery, onSearchChange }) {
+function UpperMenu({ searchQuery, onSearchChange, setShowMoviesBy }) {
     const { fileUrl } = useGlobalContext();
 
     // State hooks for different features
@@ -25,6 +25,9 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     const [currentUser, setCurrentUser] = useState(null);
     const { isLightMode, setIsLightMode } = useContext(ThemeContext);
     const navigate = useNavigate();
+
+    // Check if the current route is the home screen
+    const isHomeScreen = location.pathname === '/home';
 
     // Check if the user is an admin based on localStorage
     useEffect(() => {
@@ -70,6 +73,8 @@ function UpperMenu({ searchQuery, onSearchChange }) {
 
     // Navigate to the home page
     const handleHome = () => {
+        if(setShowMoviesBy)
+            setShowMoviesBy(false);  // Disable showing MoviesBy
         navigate('/home');
     };
 
@@ -117,7 +122,8 @@ function UpperMenu({ searchQuery, onSearchChange }) {
     };
 
     const handleMoviesBy = () => {
-        navigate('/moviesByCategories');
+        setShowMoviesBy(true);
+        navigate('/home');
     }
 
 
@@ -129,9 +135,11 @@ function UpperMenu({ searchQuery, onSearchChange }) {
                     <button className="btn btn-primary" type="button" onClick={handleHome}>
                         <i className="bi bi-house"></i> Home
                     </button>
-                    <button className="btn btn-primary" type="button" onClick={handleMoviesBy}>
-                        Movies by Categories
-                    </button>
+                    {isHomeScreen && (
+                        <button className="btn btn-primary" type="button" onClick={handleMoviesBy}>
+                            Movies by Categories
+                        </button>
+                    )}
                 </div>
                 <div className="d-flex search-container">
                     <img src={searchIcon} className="search-logo" alt="Search Logo" onClick={openSearch}></img>

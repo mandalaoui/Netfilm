@@ -167,6 +167,27 @@ public class HomeActivity extends AppCompatActivity {
         // Button to show category selection dialog
         Button btnCategories = binding.btnCategories;
         btnCategories.setOnClickListener(v -> showCategoriesDialog());
+
+        // Get the button to toggle the theme mode
+        ImageButton themeToggleBtn = binding.actionTheme;
+        themeToggleBtn.setOnClickListener(v -> {
+            // No need to redefine `isDarkMode` here
+            boolean currentMode = getSharedPreferences("settings", MODE_PRIVATE)
+                    .getBoolean("dark_mode", false);
+
+            // Switch between Dark and Light Mode
+            if (currentMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+
+            // Save the new mode to SharedPreferences
+            getSharedPreferences("settings", MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("dark_mode", !currentMode)
+                    .apply();
+        });
     }
 
     // Display a popup menu with admin options

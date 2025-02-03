@@ -26,7 +26,6 @@ root.render(
             <Route path="/login" element={<Connect />} />
             <Route path="/register" element={<Connect />} />
             <Route path="/home" element={<AuthGuard> <Home /> </AuthGuard>} />
-            <Route path="/moviesByCategories" element={<AuthGuard> <Home /> </AuthGuard>} />
             <Route path="/movie/:id" element={<AuthGuard> <MovieInfo /> </AuthGuard>} />
             <Route path="/watchMovie/:id" element={<AuthGuard> <WatchMovie /> </AuthGuard>} />
             <Route path="/watchTrailer/:id" element={<AuthGuard> <WatchTrailer /> </AuthGuard>} />
