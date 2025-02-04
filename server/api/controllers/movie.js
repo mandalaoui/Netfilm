@@ -108,5 +108,10 @@ const getMovieIncludeQuery = async (req, res) => {
 
 };
 
+const getAllMovie =  async (req, res) => {
+    const movies = await movieService.getAllMovie();
+    res.status(200).json(movies);
+};
+
 // Exporting all functions to be used in routes
-module.exports = { createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery };
+module.exports = { createMovie, getMovies, getMovie, updateMovie, deleteMovie, getMovieIncludeQuery, getAllMovie};

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black"
+    android:background="@color/colorBackground"
     android:fillViewport="true"
     android:id="@+id/editMovieActivity"
     android:scrollbars="vertical">
@@ -29,7 +29,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
                 android:text="@string/edit_movie"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorText"
                 android:textSize="20dp" />
 
             <EditText
@@ -39,8 +39,8 @@
                 android:autofillHints="name"
                 android:hint="@string/managerCreate_movie_name"
                 android:inputType="textMultiLine"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#B0B0B0" />
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/textColorHint" />
 
             <EditText
                 android:id="@+id/movieTimeInput"
@@ -49,8 +49,8 @@
                 android:autofillHints="time"
                 android:hint="@string/managerCreate_time"
                 android:inputType="textMultiLine"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#B0B0B0" />
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/textColorHint" />
 
             <EditText
                 android:id="@+id/movieYearInput"
@@ -59,8 +59,8 @@
                 android:autofillHints="year"
                 android:hint="@string/managerCreate_year"
                 android:inputType="textMultiLine"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#B0B0B0" />
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/textColorHint" />
 
             <EditText
                 android:id="@+id/movieDescriptionInput"
@@ -69,8 +69,8 @@
                 android:autofillHints="description"
                 android:hint="@string/managerCreate_description"
                 android:inputType="textMultiLine"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#F8F5F5" />
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/textColorHint" />
 
             <ScrollView
                 android:id="@+id/scrollView"
@@ -84,7 +84,7 @@
                     android:layout_height="155dp"
                     android:layout_marginEnd="0dp"
                     android:choiceMode="multipleChoice"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/colorText"
                     app:layout_constraintEnd_toEndOf="parent" />
             </ScrollView>
 
@@ -98,7 +98,7 @@
                 android:focusable="false"
                 android:padding="0dp"
                 android:text="@string/choose_pic"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorText"
                 android:textSize="16sp" />
 
             <ImageView
@@ -119,7 +119,7 @@
                 android:focusable="false"
                 android:padding="0dp"
                 android:text="@string/choose_video"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/colorText"
                 android:textSize="16sp" />
 
             <VideoView
@@ -137,7 +137,7 @@
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#A91616"
                 android:text="@string/save_change"
-                android:textColor="#FFFFFF" />
+                android:textColor="@color/colorText" />
         </LinearLayout>
     </LinearLayout>
 

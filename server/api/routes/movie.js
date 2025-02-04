@@ -18,6 +18,8 @@ router.route('/')
         ]),
         userValidation.validateUserIdHeader, movieValidation.validateMovieInput, movieController.createMovie)
 
+router.route('/allmovies/')
+    .get(userValidation.validateUserIdHeader, movieController.getAllMovie);
 // Define routes for '/:id'
 router.route('/:id')
     .get(userValidation.validateUserIdHeader, movieValidation.validateMovieId, movieController.getMovie)

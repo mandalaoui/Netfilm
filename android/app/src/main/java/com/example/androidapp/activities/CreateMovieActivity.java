@@ -53,6 +53,10 @@ public class CreateMovieActivity extends AppCompatActivity {
     private ImageView imageCheck, videoCheck, trailerCheck;
     private List<String> selectedCategories;
     private ListView categoryListView;
+    private CategoriesViewModel categoriesViewModel;
+    private List<String> categoryTitles,categoryIds;
+    private List<Category> allcategories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,21 +86,18 @@ public class CreateMovieActivity extends AppCompatActivity {
         binding.btnChooseVideo.setOnClickListener(v -> requestPermissionsForVideo());
         binding.btnChooseTrailer.setOnClickListener(v-> requestPermissionsForTrailer());
 
-        CategoryApi apiRequest = new CategoryApi();
-        apiRequest.getCategories(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Category> categories = response.body();
-                    onCategoriesReceived(categories);
-                } else {
-                    Log.e("API Response", "Response error: " + response.message());  // לוג במקרה של בעיה בתשובה
-                }
+        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        categoriesViewModel.reload();
+        // API request to fetch movie categories
+        categoriesViewModel.get().observe(this, categories -> {
+            categoryTitles = new ArrayList<>();
+            categoryIds = new ArrayList<>();
+            for (Category category : categories) {
+                categoryTitles.add(category.getName());
+                categoryIds.add(category.getId());
             }
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                Log.e("API Failure", "Failed to load categories: " + t.getMessage());
-            }
+            allcategories = categories;
+            onCategoriesReceived(allcategories);
         });
     }
 
@@ -145,7 +146,7 @@ public class CreateMovieActivity extends AppCompatActivity {
 
         if (movieName.isEmpty() || movieYearText.isEmpty()|| movieTime.isEmpty() || movieDescription.isEmpty()) {
             Toast.makeText(CreateMovieActivity.this, "All fields are required", Toast.LENGTH_LONG).show();
-        } else if (selectedImageUri == null || selectedImageUri.isEmpty()) {  // אם לא נבחרה תמונה
+        } else if (selectedImageUri == null || selectedImageUri.isEmpty()) {
             Toast.makeText(CreateMovieActivity.this, "Please select an image for the movie", Toast.LENGTH_LONG).show();
         }
         else {

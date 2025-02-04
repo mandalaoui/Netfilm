@@ -30,6 +30,7 @@ import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityEditMovieBinding;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
+import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.MovieViewModel;
 
 import java.io.File;
@@ -55,6 +56,9 @@ public class EditMovieActivity extends AppCompatActivity {
     private List<String> selectedCategories;
     private List<String> movieTitles, movieIds;
     private List<Movie> allMovies;
+    private CategoriesViewModel categoriesViewModel;
+    private List<String> categoryTitles,categoryIds;
+    private List<Category> allcategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,21 +98,18 @@ public class EditMovieActivity extends AppCompatActivity {
         binding.btnChooseVideo.setOnClickListener(v -> requestPermissionsForVideo());
         binding.btnChooseTrailer.setOnClickListener(v-> requestPermissionsForTrailer());
 
-        CategoryApi apiRequest = new CategoryApi();
-        apiRequest.getCategories(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Category> categories = response.body();
-                    onCategoriesReceived(categories);
-                } else {
-                    Log.e("API Response", "Response error: " + response.message());  // לוג במקרה של בעיה בתשובה
-                }
+        categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
+        categoriesViewModel.reload();
+        // API request to fetch movie categories
+        categoriesViewModel.get().observe(this, categories -> {
+            categoryTitles = new ArrayList<>();
+            categoryIds = new ArrayList<>();
+            for (Category category : categories) {
+                categoryTitles.add(category.getName());
+                categoryIds.add(category.getId());
             }
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                Log.e("API Failure", "Failed to load categories: " + t.getMessage());
-            }
+            allcategories = categories;
+            onCategoriesReceived(allcategories);
         });
     }
     // Show a dialog to select a movie for editing
@@ -117,7 +118,6 @@ public class EditMovieActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Choose movie")
                 .setSingleChoiceItems(movieTitles.toArray(new String[0]), -1, (dialog, which) -> {
-                    // כאשר נבחר סרט
                     String selectedMovieName = movieTitles.get(which);
                     selectedMovieId = movieIds.get(which);
                     for (Movie movie : allMovies) {
@@ -190,7 +190,7 @@ public class EditMovieActivity extends AppCompatActivity {
                     Log.e("Error", "Category ID is null for category: " + selectedCategory.getName());
                 }
             } else {
-                selectedCategories.remove(selectedCategory.getId());  // אם בוטלה הבחירה, הסר את ה-ID
+                selectedCategories.remove(selectedCategory.getId());
             }
 
         });

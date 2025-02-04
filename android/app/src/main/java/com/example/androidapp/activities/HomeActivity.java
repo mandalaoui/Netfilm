@@ -9,13 +9,17 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.MediaItem;
 import androidx.media3.exoplayer.ExoPlayer;
@@ -23,14 +27,19 @@ import androidx.media3.ui.PlayerView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.androidapp.MyApplication;
+import com.example.androidapp.R;
 import com.example.androidapp.adapters.MovieListAdapter;
 import com.example.androidapp.adapters.PromotedCategoryListAdapter;
 import com.example.androidapp.api.MovieApi;
+import com.example.androidapp.api.UserApi;
 import com.example.androidapp.databinding.ActivityHomeBinding;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.entities.Movie;
 import com.example.androidapp.entities.PromotedCategory;
+import com.example.androidapp.entities.User;
 import com.example.androidapp.viewmodels.CategoriesViewModel;
 import com.example.androidapp.viewmodels.PromotedCategoriesViewModel;
 import com.google.android.material.appbar.AppBarLayout;
@@ -52,6 +61,10 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         boolean isDarkMode = getSharedPreferences("settings", MODE_PRIVATE)
                 .getBoolean("dark_mode", false);
         if (isDarkMode) {
@@ -60,9 +73,34 @@ public class HomeActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        super.onCreate(savedInstanceState);
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        TextView username = binding.username;
+        ImageView userIcon = binding.userIcon;
+
+        UserApi apiRequest = new UserApi();
+        apiRequest.getUser(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body();
+                    Log.d("API Response", "Response error: " + user);
+                    Log.d("API Response", "Response error: " + user.toString());
+                    String userTitle = "For " + user.getUsername();
+                    username.setText(userTitle);
+                    if (user.getPhoto() != null) {
+                        Glide.with(userIcon.getContext())
+                                .load("http://10.0.2.2:12345/api/" + user.getPhoto())
+                                .into(userIcon);
+                    }
+                } else {
+                    Log.e("API Response", "Response error: " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e("API Failure", "Failed to load categories: " + t.getMessage());
+         }
+        });
+
 
         // Initialize ViewModel for categories and observe changes
         categoriesViewModel = new ViewModelProvider(this).get(CategoriesViewModel.class);
@@ -124,11 +162,11 @@ public class HomeActivity extends AppCompatActivity {
         // Set up the admin button visibility and actions
         ImageButton adminBtn = binding.admin;
         MyApplication myApplication = MyApplication.getInstance();
-//        if (myApplication.isAdmin()) {
+        if (myApplication.isAdmin()) {
             adminBtn.setOnClickListener(v -> showAdminMenu(adminBtn));
-//        } else {
-//            adminBtn.setVisibility(View.GONE);
-//        }
+        } else {
+            adminBtn.setVisibility(View.GONE);
+        }
 
         // Set up the RecyclerView for searched movies
         searchedMovies = binding.searchedMovies;
@@ -144,7 +182,7 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout linearLayout2 = (LinearLayout) linearLayout1.getChildAt(2);
         LinearLayout linearLayout3 = (LinearLayout) linearLayout2.getChildAt(1);
         AutoCompleteTextView autoComplete = (AutoCompleteTextView) linearLayout3.getChildAt(0);
-        autoComplete.setTextColor(Color.WHITE);
+        autoComplete.setTextColor(ContextCompat.getColor(this, R.color.colorText));
 
         // Set the query text listener for the search view
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

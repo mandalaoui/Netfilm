@@ -52,13 +52,8 @@ public interface ApiService {
             @Part MultipartBody.Part trailer
             );
 
-    // Retrieve a movie's details by its ID
-    @GET("movies/{movieId}")
-    Call<Movie> getMovie(@Path("movieId") String movieId, @Header("userId") String userId);
-
-    // Retrieve a list of recommended movies based on the provided movie ID
-    @GET("movies/{movieId}/recommend/")
-    Call<List<Movie>> RecommendedMovies(@Path("movieId") String movieId, @Header("userId") String userId);
+    @GET("users/{Id}")
+    Call<User> getUser(@Path("Id") String Id, @Header("userId") String userId);
 
     // Handle user login by receiving a User object and returning a LoginResponse
     @POST("tokens")

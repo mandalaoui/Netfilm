@@ -27,7 +27,7 @@ public class VideoMovieActivity extends AppCompatActivity {
         videoMovie.setPlayer(exoPlayer);
 
         // Get the video URL from the intent's extras
-        String videoUrl = getIntent().getStringExtra("videoUrl");
+        String videoUrl = getIntent().getStringExtra("url");
         if (videoUrl != null) {
             Uri videoUri = Uri.parse(videoUrl);
 

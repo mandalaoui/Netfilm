@@ -27,13 +27,8 @@
                     android:layout_height="52dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="16dp"
-<<<<<<< HEAD
-                    android:text="create movie"
-                    android:textColor="@color/colorText"
-=======
                     android:text="@string/create_movie"
-                    android:textColor="#FFFFFF"
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
+                    android:textColor="@color/colorText"
                     android:textSize="20dp" />
 
                 <EditText
@@ -73,8 +68,8 @@
                     android:autofillHints="age"
                     android:hint="@string/age"
                     android:inputType="textMultiLine"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#B0B0B0" />
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorText" />
 
                 <EditText
                     android:id="@+id/movieDescriptionInput"
@@ -95,26 +90,16 @@
                     <ListView
                         android:id="@+id/categoryListView"
                         android:layout_width="wrap_content"
-                        android:layout_height="155dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="0dp"
                         android:choiceMode="multipleChoice"
-                        android:textColor="@color/colorText"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:nestedScrollingEnabled="true"
+                        android:textColor="@color/colorText" />
+                    <!--app:layout_constraintEnd_toEndOf="parent" />-->
                 </ScrollView>
-                
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-<<<<<<< HEAD
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:focusable="false"
-                    android:padding="0dp"
-                    android:text="Choose Picture"
-                    android:textColor="@color/colorText"
-                    android:textSize="16sp" />
-=======
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center">
@@ -127,7 +112,7 @@
                         android:focusable="false"
                         android:padding="0dp"
                         android:text="@string/choose_pic"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorText"
                         android:textSize="16sp" />
                     <ImageView
                         android:id="@+id/checkProfilePic"
@@ -153,7 +138,7 @@
                         android:focusable="false"
                         android:padding="0dp"
                         android:text="@string/choose_video"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorText"
                         android:textSize="16sp" />
                     <ImageView
                         android:id="@+id/checkVideo"
@@ -179,7 +164,7 @@
                         android:focusable="false"
                         android:padding="0dp"
                         android:text="@string/choose_trailer"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/colorText"
                         android:textSize="16sp"
                         app:layout_constraintTop_toBottomOf = "@+id/videoView"/>
                     <ImageView

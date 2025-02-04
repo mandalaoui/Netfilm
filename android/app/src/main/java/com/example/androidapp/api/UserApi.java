@@ -76,14 +76,15 @@ public class UserApi {
                         MyApplication.getAppContext().startActivity(i);
                     } else {
                         if (response.body() != null) {
-                            Toast.makeText(MyApplication.getAppContext(), response.body().getUsername(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(MyApplication.getAppContext(), response.body().toString(), Toast.LENGTH_LONG).show();
                         }
                     }
                 } else {
                     // Handle errors during registration
                     try {
                         if (response.errorBody() != null) {
-                            String errorMessage = response.errorBody().string();  // לקרוא את הגוף של השגיאה
+                            String errorMessage = response.errorBody().string();
+                            Toast.makeText(MyApplication.getAppContext(), errorMessage, Toast.LENGTH_LONG).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -148,7 +149,24 @@ public class UserApi {
         });
 
     }
+    public void getUser(final Callback<User> callback) {
+        Call<User> call = apiService.getUser(userId, userId);
 
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    callback.onResponse(call, Response.success(response.body()));
+                } else {
+                    callback.onFailure(call, new Throwable("Failed to get user details"));
+                }
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                callback.onFailure(call, t);
+            }
+        });
+    }
     // Extract user-specific data (like user ID and admin status) from JWT token
     public void extractDataFromToken(String token) {
         try {

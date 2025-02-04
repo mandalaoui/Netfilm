@@ -12,13 +12,8 @@
         android:id="@+id/deleteCategory"
         android:layout_width="193dp"
         android:layout_height="33dp"
-<<<<<<< HEAD
-        android:text="Delete Category"
-        android:textColor="@color/colorText"
-=======
         android:text="@string/delete_category"
-        android:textColor="@color/white"
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
+        android:textColor="@color/colorText"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -32,9 +27,9 @@
         android:id="@+id/chooseCategoryButton"
         android:layout_width="376dp"
         android:layout_height="49dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="@color/textColorHint"
         android:text="@string/choose_category"
-        android:textColor="@color/black"
+        android:textColor="@color/colorText"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,15 +42,10 @@
         android:id="@+id/deleteCategoryButton"
         android:layout_width="376dp"
         android:layout_height="49dp"
-<<<<<<< HEAD
+
         android:backgroundTint="@color/colorSubmitButton"
-        android:text="Delete Category"
-        android:textSize="18dp"
-=======
-        android:backgroundTint="#FF0000"
         android:text="@string/delete_category"
         android:textSize="18sp"
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.542"

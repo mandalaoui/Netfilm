@@ -1,5 +1,6 @@
 package com.example.androidapp.api;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
+import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.dao.MovieDao;
 import com.example.androidapp.entities.Movie;
 
@@ -95,7 +97,7 @@ public class MovieApi {
                     }).start();
 
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e("MovieApi", String.valueOf(response.code()));
                 }
             }
 
@@ -112,7 +114,7 @@ public class MovieApi {
         List<String> categories = movieCreate.getCategories();
 
         categoriesRequestBody = RequestBody.create(
-                TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
+                TextUtils.join(",", categories), MediaType.parse("text/plain")
         );
         // Prepare other fields for the movie as request bodies
         RequestBody name = RequestBody.create(movieCreate.getName(),MediaType.parse("text/plain"));
@@ -142,11 +144,13 @@ public class MovieApi {
                         dao.insertMovie(response.body());
                     }).start();
                     Log.d("MovieApi", "Movie created successfully");
+                    Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(i);
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
-                        Log.e("Error Response", errorResponse);
+                        String errorResponse = response.errorBody().string();
+                        Toast.makeText(MyApplication.getAppContext(), errorResponse, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -169,6 +173,9 @@ public class MovieApi {
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.isSuccessful()) {
                     Log.d("MovieApi", "Movie delete successfully");
+                    Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(i);
                 } else {
                     Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
@@ -210,7 +217,7 @@ public class MovieApi {
         List<String> categories = movieEdit.getCategories();
 
         categoriesRequestBody = RequestBody.create(
-                TextUtils.join(",", categories), MediaType.parse("text/plain")  // שליחה כ-text/plain, ברשימה מופרדת בפסיקים
+                TextUtils.join(",", categories), MediaType.parse("text/plain")
         );
         // Prepare other fields for the movie as request bodies
         RequestBody name = RequestBody.create(movieEdit.getName(),MediaType.parse("text/plain"));
@@ -237,11 +244,13 @@ public class MovieApi {
                     new Thread(() -> {
                         dao.update(response.body());
                     }).start();
+                    Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(i);
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        String errorResponse = response.errorBody().string();  // תקבל את התגובה השגויה כאן
-                        Log.e("Error Response", errorResponse);
+                        String errorResponse = response.errorBody().string();
+                        Toast.makeText(MyApplication.getAppContext(), errorResponse, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -261,7 +270,6 @@ public class MovieApi {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.isSuccessful()) {
-                    // אם התגובה הצליחה, מחזירים את הרשימה דרך ה-Callback
                     callback.onResponse(call, Response.success(response.body()));
                 } else {
                     if (response.code() == 404) {

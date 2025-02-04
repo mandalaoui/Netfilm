@@ -100,7 +100,7 @@ public class MovieRepository {
                     @Override
                     public void onFailure(Call<Movie> call, Throwable t) {
                         Log.d("MovieRepository", "API failure");
-                        movieLiveData.postValue(null); // או לשים ערך שגיאה
+                        movieLiveData.postValue(null);
                     }
                 });
             }

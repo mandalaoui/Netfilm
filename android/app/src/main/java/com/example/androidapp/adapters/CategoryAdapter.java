@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.example.androidapp.R;
 import com.example.androidapp.entities.Category;
 
 import java.util.List;
@@ -36,7 +39,7 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
         // Get the current category item
         Category category = categories.get(position);
         TextView categoryNameTextView = convertView.findViewById(android.R.id.text1);
-        categoryNameTextView.setTextColor(Color.WHITE);
+        categoryNameTextView.setTextColor(ContextCompat.getColor(context, R.color.colorText));
         categoryNameTextView.setText(category.getName());
 
         // If it's single-choice, hide the checkbox

@@ -1,6 +1,7 @@
 package com.example.androidapp.api;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.androidapp.MyApplication;
 import com.example.androidapp.R;
+import com.example.androidapp.activities.HomeActivity;
 import com.example.androidapp.entities.Category;
 import com.example.androidapp.dao.CategoryDao;
 
@@ -37,36 +39,9 @@ public class CategoryApi {
         apiService = retrofit.create(ApiService.class);
     }
 
-    public CategoryApi() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.getAppContext().getString(R.string.BaseUrl))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        apiService = retrofit.create(ApiService.class);
-    }
     MyApplication myApplication = MyApplication.getInstance();
 
     String userId = myApplication.getGlobalUserId();
-
-    public void getCategories(final Callback<List<Category>> callback) {
-        Call<List<Category>> call = apiService.getAllCategories(userId);
-
-        call.enqueue(new Callback<List<Category>>() {
-            @Override
-            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    callback.onResponse(call, Response.success(response.body()));
-                } else {
-                    callback.onFailure(call, new Throwable("Failed to get categories"));
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Category>> call, Throwable t) {
-                callback.onFailure(call, t);
-            }
-        });
-    }
 
     public void getCategories() {
         Call<List<Category>> call = apiService.getAllCategories(userId);
@@ -83,7 +58,7 @@ public class CategoryApi {
                     }).start();
                 }
                 else {
-                    Toast.makeText(MyApplication.getAppContext(), "Failed to get categories: " + response.message(), Toast.LENGTH_SHORT).show();
+                    Log.e("CategoryApi", "Failed to get categories: " + response.message());
                 }
             }
             @Override
@@ -102,17 +77,19 @@ public class CategoryApi {
                         dao.insert(response.body());
                     }).start();
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), "Failed to create category:" + response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                MyApplication.getAppContext().startActivity(i);
             }
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
-                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
+                Log.e("CategoryApi", "Network request failed");
             }
         });
 
@@ -126,8 +103,11 @@ public class CategoryApi {
             public void onResponse(Call<Category> call, Response<Category> response) {
                 if (response.isSuccessful()) {
                     Log.d("CategoryApi", "Category delete successfully");
+                    Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(i);
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.code(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApplication.getAppContext(), response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -144,10 +124,12 @@ public class CategoryApi {
             public void onResponse(Call<Category> call, retrofit2.Response<Category> response) {
                 if (response.isSuccessful()) {
                     Log.d("CategoryApi", "Category update successfully");
+                    Intent i = new Intent(MyApplication.getAppContext(), HomeActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    MyApplication.getAppContext().startActivity(i);
                 } else {
-                    Toast.makeText(MyApplication.getAppContext(), "Failed to update category:" + response.message(), Toast.LENGTH_SHORT).show();
                     try {
-                        Toast.makeText(MyApplication.getAppContext(), "Error Response" + response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyApplication.getAppContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -156,9 +138,7 @@ public class CategoryApi {
             @Override
             public void onFailure(Call<Category> call, Throwable t) {
                 Log.e("CategoryApi", "Error: " + t.getMessage());
-                Toast.makeText(MyApplication.getAppContext(), "Network request failed", Toast.LENGTH_SHORT).show();
             }
-
         });
     }
 }

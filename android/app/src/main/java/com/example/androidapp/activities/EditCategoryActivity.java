@@ -67,7 +67,7 @@ public class EditCategoryActivity extends AppCompatActivity {
 
 
         recyclerViewMovies = findViewById(R.id.recyclerViewMovies);
-        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3)); // 3 סרטים בשורה
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3));
         movieAdapter = new MovieAdapter(this, new ArrayList<>(), false);
         recyclerViewMovies.setAdapter(movieAdapter);
 

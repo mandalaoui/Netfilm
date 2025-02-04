@@ -94,13 +94,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-<<<<<<< HEAD
-            android:text="Choose Picture"
-            android:textColor="@color/white"
-=======
             android:text="@string/choose_pic"
-            android:textColor="#FFFFFF"
->>>>>>> 6eab6ffa7ad525c7fb231bbfb25b9fdf870173d4
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:padding="0dp"
             android:focusable="false"
