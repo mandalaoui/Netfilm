@@ -48,9 +48,11 @@ http://localhost:3000/
 
 
 ### Android Client:
-Create a new device (Emulator) - pixel 2, R
-Sync
-Run the Emulator
+- Open Adroid folder on AndroidStudio.
+- Create a new device (Emulator) - pixel 2, R.
+- Sync.
+- Run the Emulator.
+- The Android app receives data through the API server port defined in the MyApplication file.
 
 ![הרצת אנדוראיד](https://github.com/user-attachments/assets/7009ead4-cb20-42ce-84b0-d4c029bd14b0)
 

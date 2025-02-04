@@ -1,7 +1,6 @@
 package com.example.androidapp.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -88,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
                     username.setText(userTitle);
                     if (user.getPhoto() != null) {
                         Glide.with(userIcon.getContext())
-                                .load("http://10.0.2.2:12345/api/" + user.getPhoto())
+                                .load(MyApplication.getBaseUrl() + user.getPhoto())
                                 .into(userIcon);
                     }
                 } else {
@@ -134,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
                 ExoPlayer exoPlayer = new ExoPlayer.Builder(this).build();
                 random_movie.setPlayer(exoPlayer);
 
-                String videoUrl = "http://10.0.2.2:12345/api/" + randMovie.getVideo();
+                String videoUrl = MyApplication.getBaseUrl() + randMovie.getVideo();
                 if (videoUrl != null) {
                     MediaItem mediaItem = MediaItem.fromUri(videoUrl);
 
@@ -345,7 +344,7 @@ public class HomeActivity extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(HomeActivity.this, NetflixActivity.class);
+                        Intent intent = new Intent(HomeActivity.this, NetfilmActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }

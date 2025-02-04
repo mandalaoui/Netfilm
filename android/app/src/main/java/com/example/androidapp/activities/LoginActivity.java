@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // On Back button click, navigate to NetflixActivity
         binding.btnBack.setOnClickListener(v -> {
-            Intent i = new Intent(this, NetflixActivity.class);
+            Intent i = new Intent(this, NetfilmActivity.class);
             startActivity(i);
         });
         // On SignIn button click, validate user input and call the API for login

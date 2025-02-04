@@ -1,5 +1,6 @@
 package com.example.androidapp.adapters;
 import com.bumptech.glide.Glide;
+import com.example.androidapp.MyApplication;
 import com.example.androidapp.activities.SelectedCategoryActivity;
 import com.example.androidapp.entities.Movie;
 import android.content.Context;
@@ -47,7 +48,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             final Movie current = movies.get(position);
             // Use Glide to load the movie poster into the ImageButton
             Glide.with(holder.itemView.getContext())
-                    .load("http://10.0.2.2:12345/api/" + current.getImage())
+                    .load(MyApplication.getBaseUrl() + current.getImage())
                     .into(holder.movieImage);
 
             holder.movieImage.setTag(current);

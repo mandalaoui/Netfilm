@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.androidapp.databinding.ActivityMainBinding;
 
-public class NetflixActivity extends AppCompatActivity {
+public class NetfilmActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     @Override

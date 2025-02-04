@@ -108,7 +108,7 @@ public class MovieActivity extends AppCompatActivity {
         moviePlayer.setPlayer(exoPlayer);
 
         // Handle video playback URL
-        String videoUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("video");
+        String videoUrl = MyApplication.getBaseUrl() + intent.getStringExtra("video");
         if (videoUrl != null) {
             MediaItem mediaItem = MediaItem.fromUri(videoUrl);
             exoPlayer.setMediaItem(mediaItem);
@@ -119,7 +119,7 @@ public class MovieActivity extends AppCompatActivity {
         }
 
         // Handle trailer URL
-        String trailerUrl = "http://10.0.2.2:12345/api/" + intent.getStringExtra("trailer");
+        String trailerUrl = MyApplication.getBaseUrl() + intent.getStringExtra("trailer");
 
         // Play the movie on button click
         btnPlay.setOnClickListener(v -> {

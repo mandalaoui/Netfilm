@@ -18,6 +18,14 @@ public class MyApplication extends Application {
         context = getApplicationContext();
     }
 
+    // Base URL for the API
+    private static final String BASE_URL = "http://10.0.2.2:12345/api/";
+
+    // Public method to retrieve the base URL
+    public static String getBaseUrl() {
+        return BASE_URL; // Return the base URL
+    }
+
     // Static method to get the instance of this application class
     public static MyApplication getInstance() {
         return instance;
