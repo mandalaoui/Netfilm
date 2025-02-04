@@ -91,6 +91,3 @@ Once logged in, users see a homepage displaying available movies.
 ### Theme Toggle (Dark/Light Mode):
 - Implemented via `localStorage` to persist user preferences.
 - Allows users to switch between themes via a button in the navigation bar.
-
-![צפייה בקטגוריה ספציפית](https://github.com/user-attachments/assets/828fe58e-188d-4653-8ef1-6defd6530de0)
-
