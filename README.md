@@ -5,10 +5,11 @@
 - Overview
 - Project Structure
 - API Design
-- React Web Client Features
+- Client Features
 - Running the Application
 - Additional Notes
-- Running Examples
+- Running Examples - Web
+- Running Examples - Android
 
 ## Overview
 
@@ -61,6 +62,7 @@ Once logged in, users see a homepage displaying available movies.
 - **GET** `/api/movies/:id` - Retrieves details of a movie.
 - **PUT** `/api/movies/:id` - Updates a movie.
 - **DELETE** `/api/movies/:id` - Deletes a movie.
+- **GET** `/api/movies/allmovies` - Returns all movies.
 
 ### Movie Recommendations:
 - **GET** `/api/movies/:id/recommend` - Fetches recommended movies based on the given movie ID.
@@ -71,7 +73,7 @@ Once logged in, users see a homepage displaying available movies.
 ### Search Functionality:
 - **GET** `/api/movies/search/:query` - Returns movies matching the search query.
 
-## React Web Client Features
+## Client Features
 
 ### Implemented Screens:
 - **Landing Page** (for non-logged-in users)
@@ -91,13 +93,14 @@ Once logged in, users see a homepage displaying available movies.
 ### Admin Panel Features:
 - Add/Edit/Delete movies.
 - Add/Edit/Delete categories.
-- A movie cannot exist without a category—if removed, it is automatically assigned to a default unAttached category and will not be displayed to users.
 
 ### Theme Toggle (Dark/Light Mode):
 - Implemented via `localStorage` to persist user preferences.
 - Allows users to switch between themes via a button in the navigation bar.
 
 ## Running the Application
+
+### Download node_modules
 
 ### Create .env.local:
 - Create config folder at folder "api"
@@ -144,6 +147,7 @@ http://localhost:3000/
 
 ### Android Client:
 Create a new device (Emulator) - pixel 2, R
+Sync
 Run the Emulator
 
 ## Additional Notes
@@ -152,19 +156,9 @@ The admin user is manually defined in MongoDB.
 Upon re-login, the admin can access the management dashboard.
 All files are stored inside Docker containers.
 
-### Running API Requests
-A api_request.rest file is included for testing API calls.
-
-Usage steps:
-
-- Install the REST Client extension in VS Code.
-- Open api_request.rest.
-- Click Send Request on the desired API operation.
-- Replace placeholders (e.g., user IDs) as needed.
-
 > This README reflects all changes introduced in Phase 4 of the project
 
-## Running Examples
+## Running Examples - Web
 
 ### Home screen for non-logged-in users
 ![מסך הבית למשתמשים לא מחוברים](https://github.com/user-attachments/assets/4cd748e9-5f14-4b7c-bf7e-d72ec798a7e3)
@@ -211,3 +205,49 @@ Usage steps:
 
 ### Edit movie (light mode)
 ![עריכת סרט](https://github.com/user-attachments/assets/d14e9f71-0e0d-4213-9b91-af39e8e6b9f6)
+
+
+## Running Examples - Android
+
+### Home screen for non-logged-in users
+![מסך הבית ללא מחוברים](https://github.com/user-attachments/assets/4a778ae5-c25d-4166-a1fa-6903a2f12e58)
+
+### Registeration screen
+![מסך יצירת משתמש](https://github.com/user-attachments/assets/614af2a4-00da-4850-9812-f5d96fa8cdf7)
+
+### Login screen
+![מסך התחברות](https://github.com/user-attachments/assets/948af6d7-4e5d-4550-a3e6-a838d47c8d11)
+
+### Home screen for logged-in users
+![מסך הבית](https://github.com/user-attachments/assets/90e16153-de4b-4106-8f3a-13c63bcd4da2)
+
+### Movie details screen
+![צפייה בסרט](https://github.com/user-attachments/assets/051e57d7-00d3-4392-8cc0-2978216a6267)
+
+### Light mode
+![מסך לבן](https://github.com/user-attachments/assets/e3b16fe5-7e20-42d6-bffc-9a8d2717f1f5)
+
+### Search
+![חיפוש](https://github.com/user-attachments/assets/caa7ef7c-583b-4c4c-b150-2fff201407ab)
+
+### Create a new movie
+![מסך יצירת סרט](https://github.com/user-attachments/assets/45e7cab7-e330-44e0-b937-b3c20e8ffed3)
+
+### Create new category
+![יצירת קטגוריה](https://github.com/user-attachments/assets/ea106a07-7fbb-4d9d-81d0-7539997bad1c)
+
+### Edit category
+![עריכת קטגוריה](https://github.com/user-attachments/assets/2fd8228f-100d-4737-8167-9d18981140e6)
+
+### Edit movie
+![מסך עריכת סרט](https://github.com/user-attachments/assets/9d4e2860-38a4-48bb-9699-b9e1dbcbe1ea)
+
+### Delete category
+![מחיקת קטגוריה](https://github.com/user-attachments/assets/022b023e-353d-4fe6-82f1-2567f92a8ade)
+
+### Delete movie
+![מחיקת סרט](https://github.com/user-attachments/assets/ed564232-bebc-4d21-82a8-bb0f2949920e)
+
+### View by category
+![צפייה בקטגוריה ספציפית](https://github.com/user-attachments/assets/828fe58e-188d-4653-8ef1-6defd6530de0)
+
