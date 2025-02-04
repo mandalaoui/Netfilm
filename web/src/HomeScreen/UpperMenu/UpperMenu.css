@@ -1,0 +1,160 @@
+.navbar {
+    background-color: var(--top-menu-background);
+    height: 60px;
+    width: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.btn-primary {
+    height: 40px;
+    max-width: 20vw;
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 0.8rem; /* Make the text smaller */
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-background);
+    color: var(--text-color);
+}
+
+.d-flex.me-auto {
+    margin-left: 20px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+}
+
+.search-logo, .user-logo, .netfilm-logo {
+    align-self: center;
+  }
+
+.search-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.search-logo:hover {
+    cursor: pointer;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 20vw;
+}
+
+.search-input {
+    width: 100% !important;
+    height: 30px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color-light-transparent);
+    margin-left: 5px !important;
+    background-color: var(--search-background);
+    font-size: 1rem;
+    transition: width 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--border-color);
+    background-color: var(--search-background);
+}
+
+.clear-search {
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    font-weight: bold;
+}
+
+.clear-search:hover {
+    color: white;
+}
+
+.user-logo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: var(--user-logo-background);
+}
+
+.user-logo:hover {
+    cursor: pointer;
+    background-color: var(--user-logo-hover-background);
+}
+
+.netfilm-logo {
+    height: 40px;
+    width: auto;
+}
+
+.dropdown-item {
+    color: var(--text-color);
+    background-color: var(--dropdown-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+}
+
+.dropdown-item:hover {
+    color: var(--text-color);
+    background-color: var(--dropdown-item-hover-background);
+    cursor: pointer;
+}
+
+.dropdown-user-menu {
+    position: absolute;
+    top: 100%;
+    left: -150px;
+    z-index: 1;
+    display: block;
+    margin: 0;
+    padding: 0rem 0;
+    font-size: 1rem;
+    background-color: var(--dropdown-item-background);
+    border: 1px solid var(--border-color-light-transparent); 
+    border-radius: 0.25rem;
+    width: 200px;
+}
+
+.btn-primary {
+    font-size: 0.8rem; /* Default font size */
+}
+
+/* Larger screens */
+@media (min-width: 768px) {
+    .btn-primary {
+        font-size: 1rem; /* Increase font size for larger screens */
+    }
+}
+
+/* Extra large screens */
+@media (min-width: 1200px) {
+    .btn-primary {
+        font-size: 1.2rem; /* Further increase font size for extra large screens */
+    }
+}

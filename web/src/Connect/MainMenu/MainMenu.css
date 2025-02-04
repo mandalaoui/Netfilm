@@ -1,6 +1,6 @@
-/* רקע שקוף עם תמונה */
-.container {
-    background: rgba(0, 0, 0, 0.8); /* רקע שחור חצי שקוף */
+/* Transparent background with a shadow effect */
+.menu-container {
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -12,61 +12,61 @@
     z-index: 2;
 }
 
-/* שדות קלט (input) */
+/* Input fields (text, password, file) */
 input[type="text"],
 input[type="password"],
 input[type="file"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #bbb; /* גבול אפור בהיר */
+    border: 1px solid #bbb;
     border-radius: 4px;
-    background-color: #222; /* רקע כהה לשדות הקלט */
-    color: #ddd; /* טקסט בהיר */
+    background-color: #222;
+    color: #ddd;
     box-sizing: border-box;
 }
 
-/* מצב כאשר השדה נמצא במיקוד (focus) */
+/* Focus state for input fields */
 input:focus {
-    outline: none; /* להסיר את הגבול המוגדר כברירת מחדל */
-    border: 2px solid #eee; /* גבול בהיר בזמן מיקוד */
+    outline: none;
+    border: 2px solid #eee;
 }
 
-/* כפתורים */
-button {
+/* Button styling */
+.intro-container button, .menu-container button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: none;
     border-radius: 4px;
-    background-color: #FF0000; /* צבע כפתור אדום */
+    background-color: #FF0000;
     color: white;
     font-size: 16px;
-    cursor: pointer; /* מצביע כאשר מרחפים מעל הכפתור */
+    cursor: pointer;
 }
 
-/* כפתור משני */
+/* Secondary button style */
 button.secondary {
-    background-color: #6c757d; /* צבע אפור לכפתור משני */
+    background-color: #6c757d;
 }
 
-/* אפקט ריחוף על כפתורים */
+/* Hover effect for buttons */
 button:hover {
-    filter: brightness(80%); /* כהה יותר כאשר מרחפים מעל */
+    filter: brightness(80%);
 }
 
-/* כפתור משני בעת ריחוף */
+/* Hover effect for secondary buttons */
 button.secondary:hover {
-    filter: brightness(80%); /* כהה יותר כאשר מרחפים מעל */
+    filter: brightness(80%);
 }
 
-/* עיצוב לחלקת ה-Profile Picture */
+/* Profile picture container */
 .input-group {
     position: relative;
     width: 100%;
 }
 
-/* כותרת עבור Profile Picture */
+/* Title for the profile picture section */
 h6 {
     margin: 0;
     font-size: 14px;
@@ -74,47 +74,52 @@ h6 {
     text-align: left;
 }
 
-/* טקסט המציין שהתמונה לא חובה */
+/* Optional text note for profile picture */
 .optional-text {
     position: relative;
-    left: 8px;
+    /* left: 8px; */
     font-size: 12px;
     color: #bbb;
-    margin: 0;
+    /* margin: 0; */
     margin-bottom: 10px;
 }
 
-/* שיפור מרווחים סביב התכנים בתוך הקונטיינר */
-.container > * {
+/* Spacing for elements inside the container */
+.menu-container > * {
     margin: 10px 0;
 }
 
-.container.hidden {
+/* Hidden container (used for toggling visibility) */
+.menu-container.hidden {
     display: none;
 }
 
+/* Intro section container */
 .intro-container {
     background: none;
     padding: 20px;
     text-align: center;
-    position: relative;
+    position: absolute;
     z-index: 2;
     width: 100%;
     max-width: 600px;
 }
 
+/* Main heading in the intro section */
 .intro-container h1 {
     font-size: 42px;
     font-weight: 900;
     color: white;
 }
 
+/* Subheading in the intro section */
 .intro-container h3 {
     font-size: 28px;
     font-weight: normal;
     color: white;
 }
 
+/* Buttons in the intro section */
 .intro-actions button {
     padding: 12px 30px;
     font-size: 16px;
@@ -125,17 +130,49 @@ h6 {
     cursor: pointer;
 }
 
+/* Hover effect for intro section buttons */
 .intro-actions button:hover {
     background-color: #cc0000;
 }
 
-.error-message {
+/* Error message styling */
+.error-message-movie {
     position: relative;
     text-align: left;
     font-size: 12px;
     color: #FF0000;
-    margin: 0;
-    margin-top: -8px;
-    margin-bottom: 6px;
+    margin-bottom: -10px;
     display: none;
+}
+
+/* .admin-checkbox-container {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 20px; 
+} */
+
+/* .Is-Admin-checkbox {
+    display: flex;
+    align-items: center;
+} */
+
+input[type="checkbox"] {
+    transform: scale(1.3);
+}
+
+.profile-picture{
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-picture-text{
+    display: flex;
+    flex-direction: row;
+}
+.profile-picture h6,
+.profile-picture .optional-text {
+    display: inline-block; 
+    margin-right: 10px;
 }

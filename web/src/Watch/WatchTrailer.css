@@ -1,0 +1,7 @@
+.watcher {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--background-color); /* Uses theme variable */
+    color: var(--text-color); /* Uses theme variable */
+}

@@ -14,17 +14,25 @@ const User = new Schema({
     },
     photo : {
         type: String,
-        required: false
+        required: true
     },
     nickname : {
         type: String,
         required: true
     },
+    isAdmin : {
+        type: Boolean,
+        required: false
+    },
     watchedMovies : [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Movie',
         default: ''
-    }]
+    }],
+    isAdmin : {
+        type: Boolean,
+        required: false
+    }
 });
 
 // Exports the User model to be used in other parts of the application.

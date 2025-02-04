@@ -1,58 +1,49 @@
-/* רקע שקוף */
+/* Transparent background for the navbar */
 .transparent-bg {
     background-color: transparent !important;
     border: none;
     box-shadow: none;
 }
 
-/* הפיכת הרכיב לקבוע בראש הדף */
+/* Fixing the navbar at the top of the page */
 .fixed-top {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 3; 
+    z-index: 3; /* Ensures it appears above other content */
 }
 
-/* כיסוי מלא לאורך */
+/* Full-width styling for the navbar */
 .full-width {
     width: 100%;
 }
 
-/* טקסט NETFLIX בצד ימין */
+/* Netfilm logo styling (aligned to the right) */
 .header {
-
     font-size: 32px;
     font-weight: bold;
     color: red;
     font-family: 'Arial', sans-serif;
-    text-align: right;
+    text-align: right; /* Align text to the right */
 }
 
+/* Container for buttons (aligned to the right) */
 .buttons-container {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    gap: 10px; /* Adds spacing between buttons */
 }
 
-/* כפתור שינוי שפה */
-.btn-secondary {
-    background-color: #6c757d;
-    border: none;
-}
 
-/* כפתור Login */
-.btn-primary {
+/* Styling for the primary button (e.g., Login button) */
+.btn-danger {
     background-color: #FF0000;
     border: none;
 }
 
-/* כפתורים - אפקט רחיפה */
-.btn-secondary:hover {
-    filter: brightness(80%);
-}
-
-.btn-primary:hover {
-    background-color: #FF0000;
-    filter: brightness(80%);
+/* Hover effect for the primary button */
+.btn-danger:hover {
+    background-color: #FF0000; /* Ensures hover color remains consistent */
+    filter: brightness(80%); /* Darkens the button slightly on hover */
 }

@@ -1,0 +1,79 @@
+.home-container { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color); /* Use background color variable */
+    background-image: none;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    z-index: 2;
+}
+
+/* Bottom space */
+.bottom-space {
+    height: 200px !important;
+    width: 100%;
+}
+
+.movies-by-container{
+    position: fixed;
+    display: block;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    
+}
+/* Style for the category select dropdown */
+.category-select {
+    width: 200px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    transition: border-color 0.3s ease;
+}
+
+/* Style for the category select dropdown on focus */
+.category-select:focus {
+    outline: none;
+    background-color: var(--text-color);
+}
+
+/* Dropdown options styling */
+.category-option {
+    padding: 10px;
+    font-size: 16px;
+    color: var(--background-color);
+}
+
+/* Style for the MoviesBy button */
+.movies-by-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Change button color on hover */
+.movies-by-button:hover {
+    background-color: #0056b3;
+}

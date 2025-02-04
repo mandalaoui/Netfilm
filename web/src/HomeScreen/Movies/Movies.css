@@ -1,0 +1,71 @@
+.movies-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  overflow: visible;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.add-category-container,
+.add-movie-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  left: -10px;
+}
+
+.add-category-button,
+.add-movie-button {
+  background: none;
+  border: none;
+  color: var(--text-color) !important;
+  font-size: 2.8rem;
+  cursor: pointer;
+  max-width: 120px;
+}
+
+.add-category-button:hover,
+.add-movie-button:hover {
+  transform: scale(1.2);
+}
+
+.add-category-text,
+.add-movie-text {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.modal-content {
+  position: fixed;
+  background-color: var(--top-menu-background);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  top: 50%;
+  width: 60%;
+  height: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  max-width: 400px;
+  max-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  opacity: 1;
+  border-radius: 8px;
+}
+
+.modal-close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

@@ -1,0 +1,25 @@
+.search-results {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    gap: 20px;
+    padding: 20px;
+    background-color: transparent; 
+}
+
+.search-results p {
+    font-size: 18px;
+    color: var(--text-color);
+    text-align: center;
+    width: 100%;
+}
+
+.movie-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    overflow: hidden;
+}
+
+.movie-image img {
+    width: 100%; 
+    height: auto;
+}

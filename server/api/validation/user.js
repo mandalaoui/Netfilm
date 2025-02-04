@@ -9,7 +9,8 @@ const validateUserInput = async (req, res, next) => {
         password,
         photo,
         nickname,
-        watchedMovies
+        watchedMovies,
+        isAdmin
     } = req.body;
 
     // Validate username: must be a non-empty string.

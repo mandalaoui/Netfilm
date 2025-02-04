@@ -1,13 +1,76 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Root variables */
+:root {
+    --FILE_URL: http://localhost:12345/api/;
+    --background-color-dark: #282828; /* Dark background color */
+    --background-color-light: #ffffff; /* Light background color */
+    --text-color-dark: #ffffff; /* Text color in dark mode */
+    --text-color-light: #000000; /* Text color in light mode */
+    --admin-box-dark: #333; /* Background color for admin boxes in dark mode */
+    --admin-box-light: #eaeaea; /* Background color for admin boxes in light mode */
+    --admin-box-border-dark: #555; /* Background color for admin boxes in dark mode */
+    --admin-box-border-light: #a8a8a8; /* Background color for admin boxes in light mode */
+    --modal-background-dark: rgb(28, 28, 28); /* Modal background for dark mode */
+    --modal-background-light: #f5f5f5; /* Modal background for light mode */
+    --arrow-dark: rgb(0, 0, 0); /* Arrow for dark mode */
+    --arrow-light: rgb(255, 255, 255); /* Arrow for light mode */
+    --arrow-background-dark: rgba(0, 0, 0, 0.275); /* Arrow background for dark mode */
+    --arrow-background-light: rgba(200, 200, 200, 0.378); /* Arrow background for light mode */
+    --arrow-hover-background-dark: rgba(255, 255, 255, 0.8); /* Arrow hover background for dark mode */
+    --arrow-hover-background-light: rgba(50, 50, 50, 0.8); /* Arrow hover background for light mode */
+    --top-menu-background-dark: rgb(16, 16, 16); /* Top menu background for dark mode */
+    --top-menu-background-light: #e0e0e0; /* Top menu background for light mode */
+    --border-color-dark: #ffffff; /* Border color for dark mode */
+    --border-color-light: #000000; /* Border color for light mode */
+    --overlay-background-dark: rgba(0, 0, 0, 0.5); /* Overlay background for dark mode */
+    --overlay-background-light: rgba(255, 255, 255, 0.5); /* Overlay background for light mode */
+    --button-hover-background: rgba(101, 101, 101, 0.2); /* Button hover background */
+    --search-background: var(--background-color-light); /* Default search field background */
+    --search-focus-background: rgba(0, 0, 0, 0.8); /* Search focus background */
+    --dropdown-item-background-dark: rgba(20, 20, 20, 0.799); /* Dropdown item hover background */
+    --dropdown-item-background-light: rgba(254, 254, 254, 0.89); /* Dropdown item hover background */
+    --dropdown-item-hover-background-dark: rgba(47, 47, 47, 0.779); /* Dropdown item hover background */
+    --dropdown-item-hover-background-light: rgba(184, 184, 184, 0.668); /* Dropdown item hover background */
+    --user-logo-background: var(--background-color-light); /* Default user logo background */
+    --user-logo-hover-background: rgba(0, 0, 0, 0.2); /* User logo hover background */
+    --border-color-light-transparent: rgba(255, 255, 255, 0.2); /*Transparent border color */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Light mode overrides */
+.light-mode {
+    --background-color: var(--background-color-light); /* Light mode background */
+    --text-color: var(--text-color-light); /* Light mode text color */
+    --admin-box: var(--admin-box-light); /* Light mode admin box */
+    --modal-background: var(--modal-background-light); /* Light mode modal background */
+    --arrow: var(--arrow-dark);
+    --arrow-background: var(--arrow-background-light); /* Light mode arrow background */
+    --arrow-hover: var(--arrow-light);
+    --arrow-hover-background: var(--arrow-hover-background-light); /* Light mode arrow hover */
+    --top-menu-background: var(--top-menu-background-light); /* Light mode top menu background */
+    --border-color: var(--border-color-light); /* Light mode border color */
+    --overlay-background: var(--overlay-background-light); /* Light mode overlay background */
+    --border-color-light-transparent: rgba(0, 0, 0, 0.2); /* Light mode transparent border */
+    --search-background: var(--background-color-light);
+    --dropdown-background: var(--dropdown-item-background-light);
+    --dropdown-item-hover-background: var(--dropdown-item-hover-background-light);
+    --admin-box-border: var(--admin-box-border-light);
+}
+
+/* Dark mode overrides */
+.dark-mode {
+    --background-color: var(--background-color-dark); /* Dark mode background */
+    --text-color: var(--text-color-dark); /* Dark mode text color */
+    --admin-box: var(--admin-box-dark); /* Dark mode admin box */
+    --modal-background: var(--modal-background-dark); /* Dark mode modal background */
+    --arrow: var(--arrow-light);
+    --arrow-background: var(--arrow-background-dark); /* Dark mode arrow background */
+    --arrow-hover: var(--arrow-dark);
+    --arrow-hover-background: var(--arrow-hover-background-dark); /* Dark mode arrow hover */
+    --top-menu-background: var(--top-menu-background-dark); /* Dark mode top menu background */
+    --border-color: var(--border-color-dark); /* Dark mode border color */
+    --overlay-background: var(--overlay-background-dark); /* Dark mode overlay background */
+    --border-color-light-transparent: rgba(255, 255, 255, 0.2); /* Dark mode transparent border */
+    --search-background: var(--background-color-dark);
+    --dropdown-background: var(--dropdown-item-background-dark);
+    --dropdown-item-hover-background: var(--dropdown-item-hover-background-dark);
+    --admin-box-border: var(--admin-box-border-dark);
 }

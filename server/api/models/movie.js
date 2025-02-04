@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
@@ -11,6 +12,7 @@ const Movie = new Schema({
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
+        required: false
     }],
     movie_time: {
         type: String,
@@ -27,6 +29,14 @@ const Movie = new Schema({
     description: {
         type: String,
         default: ''
+    },
+    video: {
+        type: String,
+        required: false
+    },
+    trailer: {
+        type: String,
+        required: true
     },
     age: {
         type: Number,

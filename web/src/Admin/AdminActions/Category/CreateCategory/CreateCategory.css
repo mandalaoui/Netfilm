@@ -1,0 +1,135 @@
+.Create-Category-modal-content {
+    background-color: var(--top-menu-background);
+    padding: 20px;
+    width: 100%;
+    height: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.Create-Category-modal-content h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+.Create-Category-modal-content h2 {
+    text-align: left;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.input-group-CC {
+    margin-bottom: 15px;
+    color: var(--text-color);
+
+}
+
+.input-group-CC input {
+    background-color: var(--background-color);
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    color: var(--text-color);
+    border: 1px solid var(--admin-box);
+}
+
+.CC-checkbox{
+    transform: scale(1.4);
+    padding-left: 25px;
+}
+
+.CC-movie-list {
+    height: 20%;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.CC-movie-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.CC-movie-item input {
+    margin-right: 10px;
+}
+
+.Create-Category-btn button{
+    width: 100%;
+    padding: 10px;
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: red;
+}
+
+
+.Create-Category-btn:focus {
+    outline: none;
+}
+
+.input-group-CC-add-movie{
+    margin-bottom: 30px;
+    color: var(--text-color);
+    width: 100%;
+    max-height: 200px;
+    border-radius: 4px;
+}
+
+.movies-in-category-list {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 100px; 
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid var(--admin-box);;  
+    border-radius: 5px; 
+    background-color: var(--background-color);
+}
+
+.movies-in-category-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin: 8px 0;
+    white-space: nowrap;
+    cursor: pointer;
+    padding-right: 10px;
+
+}
+
+.movies-in-category-item input {
+    transform: scale(1.2);
+    order: 2;
+    cursor: pointer;
+}
+
+.movies-in-category-label {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+    color: var(--text-color);
+    cursor: pointer;
+    flex-grow: 1; 
+    text-align: left;
+    width: 100%; 
+}
+
+.movies-in-category-item input:checked + .movies-in-category-label {
+    font-weight: normal;
+}
+
+.movie-from-category-name {
+    font-size: 16px;
+}
+
+.movie-from-category-year {
+    font-size: 14px;
+    font-weight: bold;
+    color: #8a8a8a;
+}

@@ -1,29 +1,30 @@
 import './UpperMenu.css';
 import { useLocationContext } from '../../LocationContext.js';
+import { useNavigate } from 'react-router-dom';
+import netfilmIcon from '../../icons/NETFILM.png';
 
 function UpperMenu() {
-    const location = useLocationContext(); // מקבלים את המיקום מה-context
+    const location = useLocationContext(); // Retrieve the current location from the context
     let loc = location.pathname;
+    const navigate = useNavigate();
 
+    // Function to navigate to the login page
     const navigateToLogin = () => {
-        window.location.href = "/login"; // כתובת העמוד הרלוונטי
+        navigate("/login");
     };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark transparent-bg fixed-top full-width">
-            <div className="container-fluid d-flex justify-content-between">
-                <div className="d-flex me-auto">
-                    {loc === "/" && (
-                        <>
-                            <button className="btn btn-primary me-2" type="button" onClick={navigateToLogin}>
-                                Login
-                            </button>
-                            <button className="btn btn-secondary" type="button">Language</button>
-                        </>
-                    )}
-                </div>
+            <div className="container-fluid d-flex justify-content-between align-items-center">
+            <img src={netfilmIcon} className="netfilm-logo" alt="Netfilm Logo"></img>
 
-                <div className="header">NETFLIX</div>
+                {loc === "/" && (
+                    <div className="d-flex me-2">
+                        <button className="btn btn-danger" type="button" onClick={navigateToLogin}>
+                            Login
+                        </button>
+                    </div>
+                )}
             </div>
         </nav>
     );

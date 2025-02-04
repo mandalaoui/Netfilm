@@ -28,12 +28,17 @@ userId: <ID>
 
 ### Get a specific movie by ID
 
-GET http://localhost:12345/api/movies/:id 
+GET http://localhost:12345/api/movies/:id
+userId: <ID>
+
+### Get all movie
+
+GET http://localhost:12345/api/movies/allmovies
 userId: <ID>
 
 ### Update a movie
 
-PUT http://localhost:12345/api/movies/67840d2c35ec2c3ef382f858 
+PUT http://localhost:12345/api/movies/:id
 Content-Type: application/json 
 userId: <ID>
 
@@ -49,17 +54,16 @@ userId: <ID>
 
 ### Delete a movie
 
-DELETE http://localhost:12345/api/movies/6784155156b0b833f090f588 
+DELETE http://localhost:12345/api/movies/:id 
 userId: <ID>
 
 ### Get recommendation
-
 GET http://localhost:12345/api/movies/:id/recommend/ 
 userId: <ID>
 
 ### Add movie to user's watchlist
 
-POST http://localhost:12345/api/movies/6784155156b0b833f090f588/recommend/ 
+POST http://localhost:12345/api/movies/:id/recommend/ 
 Content-Type: application/json 
 userId: <ID>
 
@@ -73,21 +77,21 @@ userId: <ID>
 ### Create a new category
 
 POST http://localhost:12345/api/categories/ 
-userId: <ID> 
+userId: <ID>
 Content-Type: application/json
 
 {
-"name": "Family", "isPromoted": false, "movies": []
+"name": "Drama", "isPromoted": true, "movies": []
 }
 
 ### Get a specific category by ID
 
-GET http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+GET http://localhost:12345/api/categories/:id 
 userId: <ID>
 
 ### Update a category
 
-PATCH http://localhost:12345/api/categories/6784159856b0b833f090f58d 
+PATCH http://localhost:12345/api/categories/:id 
 userId: <ID> 
 Content-Type: application/json
 
@@ -97,9 +101,9 @@ Content-Type: application/json
   "movies": [] 
 }
 
-### Delete a category
+### Delete a category   
 
-DELETE http://localhost:12345/api/categories/67841e6efb9dec98b33abb5e 
+DELETE http://localhost:12345/api/categories/:id 
 userId: <ID>
 
 #USER
@@ -112,8 +116,8 @@ Content-Type: application/json
 {
 "username": "lioriii", 
 "password": "123456", 
-"nickname": "liori"
-
+"nickname": "liori",
+"isAdmin": true
 }
 
 ### Connect to system
@@ -126,7 +130,17 @@ Content-Type: application/json
 "password": "123456"
 }
 
-### Get a specific user by ID
+  ### Get a specific user by ID
 
 GET http://localhost:12345/api/users/:id 
 userId: <ID>
+
+
+### Upload a video
+
+POST http://localhost:12345/api/upload/video
+
+### Upload an image
+
+POST http://localhost:12345/api/upload/image 
+

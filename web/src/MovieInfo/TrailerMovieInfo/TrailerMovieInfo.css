@@ -1,0 +1,14 @@
+.current-movie-info-container {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: var(--background-color-view); /* Using background color variable */
+}
+
+.current-movie-info-trailer video {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-top: 0;
+}

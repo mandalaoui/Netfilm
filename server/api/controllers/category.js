@@ -4,7 +4,7 @@ const categoryService = require('../services/category');
 const createCategory = async (req, res, next) => {
     const newCategory = await categoryService.createCategory(req.body.name, req.body.isPromoted, req.body.movies);
     const location = `/api/categories/${newCategory._id}`;
-    res.status(201).location(location).json();
+    res.status(201).location(location).json(newCategory);
     
     next();
 };
@@ -31,7 +31,7 @@ const updateCategory = async (req, res, next) => {
     if (!category) {
         return res.status(404).json({ errors: ['Category not found'] });
     }
-    res.status(204).json();
+    res.status(204).json(category);
     next();
 };
 
@@ -41,7 +41,7 @@ const deleteCategory = async (req, res, next) => {
     if (!category) {
         return res.status(404).json({ errors: ['Category not found'] });
     }
-    res.status(204).json();
+    res.status(204).json({});
     next();
 };
 
