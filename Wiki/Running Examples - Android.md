@@ -1,44 +1,44 @@
 ## Running Examples - Android
 
 ### Home screen for non-logged-in users
-![מסך הבית ללא מחוברים](https://github.com/user-attachments/assets/4a778ae5-c25d-4166-a1fa-6903a2f12e58)
+![1](https://github.com/user-attachments/assets/692451ed-6784-4f71-8644-44e3c0cb9d20)
 
 ### Registeration screen
-![מסך יצירת משתמש](https://github.com/user-attachments/assets/614af2a4-00da-4850-9812-f5d96fa8cdf7)
+![2](https://github.com/user-attachments/assets/d06a9a51-4ed9-4f74-b952-76af36c603de)
 
 ### Login screen
-![מסך התחברות](https://github.com/user-attachments/assets/948af6d7-4e5d-4550-a3e6-a838d47c8d11)
+![3](https://github.com/user-attachments/assets/e2f6d1c4-8b03-4663-be44-9c65e473e5b1)
 
 ### Home screen for logged-in users
-![מסך הבית](https://github.com/user-attachments/assets/90e16153-de4b-4106-8f3a-13c63bcd4da2)
+![4](https://github.com/user-attachments/assets/f81462f9-e212-4fc7-ba18-90c02e98603e)
 
 ### Movie details screen
-![צפייה בסרט](https://github.com/user-attachments/assets/051e57d7-00d3-4392-8cc0-2978216a6267)
+![5](https://github.com/user-attachments/assets/0dec00f7-3cdc-4268-bd53-4146b153f274)
 
 ### Light mode
-![מסך לבן](https://github.com/user-attachments/assets/e3b16fe5-7e20-42d6-bffc-9a8d2717f1f5)
+![6](https://github.com/user-attachments/assets/25930b6a-a5ab-40a8-9c16-fa03261029a3)
 
 ### Search
-![חיפוש](https://github.com/user-attachments/assets/caa7ef7c-583b-4c4c-b150-2fff201407ab)
+![7](https://github.com/user-attachments/assets/d9080e74-1665-4123-a478-4b8f6a6ec84a)
 
 ### Create a new movie
-![מסך יצירת סרט](https://github.com/user-attachments/assets/45e7cab7-e330-44e0-b937-b3c20e8ffed3)
+![8](https://github.com/user-attachments/assets/aa23f1f6-b925-4f04-b937-f4ff3775ab42)
 
 ### Create new category
-![יצירת קטגוריה](https://github.com/user-attachments/assets/ea106a07-7fbb-4d9d-81d0-7539997bad1c)
+![9](https://github.com/user-attachments/assets/e29f3456-0728-4d04-9e06-640470215e1e)
 
 ### Edit category
-![עריכת קטגוריה](https://github.com/user-attachments/assets/2fd8228f-100d-4737-8167-9d18981140e6)
+![10](https://github.com/user-attachments/assets/8a5d6486-9d7d-4a07-a383-d52e9018f189)
 
 ### Edit movie
-![מסך עריכת סרט](https://github.com/user-attachments/assets/9d4e2860-38a4-48bb-9699-b9e1dbcbe1ea)
+![11](https://github.com/user-attachments/assets/c2e833d4-b5b6-479b-bf46-763193b942b0)
 
 ### Delete category
-![מחיקת קטגוריה](https://github.com/user-attachments/assets/022b023e-353d-4fe6-82f1-2567f92a8ade)
+![12](https://github.com/user-attachments/assets/1139aaba-4b80-4c68-980f-a62c9d47dddb)
 
 ### Delete movie
-![מחיקת סרט](https://github.com/user-attachments/assets/ed564232-bebc-4d21-82a8-bb0f2949920e)
+![13](https://github.com/user-attachments/assets/16084c97-e0b5-4312-9cee-5c79317ac65b)
 
 ### View by category
-![צפייה בקטגוריה ספציפית](https://github.com/user-attachments/assets/828fe58e-188d-4653-8ef1-6defd6530de0)
+![14](https://github.com/user-attachments/assets/95a389ef-5319-495d-8a62-73f33451418c)
 
